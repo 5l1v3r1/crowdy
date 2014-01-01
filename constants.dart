@@ -17,6 +17,9 @@ const OPERATOR_ICON_OUTPUT = 'output.png';
 
 const OPERATOR_MODAL_ID = 'operator_modal';
 
+const OPERATOR_OUTPUT_REFRESH = 'operator_output_refresh';
+const OPERATOR_OUTPUT_CLEAR = 'operator_output_clear';
+
 List<String> SOURCE_OPTIONS_VALUES = ['', ' ', '\t', ',', ':'];
 List<String> SOURCE_OPTIONS_NAMES = ['None', 'White space', 'Tab', 'Comma', 'Column'];
 

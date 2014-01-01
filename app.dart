@@ -19,7 +19,7 @@ part 'logic/Application.dart';
 
 void main() {
   Application app = new Application("#app_container");
-  
+
   var messageList = html.document.querySelector('div#bottom-panes div#messages ul');
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((LogRecord rec) {
