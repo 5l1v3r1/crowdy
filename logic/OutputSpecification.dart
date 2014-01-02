@@ -128,8 +128,11 @@ class OutputSpecification extends BaseSpecification {
 
   bool refresh (Map<String, OutputSegmentUI> previousElements) {
     bool changed = true;
-    previousElements.forEach((id, segment) => updateSegment(id, segment));
-    this.elements.forEach((id, segment) => assureSegment(id, segment, previousElements));
+    previousElements.forEach((id, segment) => this.updateSegment(id, segment));
+    //this.elements.forEach((id, segment) => assureSegment(id, segment, previousElements));
+    for (int i = this.elements.length-1; i >= 0; i--) {
+      this.assureSegment(this.elements.keys.elementAt(i), this.elements.values.elementAt(i), previousElements);
+    }
     return changed;
   }
 
@@ -172,5 +175,20 @@ class SelectionOutputSpecification extends OutputSpecification {
 
   SelectionOutputSpecification(String id) : super(id) {
 
+  }
+}
+
+class SortOutputSpecification extends OutputSpecification {
+
+  SortOutputSpecification(String id) : super(id) {
+
+  }
+
+  void editElement(String identifier, String newText) {
+    super.editElement(identifier, newText);
+  }
+
+  void removeElement(String identifier) {
+    super.removeElement(identifier);
   }
 }

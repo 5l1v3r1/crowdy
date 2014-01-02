@@ -115,14 +115,14 @@ class BaseDetailsUI {
     this.detailsView.append(new html.HeadingElement.h4()
     ..id = 'details'
     ..text = 'Details'
-    ..appendHtml(' <small>for bookkeeping purposes</small>'))
-    ..append(new html.HRElement());
+    ..appendHtml(' <small>for bookkeeping purposes</small>'));
+    this.detailsView.append(new html.HRElement());
 
     this.parametersView.append(new html.HeadingElement.h4()
     ..id = 'parameters'
     ..text = 'Parameters'
-    ..appendHtml(' <small>specific to this operator</small>'))
-    ..append(new html.HRElement());
+    ..appendHtml(' <small>specific to this operator</small>'));
+    this.parametersView.append(new html.HRElement());
   }
 
   bool refresh(OutputSpecification specification) {}
@@ -419,19 +419,22 @@ class SortDetailsUI extends BaseDetailsUI {
   static int count = 1;
 
   SortDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this.output = new SelectionOutputSpecification(this.id);
+    this.output = new SortOutputSpecification(this.id);
     this.view.append(this.output.view);
     this.configureFilters();
   }
 
   void initialize() {
     super.initialize();
-    this.addElement('size', 'number', 'Data size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
+    this.addElement('size', 'number', 'Window size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
   }
 
   bool refresh(OutputSpecification specification) {
-    //this.output.clear();
     return (this.output as OutputSpecification).refresh(specification.elements);
+  }
+
+  void deleteParameter(String rowId) {
+    this.parametersView.querySelector('#${rowId}').remove();
   }
 
   void configureFilters() {
@@ -470,6 +473,6 @@ class SortDetailsUI extends BaseDetailsUI {
   }
 
   void _deleteParameter(html.MouseEvent e, String rowId) {
-    this.parametersView.querySelector('#${rowId}').remove();
+    this.deleteParameter(rowId);
   }
 }
