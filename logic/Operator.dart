@@ -10,7 +10,7 @@ class Operator {
   BaseDetailsUI details;
   Map<String, bool> next, prev;
 
-  Operator(String this.id, String this.type, svg.SvgSvgElement canvas, num mouseX, num mouseY) {
+  Operator(String this.id, String this.type, num mouseX, num mouseY) {
     next = new Map<String, bool>();
     prev = new Map<String, bool>();
 
@@ -85,7 +85,8 @@ class Operator {
 
   void connectPrevious(String previousOperatorId) {
     this.prev[previousOperatorId] = true;
-    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: previousOperatorId));
+    this.updateDownFlow(previousOperatorId);
+    //canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: previousOperatorId));
   }
 
   void removeNext(String nextOperatorId) {
@@ -94,8 +95,25 @@ class Operator {
 
   void removePrevious(String previousOperatorId) {
     this.prev.remove(previousOperatorId);
-    this.details.outputSpecification.outputUI.clear();
+    this.clearDownFlow();
+    //canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: previousOperatorId));
+    //this.details.output.clear();
   }
+
+  /*
+  void clear() {
+    this.clearNext();
+    this.clearPrevious();
+  }
+
+  void clearNext() {
+    this.next.clear();
+    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: this.id));
+  }
+  void clearPrevious() {
+    this.prev.clear();
+  }
+  */
 
   void _onDoubleClick(html.MouseEvent e) {
     currentOperatorId = this.id;
@@ -110,11 +128,20 @@ class Operator {
   void _refresh(html.CustomEvent e) {
     String prevId = e.detail as String;
     if (this.prev.containsKey(prevId)) {
-      this.details.refresh(operators[prevId].details.outputSpecification);
-
-      if (this.next.length > 0) {
-        operators[prevId].details.refresh(this.details.outputSpecification);
-      }
+      this.updateDownFlow(prevId);
     }
+  }
+
+  void updateDownFlow(String prevId) {
+    bool updated = this.details.refresh(operators[prevId].details.output);
+
+    if (updated && this.next.length > 0) {
+      this.next.forEach((nextId, connected) => operators[nextId].updateDownFlow(prevId));
+    }
+  }
+
+  void clearDownFlow() {
+    this.details.output.clear();
+    this.next.forEach((nextId, connected) => operators[nextId].clearDownFlow());
   }
 }

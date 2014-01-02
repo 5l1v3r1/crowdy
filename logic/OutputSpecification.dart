@@ -52,7 +52,7 @@ class OutputSegmentUI {
   }
 }
 
-class OutputSpecificationUI {
+class BaseSpecification {
 
   String id;
   Map<String, OutputSegmentUI> elements;
@@ -61,7 +61,7 @@ class OutputSpecificationUI {
   html.DivElement innerView;
   html.UListElement elementList;
 
-  OutputSpecificationUI(String this.id) {
+  BaseSpecification(String this.id) {
     this.elements = new Map<String, OutputSegmentUI>();
     this.view = new html.DivElement();
     this.innerView = new html.DivElement();
@@ -113,95 +113,64 @@ class OutputSpecificationUI {
   html.SelectElement select(Map<String, bool> previousConnections) {
     html.SelectElement selectElement = new html.SelectElement();
     if (previousConnections.length > 0) {
-      Map<String, OutputSegmentUI> segmentList = operators[previousConnections.keys.first].details.outputSpecification.outputUI.elements;
+      Map<String, OutputSegmentUI> segmentList = operators[previousConnections.keys.first].details.output.elements;
       segmentList.forEach((identifier, segment) => selectElement.append(new html.OptionElement(data: segment.name.text)));
     }
     return selectElement;
   }
-
-  void refresh (Map<String, OutputSegmentUI> elements) { }
 }
 
-class OutputSpecification {
+class OutputSpecification extends BaseSpecification {
 
-  String id, type;
-  OutputSpecificationUI outputUI;
-
-  OutputSpecification(String this.id, String this.type) {
-  }
-}
-
-class InputHumanOutputSpecificationUI extends OutputSpecificationUI {
-
-  InputHumanOutputSpecificationUI(String id) : super(id) {
-
-  }
-}
-
-class InputManualOutputSpecificationUI extends OutputSpecificationUI {
-
-  Map<String, ElementUI> details;
-
-  InputManualOutputSpecificationUI(Map<String, ElementUI> this.details, String id) : super(id) {
-    html.ButtonElement button = new html.ButtonElement();
-    button.text = '(re)generate';
-    button.className = 'btn btn-default btn-xs';
-    button.onClick.listen(_onRefresh);
-    this.title.append(button);
-  }
-
-  void _onRefresh(html.MouseEvent e) {
-    String text = (this.details['input'].input as html.TextAreaElement).value;
-    String delimiter = SOURCE_OPTIONS_VALUES[int.parse((this.details['delimiter'].input as html.SelectElement).value)];
-
-    if (text.contains('\n')) {
-      text = text.substring(0, text.indexOf('\n'));
-    }
-
-    this.clear();
-    int length = 0;
-
-    if (delimiter.isEmpty) {
-      length = 1;
-      this.addElement('output-1', example: text.trim());
-      return;
-    }
-
-    List<String> delimitedString;
-    if (text.isNotEmpty) {
-      delimitedString = text.trim().split(delimiter);
-      length = delimitedString.length;
-    }
-
-    for (int i = 0; i < length; i++) {
-      this.addElement('output-$i', example: delimitedString[i]);
-    }
-  }
-}
-
-class SelectionOutputSpecificationUI extends OutputSpecificationUI {
-
-  SelectionOutputSpecificationUI(String id) : super(id) {
+  OutputSpecification(String id) : super(id) {
 
   }
 
-  void refresh (Map<String, OutputSegmentUI> previousElements) {
+  bool refresh (Map<String, OutputSegmentUI> previousElements) {
+    bool changed = true;
     previousElements.forEach((id, segment) => updateSegment(id, segment));
     this.elements.forEach((id, segment) => assureSegment(id, segment, previousElements));
+    return changed;
   }
 
-  void updateSegment(String id, OutputSegmentUI segment) {
-    if (this.elements.containsKey(id)) {
-      this.editElement(id, segment.name.text);
-    }
-    else {
+  bool updateSegment(String id, OutputSegmentUI segment) {
+    if (!this.elements.containsKey(id)) {
       this.addElement(segment.name.id, defaultName: segment.name.text, editable: false);
+      return true;
+    }
+
+    if (this.elements[id].name.text.compareTo(segment.name.text) != 0) {
+      this.editElement(id, segment.name.text);
+      return true;
     }
   }
 
-  void assureSegment(String id, OutputSegmentUI segment, Map<String, OutputSegmentUI> previousElements) {
+  bool assureSegment(String id, OutputSegmentUI segment, Map<String, OutputSegmentUI> previousElements) {
     if (!previousElements.containsKey(id)) {
       this.removeElement(segment.name.id);
+      return true;
     }
+    return false;
+  }
+}
+
+class InputHumanOutputSpecification extends OutputSpecification {
+
+  InputHumanOutputSpecification(String id) : super(id) {
+
+  }
+}
+
+class InputManualOutputSpecification extends OutputSpecification {
+
+  InputManualOutputSpecification(String id) : super(id) {
+
+  }
+}
+
+class SelectionOutputSpecification extends OutputSpecification {
+
+  SelectionOutputSpecification(String id) : super(id) {
+
   }
 }

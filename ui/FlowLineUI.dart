@@ -20,12 +20,12 @@ class FlowLineUI {
 
     canvas.append(this.path);
 
-    html.window.onKeyDown.listen(keyPressed);
+    html.window.onKeyDown.listen(_keyPressed);
 
-    this.from.body.on[STREAM_PORT_MOVING].listen(move);
-    this.to.body.on[STREAM_PORT_MOVING].listen(move);
-    this.from.body.on[STREAM_PORT_REMOVED].listen(remove);
-    this.to.body.on[STREAM_PORT_REMOVED].listen(remove);
+    this.from.body.on[STREAM_PORT_MOVING].listen(_move);
+    this.to.body.on[STREAM_PORT_MOVING].listen(_move);
+    this.from.body.on[STREAM_PORT_REMOVED].listen(_remove);
+    this.to.body.on[STREAM_PORT_REMOVED].listen(_remove);
   }
 
   void select(html.MouseEvent e) {
@@ -39,22 +39,30 @@ class FlowLineUI {
     }
   }
 
-  void keyPressed(html.KeyboardEvent e) {
+  void remove() {
+    String from = this.from.group.attributes['id'];
+    String to = this.to.group.attributes['id'];
+    operators[from].removeNext(to);
+    operators[to].removePrevious(from);
+    canvas.children.remove(this.path);
+  }
+
+  void _keyPressed(html.KeyboardEvent e) {
     if (this.selected && e.keyCode == 8) {
       e.preventDefault();
-      canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_REMOVE, detail: [this.from.group.attributes['id'], this.to.group.attributes['id']]));
-      canvas.children.remove(this.path);
+      this.remove();
+      //canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_REMOVE, detail: [this.from.group.attributes['id'], this.to.group.attributes['id']]));
     }
   }
 
-  void move(html.CustomEvent e) {
+  void _move(html.CustomEvent e) {
     this.path.pathSegList.clear();
     this.path.pathSegList.appendItem(this.path.createSvgPathSegMovetoAbs(from.point.x, from.point.y));
     this.path.pathSegList.appendItem(this.path.createSvgPathSegLinetoAbs((from.point.x + to.point.x)/2, (from.point.y + to.point.y)/2));
     this.path.pathSegList.appendItem(this.path.createSvgPathSegLinetoAbs(to.point.x, to.point.y));
   }
 
-  void remove(html.CustomEvent e) {
-    canvas.children.remove(this.path);
+  void _remove(html.CustomEvent e) {
+    this.remove();
   }
 }

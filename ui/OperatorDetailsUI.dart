@@ -69,7 +69,7 @@ class BaseDetailsUI {
 
   String id, type;
   Map<String, bool> prevConn, nextConn;
-  OutputSpecification outputSpecification;
+  BaseSpecification output;
 
   Map<String, ElementUI> base;
   Map<String, ElementUI> elements;
@@ -78,7 +78,7 @@ class BaseDetailsUI {
   html.DivElement parametersView;
 
   BaseDetailsUI(String this.id, String this.type, Map<String, bool> this.prevConn, Map<String, bool> this.nextConn) {
-    this.outputSpecification = new OutputSpecification(this.id, this.type);
+    this.output = new OutputSpecification(this.id);
 
     this.base = new Map<String, ElementUI>();
     this.elements = new Map<String, ElementUI>();
@@ -125,7 +125,7 @@ class BaseDetailsUI {
     ..append(new html.HRElement());
   }
 
-  void refresh(OutputSpecification specification) {}
+  bool refresh(OutputSpecification specification) {}
 }
 
 class EnrichDetailsUI extends BaseDetailsUI {
@@ -161,8 +161,8 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   html.DivElement elementsDiv;
 
   SourceHumanDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this.outputSpecification.outputUI = new InputHumanOutputSpecificationUI(this.id);
-    this.view.append(this.outputSpecification.outputUI.view);
+    this.output = new InputHumanOutputSpecification(this.id);
+    this.view.append(this.output.view);
   }
 
   void initialize() {
@@ -204,7 +204,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     elementRow.id = 'segment-${elementRow.hashCode}';
 
     String inputType = this.availableInputs.value;
-    this.outputSpecification.outputUI.addElement('segment-${elementRow.hashCode}', example: '${inputType} from human workers');
+    this.output.addElement('segment-${elementRow.hashCode}', example: '${inputType} from human workers');
 
     html.DivElement elementRowDefinition = new html.DivElement();
     elementRowDefinition.className = 'col-sm-2';
@@ -254,21 +254,53 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
 
   void _deleteInput(html.MouseEvent e, String rowId) {
     this.elementsDiv.querySelector('#${rowId}').remove();
-    this.outputSpecification.outputUI.removeElement(rowId);
+    this.output.removeElement(rowId);
   }
 }
 
 class SourceManualDetailsUI extends BaseDetailsUI {
 
   SourceManualDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this..outputSpecification.outputUI = new InputManualOutputSpecificationUI(this.elements, this.id);
-    this.view.append(this.outputSpecification.outputUI.view);
+    this.output = new InputManualOutputSpecification(this.id);
+    this.output.title.append(new html.ButtonElement()
+    ..text = '(re)generate'
+    ..className = 'btn btn-default btn-xs'
+    ..onClick.listen(_onRefresh));
+    this.view.append(this.output.view);
   }
 
   void initialize() {
     super.initialize();
     this.addElement('input', 'textarea', 'Manual entry', this.elements, features: {'rows': '5'});
     this.addElement('delimiter', 'select', 'Delimiter', this.elements, options: SOURCE_OPTIONS_NAMES);
+  }
+
+  void _onRefresh(html.MouseEvent e) {
+    String text = (this.elements['input'].input as html.TextAreaElement).value;
+    String delimiter = SOURCE_OPTIONS_VALUES[int.parse((this.elements['delimiter'].input as html.SelectElement).value)];
+
+    if (text.contains('\n')) {
+      text = text.substring(0, text.indexOf('\n'));
+    }
+
+    this.output.clear();
+    int length = 0;
+
+    if (delimiter.isEmpty) {
+      length = 1;
+      this.output.addElement('segment-${delimiter.hashCode}', example: text.trim());
+      return;
+    }
+
+    List<String> delimitedString;
+    if (text.isNotEmpty) {
+      delimitedString = text.trim().split(delimiter);
+      length = delimitedString.length;
+    }
+
+    for (int i = 0; i < length; i++) {
+      this.output.addElement('segment-${delimitedString[i].hashCode}', example: delimitedString[i]);
+    }
   }
 }
 
@@ -322,12 +354,12 @@ class ProcessingDetailsUI extends BaseDetailsUI {
 
 class SelectionDetailsUI extends BaseDetailsUI {
 
-  SelectionOutputSpecificationUI output;
+  //SelectionOutputSpecification output;
   static int count = 1;
 
   SelectionDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this.outputSpecification.outputUI = new SelectionOutputSpecificationUI(this.id);
-    this.view.append(this.outputSpecification.outputUI.view);
+    this.output = new SelectionOutputSpecification(this.id);
+    this.view.append(this.output.view);
     this.configureFilters();
   }
 
@@ -335,13 +367,8 @@ class SelectionDetailsUI extends BaseDetailsUI {
     super.initialize();
   }
 
-  html.DivElement refresh(OutputSpecification specification) {
-    this.outputSpecification.outputUI.clear();
-    if (this.prevConn.length > 0) {
-      this.outputSpecification.outputUI.refresh(specification.outputUI.elements);
-    }
-
-    return this.view;
+  bool refresh(OutputSpecification specification) {
+    return (this.output as OutputSpecification).refresh(specification.elements);
   }
 
   void configureFilters() {
@@ -365,7 +392,7 @@ class SelectionDetailsUI extends BaseDetailsUI {
 
     html.DivElement configDiv = new html.DivElement()
     ..className = 'col-sm-9'
-    ..append(this.outputSpecification.outputUI.select(this.prevConn))
+    ..append(this.output.select(this.prevConn))
     ..append(new html.SelectElement()
       ..append(new html.OptionElement(data: 'equals', value: 'equals'))
       ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
@@ -389,12 +416,11 @@ class SelectionDetailsUI extends BaseDetailsUI {
 
 class SortDetailsUI extends BaseDetailsUI {
 
-  SelectionOutputSpecificationUI output;
   static int count = 1;
 
   SortDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this.outputSpecification.outputUI = new SelectionOutputSpecificationUI(this.id);
-    this.view.append(this.outputSpecification.outputUI.view);
+    this.output = new SelectionOutputSpecification(this.id);
+    this.view.append(this.output.view);
     this.configureFilters();
   }
 
@@ -403,9 +429,9 @@ class SortDetailsUI extends BaseDetailsUI {
     this.addElement('size', 'number', 'Data size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
   }
 
-  void refresh(OutputSpecification specification) {
-    this.outputSpecification.outputUI.clear();
-    this.outputSpecification.outputUI.refresh(specification.outputUI.elements);
+  bool refresh(OutputSpecification specification) {
+    //this.output.clear();
+    return (this.output as OutputSpecification).refresh(specification.elements);
   }
 
   void configureFilters() {
@@ -426,7 +452,7 @@ class SortDetailsUI extends BaseDetailsUI {
     html.DivElement configDiv = new html.DivElement()
     ..className = 'col-sm-9'
     ..appendText('using')
-    ..append(this.outputSpecification.outputUI.select(this.prevConn))
+    ..append(this.output.select(this.prevConn))
     ..appendText('in')
     ..append(new html.SelectElement()
       ..append(new html.OptionElement(data: 'ascending', value: 'ascending'))

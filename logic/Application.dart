@@ -18,7 +18,7 @@ class Application {
     canvas.onClick.listen(deselect);
 
     canvas.on[STREAM_LINE_DRAW].listen(drawLine);
-    canvas.on[STREAM_LINE_REMOVE].listen(removeLine);
+    //canvas.on[STREAM_LINE_REMOVE].listen(removeLine);
     canvas.onDragOver.listen(_onDragOver);
     canvas.onDrop.listen(_onDrop);
 
@@ -57,10 +57,11 @@ class Application {
     }
   }
 
+  /*
   void removeLine(html.CustomEvent e) {
     operators[e.detail[0]].removeNext(e.detail[1]);
     operators[e.detail[1]].removePrevious(e.detail[0]);
-  }
+  }*/
 
   void _onDragStart(html.MouseEvent e) {
     html.Element dragTarget = e.target;
@@ -87,8 +88,7 @@ class Application {
     html.Element dropTarget = e.target;
     if (_dragSource != dropTarget) {
       String operatorId = 'operator_$opNumber';
-      operators['operator_$opNumber'] = new Operator(operatorId, e.dataTransfer.getData('unit-type'),
-                                                canvas, e.offset.x, e.offset.y);
+      operators['operator_$opNumber'] = new Operator(operatorId, e.dataTransfer.getData('unit-type'), e.offset.x, e.offset.y);
       opNumber += 1;
     }
 
