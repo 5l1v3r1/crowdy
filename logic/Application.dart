@@ -30,9 +30,17 @@ class Application {
 
     // Refresh down stream when output specification changes
     //closeButton.onClick.listen((e) => canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId)));
-    js.context['jQuery']('#$OPERATOR_MODAL_ID').on('hidden.bs.modal', js.context['dartCallback'] = (x) =>
-        canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId)));
+    //js.context['jQuery']('#$OPERATOR_MODAL_ID').on('hidden.bs.modal', js.context['dartCallback'] = (x) =>
+    //    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId)));
+    closeButton.onClick.listen(_modalClosed);
+    closeButton2.onClick.listen(_modalClosed);
     initialize();
+  }
+
+  void _modalClosed(html.MouseEvent e) {
+    modalBody.children.clear();
+    modal.style.display = 'none';
+    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId));
   }
 
   void deselect(html.MouseEvent e) {
@@ -70,7 +78,7 @@ class Application {
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('unit-type', dragTarget.attributes['data-unit-type']);
 
-    js.context['jQuery']('ul.units li').tooltip('hide');
+    //js.context['jQuery']('ul.units li').tooltip('hide');
   }
 
   void _onDragEnd(html.MouseEvent e) {
@@ -95,6 +103,6 @@ class Application {
   }
 
   void initialize() {
-    js.context['jQuery']('ul.units li').tooltip();
+    //js.context['jQuery']('ul.units li').tooltip();
   }
 }

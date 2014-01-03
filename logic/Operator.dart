@@ -1,7 +1,10 @@
 part of crowdy;
 
-final modal = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-dialog .modal-content .modal-body');
-final closeButton = html.document.querySelector('#close_operator_modal');
+final html.DivElement modal = html.document.querySelector('#$OPERATOR_MODAL_ID');
+final html.DivElement modalBody = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-dialog .modal-content .modal-body');
+final closeButton = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-header .close');
+final closeButton2 = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-footer #close_operator_modal');
+
 String currentOperatorId;
 
 class Operator {
@@ -118,11 +121,13 @@ class Operator {
   void _onDoubleClick(html.MouseEvent e) {
     currentOperatorId = this.id;
 
-    modal.children.add(this.details.view);
+    modalBody.children.add(this.details.view);
+    modal.classes.add('in');
+    modal.style.display = 'block';
     //modal.children.add(this.flow.getFlow('input'));
     //modal.children.add(this.flow.getFlow('output'));
-    js.context['jQuery']('#$OPERATOR_MODAL_ID').modal('show');
-    js.context['jQuery']('#$OPERATOR_MODAL_ID').on('hidden.bs.modal', js.context['dartCallback'] = (x) => modal.children.clear());
+    //js.context['jQuery']('#$OPERATOR_MODAL_ID').modal('show');
+    //js.context['jQuery']('#$OPERATOR_MODAL_ID').on('hidden.bs.modal', js.context['dartCallback'] = (x) => modal.children.clear());
   }
 
   void _refresh(html.CustomEvent e) {

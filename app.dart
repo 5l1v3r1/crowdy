@@ -3,7 +3,7 @@ library crowdy;
 import 'dart:async';
 import 'dart:html' as html;
 import 'dart:svg' as svg;
-import 'package:js/js.dart' as js;
+//import 'package:js/js.dart' as js;
 import 'package:logging/logging.dart';
 
 part 'constants.dart';

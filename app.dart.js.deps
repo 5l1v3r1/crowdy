@@ -5,7 +5,6 @@ file:///Users/mert/Public/Projects/dart/crowdy/web/logic/Operator.dart
 file:///Users/mert/Public/Projects/dart/crowdy/web/logic/OutputSpecification.dart
 file:///Users/mert/Public/Projects/dart/crowdy/web/packages/collection/src/unmodifiable_wrappers.dart
 file:///Users/mert/Public/Projects/dart/crowdy/web/packages/collection/wrappers.dart
-file:///Users/mert/Public/Projects/dart/crowdy/web/packages/js/js.dart
 file:///Users/mert/Public/Projects/dart/crowdy/web/packages/logging/logging.dart
 file:///Users/mert/Public/Projects/dart/crowdy/web/ui/ApplicationUI.dart
 file:///Users/mert/Public/Projects/dart/crowdy/web/ui/FlowLineUI.dart
@@ -31,13 +30,11 @@ file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/isol
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/isolate_patch.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/js_array.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/js_helper.dart
-file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/js_mirrors.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/js_names.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/js_number.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/js_rti.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/js_string.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/math_patch.dart
-file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/mirrors_patch.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/native_helper.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/regexp_helper.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/_internal/lib/string_helper.dart
@@ -124,13 +121,11 @@ file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/html/html_common/l
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/html/html_common/metadata.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/indexed_db/dart2js/indexed_db_dart2js.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/isolate/isolate.dart
-file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/js/dart2js/js_dart2js.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/math/jenkins_smi_hash.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/math/math.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/math/point.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/math/random.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/math/rectangle.dart
-file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/mirrors/mirrors.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/svg/dart2js/svg_dart2js.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/typed_data/dart2js/typed_data_dart2js.dart
 file:///Users/mert/Public/School/MSc Thesis/dart/dart-sdk/lib/web_audio/dart2js/web_audio_dart2js.dart
