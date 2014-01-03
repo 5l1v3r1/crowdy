@@ -27,7 +27,7 @@ class BaseOperatorUI {
 
     this.dragging = false;
 
-    html.window.onKeyDown.listen(_onKeyDown);
+    html.document.onKeyDown.listen(_onKeyDown);
   }
 
   void _onClick(html.MouseEvent e) {
@@ -85,7 +85,11 @@ class BaseOperatorUI {
   }
 
   void _onKeyDown(html.KeyboardEvent e) {
-    if (selectedOperator == this && e.keyCode == 8 && html.document.querySelector('.modal.fade.in') == null) {
+    if (e.keyCode == 8) {
+      e.preventDefault();
+    }
+
+    if (selectedOperator == this && e.keyCode == 8 && modal.style.display != 'block') {
       e.preventDefault();
       //canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_REMOVE, detail: [this.group.attributes['id'], 'ALL']));
       this.group.dispatchEvent(new html.CustomEvent(STREAM_UNIT_REMOVED));

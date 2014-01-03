@@ -65,6 +65,9 @@ class ElementUI {
 }
 
 class BaseDetailsUI {
+
+  final Logger log = new Logger('OperatorDetails');
+
   static int count = 1;
 
   String id, type;
@@ -126,12 +129,27 @@ class BaseDetailsUI {
   }
 
   bool refresh(OutputSpecification specification) {}
+
+  void clear() {
+    this.output.clear();
+  }
 }
 
-class EnrichDetailsUI extends BaseDetailsUI {
+class OutputDetailsUI extends BaseDetailsUI {
+
+  OutputDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+    this.output = new OutputSpecification(this.id);
+  }
+
+  bool refresh(OutputSpecification specification) {
+    return (this.output as OutputSpecification).refresh(specification.elements);
+  }
+}
+
+class EnrichDetailsUI extends OutputDetailsUI {
 
   EnrichDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-
+    this.view.append(this.output.view);
   }
 
   void initialize() {
@@ -200,7 +218,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
 
   void _addNewInput(html.MouseEvent e) {
     html.DivElement elementRow = new html.DivElement();
-    elementRow.className = 'row';
+    elementRow.className = 'row rule';
     elementRow.id = 'segment-${elementRow.hashCode}';
 
     String inputType = this.availableInputs.value;
@@ -284,22 +302,19 @@ class SourceManualDetailsUI extends BaseDetailsUI {
     }
 
     this.output.clear();
-    int length = 0;
-
-    if (delimiter.isEmpty) {
-      length = 1;
-      this.output.addElement('segment-${delimiter.hashCode}', example: text.trim());
-      return;
-    }
-
     List<String> delimitedString;
-    if (text.isNotEmpty) {
+    if (text.isNotEmpty && delimiter.isNotEmpty) {
       delimitedString = text.trim().split(delimiter);
-      length = delimitedString.length;
+    }
+    else {
+      delimitedString = new List<String>();
+      delimitedString.add('');
     }
 
-    for (int i = 0; i < length; i++) {
-      this.output.addElement('segment-${delimitedString[i].hashCode}', example: delimitedString[i]);
+    for (String segment in delimitedString) {
+      html.SpanElement dumpSpan = new html.SpanElement();
+      this.output.addElement('segment-${dumpSpan.hashCode}', example: segment);
+      dumpSpan.remove();
     }
   }
 }
@@ -340,10 +355,10 @@ class SinkEmailDetailsUI extends BaseDetailsUI {
   }
 }
 
-class ProcessingDetailsUI extends BaseDetailsUI {
+class ProcessingDetailsUI extends OutputDetailsUI {
 
   ProcessingDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-
+    this.view.append(this.output.view);
   }
 
   void initialize() {
@@ -352,26 +367,21 @@ class ProcessingDetailsUI extends BaseDetailsUI {
   }
 }
 
-class SelectionDetailsUI extends BaseDetailsUI {
+class SelectionDetailsUI extends OutputDetailsUI {
 
-  //SelectionOutputSpecification output;
   static int count = 1;
 
   SelectionDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this.output = new SelectionOutputSpecification(this.id);
+    this.output = new SelectionOutputSpecification(this, this.id);
     this.view.append(this.output.view);
-    this.configureFilters();
+    this.configureRules();
   }
 
   void initialize() {
     super.initialize();
   }
 
-  bool refresh(OutputSpecification specification) {
-    return (this.output as OutputSpecification).refresh(specification.elements);
-  }
-
-  void configureFilters() {
+  void configureRules() {
     this.parametersView.querySelector('#parameters').append(new html.ButtonElement()
     ..text = 'add new rule'
     ..className = 'btn btn-default btn-xs'
@@ -379,8 +389,13 @@ class SelectionDetailsUI extends BaseDetailsUI {
   }
 
   void _addNewParameter(html.MouseEvent e) {
+    if (this.prevConn.length < 1) {
+      log.warning('Please first make sure there is an input flow to this operator.');
+      return;
+    }
+
     html.DivElement parameter = new html.DivElement()
-    ..className = 'row'
+    ..className = 'row rule'
     ..id = '${this.id}-rule-${count}';
 
     html.DivElement conditionDiv = new html.DivElement()
@@ -396,8 +411,8 @@ class SelectionDetailsUI extends BaseDetailsUI {
     ..append(new html.SelectElement()
       ..append(new html.OptionElement(data: 'equals', value: 'equals'))
       ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
-      ..append(new html.OptionElement(data: 'contains', value: 'contains'))
-    ..append(new html.InputElement(type: 'text')))
+      ..append(new html.OptionElement(data: 'contains', value: 'contains')))
+    ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm')
     ..append(new html.ButtonElement()
       ..text = '-'
       ..className = 'btn btn-danger btn-sm'
@@ -412,14 +427,19 @@ class SelectionDetailsUI extends BaseDetailsUI {
   void _deleteParameter(html.MouseEvent e, String rowId) {
     this.parametersView.querySelector('#${rowId}').remove();
   }
+
+  void clear() {
+    super.clear();
+    //this.parametersView.querySelector('.rule').c = '';
+  }
 }
 
-class SortDetailsUI extends BaseDetailsUI {
+class SortDetailsUI extends OutputDetailsUI {
 
   static int count = 1;
 
   SortDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this.output = new SortOutputSpecification(this.id);
+    this.output = new SortOutputSpecification(this, this.id);
     this.view.append(this.output.view);
     this.configureFilters();
   }
@@ -429,8 +449,9 @@ class SortDetailsUI extends BaseDetailsUI {
     this.addElement('size', 'number', 'Window size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
   }
 
-  bool refresh(OutputSpecification specification) {
-    return (this.output as OutputSpecification).refresh(specification.elements);
+  void clear() {
+    super.clear();
+    this.parametersView.querySelectorAll('.rule').removeWhere((e) => true);
   }
 
   void deleteParameter(String rowId) {
@@ -445,6 +466,11 @@ class SortDetailsUI extends BaseDetailsUI {
   }
 
   void _addNewParameter(html.MouseEvent e) {
+    if (this.prevConn.length < 1) {
+      log.warning('Please first make sure there is an input flow to this operator.');
+      return;
+    }
+
     html.DivElement parameter = new html.DivElement()
     ..className = 'row'
     ..id = '${this.id}-rule-${count}';

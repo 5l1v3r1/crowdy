@@ -33,12 +33,13 @@ class Application {
     //js.context['jQuery']('#$OPERATOR_MODAL_ID').on('hidden.bs.modal', js.context['dartCallback'] = (x) =>
     //    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId)));
     closeButton.onClick.listen(_modalClosed);
-    closeButton2.onClick.listen(_modalClosed);
+    modalAlert.querySelector('.close').onClick.listen((e) => modalAlert.style.display = 'none');
     initialize();
   }
 
   void _modalClosed(html.MouseEvent e) {
     modalBody.children.clear();
+    modalAlert.style.display = 'none';
     modal.style.display = 'none';
     canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId));
   }

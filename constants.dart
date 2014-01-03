@@ -43,9 +43,10 @@ const STREAM_PORT_REMOVED = 'stream_port_removed';
 const LINE_SIZE = 4;
 
 const STREAM_LINE_DRAW = 'stream_draw_line';
-//const STREAM_LINE_REMOVE = 'stream_remove_line';
 
 const WARNING_LINE_SAME_UNIT = 'You cannot add a flow within the same unit.';
 const WARNING_LINE_DUPLICATE = 'You already have a flow line between those units.';
 const WARNING_LINE_DIRECTION = 'You can only direct flow from an input port to outpot port.';
 const WARNING_LINE_ALREADY_CONNECTED = 'You can connect only one flow to an operator.';
+
+final html.DivElement modalAlert = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-dialog .modal-content .modal-header .alert');

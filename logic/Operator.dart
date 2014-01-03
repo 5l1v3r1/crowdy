@@ -2,12 +2,14 @@ part of crowdy;
 
 final html.DivElement modal = html.document.querySelector('#$OPERATOR_MODAL_ID');
 final html.DivElement modalBody = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-dialog .modal-content .modal-body');
-final closeButton = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-header .close');
-final closeButton2 = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-footer #close_operator_modal');
+final closeButton = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-footer #close_operator_modal');
 
 String currentOperatorId;
 
 class Operator {
+
+  final Logger log = new Logger('Operator');
+
   String id, type;
   BaseOperatorUI ui;
   BaseDetailsUI details;
@@ -56,7 +58,7 @@ class Operator {
         break;
       case 'split':
         this.ui = new SplitOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-        this.details = new BaseDetailsUI(this.id, this.type, this.prev, this.next);
+        this.details = new SplitDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'sort':
         this.ui = new SortOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
@@ -99,24 +101,7 @@ class Operator {
   void removePrevious(String previousOperatorId) {
     this.prev.remove(previousOperatorId);
     this.clearDownFlow();
-    //canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: previousOperatorId));
-    //this.details.output.clear();
   }
-
-  /*
-  void clear() {
-    this.clearNext();
-    this.clearPrevious();
-  }
-
-  void clearNext() {
-    this.next.clear();
-    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: this.id));
-  }
-  void clearPrevious() {
-    this.prev.clear();
-  }
-  */
 
   void _onDoubleClick(html.MouseEvent e) {
     currentOperatorId = this.id;
@@ -146,7 +131,89 @@ class Operator {
   }
 
   void clearDownFlow() {
-    this.details.output.clear();
+    this.details.clear();
     this.next.forEach((nextId, connected) => operators[nextId].clearDownFlow());
+  }
+}
+
+class SplitDetailsUI extends BaseDetailsUI {
+
+  static int count = 1;
+
+  SplitDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+    this.output = new SplitOutputSpecification(this, this.id);
+    this.view.append(this.output.view);
+    this.configureRules();
+  }
+
+  void initialize() {
+    super.initialize();
+  }
+
+  bool refresh(OutputSpecification specification) {
+    return (this.output as OutputSpecification).refresh(specification.elements);
+  }
+
+  void clear() {
+    super.clear();
+    this.parametersView.querySelectorAll('.rule').clear();
+  }
+
+  void configureRules() {
+    this.parametersView.querySelector('#parameters').append(new html.ButtonElement()
+    ..text = 'add new rule'
+    ..className = 'btn btn-default btn-xs'
+    ..onClick.listen(_addNewParameter));
+  }
+
+  html.SelectElement outputSelectElement() {
+    html.SelectElement selectElement = new html.SelectElement();
+    selectElement.className = 'output-flows';
+    this.nextConn.forEach((identifier, connected) => selectElement.append(new html.OptionElement(data: identifier, value: identifier)));
+    return selectElement;
+  }
+
+  void _addNewParameter(html.MouseEvent e) {
+    if (this.nextConn.length < 1) {
+      log.warning('Please first make sure there is an output flow from this operator.');
+      return;
+    }
+
+    if (this.prevConn.length < 1) {
+      log.warning('Please first make sure there is an input flow to this operator.');
+      return;
+    }
+
+    html.DivElement parameter = new html.DivElement()
+    ..className = 'row rule'
+    ..id = '${this.id}-rule-${count}';
+
+    html.DivElement conditionDiv = new html.DivElement()
+    ..className = 'col-sm-3'
+    ..appendText('Send to ')
+    ..append(this.outputSelectElement());
+
+    html.DivElement configDiv = new html.DivElement()
+    ..className = 'col-sm-9'
+    ..appendText('when ')
+    ..append(this.output.select(this.prevConn))
+    ..append(new html.SelectElement()
+      ..append(new html.OptionElement(data: 'equals', value: 'equals'))
+      ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
+      ..append(new html.OptionElement(data: 'contains', value: 'contains')))
+    ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm')
+    ..append(new html.ButtonElement()
+      ..text = '-'
+      ..className = 'btn btn-danger btn-sm'
+      ..onClick.listen((e) => _deleteParameter(e, parameter.id)));;
+
+    count += 1;
+    parameter.append(conditionDiv);
+    parameter.append(configDiv);
+    this.parametersView.append(parameter);
+  }
+
+  void _deleteParameter(html.MouseEvent e, String rowId) {
+    this.parametersView.querySelector('#${rowId}').remove();
   }
 }

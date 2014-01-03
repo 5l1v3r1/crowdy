@@ -112,10 +112,12 @@ class BaseSpecification {
 
   html.SelectElement select(Map<String, bool> previousConnections) {
     html.SelectElement selectElement = new html.SelectElement();
+    selectElement.className = 'output-segments';
     if (previousConnections.length > 0) {
       Map<String, OutputSegmentUI> segmentList = operators[previousConnections.keys.first].details.output.elements;
-      segmentList.forEach((identifier, segment) => selectElement.append(new html.OptionElement(data: segment.name.text)));
+      segmentList.forEach((identifier, segment) => selectElement.append(new html.OptionElement(data: segment.name.text, value: segment.name.id)));
     }
+    //selectElement.onChange.listen((e) => selectElement.dataset['segment'] = e.)
     return selectElement;
   }
 }
@@ -127,11 +129,14 @@ class OutputSpecification extends BaseSpecification {
   }
 
   bool refresh (Map<String, OutputSegmentUI> previousElements) {
-    bool changed = true;
-    previousElements.forEach((id, segment) => this.updateSegment(id, segment));
+    bool changed = false;
+    for (int i = 0; i < previousElements.length; i++) {
+      changed = this.updateSegment(previousElements.keys.elementAt(i), previousElements.values.elementAt(i)) || changed;
+    }
+    //previousElements.forEach((id, segment) => changed = this.updateSegment(id, segment)) || changed;
     //this.elements.forEach((id, segment) => assureSegment(id, segment, previousElements));
     for (int i = this.elements.length-1; i >= 0; i--) {
-      this.assureSegment(this.elements.keys.elementAt(i), this.elements.values.elementAt(i), previousElements);
+      changed = this.assureSegment(this.elements.keys.elementAt(i), this.elements.values.elementAt(i), previousElements) || changed;
     }
     return changed;
   }
@@ -146,6 +151,8 @@ class OutputSpecification extends BaseSpecification {
       this.editElement(id, segment.name.text);
       return true;
     }
+
+    return false;
   }
 
   bool assureSegment(String id, OutputSegmentUI segment, Map<String, OutputSegmentUI> previousElements) {
@@ -173,22 +180,75 @@ class InputManualOutputSpecification extends OutputSpecification {
 
 class SelectionOutputSpecification extends OutputSpecification {
 
-  SelectionOutputSpecification(String id) : super(id) {
+  SelectionDetailsUI details;
 
+  SelectionOutputSpecification(SelectionDetailsUI this.details, String id) : super(id) {
+
+  }
+
+  bool refresh (Map<String, OutputSegmentUI> previousElements) {
+    bool updated = super.refresh(previousElements);
+    if (updated) {
+      this.details.parametersView.querySelectorAll('.rule select.output-segments').forEach((html.SelectElement e) => _updateRuleSegments(e));
+    }
+
+    return updated;
+  }
+
+  void _updateRuleSegments(html.SelectElement e) {
+    String selectedSegment = e.value;
+    e.children.clear();
+    e.children.addAll(this.select(this.details.prevConn).options);
+    e.value = selectedSegment;
   }
 }
 
 class SortOutputSpecification extends OutputSpecification {
 
-  SortOutputSpecification(String id) : super(id) {
+  SortDetailsUI details;
+
+  SortOutputSpecification(SortDetailsUI this.details, String id) : super(id) {
 
   }
+  /*
+  bool refresh (Map<String, OutputSegmentUI> previousElements) {
+    bool updated = super.refresh(previousElements);
+    if (updated) {
+      this.details.parametersView.querySelectorAll('.rule select.output-segments').forEach((html.SelectElement e) => _updateRuleSegments(e));
+    }
 
-  void editElement(String identifier, String newText) {
-    super.editElement(identifier, newText);
+    return updated;
   }
 
-  void removeElement(String identifier) {
-    super.removeElement(identifier);
+  void _updateRuleSegments(html.SelectElement e) {
+    String selectedSegment = e.value;
+    e.children.clear();
+    e.children.addAll(this.select(this.details.prevConn).options);
+    e.value = selectedSegment;
+  }*/
+}
+
+class SplitOutputSpecification extends OutputSpecification {
+
+  SplitDetailsUI details;
+
+  SplitOutputSpecification(SplitDetailsUI this.details, String id) : super(id) {
+
   }
+  /*
+  bool refresh (Map<String, OutputSegmentUI> previousElements) {
+    bool updated = super.refresh(previousElements);
+    if (updated) {
+      this.details.parametersView.querySelectorAll('.rule select.output-segments').forEach((html.SelectElement e) => _updateRuleSegments(e));
+    }
+
+    return updated;
+  }
+
+  void _updateRuleSegments(html.SelectElement e) {
+    String selectedSegment = e.value;
+    e.children.clear();
+    e.children.addAll(this.select(this.details.prevConn).options);
+    e.value = selectedSegment;
+  }*/
 }
