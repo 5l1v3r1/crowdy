@@ -92,7 +92,7 @@ class BaseOperatorUI {
     if (selectedOperator == this && e.keyCode == 8 && modal.style.display != 'block') {
       e.preventDefault();
       //canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_REMOVE, detail: [this.group.attributes['id'], 'ALL']));
-      this.group.dispatchEvent(new html.CustomEvent(STREAM_UNIT_REMOVED));
+      this.group.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE));
       canvas.children.remove(this.group);
     }
   }
@@ -117,7 +117,7 @@ class SourceOperatorUI extends BaseOperatorUI {
 
   PortUI port;
 
-  SourceOperatorUI(svg.SvgSvgElement canvas, String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+  SourceOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.port = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_INPUT);
   }
@@ -127,7 +127,7 @@ class SinkOperatorUI extends BaseOperatorUI {
 
   PortUI port;
 
-  SinkOperatorUI(svg.SvgSvgElement canvas, String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+  SinkOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.port = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.addBackgroundImage(OPERATOR_ICON_OUTPUT);
   }
@@ -138,7 +138,7 @@ class ProcessingOperatorUI extends BaseOperatorUI {
   PortUI inputPort;
   PortUI outputPort;
 
-  ProcessingOperatorUI(svg.SvgSvgElement canvas, String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+  ProcessingOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_PROCESSING);
@@ -150,7 +150,7 @@ class SelectionOperatorUI extends BaseOperatorUI {
   PortUI inputPort;
   PortUI outputPort;
 
-  SelectionOperatorUI(svg.SvgSvgElement canvas, String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+  SelectionOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_SELECTION);
@@ -162,7 +162,7 @@ class SplitOperatorUI extends BaseOperatorUI {
   PortUI inputPort;
   PortUI outputPort;
 
-  SplitOperatorUI(svg.SvgSvgElement canvas, String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+  SplitOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_SPLIT);
@@ -174,7 +174,7 @@ class SortOperatorUI extends BaseOperatorUI {
   PortUI inputPort;
   PortUI outputPort;
 
-  SortOperatorUI(svg.SvgSvgElement canvas, String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+  SortOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_SORT);
@@ -186,7 +186,7 @@ class EnrichOperatorUI extends BaseOperatorUI {
   PortUI inputPort;
   PortUI outputPort;
 
-  EnrichOperatorUI(svg.SvgSvgElement canvas, String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+  EnrichOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_ENRICH);

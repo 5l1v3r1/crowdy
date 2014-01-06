@@ -22,10 +22,10 @@ class FlowLineUI {
 
     html.window.onKeyDown.listen(_keyPressed);
 
-    this.from.body.on[STREAM_PORT_MOVING].listen(_move);
-    this.to.body.on[STREAM_PORT_MOVING].listen(_move);
-    this.from.body.on[STREAM_PORT_REMOVED].listen(_remove);
-    this.to.body.on[STREAM_PORT_REMOVED].listen(_remove);
+    this.from.body.on[OPERATOR_PORT_MOVING].listen(_move);
+    this.to.body.on[OPERATOR_PORT_MOVING].listen(_move);
+    this.from.body.on[OPERATOR_PORT_REMOVED].listen(_remove);
+    this.to.body.on[OPERATOR_PORT_REMOVED].listen(_remove);
   }
 
   void select(html.MouseEvent e) {
@@ -45,6 +45,7 @@ class FlowLineUI {
     operators[from].removeNext(to);
     operators[to].removePrevious(from);
     canvas.children.remove(this.path);
+    operators[this.to.group.id].clearDownFlow();
   }
 
   void _keyPressed(html.KeyboardEvent e) {

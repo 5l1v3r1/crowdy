@@ -118,13 +118,13 @@ class BaseDetailsUI {
     this.detailsView.append(new html.HeadingElement.h4()
     ..id = 'details'
     ..text = 'Details'
-    ..appendHtml(' <small>for bookkeeping purposes</small>'));
+    ..appendHtml('<small>for bookkeeping purposes</small>'));
     this.detailsView.append(new html.HRElement());
 
     this.parametersView.append(new html.HeadingElement.h4()
     ..id = 'parameters'
     ..text = 'Parameters'
-    ..appendHtml(' <small>specific to this operator</small>'));
+    ..appendHtml('<small>specific to this operator</small>'));
     this.parametersView.append(new html.HRElement());
   }
 
@@ -143,6 +143,50 @@ class OutputDetailsUI extends BaseDetailsUI {
 
   bool refresh(OutputSpecification specification) {
     return (this.output as OutputSpecification).refresh(specification.elements);
+  }
+}
+
+class RuleDetailsUI extends OutputDetailsUI {
+
+  html.DivElement rulesDiv;
+  html.ButtonElement addRuleButton;
+
+  RuleDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  }
+
+  void initialize() {
+    super.initialize();
+
+    this.rulesDiv = new html.DivElement()
+    ..className = 'rules';
+    this.parametersView.append(this.rulesDiv);
+
+    this.addRuleButton = new html.ButtonElement()
+    ..className = 'btn btn-default btn-xs'
+    ..text = 'add new rule'
+    ..onClick.listen(_addRule);
+
+    this.parametersView.querySelector('#parameters').append(this.addRuleButton);
+  }
+
+  void clear() {
+    super.clear();
+    this.rulesDiv.children.clear();
+  }
+
+  bool refresh(OutputSpecification specification) {
+    bool updated = super.refresh(specification);
+    if (specification.elements.length == 0) {
+      this.clear();
+      return true;
+    }
+    return updated;
+  }
+
+  void _addRule(html.MouseEvent e) { }
+
+  void _deleteRule(html.MouseEvent e, String ruleId) {
+    this.rulesDiv.querySelector('#${ruleId}').remove();
   }
 }
 
@@ -177,6 +221,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   html.ButtonElement addInput;
   html.SelectElement availableInputs;
   html.DivElement elementsDiv;
+  html.DivElement rulesDiv;
 
   SourceHumanDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new InputHumanOutputSpecification(this.id);
@@ -367,28 +412,20 @@ class ProcessingDetailsUI extends OutputDetailsUI {
   }
 }
 
-class SelectionDetailsUI extends OutputDetailsUI {
+class SelectionDetailsUI extends RuleDetailsUI {
 
   static int count = 1;
 
   SelectionDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new SelectionOutputSpecification(this, this.id);
     this.view.append(this.output.view);
-    this.configureRules();
   }
 
   void initialize() {
     super.initialize();
   }
 
-  void configureRules() {
-    this.parametersView.querySelector('#parameters').append(new html.ButtonElement()
-    ..text = 'add new rule'
-    ..className = 'btn btn-default btn-xs'
-    ..onClick.listen(_addNewParameter));
-  }
-
-  void _addNewParameter(html.MouseEvent e) {
+  void _addRule(html.MouseEvent e) {
     if (this.prevConn.length < 1) {
       log.warning('Please first make sure there is an input flow to this operator.');
       return;
@@ -416,32 +453,22 @@ class SelectionDetailsUI extends OutputDetailsUI {
     ..append(new html.ButtonElement()
       ..text = '-'
       ..className = 'btn btn-danger btn-sm'
-      ..onClick.listen((e) => _deleteParameter(e, parameter.id)));;
+      ..onClick.listen((e) => _deleteRule(e, parameter.id)));;
 
     count += 1;
     parameter.append(conditionDiv);
     parameter.append(configDiv);
-    this.parametersView.append(parameter);
-  }
-
-  void _deleteParameter(html.MouseEvent e, String rowId) {
-    this.parametersView.querySelector('#${rowId}').remove();
-  }
-
-  void clear() {
-    super.clear();
-    //this.parametersView.querySelector('.rule').c = '';
+    this.rulesDiv.append(parameter);
   }
 }
 
-class SortDetailsUI extends OutputDetailsUI {
+class SortDetailsUI extends RuleDetailsUI {
 
   static int count = 1;
 
   SortDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new SortOutputSpecification(this, this.id);
     this.view.append(this.output.view);
-    this.configureFilters();
   }
 
   void initialize() {
@@ -449,23 +476,7 @@ class SortDetailsUI extends OutputDetailsUI {
     this.addElement('size', 'number', 'Window size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
   }
 
-  void clear() {
-    super.clear();
-    this.parametersView.querySelectorAll('.rule').removeWhere((e) => true);
-  }
-
-  void deleteParameter(String rowId) {
-    this.parametersView.querySelector('#${rowId}').remove();
-  }
-
-  void configureFilters() {
-    this.parametersView.querySelector('#parameters').append(new html.ButtonElement()
-    ..text = 'add new rule'
-    ..className = 'btn btn-default btn-xs'
-    ..onClick.listen(_addNewParameter));
-  }
-
-  void _addNewParameter(html.MouseEvent e) {
+  void _addRule(html.MouseEvent e) {
     if (this.prevConn.length < 1) {
       log.warning('Please first make sure there is an input flow to this operator.');
       return;
@@ -473,14 +484,14 @@ class SortDetailsUI extends OutputDetailsUI {
 
     html.DivElement parameter = new html.DivElement()
     ..className = 'row'
-    ..id = '${this.id}-rule-${count}';
+    ..id = '${this.id}-rule-${count}'
+    ..appendText('Sort using');
 
     html.DivElement conditionDiv = new html.DivElement()
     ..className = 'col-sm-3';
 
     html.DivElement configDiv = new html.DivElement()
     ..className = 'col-sm-9'
-    ..appendText('using')
     ..append(this.output.select(this.prevConn))
     ..appendText('in')
     ..append(new html.SelectElement()
@@ -490,15 +501,68 @@ class SortDetailsUI extends OutputDetailsUI {
     ..append(new html.ButtonElement()
       ..text = '-'
       ..className = 'btn btn-danger btn-sm'
-      ..onClick.listen((e) => _deleteParameter(e, parameter.id)));
+      ..onClick.listen((e) => _deleteRule(e, parameter.id)));
 
     count += 1;
     parameter.append(conditionDiv);
     parameter.append(configDiv);
-    this.parametersView.append(parameter);
+    this.rulesDiv.append(parameter);
+  }
+}
+
+class SplitDetailsUI extends RuleDetailsUI {
+
+  static int count = 1;
+
+  SplitDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+    this.output = new SplitOutputSpecification(this, this.id);
+    this.view.append(this.output.view);
   }
 
-  void _deleteParameter(html.MouseEvent e, String rowId) {
-    this.deleteParameter(rowId);
+  html.SelectElement outputSelectElement() {
+    html.SelectElement selectElement = new html.SelectElement();
+    selectElement.className = 'output-flows';
+    this.nextConn.forEach((identifier, connected) => selectElement.append(new html.OptionElement(data: identifier, value: identifier)));
+    return selectElement;
+  }
+
+  void _addRule(html.MouseEvent e) {
+    if (this.nextConn.length < 1) {
+      log.warning('Please first make sure there is an output flow from this operator.');
+      return;
+    }
+
+    if (this.prevConn.length < 1) {
+      log.warning('Please first make sure there is an input flow to this operator.');
+      return;
+    }
+
+    html.DivElement parameter = new html.DivElement()
+    ..className = 'row rule'
+    ..id = '${this.id}-rule-${count}';
+
+    html.DivElement conditionDiv = new html.DivElement()
+    ..className = 'col-sm-3'
+    ..appendText('Send to ')
+    ..append(this.outputSelectElement());
+
+    html.DivElement configDiv = new html.DivElement()
+    ..className = 'col-sm-9'
+    ..appendText('when ')
+    ..append(this.output.select(this.prevConn))
+    ..append(new html.SelectElement()
+      ..append(new html.OptionElement(data: 'equals', value: 'equals'))
+      ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
+      ..append(new html.OptionElement(data: 'contains', value: 'contains')))
+    ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm')
+    ..append(new html.ButtonElement()
+      ..text = '-'
+      ..className = 'btn btn-danger btn-sm'
+      ..onClick.listen((e) => _deleteRule(e, parameter.id)));;
+
+    count += 1;
+    parameter.append(conditionDiv);
+    parameter.append(configDiv);
+    this.rulesDiv.append(parameter);
   }
 }

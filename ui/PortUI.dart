@@ -36,7 +36,7 @@ class PortUI {
     
     this.group.append(this.body);
     this.body.parent.on[STREAM_UNIT_MOVING].listen(move);
-    this.body.parent.on[STREAM_UNIT_REMOVED].listen(remove);
+    this.body.parent.on[OPERATOR_UNIT_REMOVE].listen(remove);
   }
   
   void _onMouseDown(html.MouseEvent e) {
@@ -106,11 +106,11 @@ class PortUI {
   void move(html.CustomEvent e) {
     this.point.x = this.initX + e.detail[0];
     this.point.y = this.initY + e.detail[1];
-    this.body.dispatchEvent(new html.CustomEvent(STREAM_PORT_MOVING));
+    this.body.dispatchEvent(new html.CustomEvent(OPERATOR_PORT_MOVING));
   }
   
   void remove(html.CustomEvent e) {
-    this.body.dispatchEvent(new html.CustomEvent(STREAM_PORT_REMOVED));
+    this.body.dispatchEvent(new html.CustomEvent(OPERATOR_PORT_REMOVED));
     
     if (selectedPort == this) {
       selectedPort = null;

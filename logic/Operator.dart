@@ -21,48 +21,52 @@ class Operator {
 
     switch(this.type) {
       case 'enrich':
-        this.ui = new EnrichOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+        this.ui = new EnrichOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
         this.details = new EnrichDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'source.file':
-        this.ui = new SourceOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+        this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
         this.details = new SourceFileDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'source.human':
-        this.ui = new SourceOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+        this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
         this.details = new SourceHumanDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'source.manual':
-        this.ui = new SourceOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+        this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
         this.details = new SourceManualDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'source.rss':
-        this.ui = new SourceOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+        this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
         this.details = new SourceRSSDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'sink.file':
-        this.ui = new SinkOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+        this.ui = new SinkOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
         this.details = new SinkFileDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'sink.email':
-        this.ui = new SinkOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+        this.ui = new SinkOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
         this.details = new SinkEmailDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'processing':
-        this.ui = new ProcessingOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+        this.ui = new ProcessingOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
         this.details = new ProcessingDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'selection':
-        this.ui = new SelectionOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH/3, OPERATOR_HEIGHT);
+        this.ui = new SelectionOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/3, OPERATOR_HEIGHT);
         this.details = new SelectionDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'split':
-        this.ui = new SplitOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+        this.ui = new SplitOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
         this.details = new SplitDetailsUI(this.id, this.type, this.prev, this.next);
         break;
       case 'sort':
-        this.ui = new SortOperatorUI(canvas, this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+        this.ui = new SortOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
         this.details = new SortDetailsUI(this.id, this.type, this.prev, this.next);
+        break;
+      default:
+        this.ui = new BaseOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+        this.details = new BaseDetailsUI(this.id, this.type, this.prev, this.next);
         break;
     }
 
@@ -91,7 +95,6 @@ class Operator {
   void connectPrevious(String previousOperatorId) {
     this.prev[previousOperatorId] = true;
     this.updateDownFlow(previousOperatorId);
-    //canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: previousOperatorId));
   }
 
   void removeNext(String nextOperatorId) {
@@ -109,10 +112,6 @@ class Operator {
     modalBody.children.add(this.details.view);
     modal.classes.add('in');
     modal.style.display = 'block';
-    //modal.children.add(this.flow.getFlow('input'));
-    //modal.children.add(this.flow.getFlow('output'));
-    //js.context['jQuery']('#$OPERATOR_MODAL_ID').modal('show');
-    //js.context['jQuery']('#$OPERATOR_MODAL_ID').on('hidden.bs.modal', js.context['dartCallback'] = (x) => modal.children.clear());
   }
 
   void _refresh(html.CustomEvent e) {
@@ -136,84 +135,23 @@ class Operator {
   }
 }
 
-class SplitDetailsUI extends BaseDetailsUI {
+class SplitOperator extends Operator {
 
-  static int count = 1;
-
-  SplitDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this.output = new SplitOutputSpecification(this, this.id);
-    this.view.append(this.output.view);
-    this.configureRules();
+  SplitOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SplitOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+    this.details = new SplitDetailsUI(this.id, this.type, this.prev, this.next);
   }
 
-  void initialize() {
-    super.initialize();
-  }
-
-  bool refresh(OutputSpecification specification) {
-    return (this.output as OutputSpecification).refresh(specification.elements);
-  }
-
-  void clear() {
-    super.clear();
-    this.parametersView.querySelectorAll('.rule').clear();
-  }
-
-  void configureRules() {
-    this.parametersView.querySelector('#parameters').append(new html.ButtonElement()
-    ..text = 'add new rule'
-    ..className = 'btn btn-default btn-xs'
-    ..onClick.listen(_addNewParameter));
-  }
-
-  html.SelectElement outputSelectElement() {
-    html.SelectElement selectElement = new html.SelectElement();
-    selectElement.className = 'output-flows';
-    this.nextConn.forEach((identifier, connected) => selectElement.append(new html.OptionElement(data: identifier, value: identifier)));
-    return selectElement;
-  }
-
-  void _addNewParameter(html.MouseEvent e) {
-    if (this.nextConn.length < 1) {
-      log.warning('Please first make sure there is an output flow from this operator.');
-      return;
+  bool connectNext(String nextOperatorId) {
+    bool result = super.connectNext(nextOperatorId);
+    if (result) {
+      (this.details.output as SplitOutputSpecification).refreshOutput();
     }
-
-    if (this.prevConn.length < 1) {
-      log.warning('Please first make sure there is an input flow to this operator.');
-      return;
-    }
-
-    html.DivElement parameter = new html.DivElement()
-    ..className = 'row rule'
-    ..id = '${this.id}-rule-${count}';
-
-    html.DivElement conditionDiv = new html.DivElement()
-    ..className = 'col-sm-3'
-    ..appendText('Send to ')
-    ..append(this.outputSelectElement());
-
-    html.DivElement configDiv = new html.DivElement()
-    ..className = 'col-sm-9'
-    ..appendText('when ')
-    ..append(this.output.select(this.prevConn))
-    ..append(new html.SelectElement()
-      ..append(new html.OptionElement(data: 'equals', value: 'equals'))
-      ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
-      ..append(new html.OptionElement(data: 'contains', value: 'contains')))
-    ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm')
-    ..append(new html.ButtonElement()
-      ..text = '-'
-      ..className = 'btn btn-danger btn-sm'
-      ..onClick.listen((e) => _deleteParameter(e, parameter.id)));;
-
-    count += 1;
-    parameter.append(conditionDiv);
-    parameter.append(configDiv);
-    this.parametersView.append(parameter);
+    return result;
   }
 
-  void _deleteParameter(html.MouseEvent e, String rowId) {
-    this.parametersView.querySelector('#${rowId}').remove();
+  void removeNext(String nextOperatorId) {
+    super.removeNext(nextOperatorId);
+    (this.details.output as SplitOutputSpecification).refreshOutput();
   }
 }

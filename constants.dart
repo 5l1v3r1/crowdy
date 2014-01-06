@@ -30,15 +30,15 @@ Map<String, String> SOURCE_OPTIONS_HUMAN_INPUTS = {
 };
 
 const STREAM_UNIT_MOVING = 'stream_unit_moving';
-const STREAM_UNIT_REMOVED = 'stream_unit_removed';
+const OPERATOR_UNIT_REMOVE = 'stream_unit_removed';
 
 const PORT_SIZE = 6;
 
 const CSS_PORT_CLASS = 'port';
 const CSS_PORT_CLASS_SELECTED = 'port selected';
 
-const STREAM_PORT_MOVING = 'stream_port_moving';
-const STREAM_PORT_REMOVED = 'stream_port_removed';
+const OPERATOR_PORT_MOVING = 'stream_port_moving';
+const OPERATOR_PORT_REMOVED = 'stream_port_removed';
 
 const LINE_SIZE = 4;
 

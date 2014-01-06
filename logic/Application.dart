@@ -29,12 +29,8 @@ class Application {
     units.onDragEnd.listen(_onDragEnd);
 
     // Refresh down stream when output specification changes
-    //closeButton.onClick.listen((e) => canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId)));
-    //js.context['jQuery']('#$OPERATOR_MODAL_ID').on('hidden.bs.modal', js.context['dartCallback'] = (x) =>
-    //    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId)));
     closeButton.onClick.listen(_modalClosed);
     modalAlert.querySelector('.close').onClick.listen((e) => modalAlert.style.display = 'none');
-    initialize();
   }
 
   void _modalClosed(html.MouseEvent e) {
@@ -78,8 +74,6 @@ class Application {
     _dragSource = dragTarget;
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('unit-type', dragTarget.attributes['data-unit-type']);
-
-    //js.context['jQuery']('ul.units li').tooltip('hide');
   }
 
   void _onDragEnd(html.MouseEvent e) {
@@ -97,13 +91,19 @@ class Application {
     html.Element dropTarget = e.target;
     if (_dragSource != dropTarget) {
       String operatorId = 'operator_$opNumber';
-      operators['operator_$opNumber'] = new Operator(operatorId, e.dataTransfer.getData('unit-type'), e.offset.x, e.offset.y);
+      operators['operator_$opNumber'] = addOperator(operatorId, e.dataTransfer.getData('unit-type'), e.offset.x, e.offset.y);
       opNumber += 1;
     }
-
   }
 
-  void initialize() {
-    //js.context['jQuery']('ul.units li').tooltip();
+  Operator addOperator(String id, String type, int x, int y) {
+    switch(type) {
+      case 'split':
+        return new SplitOperator(id, type, x, y);
+        break;
+      default:
+        return new Operator(id, type, x, y);
+        break;
+    }
   }
 }

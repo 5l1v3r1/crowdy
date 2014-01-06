@@ -86,7 +86,6 @@ class BaseSpecification {
     this.view.append(this.innerView);
   }
 
-
   void addElement(String identifier,
                   {String defaultName: '', String example: '', bool editable: true,
                     bool removable: false, Map<String, String> additional: null}) {
@@ -117,7 +116,6 @@ class BaseSpecification {
       Map<String, OutputSegmentUI> segmentList = operators[previousConnections.keys.first].details.output.elements;
       segmentList.forEach((identifier, segment) => selectElement.append(new html.OptionElement(data: segment.name.text, value: segment.name.id)));
     }
-    //selectElement.onChange.listen((e) => selectElement.dataset['segment'] = e.)
     return selectElement;
   }
 }
@@ -130,14 +128,17 @@ class OutputSpecification extends BaseSpecification {
 
   bool refresh (Map<String, OutputSegmentUI> previousElements) {
     bool changed = false;
+
+    // Compare elements from previously connected one to this one
     for (int i = 0; i < previousElements.length; i++) {
       changed = this.updateSegment(previousElements.keys.elementAt(i), previousElements.values.elementAt(i)) || changed;
     }
-    //previousElements.forEach((id, segment) => changed = this.updateSegment(id, segment)) || changed;
-    //this.elements.forEach((id, segment) => assureSegment(id, segment, previousElements));
+
+    // Compare current elements with the previously connected one
     for (int i = this.elements.length-1; i >= 0; i--) {
       changed = this.assureSegment(this.elements.keys.elementAt(i), this.elements.values.elementAt(i), previousElements) || changed;
     }
+
     return changed;
   }
 
@@ -164,6 +165,31 @@ class OutputSpecification extends BaseSpecification {
   }
 }
 
+class RuleOutputSpecification extends OutputSpecification {
+
+  RuleDetailsUI details;
+
+  RuleOutputSpecification(RuleDetailsUI this.details, String id) : super(id) {
+
+  }
+
+  bool refresh(Map<String, OutputSegmentUI> previousElements) {
+    bool updated = super.refresh(previousElements);
+    if (updated) {
+      this.details.rulesDiv.querySelectorAll('.rule select.output-segments').forEach((html.SelectElement e) => _updateRuleSegments(e));
+    }
+
+    return updated;
+  }
+
+  void _updateRuleSegments(html.SelectElement e) {
+    String selectedSegment = e.value;
+    e.children.clear();
+    e.children.addAll(this.select(this.details.prevConn).options);
+    e.value = selectedSegment;
+  }
+}
+
 class InputHumanOutputSpecification extends OutputSpecification {
 
   InputHumanOutputSpecification(String id) : super(id) {
@@ -178,77 +204,34 @@ class InputManualOutputSpecification extends OutputSpecification {
   }
 }
 
-class SelectionOutputSpecification extends OutputSpecification {
+class SelectionOutputSpecification extends RuleOutputSpecification {
 
-  SelectionDetailsUI details;
+  SelectionOutputSpecification(SelectionDetailsUI details, String id) : super(details, id) {
 
-  SelectionOutputSpecification(SelectionDetailsUI this.details, String id) : super(id) {
-
-  }
-
-  bool refresh (Map<String, OutputSegmentUI> previousElements) {
-    bool updated = super.refresh(previousElements);
-    if (updated) {
-      this.details.parametersView.querySelectorAll('.rule select.output-segments').forEach((html.SelectElement e) => _updateRuleSegments(e));
-    }
-
-    return updated;
-  }
-
-  void _updateRuleSegments(html.SelectElement e) {
-    String selectedSegment = e.value;
-    e.children.clear();
-    e.children.addAll(this.select(this.details.prevConn).options);
-    e.value = selectedSegment;
   }
 }
 
-class SortOutputSpecification extends OutputSpecification {
+class SortOutputSpecification extends RuleOutputSpecification {
 
-  SortDetailsUI details;
-
-  SortOutputSpecification(SortDetailsUI this.details, String id) : super(id) {
+  SortOutputSpecification(SortDetailsUI details, String id) : super(details, id) {
 
   }
-  /*
-  bool refresh (Map<String, OutputSegmentUI> previousElements) {
-    bool updated = super.refresh(previousElements);
-    if (updated) {
-      this.details.parametersView.querySelectorAll('.rule select.output-segments').forEach((html.SelectElement e) => _updateRuleSegments(e));
-    }
-
-    return updated;
-  }
-
-  void _updateRuleSegments(html.SelectElement e) {
-    String selectedSegment = e.value;
-    e.children.clear();
-    e.children.addAll(this.select(this.details.prevConn).options);
-    e.value = selectedSegment;
-  }*/
 }
 
-class SplitOutputSpecification extends OutputSpecification {
+class SplitOutputSpecification extends RuleOutputSpecification {
 
-  SplitDetailsUI details;
-
-  SplitOutputSpecification(SplitDetailsUI this.details, String id) : super(id) {
+  SplitOutputSpecification(SplitDetailsUI details, String id) : super(details, id) {
 
   }
-  /*
-  bool refresh (Map<String, OutputSegmentUI> previousElements) {
-    bool updated = super.refresh(previousElements);
-    if (updated) {
-      this.details.parametersView.querySelectorAll('.rule select.output-segments').forEach((html.SelectElement e) => _updateRuleSegments(e));
-    }
 
-    return updated;
+  void refreshOutput() {
+    this.details.rulesDiv.querySelectorAll('.rule select.output-flows').forEach((html.SelectElement e) => _updateRuleFlows(e));
   }
 
-  void _updateRuleSegments(html.SelectElement e) {
+  void _updateRuleFlows(html.SelectElement e) {
     String selectedSegment = e.value;
     e.children.clear();
-    e.children.addAll(this.select(this.details.prevConn).options);
+    e.children.addAll((this.details as SplitDetailsUI).outputSelectElement().options);
     e.value = selectedSegment;
-  }*/
+  }
 }
