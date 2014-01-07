@@ -69,12 +69,13 @@ class Operator {
         this.details = new BaseDetailsUI(this.id, this.type, this.prev, this.next);
         break;
     }
+  }
 
-    if (this.ui != null) {
-      canvas.append(this.ui.group);
-    }
-
+  void initialize() {
+    this.ui.initialize();
     this.ui.group.onDoubleClick.listen(_onDoubleClick);
+
+    this.details.initialize();
 
     // Refresh the output specification according to changes made on previous operator
     canvas.on[OPERATOR_OUTPUT_REFRESH].listen(_refresh);

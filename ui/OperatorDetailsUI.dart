@@ -89,7 +89,6 @@ class BaseDetailsUI {
     this.detailsView = new html.DivElement()..id = '${this.id}-details'..className = 'operator-details';
     this.parametersView = new html.DivElement()..id = '${this.id}-parameters'..className = 'operator-parameters';
     this.view = new html.DivElement()..append(this.detailsView)..append(this.parametersView);
-    this.initialize();
   }
 
   void initialize() {
@@ -472,8 +471,8 @@ class SortDetailsUI extends RuleDetailsUI {
   }
 
   void initialize() {
-    super.initialize();
     this.addElement('size', 'number', 'Window size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
+    super.initialize();
   }
 
   void _addRule(html.MouseEvent e) {
@@ -484,11 +483,11 @@ class SortDetailsUI extends RuleDetailsUI {
 
     html.DivElement parameter = new html.DivElement()
     ..className = 'row'
-    ..id = '${this.id}-rule-${count}'
-    ..appendText('Sort using');
+    ..id = '${this.id}-rule-${count}';
 
     html.DivElement conditionDiv = new html.DivElement()
-    ..className = 'col-sm-3';
+    ..className = 'col-sm-3'
+    ..appendText('Sort using');
 
     html.DivElement configDiv = new html.DivElement()
     ..className = 'col-sm-9'

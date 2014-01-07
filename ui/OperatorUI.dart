@@ -30,6 +30,10 @@ class BaseOperatorUI {
     html.document.onKeyDown.listen(_onKeyDown);
   }
 
+  void initialize() {
+    canvas.append(this.group);
+  }
+
   void _onClick(html.MouseEvent e) {
     bool alreadySelected = this == selectedOperator;
 

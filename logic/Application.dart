@@ -92,6 +92,7 @@ class Application {
     if (_dragSource != dropTarget) {
       String operatorId = 'operator_$opNumber';
       operators['operator_$opNumber'] = addOperator(operatorId, e.dataTransfer.getData('unit-type'), e.offset.x, e.offset.y);
+      operators['operator_$opNumber'].initialize();
       opNumber += 1;
     }
   }
