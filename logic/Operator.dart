@@ -18,57 +18,6 @@ class Operator {
   Operator(String this.id, String this.type, num mouseX, num mouseY) {
     next = new Map<String, bool>();
     prev = new Map<String, bool>();
-
-    switch(this.type) {
-      case 'enrich':
-        this.ui = new EnrichOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-        this.details = new EnrichDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'source.file':
-        this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-        this.details = new SourceFileDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'source.human':
-        this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-        this.details = new SourceHumanDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'source.manual':
-        this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-        this.details = new SourceManualDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'source.rss':
-        this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-        this.details = new SourceRSSDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'sink.file':
-        this.ui = new SinkOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-        this.details = new SinkFileDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'sink.email':
-        this.ui = new SinkOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-        this.details = new SinkEmailDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'processing':
-        this.ui = new ProcessingOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-        this.details = new ProcessingDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'selection':
-        this.ui = new SelectionOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/3, OPERATOR_HEIGHT);
-        this.details = new SelectionDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'split':
-        this.ui = new SplitOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-        this.details = new SplitDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      case 'sort':
-        this.ui = new SortOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-        this.details = new SortDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-      default:
-        this.ui = new BaseOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-        this.details = new BaseDetailsUI(this.id, this.type, this.prev, this.next);
-        break;
-    }
   }
 
   void initialize() {
@@ -132,6 +81,76 @@ class Operator {
   void clearDownFlow() {
     this.details.clear();
     this.next.forEach((nextId, connected) => operators[nextId].clearDownFlow());
+  }
+}
+
+class EnrichOperator extends Operator {
+  EnrichOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new EnrichOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+    this.details = new EnrichDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class SourceFileOperator extends Operator {
+  SourceFileOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.details = new SourceFileDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class SourceHumanOperator extends Operator {
+  SourceHumanOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.details = new SourceHumanDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class SourceManualOperator extends Operator {
+  SourceManualOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.details = new SourceManualDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class SourceRSSOperator extends Operator {
+  SourceRSSOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.details = new SourceRSSDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class SinkFileOperator extends Operator {
+  SinkFileOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SinkOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.details = new SinkFileDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class SinkEmailOperator extends Operator {
+  SinkEmailOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SinkOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.details = new SinkEmailDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class HumanProcessingOperator extends Operator {
+  HumanProcessingOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new ProcessingOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.details = new ProcessingDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class SelectionOperator extends Operator {
+  SelectionOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SelectionOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/3, OPERATOR_HEIGHT);
+    this.details = new SelectionDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+}
+
+class SortOperator extends Operator {
+  SortOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new SortOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+    this.details = new SortDetailsUI(this.id, this.type, this.prev, this.next);
   }
 }
 

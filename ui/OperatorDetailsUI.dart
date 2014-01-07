@@ -127,7 +127,9 @@ class BaseDetailsUI {
     this.parametersView.append(new html.HRElement());
   }
 
-  bool refresh(OutputSpecification specification) {}
+  bool refresh(OutputSpecification specification) {
+    return false;
+  }
 
   void clear() {
     this.output.clear();

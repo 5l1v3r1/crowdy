@@ -98,13 +98,46 @@ class Application {
   }
 
   Operator addOperator(String id, String type, int x, int y) {
+    Operator newOperator;
     switch(type) {
+      case 'enrich':
+        newOperator = new EnrichOperator(id, type, x, y);
+        break;
+      case 'source.file':
+        newOperator = new SourceFileOperator(id, type, x, y);
+        break;
+      case 'source.human':
+        newOperator = new SourceHumanOperator(id, type, x, y);
+        break;
+      case 'source.manual':
+        newOperator = new SourceManualOperator(id, type, x, y);
+        break;
+      case 'source.rss':
+        newOperator = new SourceRSSOperator(id, type, x, y);
+        break;
+      case 'sink.file':
+        newOperator = new SinkFileOperator(id, type, x, y);
+        break;
+      case 'sink.email':
+        newOperator = new SinkEmailOperator(id, type, x, y);
+        break;
+      case 'processing':
+        newOperator = new HumanProcessingOperator(id, type, x, y);
+        break;
+      case 'selection':
+        newOperator = new SelectionOperator(id, type, x, y);
+        break;
+      case 'sort':
+        newOperator = new SortOperator(id, type, x, y);
+        break;
       case 'split':
-        return new SplitOperator(id, type, x, y);
+        newOperator = new SplitOperator(id, type, x, y);
         break;
       default:
-        return new Operator(id, type, x, y);
+        newOperator = new Operator(id, type, x, y);
         break;
     }
+
+    return newOperator;
   }
 }
