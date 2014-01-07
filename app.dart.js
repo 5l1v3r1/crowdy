@@ -303,6 +303,14 @@ JSArray: {"": "List/Interceptor;",
       }
     return false;
   },
+  addAll$1: function(receiver, collection) {
+    var t1;
+    for (t1 = J.get$iterator$ax(collection); t1.moveNext$0();)
+      this.add$1(receiver, t1.get$current());
+  },
+  clear$0: function(receiver) {
+    this.set$length(receiver, 0);
+  },
   forEach$1: function(receiver, f) {
     return H.IterableMixinWorkaround_forEach(receiver, f);
   },
@@ -319,7 +327,7 @@ JSArray: {"": "List/Interceptor;",
     return list.join(separator);
   },
   elementAt$1: function(receiver, index) {
-    if (index < 0 || index >= receiver.length)
+    if (index >>> 0 !== index || index >= receiver.length)
       throw H.ioore(receiver, index);
     return receiver[index];
   },
@@ -355,7 +363,7 @@ JSArray: {"": "List/Interceptor;",
   },
   set$length: function(receiver, newLength) {
     if (typeof newLength !== "number" || Math.floor(newLength) !== newLength)
-      throw H.wrapException(P.ArgumentError$(newLength));
+      throw H.wrapException(new P.ArgumentError(newLength));
     if (newLength < 0)
       throw H.wrapException(P.RangeError$value(newLength));
     if (!!receiver.fixed$length)
@@ -593,16 +601,6 @@ JSString: {"": "String/Interceptor;",
   },
   get$isNotEmpty: function(receiver) {
     return receiver.length !== 0;
-  },
-  compareTo$1: function(receiver, other) {
-    var t1;
-    if (typeof other !== "string")
-      throw H.wrapException(new P.ArgumentError(other));
-    if (receiver === other)
-      t1 = 0;
-    else
-      t1 = receiver < other ? -1 : 1;
-    return t1;
   },
   toString$0: function(receiver) {
     return receiver;
@@ -2465,19 +2463,23 @@ main: function() {
 
 main_closure: {"": "Closure;messageList_0",
   call$1: function(rec) {
-    var t1, t2, newMessage, t3;
+    var t1, t2, newMessage, t3, t4;
     t1 = rec.get$level().name + ": " + H.S(rec.get$time()) + ": ";
     t2 = rec.message;
     P.print(t1 + t2);
     newMessage = document.createElement("li", null);
     newMessage.textContent = t2;
-    t2 = this.messageList_0;
-    t1 = J.getInterceptor$x(t2);
-    t3 = t1.get$children(t2);
-    t3.insert$2(t3, 0, newMessage);
-    t3 = document.querySelector("ul#bottom-tabs li a span#count");
-    t2 = t1.get$children(t2);
-    t3.textContent = "" + t2.get$length(t2);
+    t1 = this.messageList_0;
+    t3 = J.getInterceptor$x(t1);
+    t4 = t3.get$children(t1);
+    t4.insert$2(t4, 0, newMessage);
+    t4 = document.querySelector("ul#bottom-tabs li a span#count");
+    t1 = t3.get$children(t1);
+    t4.textContent = "" + t1.get$length(t1);
+    if (rec.loggerName === "OperatorDetails") {
+      J.set$display$x($.get$modalAlert().style, "block");
+      $.get$modalAlert().querySelector("span.message").textContent = t2;
+    }
   },
   $is_args1: true
 },
@@ -2486,6 +2488,7 @@ Application: {"": "Object;log,ui",
   _modalClosed$1: function(e) {
     var t1 = J.get$children$x($.get$modalBody());
     t1.clear$0(t1);
+    J.set$display$x($.get$modalAlert().style, "none");
     J.set$display$x($.get$modal().style, "none");
     $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("operator_output_refresh", true, true, $.currentOperatorId));
   },
@@ -2563,12 +2566,56 @@ Application: {"": "Object;log,ui",
     if (t2 == null ? dropTarget != null : t2 !== dropTarget) {
       operatorId = "operator_" + $.opNumber;
       t2 = $.operators;
-      t2.$indexSet(t2, "operator_" + $.opNumber, D.Operator$(operatorId, t1.get$dataTransfer(e).getData("unit-type"), t1.get$offset(e).x, t1.get$offset(e).y));
+      t2.$indexSet(t2, "operator_" + $.opNumber, this.addOperator$4(operatorId, t1.get$dataTransfer(e).getData("unit-type"), t1.get$offset(e).x, t1.get$offset(e).y));
+      t1 = $.operators;
+      J.initialize$0$x(t1.$index(t1, "operator_" + $.opNumber));
       $.opNumber = $.opNumber + 1;
     }
   },
   get$_onDrop: function() {
     return new H.BoundClosure$1(this, D.Application.prototype._onDrop$1, null, "_onDrop$1");
+  },
+  addOperator$4: function(id, type, x, y) {
+    var newOperator;
+    switch (type) {
+      case "enrich":
+        newOperator = D.EnrichOperator$(id, type, x, y);
+        break;
+      case "source.file":
+        newOperator = D.SourceFileOperator$(id, type, x, y);
+        break;
+      case "source.human":
+        newOperator = D.SourceHumanOperator$(id, type, x, y);
+        break;
+      case "source.manual":
+        newOperator = D.SourceManualOperator$(id, type, x, y);
+        break;
+      case "source.rss":
+        newOperator = D.SourceRSSOperator$(id, type, x, y);
+        break;
+      case "sink.file":
+        newOperator = D.SinkFileOperator$(id, type, x, y);
+        break;
+      case "sink.email":
+        newOperator = D.SinkEmailOperator$(id, type, x, y);
+        break;
+      case "processing":
+        newOperator = D.HumanProcessingOperator$(id, type, x, y);
+        break;
+      case "selection":
+        newOperator = D.SelectionOperator$(id, type, x, y);
+        break;
+      case "sort":
+        newOperator = D.SortOperator$(id, type, x, y);
+        break;
+      case "split":
+        newOperator = D.SplitOperator$(id, type, x, y);
+        break;
+      default:
+        newOperator = D.Operator$(id, type, x, y);
+        break;
+    }
+    return newOperator;
   },
   Application$1: function(canvas_id) {
     var t1, t2, t3, units;
@@ -2620,12 +2667,11 @@ Application: {"": "Object;log,ui",
     t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t3._tryResume$0();
-    t3 = $.get$closeButton2();
+    t3 = $.get$modalAlert().querySelector(".close");
     t3.toString;
     t2 = new W._ElementEventStreamImpl(t3, t2, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t3 = this.get$_modalClosed();
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t3), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.Application_closure()), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
   },
@@ -2638,7 +2684,36 @@ Application$: function(canvas_id) {
 
 },
 
-Operator: {"": "Object;id,type',ui,details<,next,prev",
+Application_closure: {"": "Closure;",
+  call$1: function(e) {
+    J.set$display$x($.get$modalAlert().style, "none");
+    return "none";
+  },
+  $is_args1: true
+},
+
+Operator: {"": "Object;log,id,type',ui,details<,next,prev",
+  initialize$0: function(_) {
+    var t1, t2;
+    t1 = this.ui;
+    $.canvas.appendChild(t1.group);
+    t1 = this.ui.group;
+    t1.toString;
+    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_dblclick._eventType, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t2 = this.get$_onDoubleClick();
+    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t2._tryResume$0();
+    t2 = this.details;
+    t2.initialize$0(t2);
+    t2 = J.get$on$x($.canvas);
+    t2 = t2.$index(t2, "operator_output_refresh");
+    t1 = this.get$_refresh();
+    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t1._tryResume$0();
+  },
   alreadyConnected$0: function() {
     return this.prev._collection$_length > 0;
   },
@@ -2689,127 +2764,24 @@ Operator: {"": "Object;id,type',ui,details<,next,prev",
     var t1, t2;
     t1 = this.details;
     t2 = $.operators;
-    if (t1.refresh$1(t2.$index(t2, prevId).get$details().output) === true && this.next._collection$_length > 0) {
+    if (t1.refresh$1(t2.$index(t2, prevId).get$details().output) && this.next._collection$_length > 0) {
       t1 = this.next;
       t1.forEach$1(t1, new D.Operator_updateDownFlow_closure(prevId));
     }
   },
   clearDownFlow$0: function() {
-    var t1 = this.details.output;
-    J.set$innerHtml$x(t1.elementList, "");
-    t1 = t1.elements;
+    var t1 = this.details;
     t1.clear$0(t1);
     t1 = this.next;
     t1.forEach$1(t1, new D.Operator_clearDownFlow_closure());
   },
   Operator$4: function(id, type, mouseX, mouseY) {
-    var t1, t2, t3, t4, t5;
     this.next = P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, J.JSBool);
     this.prev = P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, J.JSBool);
-    switch (this.type) {
-      case "enrich":
-        this.ui = D.EnrichOperatorUI$($.canvas, this.id, mouseX, mouseY, 40, 60);
-        t1 = this.id;
-        t2 = this.type;
-        t3 = this.prev;
-        t4 = this.next;
-        t5 = new D.EnrichDetailsUI(t1, t2, t3, t4, null, null, null, null, null, null);
-        t5.BaseDetailsUI$4(t1, t2, t3, t4);
-        this.details = t5;
-        break;
-      case "source.file":
-        this.ui = D.SourceOperatorUI$($.canvas, this.id, mouseX, mouseY, 80, 60);
-        t1 = this.id;
-        t2 = this.type;
-        t3 = this.prev;
-        t4 = this.next;
-        t5 = new D.SourceFileDetailsUI(t1, t2, t3, t4, null, null, null, null, null, null);
-        t5.BaseDetailsUI$4(t1, t2, t3, t4);
-        this.details = t5;
-        break;
-      case "source.human":
-        this.ui = D.SourceOperatorUI$($.canvas, this.id, mouseX, mouseY, 80, 60);
-        this.details = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
-        break;
-      case "source.manual":
-        this.ui = D.SourceOperatorUI$($.canvas, this.id, mouseX, mouseY, 80, 60);
-        this.details = D.SourceManualDetailsUI$(this.id, this.type, this.prev, this.next);
-        break;
-      case "source.rss":
-        this.ui = D.SourceOperatorUI$($.canvas, this.id, mouseX, mouseY, 80, 60);
-        t1 = this.id;
-        t2 = this.type;
-        t3 = this.prev;
-        t4 = this.next;
-        t5 = new D.SourceRSSDetailsUI(t1, t2, t3, t4, null, null, null, null, null, null);
-        t5.BaseDetailsUI$4(t1, t2, t3, t4);
-        this.details = t5;
-        break;
-      case "sink.file":
-        this.ui = D.SinkOperatorUI$($.canvas, this.id, mouseX, mouseY, 80, 60);
-        t1 = this.id;
-        t2 = this.type;
-        t3 = this.prev;
-        t4 = this.next;
-        t5 = new D.SinkFileDetailsUI(t1, t2, t3, t4, null, null, null, null, null, null);
-        t5.BaseDetailsUI$4(t1, t2, t3, t4);
-        this.details = t5;
-        break;
-      case "sink.email":
-        this.ui = D.SinkOperatorUI$($.canvas, this.id, mouseX, mouseY, 80, 60);
-        t1 = this.id;
-        t2 = this.type;
-        t3 = this.prev;
-        t4 = this.next;
-        t5 = new D.SinkEmailDetailsUI(t1, t2, t3, t4, null, null, null, null, null, null);
-        t5.BaseDetailsUI$4(t1, t2, t3, t4);
-        this.details = t5;
-        break;
-      case "processing":
-        this.ui = D.ProcessingOperatorUI$($.canvas, this.id, mouseX, mouseY, 80, 60);
-        t1 = this.id;
-        t2 = this.type;
-        t3 = this.prev;
-        t4 = this.next;
-        t5 = new D.ProcessingDetailsUI(t1, t2, t3, t4, null, null, null, null, null, null);
-        t5.BaseDetailsUI$4(t1, t2, t3, t4);
-        this.details = t5;
-        break;
-      case "selection":
-        this.ui = D.SelectionOperatorUI$($.canvas, this.id, mouseX, mouseY, 26.666666666666668, 60);
-        this.details = D.SelectionDetailsUI$(this.id, this.type, this.prev, this.next);
-        break;
-      case "split":
-        this.ui = D.SplitOperatorUI$($.canvas, this.id, mouseX, mouseY, 40, 60);
-        this.details = D.BaseDetailsUI$(this.id, this.type, this.prev, this.next);
-        break;
-      case "sort":
-        this.ui = D.SortOperatorUI$($.canvas, this.id, mouseX, mouseY, 40, 60);
-        this.details = D.SortDetailsUI$(this.id, this.type, this.prev, this.next);
-        break;
-      default:
-    }
-    t1 = this.ui;
-    if (t1 != null)
-      $.canvas.appendChild(t1.group);
-    t1 = this.ui.group;
-    t1.toString;
-    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_dblclick._eventType, false);
-    H.setRuntimeTypeInfo(t1, [null]);
-    t2 = this.get$_onDoubleClick();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
-    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
-    t2._tryResume$0();
-    t2 = J.get$on$x($.canvas);
-    t2 = t2.$index(t2, "operator_output_refresh");
-    t1 = this.get$_refresh();
-    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
-    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t1._tryResume$0();
   },
   static: {
 Operator$: function(id, type, mouseX, mouseY) {
-  var t1 = new D.Operator(id, type, null, null, null, null);
+  var t1 = new D.Operator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
   t1.Operator$4(id, type, mouseX, mouseY);
   return t1;
 }}
@@ -2832,7 +2804,234 @@ Operator_clearDownFlow_closure: {"": "Closure;",
   $is_args2: true
 },
 
-OutputSegmentUI: {"": "Object;removable,segment,name>,value,deleteButton",
+EnrichOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  EnrichOperator$4: function(id, type, mouseX, mouseY) {
+    var t1, t2, t3, t4, t5;
+    this.ui = D.EnrichOperatorUI$(this.id, mouseX, mouseY, 40, 60);
+    t1 = this.id;
+    t2 = this.type;
+    t3 = this.prev;
+    t4 = this.next;
+    t5 = new D.EnrichDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null);
+    t5.BaseDetailsUI$4(t1, t2, t3, t4);
+    t4 = t5.id;
+    t3 = new D.OutputSpecification(t4, null, null, null, null, null);
+    t3.BaseSpecification$1(t4);
+    t5.output = t3;
+    t5.view.appendChild(t5.output.view);
+    this.details = t5;
+  },
+  static: {
+EnrichOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.EnrichOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.EnrichOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SourceFileOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  SourceFileOperator$4: function(id, type, mouseX, mouseY) {
+    var t1, t2, t3, t4, t5;
+    this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+    t1 = this.id;
+    t2 = this.type;
+    t3 = this.prev;
+    t4 = this.next;
+    t5 = new D.SourceFileDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null);
+    t5.BaseDetailsUI$4(t1, t2, t3, t4);
+    this.details = t5;
+  },
+  static: {
+SourceFileOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SourceFileOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SourceFileOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SourceHumanOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  SourceHumanOperator$4: function(id, type, mouseX, mouseY) {
+    this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+    this.details = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
+  },
+  static: {
+SourceHumanOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SourceHumanOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SourceHumanOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SourceManualOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  SourceManualOperator$4: function(id, type, mouseX, mouseY) {
+    this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+    this.details = D.SourceManualDetailsUI$(this.id, this.type, this.prev, this.next);
+  },
+  static: {
+SourceManualOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SourceManualOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SourceManualOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SourceRSSOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  SourceRSSOperator$4: function(id, type, mouseX, mouseY) {
+    var t1, t2, t3, t4, t5;
+    this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+    t1 = this.id;
+    t2 = this.type;
+    t3 = this.prev;
+    t4 = this.next;
+    t5 = new D.SourceRSSDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null);
+    t5.BaseDetailsUI$4(t1, t2, t3, t4);
+    this.details = t5;
+  },
+  static: {
+SourceRSSOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SourceRSSOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SourceRSSOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SinkFileOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  SinkFileOperator$4: function(id, type, mouseX, mouseY) {
+    var t1, t2, t3, t4, t5;
+    this.ui = D.SinkOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+    t1 = this.id;
+    t2 = this.type;
+    t3 = this.prev;
+    t4 = this.next;
+    t5 = new D.SinkFileDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null);
+    t5.BaseDetailsUI$4(t1, t2, t3, t4);
+    this.details = t5;
+  },
+  static: {
+SinkFileOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SinkFileOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SinkFileOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SinkEmailOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  SinkEmailOperator$4: function(id, type, mouseX, mouseY) {
+    var t1, t2, t3, t4, t5;
+    this.ui = D.SinkOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+    t1 = this.id;
+    t2 = this.type;
+    t3 = this.prev;
+    t4 = this.next;
+    t5 = new D.SinkEmailDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null);
+    t5.BaseDetailsUI$4(t1, t2, t3, t4);
+    this.details = t5;
+  },
+  static: {
+SinkEmailOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SinkEmailOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SinkEmailOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+HumanProcessingOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  HumanProcessingOperator$4: function(id, type, mouseX, mouseY) {
+    var t1, t2, t3, t4, t5;
+    this.ui = D.ProcessingOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+    t1 = this.id;
+    t2 = this.type;
+    t3 = this.prev;
+    t4 = this.next;
+    t5 = new D.ProcessingDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null);
+    t5.BaseDetailsUI$4(t1, t2, t3, t4);
+    t4 = t5.id;
+    t3 = new D.OutputSpecification(t4, null, null, null, null, null);
+    t3.BaseSpecification$1(t4);
+    t5.output = t3;
+    t5.view.appendChild(t5.output.view);
+    this.details = t5;
+  },
+  static: {
+HumanProcessingOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.HumanProcessingOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.HumanProcessingOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SelectionOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  SelectionOperator$4: function(id, type, mouseX, mouseY) {
+    this.ui = D.SelectionOperatorUI$(this.id, mouseX, mouseY, 26.666666666666668, 60);
+    this.details = D.SelectionDetailsUI$(this.id, this.type, this.prev, this.next);
+  },
+  static: {
+SelectionOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SelectionOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SelectionOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SortOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  SortOperator$4: function(id, type, mouseX, mouseY) {
+    this.ui = D.SortOperatorUI$(this.id, mouseX, mouseY, 40, 60);
+    this.details = D.SortDetailsUI$(this.id, this.type, this.prev, this.next);
+  },
+  static: {
+SortOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SortOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SortOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+SplitOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  connectNext$1: function(nextOperatorId) {
+    var result = D.Operator.prototype.connectNext$1.call(this, nextOperatorId);
+    if (result === true)
+      H.interceptedTypeCast(this.details.output, "$isSplitOutputSpecification").refreshOutput$0();
+    return result;
+  },
+  removeNext$1: function(nextOperatorId) {
+    D.Operator.prototype.removeNext$1.call(this, nextOperatorId);
+    H.interceptedTypeCast(this.details.output, "$isSplitOutputSpecification").refreshOutput$0();
+  },
+  SplitOperator$4: function(id, type, mouseX, mouseY) {
+    this.ui = D.SplitOperatorUI$(this.id, mouseX, mouseY, 40, 60);
+    this.details = D.SplitDetailsUI$(this.id, this.type, this.prev, this.next);
+  },
+  static: {
+SplitOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.SplitOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.SplitOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+OutputSegmentUI: {"": "Object;removable,segment,name>,value>,deleteButton",
   getFormElement$1: function(exampleValue) {
     var buttonDiv;
     J.insertAdjacentHtml$2$x(this.segment, "beforeend", "<span>\"</span>");
@@ -2925,15 +3124,8 @@ BaseSpecification: {"": "Object;",
     t1.$indexSet(t1, identifier, newElement);
     this.elementList.appendChild(newElement.getFormElement$1(example));
   },
-  addElement$3$defaultName$editable: function(identifier, defaultName, editable) {
-    return this.addElement$6$additional$defaultName$editable$example$removable(identifier, null, defaultName, editable, "", false);
-  },
   addElement$2$example: function(identifier, example) {
     return this.addElement$6$additional$defaultName$editable$example$removable(identifier, null, "", true, example, false);
-  },
-  editElement$2: function(identifier, newText) {
-    var t1 = this.elements;
-    J.set$text$x(J.get$name$x(t1.$index(t1, identifier)), newText);
   },
   removeElement$1: function(identifier) {
     var t1 = this.elements;
@@ -2944,6 +3136,7 @@ BaseSpecification: {"": "Object;",
   select$1: function(_, previousConnections) {
     var selectElement, t1, t2, segmentList;
     selectElement = document.createElement("select", null);
+    selectElement.className = "output-segments";
     if (previousConnections._collection$_length > 0) {
       t1 = $.operators;
       t2 = new P.LinkedHashMapKeyIterable(previousConnections);
@@ -2964,15 +3157,25 @@ BaseSpecification: {"": "Object;",
 
 BaseSpecification_select_closure: {"": "Closure;selectElement_0",
   call$2: function(identifier, segment) {
-    return this.selectElement_0.appendChild(W.OptionElement_OptionElement$_(J.get$text$x(J.get$name$x(segment)), "", null, false));
+    var t1 = J.getInterceptor$x(segment);
+    return this.selectElement_0.appendChild(W.OptionElement_OptionElement$_(J.get$text$x(t1.get$name(segment)), J.get$id$x(t1.get$name(segment)), null, false));
   },
   $is_args2: true
 },
 
 OutputSpecification: {"": "BaseSpecification;id,elements,title,view,innerView,elementList",
   refresh$1: function(previousElements) {
-    var i, t1, $arguments, t2, t3;
-    previousElements.forEach$1(previousElements, new D.OutputSpecification_refresh_closure(this));
+    var changed, i, $arguments, t1, t2, t3;
+    for (changed = false, i = 0; i < previousElements._collection$_length; ++i) {
+      $arguments = H.substitute(previousElements.$as_LinkedHashMap, H.getRuntimeTypeInfo(previousElements));
+      t1 = $arguments == null ? null : $arguments[0];
+      t2 = new P.LinkedHashMapKeyIterable(previousElements);
+      t2.$builtinTypeInfo = [t1];
+      t1 = t2.elementAt$1(t2, i);
+      t2 = previousElements.get$values(previousElements);
+      t3 = t2._iterable;
+      changed = this.updateSegment$2(t1, t2._f$1(t3.elementAt$1(t3, i))) || changed;
+    }
     for (i = this.elements._collection$_length - 1; i >= 0; --i) {
       t1 = this.elements;
       t1.toString;
@@ -2984,53 +3187,111 @@ OutputSpecification: {"": "BaseSpecification;id,elements,title,view,innerView,el
       t2 = this.elements;
       t2 = t2.get$values(t2);
       t3 = t2._iterable;
-      this.assureSegment$3(t1, t2._f$1(t3.elementAt$1(t3, i)), previousElements);
+      changed = this.assureSegment$3(t1, t2._f$1(t3.elementAt$1(t3, i)), previousElements) || changed;
     }
-    return true;
+    return changed;
   },
   updateSegment$2: function(id, segment) {
-    var t1, t2;
+    var t1, t2, newElement, t3;
     if (!this.elements.containsKey$1(id)) {
       t1 = J.getInterceptor$x(segment);
-      this.addElement$3$defaultName$editable(J.get$id$x(t1.get$name(segment)), J.get$text$x(t1.get$name(segment)), false);
+      t2 = J.get$id$x(t1.get$name(segment));
+      newElement = D.OutputSegmentUI$(J.get$text$x(t1.get$name(segment)), false, false);
+      newElement.name.id = t2;
+      t1 = this.elements;
+      t1.$indexSet(t1, t2, newElement);
+      this.elementList.appendChild(newElement.getFormElement$1(""));
       return true;
     }
     t1 = this.elements;
+    t1 = J.get$text$x(J.get$name$x(t1.$index(t1, id)));
     t2 = J.getInterceptor$x(segment);
-    if (J.compareTo$1$ns(J.get$text$x(J.get$name$x(t1.$index(t1, id))), J.get$text$x(t2.get$name(segment))) !== 0) {
-      this.editElement$2(id, J.get$text$x(t2.get$name(segment)));
+    t3 = J.get$text$x(t2.get$name(segment));
+    t1.toString;
+    if (typeof t3 !== "string")
+      H.throwExpression(new P.ArgumentError(t3));
+    if (t1 == null ? t3 == null : t1 === t3)
+      t1 = 0;
+    else
+      t1 = t1 < t3 ? -1 : 1;
+    if (t1 !== 0) {
+      t1 = J.get$text$x(t2.get$name(segment));
+      t2 = this.elements;
+      J.set$text$x(J.get$name$x(t2.$index(t2, id)), t1);
       return true;
     }
+    return false;
   },
   assureSegment$3: function(id, segment, previousElements) {
+    var t1, t2;
     if (!previousElements.containsKey$1(id)) {
-      this.removeElement$1(J.get$id$x(J.get$name$x(segment)));
+      t1 = J.get$id$x(J.get$name$x(segment));
+      t2 = this.elements;
+      t2.$index(t2, t1)._crowdy$_remove$0();
+      t2 = this.elements;
+      t2.remove$1(t2, t1);
       return true;
     }
     return false;
   }
 },
 
-OutputSpecification_refresh_closure: {"": "Closure;this_0",
-  call$2: function(id, segment) {
-    return this.this_0.updateSegment$2(id, segment);
+RuleOutputSpecification: {"": "OutputSpecification;details<",
+  refresh$1: function(previousElements) {
+    var updated, t1;
+    updated = D.OutputSpecification.prototype.refresh$1.call(this, previousElements);
+    if (updated) {
+      t1 = W._FrozenElementList$_wrap(this.details.rulesDiv.querySelectorAll(".rule select.output-segments"), null);
+      t1.forEach$1(t1, new D.RuleOutputSpecification_refresh_closure(this));
+    }
+    return updated;
   },
-  $is_args2: true
+  _updateRuleSegments$1: function(e) {
+    var t1, selectedSegment;
+    t1 = J.getInterceptor$x(e);
+    selectedSegment = t1.get$value(e);
+    J.clear$0$ax(t1.get$children(e));
+    J.addAll$1$ax(t1.get$children(e), J.get$options$x(this.select$1(this, this.details.prevConn)));
+    t1.set$value(e, selectedSegment);
+  }
+},
+
+RuleOutputSpecification_refresh_closure: {"": "Closure;this_0",
+  call$1: function(e) {
+    return this.this_0._updateRuleSegments$1(e);
+  },
+  $is_args1: true
 },
 
 InputHumanOutputSpecification: {"": "OutputSpecification;id,elements,title,view,innerView,elementList"},
 
 InputManualOutputSpecification: {"": "OutputSpecification;id,elements,title,view,innerView,elementList"},
 
-SelectionOutputSpecification: {"": "OutputSpecification;id,elements,title,view,innerView,elementList"},
+SelectionOutputSpecification: {"": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList"},
 
-SortOutputSpecification: {"": "OutputSpecification;id,elements,title,view,innerView,elementList",
-  editElement$2: function(identifier, newText) {
-    D.BaseSpecification.prototype.editElement$2.call(this, identifier, newText);
+SortOutputSpecification: {"": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList"},
+
+SplitOutputSpecification: {"": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList",
+  refreshOutput$0: function() {
+    var t1 = W._FrozenElementList$_wrap(this.details.rulesDiv.querySelectorAll(".rule select.output-flows"), null);
+    t1.forEach$1(t1, new D.SplitOutputSpecification_refreshOutput_closure(this));
   },
-  removeElement$1: function(identifier) {
-    D.BaseSpecification.prototype.removeElement$1.call(this, identifier);
-  }
+  _updateRuleFlows$1: function(e) {
+    var t1, selectedSegment;
+    t1 = J.getInterceptor$x(e);
+    selectedSegment = t1.get$value(e);
+    J.clear$0$ax(t1.get$children(e));
+    J.addAll$1$ax(t1.get$children(e), J.get$options$x(H.interceptedTypeCast(this.details, "$isSplitDetailsUI").outputSelectElement$0()));
+    t1.set$value(e, selectedSegment);
+  },
+  $isSplitOutputSpecification: true
+},
+
+SplitOutputSpecification_refreshOutput_closure: {"": "Closure;this_0",
+  call$1: function(e) {
+    return this.this_0._updateRuleFlows$1(e);
+  },
+  $is_args1: true
 },
 
 ApplicationUI: {"": "Object;log",
@@ -3069,15 +3330,18 @@ FlowLineUI: {"": "Object;path,from,to,selected",
     return new D.BoundClosure$i1(this, D.FlowLineUI.prototype.select$1, _receiver, "select$1");
   },
   remove$0: function(_) {
-    var from, to, t1;
+    var from, t1, to, t2;
     from = J.get$attributes$x(this.from.get$group())._element.getAttribute("id");
-    to = J.get$attributes$x(this.to.get$group())._element.getAttribute("id");
-    t1 = $.operators;
-    t1.$index(t1, from).removeNext$1(to);
-    t1 = $.operators;
-    t1.$index(t1, to).removePrevious$1(from);
-    t1 = J.get$children$x($.canvas);
-    t1.remove$1(t1, this.path);
+    t1 = this.to;
+    to = J.get$attributes$x(t1.get$group())._element.getAttribute("id");
+    t2 = $.operators;
+    t2.$index(t2, from).removeNext$1(to);
+    t2 = $.operators;
+    t2.$index(t2, to).removePrevious$1(from);
+    t2 = J.get$children$x($.canvas);
+    t2.remove$1(t2, this.path);
+    t2 = $.operators;
+    t2.$index(t2, J.get$id$x(t1.get$group())).clearDownFlow$0();
   },
   _keyPressed$1: function(e) {
     if (this.selected === true && J.get$keyCode$x(e) === 8) {
@@ -3292,7 +3556,7 @@ ElementUI_closure: {"": "Closure;this_0",
   $is_args2: true
 },
 
-BaseDetailsUI: {"": "Object;id,type',prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+BaseDetailsUI: {"": "Object;type'",
   initialize$0: function(_) {
     this.addTitles$0();
     this.addElement$5$features("id", "text", "ID", this.base, H.fillLiteralMap(["disabled", "true", "value", this.id], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
@@ -3326,18 +3590,25 @@ BaseDetailsUI: {"": "Object;id,type',prevConn,nextConn,output,base,elements,view
     t2 = document.createElement("h4", null);
     t2.id = "details";
     t2.textContent = "Details";
-    J.insertAdjacentHtml$2$x(t2, "beforeend", " <small>for bookkeeping purposes</small>");
+    J.insertAdjacentHtml$2$x(t2, "beforeend", "<small>for bookkeeping purposes</small>");
     t1.appendChild(t2);
     this.detailsView.appendChild(document.createElement("hr", null));
     t2 = this.parametersView;
     t1 = document.createElement("h4", null);
     t1.id = "parameters";
     t1.textContent = "Parameters";
-    J.insertAdjacentHtml$2$x(t1, "beforeend", " <small>specific to this operator</small>");
+    J.insertAdjacentHtml$2$x(t1, "beforeend", "<small>specific to this operator</small>");
     t2.appendChild(t1);
     this.parametersView.appendChild(document.createElement("hr", null));
   },
   refresh$1: function(specification) {
+    return false;
+  },
+  clear$0: function(_) {
+    var t1 = this.output;
+    J.set$innerHtml$x(t1.elementList, "");
+    t1 = t1.elements;
+    t1.clear$0(t1);
   },
   BaseDetailsUI$4: function(id, type, prevConn, nextConn) {
     var t1, t2;
@@ -3359,26 +3630,68 @@ BaseDetailsUI: {"": "Object;id,type',prevConn,nextConn,output,base,elements,view
     t2.appendChild(this.detailsView);
     t2.appendChild(this.parametersView);
     this.view = t2;
-    this.initialize$0(this);
-  },
-  static: {
-"": "BaseDetailsUI_count",
-BaseDetailsUI$: function(id, type, prevConn, nextConn) {
-  var t1 = new D.BaseDetailsUI(id, type, prevConn, nextConn, null, null, null, null, null, null);
-  t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
-  return t1;
-}}
-
+  }
 },
 
-EnrichDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+OutputDetailsUI: {"": "BaseDetailsUI;",
+  refresh$1: function(specification) {
+    return this.output.refresh$1(specification.elements);
+  }
+},
+
+RuleDetailsUI: {"": "OutputDetailsUI;",
+  initialize$0: function(_) {
+    var t1, t2, t3;
+    D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+    t1 = document.createElement("div", null);
+    t1.className = "rules";
+    this.rulesDiv = t1;
+    this.parametersView.appendChild(this.rulesDiv);
+    t1 = document.createElement("button", null);
+    t1.className = "btn btn-default btn-xs";
+    t1.textContent = "add new rule";
+    t1.toString;
+    t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
+    H.setRuntimeTypeInfo(t2, [null]);
+    t3 = this.get$_addRule();
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t3), t2._useCapture);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t3._tryResume$0();
+    this.addRuleButton = t1;
+    this.parametersView.querySelector("#parameters").appendChild(this.addRuleButton);
+  },
+  clear$0: function(_) {
+    var t1;
+    D.BaseDetailsUI.prototype.clear$0.call(this, this);
+    t1 = J.get$children$x(this.rulesDiv);
+    t1.clear$0(t1);
+  },
+  refresh$1: function(specification) {
+    var updated, t1;
+    updated = D.OutputDetailsUI.prototype.refresh$1.call(this, specification);
+    if (specification.elements._collection$_length === 0) {
+      D.BaseDetailsUI.prototype.clear$0.call(this, this);
+      t1 = J.get$children$x(this.rulesDiv);
+      t1.clear$0(t1);
+      return true;
+    }
+    return updated;
+  },
+  _addRule$1: function(e) {
+  },
+  get$_addRule: function() {
+    return new H.BoundClosure$1(this, D.RuleDetailsUI.prototype._addRule$1, null, "_addRule$1");
+  }
+},
+
+EnrichDetailsUI: {"": "OutputDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$5$features("copy", "number", "Iterations", this.elements, H.fillLiteralMap(["min", "1", "max", "5", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
   }
 },
 
-SourceFileDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SourceFileDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$4("input", "file", "File", this.elements);
@@ -3386,7 +3699,7 @@ SourceFileDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,e
   }
 },
 
-SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,rulesDiv,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$5$features("input", "textarea", "Instructions for human workers", this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
@@ -3426,7 +3739,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,i
   _addNewInput$1: function(e) {
     var elementRow, inputType, elementRowDefinition, t1, elementRowConfig, t2, t3;
     elementRow = document.createElement("div", null);
-    elementRow.className = "row";
+    elementRow.className = "row rule";
     elementRow.id = "segment-" + H.Primitives_objectHashCode(elementRow);
     inputType = J.get$value$x(this.availableInputs);
     this.output.addElement$2$example("segment-" + H.Primitives_objectHashCode(elementRow), H.S(inputType) + " from human workers");
@@ -3503,7 +3816,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,i
   static: {
 "": "SourceHumanDetailsUI_count",
 SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
-  var t1 = new D.SourceHumanDetailsUI(null, null, null, id, type, prevConn, nextConn, null, null, null, null, null, null);
+  var t1 = new D.SourceHumanDetailsUI(null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
   t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
   t1.SourceHumanDetailsUI$4(id, type, prevConn, nextConn);
   return t1;
@@ -3525,14 +3838,14 @@ SourceHumanDetailsUI__addNewInput_closure: {"": "Closure;this_0,elementRow_1",
   $is_args1: true
 },
 
-SourceManualDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SourceManualDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$5$features("input", "textarea", "Manual entry", this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
     this.addElement$5$options("delimiter", "select", "Delimiter", this.elements, $.get$SOURCE_OPTIONS_NAMES());
   },
   _onRefresh$1: function(e) {
-    var t1, text, t2, delimiter, delimitedString, $length, i, t3, newElement, t4;
+    var t1, text, t2, delimiter, delimitedString, segment, dumpSpan, t3, newElement, t4;
     t1 = this.elements;
     text = H.interceptedTypeCast(t1.$index(t1, "input").get$input(), "$isTextAreaElement").value;
     t1 = $.get$SOURCE_OPTIONS_VALUES();
@@ -3547,31 +3860,27 @@ SourceManualDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base
     J.set$innerHtml$x(t1.elementList, "");
     t1 = t1.elements;
     t1.clear$0(t1);
-    if (delimiter.length === 0) {
-      this.output.addElement$2$example("segment-" + C.JSString_methods.get$hashCode(delimiter), C.JSString_methods.trim$0(text));
-      return;
-    }
-    if (text.length !== 0) {
+    if (text.length !== 0 && delimiter.length !== 0)
       delimitedString = C.JSString_methods.trim$0(text).split(delimiter);
-      $length = delimitedString.length;
-    } else {
-      $length = 0;
-      delimitedString = null;
+    else {
+      delimitedString = P.List_List(null, J.JSString);
+      H.setRuntimeTypeInfo(delimitedString, [J.JSString]);
+      delimitedString.push("");
     }
-    for (i = 0; i < $length; ++i) {
-      t1 = this.output;
-      if (i >= delimitedString.length)
-        throw H.ioore(delimitedString, i);
-      t2 = "segment-" + H.S(J.get$hashCode$(delimitedString[i]));
-      if (i >= delimitedString.length)
-        throw H.ioore(delimitedString, i);
-      t3 = delimitedString[i];
-      t1.toString;
+    for (t1 = new H.ListIterator(delimitedString, delimitedString.length, 0, null); t1.moveNext$0();) {
+      segment = t1._dev$_current;
+      dumpSpan = document.createElement("span", null);
+      t2 = this.output;
+      t3 = "segment-" + J.get$hashCode$(dumpSpan);
+      t2.toString;
       newElement = D.OutputSegmentUI$("", false, true);
-      newElement.name.id = t2;
-      t4 = t1.elements;
-      t4.$indexSet(t4, t2, newElement);
-      t1.elementList.appendChild(newElement.getFormElement$1(t3));
+      newElement.name.id = t3;
+      t4 = t2.elements;
+      t4.$indexSet(t4, t3, newElement);
+      t2.elementList.appendChild(newElement.getFormElement$1(segment));
+      t2 = dumpSpan.parentNode;
+      if (t2 != null)
+        t2.removeChild(dumpSpan);
     }
   },
   get$_onRefresh: function() {
@@ -3599,7 +3908,7 @@ SourceManualDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base
   },
   static: {
 SourceManualDetailsUI$: function(id, type, prevConn, nextConn) {
-  var t1 = new D.SourceManualDetailsUI(id, type, prevConn, nextConn, null, null, null, null, null, null);
+  var t1 = new D.SourceManualDetailsUI(N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
   t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
   t1.SourceManualDetailsUI$4(id, type, prevConn, nextConn);
   return t1;
@@ -3607,77 +3916,66 @@ SourceManualDetailsUI$: function(id, type, prevConn, nextConn) {
 
 },
 
-SourceRSSDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SourceRSSDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$4("webpage", "url", "Feed URL", this.elements);
   }
 },
 
-SinkFileDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SinkFileDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$4("output", "text", "File name", this.elements);
   }
 },
 
-SinkEmailDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SinkEmailDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$4("email", "email", "email address", this.elements);
   }
 },
 
-ProcessingDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+ProcessingDetailsUI: {"": "OutputDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$5$features("input", "textarea", "Instructions", this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
   }
 },
 
-SelectionDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SelectionDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
-    D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+    D.RuleDetailsUI.prototype.initialize$0.call(this, this);
   },
-  refresh$1: function(specification) {
-    return this.output.refresh$1(specification.elements);
-  },
-  configureFilters$0: function() {
-    var t1, t2, t3, t4;
-    t1 = this.parametersView.querySelector("#parameters");
-    t2 = document.createElement("button", null);
-    t2.textContent = "add new rule";
-    t2.className = "btn btn-default btn-xs";
-    t2.toString;
-    t3 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false);
-    H.setRuntimeTypeInfo(t3, [null]);
-    t4 = this.get$_addNewParameter();
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
-    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
-    t4._tryResume$0();
-    t1.appendChild(t2);
-  },
-  _addNewParameter$1: function(e) {
-    var parameter, conditionDiv, t1, configDiv, t2, t3;
+  _addRule$1: function(e) {
+    var t1, parameter, conditionDiv, t2, configDiv, t3;
+    t1 = this.prevConn;
+    if (t1._collection$_length < 1) {
+      this.log.warning$1("Please first make sure there is an input flow to this operator.");
+      return;
+    }
     parameter = document.createElement("div", null);
-    parameter.className = "row";
+    parameter.className = "row rule";
     parameter.id = this.id + "-rule-" + $.SelectionDetailsUI_count;
     conditionDiv = document.createElement("div", null);
     conditionDiv.className = "col-sm-3";
     J.insertAdjacentText$2$x(conditionDiv, "beforeend", "Filter ");
-    t1 = document.createElement("select", null);
-    t1.appendChild(W.OptionElement_OptionElement$_("in", "in", null, false));
-    t1.appendChild(W.OptionElement_OptionElement$_("out", "out", null, false));
-    conditionDiv.appendChild(t1);
+    t2 = document.createElement("select", null);
+    t2.appendChild(W.OptionElement_OptionElement$_("in", "in", null, false));
+    t2.appendChild(W.OptionElement_OptionElement$_("out", "out", null, false));
+    conditionDiv.appendChild(t2);
     configDiv = document.createElement("div", null);
     configDiv.className = "col-sm-9";
-    t1 = this.output;
-    configDiv.appendChild(t1.select$1(t1, this.prevConn));
+    t2 = this.output;
+    configDiv.appendChild(t2.select$1(t2, t1));
     t1 = document.createElement("select", null);
     t1.appendChild(W.OptionElement_OptionElement$_("equals", "equals", null, false));
     t1.appendChild(W.OptionElement_OptionElement$_("not equals", "not equals", null, false));
     t1.appendChild(W.OptionElement_OptionElement$_("contains", "contains", null, false));
-    t1.appendChild(W.InputElement_InputElement("text"));
+    configDiv.appendChild(t1);
+    t1 = W.InputElement_InputElement("text");
+    t1.className = "form-control input-sm";
     configDiv.appendChild(t1);
     t1 = document.createElement("button", null);
     t1.textContent = "-";
@@ -3685,83 +3983,74 @@ SelectionDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,el
     t1.toString;
     t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SelectionDetailsUI__addNewParameter_closure(this, parameter)), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SelectionDetailsUI__addRule_closure(this, parameter)), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
     configDiv.appendChild(t1);
     $.SelectionDetailsUI_count = $.SelectionDetailsUI_count + 1;
     parameter.appendChild(conditionDiv);
     parameter.appendChild(configDiv);
-    this.parametersView.appendChild(parameter);
+    this.rulesDiv.appendChild(parameter);
   },
-  get$_addNewParameter: function() {
-    return new H.BoundClosure$1(this, D.SelectionDetailsUI.prototype._addNewParameter$1, null, "_addNewParameter$1");
+  get$_addRule: function() {
+    return new H.BoundClosure$1(this, D.SelectionDetailsUI.prototype._addRule$1, null, "_addRule$1");
   },
   SelectionDetailsUI$4: function(id, type, prevConn, nextConn) {
     var t1, t2;
     t1 = this.id;
-    t2 = new D.SelectionOutputSpecification(t1, null, null, null, null, null);
+    t2 = new D.SelectionOutputSpecification(this, t1, null, null, null, null, null);
     t2.BaseSpecification$1(t1);
     this.output = t2;
     this.view.appendChild(this.output.view);
-    this.configureFilters$0();
   },
   static: {
 "": "SelectionDetailsUI_count",
 SelectionDetailsUI$: function(id, type, prevConn, nextConn) {
-  var t1 = new D.SelectionDetailsUI(id, type, prevConn, nextConn, null, null, null, null, null, null);
+  var t1, t2, t3;
+  t1 = new D.SelectionDetailsUI(null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
   t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
+  t2 = t1.id;
+  t3 = new D.OutputSpecification(t2, null, null, null, null, null);
+  t3.BaseSpecification$1(t2);
+  t1.output = t3;
   t1.SelectionDetailsUI$4(id, type, prevConn, nextConn);
   return t1;
 }}
 
 },
 
-SelectionDetailsUI__addNewParameter_closure: {"": "Closure;this_0,parameter_1",
+SelectionDetailsUI__addRule_closure: {"": "Closure;this_0,parameter_1",
   call$1: function(e) {
     var t1 = this.parameter_1.id;
-    J.remove$0$ax(this.this_0.parametersView.querySelector("#" + t1));
+    J.remove$0$ax(this.this_0.rulesDiv.querySelector("#" + t1));
     return;
   },
   $is_args1: true
 },
 
-SortDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SortDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
-    D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$5$features("size", "number", "Window size", this.elements, H.fillLiteralMap(["min", "1", "max", "100", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+    D.RuleDetailsUI.prototype.initialize$0.call(this, this);
   },
-  refresh$1: function(specification) {
-    return this.output.refresh$1(specification.elements);
-  },
-  configureFilters$0: function() {
-    var t1, t2, t3, t4;
-    t1 = this.parametersView.querySelector("#parameters");
-    t2 = document.createElement("button", null);
-    t2.textContent = "add new rule";
-    t2.className = "btn btn-default btn-xs";
-    t2.toString;
-    t3 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false);
-    H.setRuntimeTypeInfo(t3, [null]);
-    t4 = this.get$_addNewParameter();
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
-    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
-    t4._tryResume$0();
-    t1.appendChild(t2);
-  },
-  _addNewParameter$1: function(e) {
-    var parameter, conditionDiv, configDiv, t1, t2, t3;
+  _addRule$1: function(e) {
+    var t1, parameter, conditionDiv, configDiv, t2, t3;
+    t1 = this.prevConn;
+    if (t1._collection$_length < 1) {
+      this.log.warning$1("Please first make sure there is an input flow to this operator.");
+      return;
+    }
     parameter = document.createElement("div", null);
     parameter.className = "row";
     parameter.id = this.id + "-rule-" + $.SortDetailsUI_count;
     conditionDiv = document.createElement("div", null);
     conditionDiv.className = "col-sm-3";
+    J.insertAdjacentText$2$x(conditionDiv, "beforeend", "Sort using");
     configDiv = document.createElement("div", null);
     configDiv.className = "col-sm-9";
-    t1 = J.getInterceptor$x(configDiv);
-    t1.insertAdjacentText$2(configDiv, "beforeend", "using");
     t2 = this.output;
-    configDiv.appendChild(t2.select$1(t2, this.prevConn));
+    configDiv.appendChild(t2.select$1(t2, t1));
+    t1 = J.getInterceptor$x(configDiv);
     t1.insertAdjacentText$2(configDiv, "beforeend", "in");
     t2 = document.createElement("select", null);
     t2.appendChild(W.OptionElement_OptionElement$_("ascending", "ascending", null, false));
@@ -3774,48 +4063,154 @@ SortDetailsUI: {"": "BaseDetailsUI;id,type,prevConn,nextConn,output,base,element
     t1.toString;
     t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SortDetailsUI__addNewParameter_closure(this, parameter)), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SortDetailsUI__addRule_closure(this, parameter)), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
     configDiv.appendChild(t1);
     $.SortDetailsUI_count = $.SortDetailsUI_count + 1;
     parameter.appendChild(conditionDiv);
     parameter.appendChild(configDiv);
-    this.parametersView.appendChild(parameter);
+    this.rulesDiv.appendChild(parameter);
   },
-  get$_addNewParameter: function() {
-    return new H.BoundClosure$1(this, D.SortDetailsUI.prototype._addNewParameter$1, null, "_addNewParameter$1");
+  get$_addRule: function() {
+    return new H.BoundClosure$1(this, D.SortDetailsUI.prototype._addRule$1, null, "_addRule$1");
   },
   SortDetailsUI$4: function(id, type, prevConn, nextConn) {
     var t1, t2;
     t1 = this.id;
-    t2 = new D.SortOutputSpecification(t1, null, null, null, null, null);
+    t2 = new D.SortOutputSpecification(this, t1, null, null, null, null, null);
     t2.BaseSpecification$1(t1);
     this.output = t2;
     this.view.appendChild(this.output.view);
-    this.configureFilters$0();
   },
   static: {
 "": "SortDetailsUI_count",
 SortDetailsUI$: function(id, type, prevConn, nextConn) {
-  var t1 = new D.SortDetailsUI(id, type, prevConn, nextConn, null, null, null, null, null, null);
+  var t1, t2, t3;
+  t1 = new D.SortDetailsUI(null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
   t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
+  t2 = t1.id;
+  t3 = new D.OutputSpecification(t2, null, null, null, null, null);
+  t3.BaseSpecification$1(t2);
+  t1.output = t3;
   t1.SortDetailsUI$4(id, type, prevConn, nextConn);
   return t1;
 }}
 
 },
 
-SortDetailsUI__addNewParameter_closure: {"": "Closure;this_0,parameter_1",
+SortDetailsUI__addRule_closure: {"": "Closure;this_0,parameter_1",
   call$1: function(e) {
     var t1 = this.parameter_1.id;
-    J.remove$0$ax(this.this_0.parametersView.querySelector("#" + t1));
+    J.remove$0$ax(this.this_0.rulesDiv.querySelector("#" + t1));
+    return;
+  },
+  $is_args1: true
+},
+
+SplitDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+  outputSelectElement$0: function() {
+    var selectElement, t1;
+    selectElement = document.createElement("select", null);
+    selectElement.className = "output-flows";
+    t1 = this.nextConn;
+    t1.forEach$1(t1, new D.SplitDetailsUI_outputSelectElement_closure(selectElement));
+    return selectElement;
+  },
+  _addRule$1: function(e) {
+    var t1, parameter, conditionDiv, configDiv, t2, t3;
+    if (this.nextConn._collection$_length < 1) {
+      this.log.warning$1("Please first make sure there is an output flow from this operator.");
+      return;
+    }
+    t1 = this.prevConn;
+    if (t1._collection$_length < 1) {
+      this.log.warning$1("Please first make sure there is an input flow to this operator.");
+      return;
+    }
+    parameter = document.createElement("div", null);
+    parameter.className = "row rule";
+    parameter.id = this.id + "-rule-" + $.SplitDetailsUI_count;
+    conditionDiv = document.createElement("div", null);
+    conditionDiv.className = "col-sm-3";
+    J.insertAdjacentText$2$x(conditionDiv, "beforeend", "Send to ");
+    conditionDiv.appendChild(this.outputSelectElement$0());
+    configDiv = document.createElement("div", null);
+    configDiv.className = "col-sm-9";
+    J.insertAdjacentText$2$x(configDiv, "beforeend", "when ");
+    t2 = this.output;
+    configDiv.appendChild(t2.select$1(t2, t1));
+    t1 = document.createElement("select", null);
+    t1.appendChild(W.OptionElement_OptionElement$_("equals", "equals", null, false));
+    t1.appendChild(W.OptionElement_OptionElement$_("not equals", "not equals", null, false));
+    t1.appendChild(W.OptionElement_OptionElement$_("contains", "contains", null, false));
+    configDiv.appendChild(t1);
+    t1 = W.InputElement_InputElement("text");
+    t1.className = "form-control input-sm";
+    configDiv.appendChild(t1);
+    t1 = document.createElement("button", null);
+    t1.textContent = "-";
+    t1.className = "btn btn-danger btn-sm";
+    t1.toString;
+    t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
+    H.setRuntimeTypeInfo(t2, [null]);
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SplitDetailsUI__addRule_closure(this, parameter)), t2._useCapture);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t3._tryResume$0();
+    configDiv.appendChild(t1);
+    $.SplitDetailsUI_count = $.SplitDetailsUI_count + 1;
+    parameter.appendChild(conditionDiv);
+    parameter.appendChild(configDiv);
+    this.rulesDiv.appendChild(parameter);
+  },
+  get$_addRule: function() {
+    return new H.BoundClosure$1(this, D.SplitDetailsUI.prototype._addRule$1, null, "_addRule$1");
+  },
+  SplitDetailsUI$4: function(id, type, prevConn, nextConn) {
+    var t1, t2;
+    t1 = this.id;
+    t2 = new D.SplitOutputSpecification(this, t1, null, null, null, null, null);
+    t2.BaseSpecification$1(t1);
+    this.output = t2;
+    this.view.appendChild(this.output.view);
+  },
+  $isSplitDetailsUI: true,
+  static: {
+"": "SplitDetailsUI_count",
+SplitDetailsUI$: function(id, type, prevConn, nextConn) {
+  var t1, t2, t3;
+  t1 = new D.SplitDetailsUI(null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
+  t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
+  t2 = t1.id;
+  t3 = new D.OutputSpecification(t2, null, null, null, null, null);
+  t3.BaseSpecification$1(t2);
+  t1.output = t3;
+  t1.SplitDetailsUI$4(id, type, prevConn, nextConn);
+  return t1;
+}}
+
+},
+
+SplitDetailsUI_outputSelectElement_closure: {"": "Closure;selectElement_0",
+  call$2: function(identifier, connected) {
+    return this.selectElement_0.appendChild(W.OptionElement_OptionElement$_(identifier, identifier, null, false));
+  },
+  $is_args2: true
+},
+
+SplitDetailsUI__addRule_closure: {"": "Closure;this_0,parameter_1",
+  call$1: function(e) {
+    var t1 = this.parameter_1.id;
+    J.remove$0$ax(this.this_0.rulesDiv.querySelector("#" + t1));
     return;
   },
   $is_args1: true
 },
 
 BaseOperatorUI: {"": "Object;group<",
+  initialize$0: function(_) {
+    $.canvas.appendChild(this.group);
+  },
   _onClick$1: function(e) {
     var t1 = $.selectedOperator;
     if (t1 != null)
@@ -3904,8 +4299,10 @@ BaseOperatorUI: {"": "Object;group<",
   },
   _onKeyDown$1: function(e) {
     var t1;
-    if ($.selectedOperator === this && J.get$keyCode$x(e) === 8 && document.querySelector(".modal.fade.in") == null) {
-      J.preventDefault$0$x(e);
+    if (J.get$keyCode$x(e) === 8)
+      e.preventDefault();
+    if ($.selectedOperator === this && e.keyCode === 8 && J.get$display$x($.get$modal().style) !== "block") {
+      e.preventDefault();
       this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
       t1 = J.get$children$x($.canvas);
       t1.remove$1(t1, this.group);
@@ -3999,7 +4396,7 @@ BaseOperatorUI: {"": "Object;group<",
     temp.appendChild(this.body);
     this.group = temp;
     this.dragging = false;
-    t2 = new W._EventStream(window, C.EventStreamProvider_keydown._eventType, false);
+    t2 = new W._EventStream(document, C.EventStreamProvider_keydown._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t1 = this.get$_onKeyDown();
     t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
@@ -4009,110 +4406,110 @@ BaseOperatorUI: {"": "Object;group<",
 },
 
 SourceOperatorUI: {"": "BaseOperatorUI;port,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-  SourceOperatorUI$6: function(canvas, id, x, y, width, height) {
+  SourceOperatorUI$5: function(id, x, y, width, height) {
     this.port = D.PortUI$(this.group, x, y, width, height, 6, false);
     this.addBackgroundImage$1("input.png");
   },
   static: {
-SourceOperatorUI$: function(canvas, id, x, y, width, height) {
+SourceOperatorUI$: function(id, x, y, width, height) {
   var t1 = new D.SourceOperatorUI(null, null, null, id, null, null, null, null, null, width, height);
   t1.BaseOperatorUI$5(id, x, y, width, height);
-  t1.SourceOperatorUI$6(canvas, id, x, y, width, height);
+  t1.SourceOperatorUI$5(id, x, y, width, height);
   return t1;
 }}
 
 },
 
 SinkOperatorUI: {"": "BaseOperatorUI;port,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-  SinkOperatorUI$6: function(canvas, id, x, y, width, height) {
+  SinkOperatorUI$5: function(id, x, y, width, height) {
     this.port = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.addBackgroundImage$1("output.png");
   },
   static: {
-SinkOperatorUI$: function(canvas, id, x, y, width, height) {
+SinkOperatorUI$: function(id, x, y, width, height) {
   var t1 = new D.SinkOperatorUI(null, null, null, id, null, null, null, null, null, width, height);
   t1.BaseOperatorUI$5(id, x, y, width, height);
-  t1.SinkOperatorUI$6(canvas, id, x, y, width, height);
+  t1.SinkOperatorUI$5(id, x, y, width, height);
   return t1;
 }}
 
 },
 
 ProcessingOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-  ProcessingOperatorUI$6: function(canvas, id, x, y, width, height) {
+  ProcessingOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
     this.addBackgroundImage$1("processing.png");
   },
   static: {
-ProcessingOperatorUI$: function(canvas, id, x, y, width, height) {
+ProcessingOperatorUI$: function(id, x, y, width, height) {
   var t1 = new D.ProcessingOperatorUI(null, null, null, null, id, null, null, null, null, null, width, height);
   t1.BaseOperatorUI$5(id, x, y, width, height);
-  t1.ProcessingOperatorUI$6(canvas, id, x, y, width, height);
+  t1.ProcessingOperatorUI$5(id, x, y, width, height);
   return t1;
 }}
 
 },
 
 SelectionOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-  SelectionOperatorUI$6: function(canvas, id, x, y, width, height) {
+  SelectionOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
     this.addBackgroundImage$1("selection.png");
   },
   static: {
-SelectionOperatorUI$: function(canvas, id, x, y, width, height) {
+SelectionOperatorUI$: function(id, x, y, width, height) {
   var t1 = new D.SelectionOperatorUI(null, null, null, null, id, null, null, null, null, null, width, height);
   t1.BaseOperatorUI$5(id, x, y, width, height);
-  t1.SelectionOperatorUI$6(canvas, id, x, y, width, height);
+  t1.SelectionOperatorUI$5(id, x, y, width, height);
   return t1;
 }}
 
 },
 
 SplitOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-  SplitOperatorUI$6: function(canvas, id, x, y, width, height) {
+  SplitOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
     this.addBackgroundImage$1("split.png");
   },
   static: {
-SplitOperatorUI$: function(canvas, id, x, y, width, height) {
+SplitOperatorUI$: function(id, x, y, width, height) {
   var t1 = new D.SplitOperatorUI(null, null, null, null, id, null, null, null, null, null, width, height);
   t1.BaseOperatorUI$5(id, x, y, width, height);
-  t1.SplitOperatorUI$6(canvas, id, x, y, width, height);
+  t1.SplitOperatorUI$5(id, x, y, width, height);
   return t1;
 }}
 
 },
 
 SortOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-  SortOperatorUI$6: function(canvas, id, x, y, width, height) {
+  SortOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
     this.addBackgroundImage$1("sort.png");
   },
   static: {
-SortOperatorUI$: function(canvas, id, x, y, width, height) {
+SortOperatorUI$: function(id, x, y, width, height) {
   var t1 = new D.SortOperatorUI(null, null, null, null, id, null, null, null, null, null, width, height);
   t1.BaseOperatorUI$5(id, x, y, width, height);
-  t1.SortOperatorUI$6(canvas, id, x, y, width, height);
+  t1.SortOperatorUI$5(id, x, y, width, height);
   return t1;
 }}
 
 },
 
 EnrichOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-  EnrichOperatorUI$6: function(canvas, id, x, y, width, height) {
+  EnrichOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
     this.addBackgroundImage$1("enrich.png");
   },
   static: {
-EnrichOperatorUI$: function(canvas, id, x, y, width, height) {
+EnrichOperatorUI$: function(id, x, y, width, height) {
   var t1 = new D.EnrichOperatorUI(null, null, null, null, id, null, null, null, null, null, width, height);
   t1.BaseOperatorUI$5(id, x, y, width, height);
-  t1.EnrichOperatorUI$6(canvas, id, x, y, width, height);
+  t1.EnrichOperatorUI$5(id, x, y, width, height);
   return t1;
 }}
 
@@ -4623,10 +5020,45 @@ FixedLengthListMixin: {"": "Object;",
   add$1: function(receiver, value) {
     throw H.wrapException(P.UnsupportedError$("Cannot add to a fixed-length list"));
   },
+  addAll$1: function(receiver, iterable) {
+    throw H.wrapException(P.UnsupportedError$("Cannot add to a fixed-length list"));
+  },
   remove$1: function(receiver, element) {
     throw H.wrapException(P.UnsupportedError$("Cannot remove from a fixed-length list"));
+  },
+  clear$0: function(receiver) {
+    throw H.wrapException(P.UnsupportedError$("Cannot clear a fixed-length list"));
   }
-}}],
+},
+
+UnmodifiableListMixin: {"": "Object;",
+  $indexSet: function(_, index, value) {
+    throw H.wrapException(P.UnsupportedError$("Cannot modify an unmodifiable list"));
+  },
+  set$length: function(_, newLength) {
+    throw H.wrapException(P.UnsupportedError$("Cannot change the length of an unmodifiable list"));
+  },
+  add$1: function(_, value) {
+    throw H.wrapException(P.UnsupportedError$("Cannot add to an unmodifiable list"));
+  },
+  addAll$1: function(_, iterable) {
+    throw H.wrapException(P.UnsupportedError$("Cannot add to an unmodifiable list"));
+  },
+  remove$1: function(_, element) {
+    throw H.wrapException(P.UnsupportedError$("Cannot remove from an unmodifiable list"));
+  },
+  clear$0: function(_) {
+    throw H.wrapException(P.UnsupportedError$("Cannot clear an unmodifiable list"));
+  },
+  setRange$4: function(_, start, end, iterable, skipCount) {
+    throw H.wrapException(P.UnsupportedError$("Cannot modify an unmodifiable list"));
+  },
+  $isList: true,
+  $asList: null,
+  $isEfficientLength: true
+},
+
+UnmodifiableListBase: {"": "ListBase+UnmodifiableListMixin;", $asListBase: null, $asList: null, $isList: true, $isEfficientLength: true}}],
 ["dart.async", "dart:async", , P, {
 _invokeErrorHandler: function(errorHandler, error, stackTrace) {
   var t1 = J.getInterceptor(errorHandler);
@@ -6153,7 +6585,7 @@ _StreamImpl: {"": "Stream;",
 
 _DelayedEvent: {"": "Object;next@"},
 
-_DelayedData: {"": "_DelayedEvent;value,next",
+_DelayedData: {"": "_DelayedEvent;value>,next",
   perform$1: function(dispatch) {
     dispatch._sendData$1(this.value);
   }
@@ -7514,6 +7946,20 @@ LinkedHashSetIterator: {"": "Object;_set,_modifications,_cell,_collection$_curre
   }
 },
 
+UnmodifiableListView: {"": "UnmodifiableListBase;_collection$_source",
+  get$length: function(_) {
+    return this._collection$_source.length;
+  },
+  $index: function(_, index) {
+    var t1 = this._collection$_source;
+    if (index >>> 0 !== index || index >= t1.length)
+      throw H.ioore(t1, index);
+    return t1[index];
+  },
+  $asUnmodifiableListBase: null,
+  $asList: null
+},
+
 _HashSetBase: {"": "IterableBase;",
   toString$0: function(_) {
     return H.IterableMixinWorkaround_toStringIterable(this, "{", "}");
@@ -7668,6 +8114,17 @@ ListMixin: {"": "Object;",
     this.set$length(receiver, t1 + 1);
     this.$indexSet(receiver, t1, element);
   },
+  addAll$1: function(receiver, iterable) {
+    var t1, element, t2;
+    for (t1 = J.get$iterator$ax(iterable); t1.moveNext$0();) {
+      element = t1.get$current();
+      t2 = this.get$length(receiver);
+      if (typeof t2 !== "number")
+        throw t2.$add();
+      this.set$length(receiver, t2 + 1);
+      this.$indexSet(receiver, t2, element);
+    }
+  },
   remove$1: function(receiver, element) {
     var i, t1;
     i = 0;
@@ -7691,6 +8148,9 @@ ListMixin: {"": "Object;",
       ++i;
     }
     return false;
+  },
+  clear$0: function(receiver) {
+    this.set$length(receiver, 0);
   },
   setRange$4: function(receiver, start, end, iterable, skipCount) {
     var t1, $length, t2, i;
@@ -8580,7 +9040,7 @@ _wrapZone: function(callback) {
   return t1.bindUnaryCallback$2$runGuarded(callback, true);
 },
 
-HtmlElement: {"": "Element;", "%": "HTMLAppletElement|HTMLBRElement|HTMLBaseFontElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDataListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLSpanElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"},
+HtmlElement: {"": "Element;", "%": "HTMLAppletElement|HTMLBRElement|HTMLBaseFontElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLSpanElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"},
 
 AnchorElement: {"": "HtmlElement;hostname=,href},port=,protocol=,target=,type}",
   toString$0: function(receiver) {
@@ -8595,11 +9055,15 @@ BaseElement: {"": "HtmlElement;href},target=", "%": "HTMLBaseElement"},
 
 BodyElement: {"": "HtmlElement;", $isBodyElement: true, "%": "HTMLBodyElement"},
 
-ButtonElement: {"": "HtmlElement;name=,type},value=", "%": "HTMLButtonElement"},
+ButtonElement: {"": "HtmlElement;name=,type},value%", "%": "HTMLButtonElement"},
 
 CharacterData: {"": "Node;length=", "%": "CDATASection|Comment|Text;CharacterData"},
 
 CssStyleDeclaration: {"": "Interceptor_CssStyleDeclarationBase;length=",
+  getPropertyValue$1: function(receiver, propertyName) {
+    var propValue = receiver.getPropertyValue(propertyName);
+    return propValue != null ? propValue : "";
+  },
   setProperty$3: function(receiver, propertyName, value, priority) {
     var exception;
     try {
@@ -8627,6 +9091,21 @@ CustomEvent: {"": "Event;_dartDetail}",
     return receiver.initCustomEvent(typeArg, canBubbleArg, cancelableArg, detailArg);
   },
   "%": "CustomEvent"
+},
+
+DataListElement: {"": "HtmlElement;options=", "%": "HTMLDataListElement"},
+
+DocumentFragment: {"": "Node;",
+  get$children: function(receiver) {
+    var t1;
+    if (receiver._children == null) {
+      t1 = new P.FilteredElementList(receiver, new W._ChildNodeListLazy(receiver));
+      H.setRuntimeTypeInfo(t1, [null]);
+      receiver._children = t1;
+    }
+    return receiver._children;
+  },
+  "%": "DocumentFragment|ShadowRoot"
 },
 
 DomError: {"": "Interceptor;name=", "%": "DOMError|FileError"},
@@ -8842,7 +9321,7 @@ HtmlCollection: {"": "Interceptor_ListMixin_ImmutableListMixin;",
 
 IFrameElement: {"": "HtmlElement;name=", "%": "HTMLIFrameElement"},
 
-InputElement: {"": "HtmlElement;name=,placeholder},type},value=", $isElement: true, $isEventTarget: true, "%": "HTMLInputElement"},
+InputElement: {"": "HtmlElement;name=,placeholder},type},value%", $isElement: true, $isEventTarget: true, "%": "HTMLInputElement"},
 
 KeyboardEvent: {"": "UIEvent;",
   get$keyCode: function(receiver) {
@@ -8853,7 +9332,7 @@ KeyboardEvent: {"": "UIEvent;",
 
 KeygenElement: {"": "HtmlElement;name=", "%": "HTMLKeygenElement"},
 
-LIElement: {"": "HtmlElement;value=", "%": "HTMLLIElement"},
+LIElement: {"": "HtmlElement;value%", "%": "HTMLLIElement"},
 
 LabelElement: {"": "HtmlElement;htmlFor}", "%": "HTMLLabelElement"},
 
@@ -8873,7 +9352,7 @@ MediaElement: {"": "HtmlElement;error=", "%": "HTMLAudioElement|HTMLMediaElement
 
 MetaElement: {"": "HtmlElement;name=", "%": "HTMLMetaElement"},
 
-MeterElement: {"": "HtmlElement;value=", "%": "HTMLMeterElement"},
+MeterElement: {"": "HtmlElement;value%", "%": "HTMLMeterElement"},
 
 MidiOutput: {"": "MidiPort;",
   send$2: function(receiver, data, timestamp) {
@@ -8940,7 +9419,7 @@ Node: {"": "EventTarget;lastChild=,nodeType=,text:textContent%",
   _replaceChild$2: function(receiver, newChild, oldChild) {
     return receiver.replaceChild(newChild, oldChild);
   },
-  "%": "Document|DocumentFragment|DocumentType|Entity|HTMLDocument|Notation|SVGDocument|ShadowRoot;Node"
+  "%": "Document|DocumentType|Entity|HTMLDocument|Notation|SVGDocument;Node"
 },
 
 NodeList: {"": "Interceptor_ListMixin_ImmutableListMixin0;",
@@ -8977,15 +9456,15 @@ OListElement: {"": "HtmlElement;type}", "%": "HTMLOListElement"},
 
 ObjectElement: {"": "HtmlElement;name=,type}", "%": "HTMLObjectElement"},
 
-OptionElement: {"": "HtmlElement;value=", "%": "HTMLOptionElement"},
+OptionElement: {"": "HtmlElement;value%", $isOptionElement: true, "%": "HTMLOptionElement"},
 
-OutputElement: {"": "HtmlElement;name=,value=", "%": "HTMLOutputElement"},
+OutputElement: {"": "HtmlElement;name=,value%", "%": "HTMLOutputElement"},
 
-ParamElement: {"": "HtmlElement;name=,value=", "%": "HTMLParamElement"},
+ParamElement: {"": "HtmlElement;name=,value%", "%": "HTMLParamElement"},
 
 ProcessingInstruction: {"": "CharacterData;target=", "%": "ProcessingInstruction"},
 
-ProgressElement: {"": "HtmlElement;value=", "%": "HTMLProgressElement"},
+ProgressElement: {"": "HtmlElement;value%", "%": "HTMLProgressElement"},
 
 Range: {"": "Interceptor;",
   getBoundingClientRect$0: function(receiver) {
@@ -8999,7 +9478,17 @@ Range: {"": "Interceptor;",
 
 ScriptElement0: {"": "HtmlElement;type}", "%": "HTMLScriptElement"},
 
-SelectElement: {"": "HtmlElement;length=,name=,value=", $isSelectElement: true, "%": "HTMLSelectElement"},
+SelectElement: {"": "HtmlElement;length=,name=,value%",
+  get$options: function(receiver) {
+    var t1 = W._FrozenElementList$_wrap(receiver.querySelectorAll("option"), null);
+    t1 = t1.where$1(t1, new W.SelectElement_options_closure());
+    t1 = new P.UnmodifiableListView(P.List_List$from(t1, true, H.getRuntimeTypeArgument(t1, "IterableBase", 0)));
+    H.setRuntimeTypeInfo(t1, [null]);
+    return t1;
+  },
+  $isSelectElement: true,
+  "%": "HTMLSelectElement"
+},
 
 SourceElement: {"": "HtmlElement;type}", "%": "HTMLSourceElement"},
 
@@ -9079,7 +9568,7 @@ TemplateElement: {"": "HtmlElement;",
   "%": "HTMLTemplateElement"
 },
 
-TextAreaElement: {"": "HtmlElement;name=,placeholder},value=", $isTextAreaElement: true, "%": "HTMLTextAreaElement"},
+TextAreaElement: {"": "HtmlElement;name=,placeholder},value%", $isTextAreaElement: true, "%": "HTMLTextAreaElement"},
 
 UIEvent: {"": "Event;detail=", "%": "CompositionEvent|FocusEvent|SVGZoomEvent|TextEvent|TouchEvent;UIEvent"},
 
@@ -9207,6 +9696,9 @@ CssStyleDeclarationBase: {"": "Object;",
   set$cursor: function(receiver, value) {
     this.setProperty$3(receiver, "cursor", value, "");
   },
+  get$display: function(receiver) {
+    return this.getPropertyValue$1(receiver, "display");
+  },
   set$display: function(receiver, value) {
     this.setProperty$3(receiver, "display", value, "");
   }
@@ -9241,6 +9733,11 @@ _ChildrenElementList: {"": "ListBase;_element,_childElements",
   get$iterator: function(_) {
     var t1 = this.toList$0(this);
     return new H.ListIterator(t1, t1.length, 0, null);
+  },
+  addAll$1: function(_, iterable) {
+    var t1, t2;
+    for (t1 = J.get$iterator$ax(iterable), t2 = this._element; t1.moveNext$0();)
+      t2.appendChild(t1.get$current());
   },
   setRange$4: function(_, start, end, iterable, skipCount) {
     throw H.wrapException(P.UnimplementedError$(null));
@@ -9380,12 +9877,17 @@ _ChildNodeListLazy: {"": "ListBase;_this",
   },
   addAll$1: function(_, iterable) {
     var t1, t2, len, i;
-    t1 = iterable._this;
-    t2 = this._this;
-    if (t1 !== t2)
-      for (len = t1.childNodes.length, i = 0; i < len; ++i)
-        t2.appendChild(t1.firstChild);
-    return;
+    t1 = J.getInterceptor$ax(iterable);
+    if (typeof iterable === "object" && iterable !== null && !!t1.$is_ChildNodeListLazy) {
+      t1 = iterable._this;
+      t2 = this._this;
+      if (t1 !== t2)
+        for (len = t1.childNodes.length, i = 0; i < len; ++i)
+          t2.appendChild(t1.firstChild);
+      return;
+    }
+    for (t1 = t1.get$iterator(iterable), t2 = this._this; t1.moveNext$0();)
+      t2.appendChild(t1.get$current());
   },
   insert$2: function(_, index, node) {
     var t1, t2, t3;
@@ -9404,6 +9906,9 @@ _ChildNodeListLazy: {"": "ListBase;_this",
   },
   remove$1: function(_, object) {
     return false;
+  },
+  clear$0: function(_) {
+    this._this.textContent = "";
   },
   $indexSet: function(_, index, value) {
     var t1, t2;
@@ -9431,6 +9936,7 @@ _ChildNodeListLazy: {"": "ListBase;_this",
       throw H.ioore(t1, index);
     return t1[index];
   },
+  $is_ChildNodeListLazy: true,
   $asList: function() {
     return [W.Node];
   }
@@ -9439,6 +9945,14 @@ _ChildNodeListLazy: {"": "ListBase;_this",
 Interceptor_ListMixin0: {"": "Interceptor+ListMixin;", $isList: true, $asList: null, $isEfficientLength: true},
 
 Interceptor_ListMixin_ImmutableListMixin0: {"": "Interceptor_ListMixin0+ImmutableListMixin;", $asList: null, $isList: true, $isEfficientLength: true},
+
+SelectElement_options_closure: {"": "Closure;",
+  call$1: function(e) {
+    var t1 = J.getInterceptor(e);
+    return typeof e === "object" && e !== null && !!t1.$isOptionElement;
+  },
+  $is_args1: true
+},
 
 Interceptor_ListMixin1: {"": "Interceptor+ListMixin;", $isList: true, $asList: null, $isEfficientLength: true},
 
@@ -9775,6 +10289,9 @@ ImmutableListMixin: {"": "Object;",
   add$1: function(receiver, value) {
     throw H.wrapException(P.UnsupportedError$("Cannot add to immutable List."));
   },
+  addAll$1: function(receiver, iterable) {
+    throw H.wrapException(P.UnsupportedError$("Cannot add to immutable List."));
+  },
   remove$1: function(receiver, object) {
     throw H.wrapException(P.UnsupportedError$("Cannot remove from immutable List."));
   },
@@ -10090,6 +10607,9 @@ PathSegList: {"": "Interceptor_ListMixin_ImmutableListMixin2;",
   elementAt$1: function(receiver, index) {
     return this.$index(receiver, index);
   },
+  clear$0: function(receiver) {
+    return receiver.clear();
+  },
   $asList: function() {
     return [P.PathSeg];
   },
@@ -10302,8 +10822,14 @@ UnmodifiableMapMixin: {"": "Object;",
   $indexSet: function(_, key, value) {
     return Q.UnmodifiableMapMixin__throw();
   },
+  addAll$1: function(_, other) {
+    return Q.UnmodifiableMapMixin__throw();
+  },
   remove$1: function(_, key) {
     Q.UnmodifiableMapMixin__throw();
+  },
+  clear$0: function(_) {
+    return Q.UnmodifiableMapMixin__throw();
   },
   $isMap: true
 },
@@ -10699,6 +11225,11 @@ FilteredElementList: {"": "ListBase;_node,_childNodes",
   add$1: function(_, value) {
     this._childNodes._this.appendChild(value);
   },
+  addAll$1: function(_, iterable) {
+    var t1, t2;
+    for (t1 = J.get$iterator$ax(iterable), t2 = this._childNodes._this; t1.moveNext$0();)
+      t2.appendChild(t1.get$current());
+  },
   setRange$4: function(_, start, end, iterable, skipCount) {
     throw H.wrapException(P.UnsupportedError$("Cannot setRange on filtered list"));
   },
@@ -10761,7 +11292,7 @@ FilteredElementList_removeRange_closure: {"": "Closure;",
   $is_args1: true
 }}],
 ["logging", "package:logging/logging.dart", , N, {
-Logger: {"": "Object;name>,parent,_level,_children>,children,_controller",
+Logger: {"": "Object;name>,parent,_level,_children>,children>,_controller",
   get$fullName: function() {
     var t1, t2, t3;
     t1 = this.parent;
@@ -10967,13 +11498,13 @@ P.StreamSubscription.$isStreamSubscription = true;
 P.StreamSubscription.$isObject = true;
 J.JSBool.$isbool = true;
 J.JSBool.$isObject = true;
-W.Event.$isObject = true;
-D.OutputSegmentUI.$isObject = true;
-W.NodeValidator.$isNodeValidator = true;
-W.NodeValidator.$isObject = true;
-D.ElementUI.$isObject = true;
 W.KeyboardEvent.$isKeyboardEvent = true;
 W.KeyboardEvent.$isObject = true;
+W.NodeValidator.$isNodeValidator = true;
+W.NodeValidator.$isObject = true;
+D.OutputSegmentUI.$isObject = true;
+D.ElementUI.$isObject = true;
+W.Event.$isObject = true;
 P.ReceivePort.$isStream = true;
 P.ReceivePort.$asStream = [null];
 P.ReceivePort.$isObject = true;
@@ -10993,6 +11524,10 @@ P._BroadcastSubscription.$is_BufferingStreamSubscription = true;
 P._BroadcastSubscription.$is_EventSink = true;
 P._BroadcastSubscription.$isStreamSubscription = true;
 P._BroadcastSubscription.$isObject = true;
+W.SelectElement.$isSelectElement = true;
+W.SelectElement.$isElement = true;
+W.SelectElement.$isNode = true;
+W.SelectElement.$isObject = true;
 P.Object.$isObject = true;
 P.Function.$isFunction = true;
 P.Function.$isObject = true;
@@ -11009,10 +11544,6 @@ P._DelayedEvent.$is_DelayedEvent = true;
 P._DelayedEvent.$isObject = true;
 P.DateTime.$isDateTime = true;
 P.DateTime.$isObject = true;
-W.SelectElement.$isSelectElement = true;
-W.SelectElement.$isElement = true;
-W.SelectElement.$isNode = true;
-W.SelectElement.$isObject = true;
 P.Map.$isMap = true;
 P.Map.$isObject = true;
 // getInterceptor methods
@@ -11063,17 +11594,6 @@ J.getInterceptor$ax = function(receiver) {
 J.getInterceptor$n = function(receiver) {
   if (typeof receiver == "number")
     return J.JSNumber.prototype;
-  if (receiver == null)
-    return receiver;
-  if (!(receiver instanceof P.Object))
-    return J.UnknownJavaScriptObject.prototype;
-  return receiver;
-};
-J.getInterceptor$ns = function(receiver) {
-  if (typeof receiver == "number")
-    return J.JSNumber.prototype;
-  if (typeof receiver == "string")
-    return J.JSString.prototype;
   if (receiver == null)
     return receiver;
   if (!(receiver instanceof P.Object))
@@ -11272,6 +11792,7 @@ $.BaseDetailsUI_count = 1;
 $.SourceHumanDetailsUI_count = 1;
 $.SelectionDetailsUI_count = 1;
 $.SortDetailsUI_count = 1;
+$.SplitDetailsUI_count = 1;
 $.printToZone = null;
 $._callbacksAreEnqueued = false;
 $.Zone__current = C.C__RootZone;
@@ -11325,11 +11846,14 @@ J.abs$0$n = function(receiver) {
 J.add$1$ax = function(receiver, a0) {
   return J.getInterceptor$ax(receiver).add$1(receiver, a0);
 };
+J.addAll$1$ax = function(receiver, a0) {
+  return J.getInterceptor$ax(receiver).addAll$1(receiver, a0);
+};
 J.addEventListener$3$x = function(receiver, a0, a1, a2) {
   return J.getInterceptor$x(receiver).addEventListener$3(receiver, a0, a1, a2);
 };
-J.compareTo$1$ns = function(receiver, a0) {
-  return J.getInterceptor$ns(receiver).compareTo$1(receiver, a0);
+J.clear$0$ax = function(receiver) {
+  return J.getInterceptor$ax(receiver).clear$0(receiver);
 };
 J.contains$2$asx = function(receiver, a0, a1) {
   return J.getInterceptor$asx(receiver).contains$2(receiver, a0, a1);
@@ -11370,6 +11894,9 @@ J.get$currentTranslate$x = function(receiver) {
 J.get$detail$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$detail(receiver);
 };
+J.get$display$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$display(receiver);
+};
 J.get$error$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$error(receiver);
 };
@@ -11403,6 +11930,9 @@ J.get$nodes$x = function(receiver) {
 J.get$on$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$on(receiver);
 };
+J.get$options$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$options(receiver);
+};
 J.get$pathSegList$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$pathSegList(receiver);
 };
@@ -11426,6 +11956,9 @@ J.getBoundingClientRect$0$x = function(receiver) {
 };
 J.getCtm$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).getCtm$0(receiver);
+};
+J.initialize$0$x = function(receiver) {
+  return J.getInterceptor$x(receiver).initialize$0(receiver);
 };
 J.insertAdjacentHtml$2$x = function(receiver, a0, a1) {
   return J.getInterceptor$x(receiver).insertAdjacentHtml$2(receiver, a0, a1);
@@ -11553,6 +12086,9 @@ Isolate.$lazy($, "SOURCE_OPTIONS_NAMES", "SOURCE_OPTIONS_NAMES", "get$SOURCE_OPT
 Isolate.$lazy($, "SOURCE_OPTIONS_HUMAN_INPUTS", "SOURCE_OPTIONS_HUMAN_INPUTS", "get$SOURCE_OPTIONS_HUMAN_INPUTS", function() {
   return H.fillLiteralMap(["text input", "text", "number input", "number", "single choice", "single", "multiple choice", "multiple"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
 });
+Isolate.$lazy($, "modalAlert", "modalAlert", "get$modalAlert", function() {
+  return document.querySelector("#operator_modal .modal-dialog .modal-content .modal-header .alert");
+});
 Isolate.$lazy($, "modal", "modal", "get$modal", function() {
   return document.querySelector("#operator_modal");
 });
@@ -11560,9 +12096,6 @@ Isolate.$lazy($, "modalBody", "modalBody", "get$modalBody", function() {
   return document.querySelector("#operator_modal .modal-dialog .modal-content .modal-body");
 });
 Isolate.$lazy($, "closeButton", "closeButton", "get$closeButton", function() {
-  return document.querySelector("#operator_modal .modal-header .close");
-});
-Isolate.$lazy($, "closeButton2", "closeButton2", "get$closeButton2", function() {
   return document.querySelector("#operator_modal .modal-footer #close_operator_modal");
 });
 Isolate.$lazy($, "_toStringList", "IterableMixinWorkaround__toStringList", "get$IterableMixinWorkaround__toStringList", function() {
