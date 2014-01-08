@@ -47,14 +47,16 @@ class ElementUI {
   }
 
   html.DivElement getFormElement() {
-    html.DivElement inputDiv = new html.DivElement();
-    inputDiv.className = 'col-sm-9';
-    inputDiv.append(this.input);
+    html.DivElement inputDiv = new html.DivElement()
+    ..className = 'col-sm-9'
+    ..append(this.input);
 
-    html.DivElement outerDiv = new html.DivElement();
-    outerDiv.className = 'row';
-    outerDiv.append(this.label);
-    outerDiv.append(inputDiv);
+    html.DivElement outerDiv = new html.DivElement()
+    ..className = 'row'
+    ..hidden = this.type == 'list'
+    ..append(this.label)
+    ..append(inputDiv);
+
     return outerDiv;
   }
 
@@ -236,7 +238,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   html.DivElement rulesDiv;
   html.UListElement segmentList;
 
-  ElementUI instructions, question;
+  List<html.DivElement> refreshableDivs;
   OutputSegmentUI _dragSegment;
 
   SourceHumanDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
@@ -246,27 +248,54 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
 
   void initialize() {
     super.initialize();
-    //this.segmentList = new html.UListElement();
-    //this.parametersView.append(this.segmentList);
     this.addElement('segment-list', 'list', 'Available Segments', this.elements, features: {'class': 'list-inline segments'});
-    this.instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', this.elements);
-    this.question = this.addElement('question', 'editable', 'Question', this.elements);
+    ElementUI instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', this.elements);
+    ElementUI question = this.addElement('question', 'editable', 'Question', this.elements);
     this.configureHumanTasks();
+
+    this.refreshableDivs = new List<html.DivElement>();
+    instructions.input.onDrop.listen(_onSegmentDrop);
+    instructions.input.onDragOver.listen(_onSegmentDragOver);
+    question.input.onDrop.listen(_onSegmentDrop);
+    question.input.onDragOver.listen(_onSegmentDragOver);
+    this.refreshableDivs.add(instructions.input);
+    this.refreshableDivs.add(question.input);
   }
 
   bool refresh(OutputSpecification specification) {
     this.segmentList.children.clear();
     Map<String, OutputSegmentUI> prevSegments = specification.elements;
+    this.refreshableDivs.forEach((e) => this.refreshSegmentFromCurrent(e.querySelectorAll('span.segment-tag'), prevSegments));
     if (prevSegments.length > 0) {
-      prevSegments.forEach((id, segment) => this.segmentList.append(
-          new html.LIElement()
-          ..append(new html.SpanElement()
-            ..text = segment.name.text
-            ..id = segment.name.id
-            ..draggable = true
-            ..onDrag.listen((e) => _dragSegment = segment))));
+      prevSegments.forEach((id, segment) => this.refreshSegmentFromPrevious(id, segment));
+      this.segmentList.parent.parent.hidden = false;
+    }
+    else {
+      this.segmentList.parent.parent.hidden = true;
     }
     return true;
+  }
+
+  void refreshSegmentFromPrevious(String id, OutputSegmentUI segment) {
+    this.segmentList.append(
+        new html.LIElement()
+        ..append(new html.SpanElement()
+        ..text = segment.name.text
+        ..attributes['data-segment'] = segment.name.id
+        ..className = 'segment-name'
+        ..draggable = true
+        ..onDrag.listen((e) => _dragSegment = segment)));
+    this.refreshableDivs.forEach((e) => e.querySelectorAll('span[data-segment="$id"]').forEach((e) => e.querySelector('span.segment-name').text = segment.name.text));
+  }
+
+  void refreshSegmentFromCurrent(List<html.HtmlElement> segments, Map<String, OutputSegmentUI> prevSegments) {
+    print(segments.length);
+    for (int i = segments.length-1; i >= 0; i--) {
+      String segmentId = segments[i].attributes['data-segment'];
+      if (!prevSegments.containsKey(segmentId)) {
+        segments[i].remove();
+      }
+    }
   }
 
   void _onSegmentDrop(html.MouseEvent e) {
@@ -274,15 +303,17 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     String segmentValue = _dragSegment.name.text;
     (e.target as html.HtmlElement).append(
         new html.SpanElement()
-        ..id = segmentId
-        ..text = segmentValue
+        ..attributes['data-segment'] = segmentId
         ..contentEditable = 'false'
         ..className = 'segment-tag'
+        ..append(new html.SpanElement()
+          ..text = segmentValue
+          ..className = 'segment-name')
         ..append(
-            new html.SpanElement()
-            ..text = 'X'
-            ..className = 'segment-remove'
-            ..onClick.listen((e) => (e.target as html.SpanElement).parent.remove())));
+          new html.SpanElement()
+          ..text = 'X'
+          ..className = 'segment-remove'
+          ..onClick.listen((e) => (e.target as html.SpanElement).parent.remove())));
   }
 
   void _onSegmentDragOver(html.MouseEvent e) {
@@ -291,10 +322,6 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
 
   void configureHumanTasks() {
     this.segmentList = this.parametersView.querySelector('ul');
-    this.instructions.input.onDrop.listen(_onSegmentDrop);
-    this.instructions.input.onDragOver.listen(_onSegmentDragOver);
-    this.question.input.onDrop.listen(_onSegmentDrop);
-    this.question.input.onDragOver.listen(_onSegmentDragOver);
 
     this.addInput = new html.ButtonElement();
     this.addInput.text = 'Add';
@@ -360,25 +387,28 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
                                   ..className = 'form-control input-xs');
         break;
       case 'single':
-        elementRowConfig.append(new html.DivElement()
-        ..contentEditable = 'true'
-        ..className = 'form-control input-sm'
-        ..text = 'Enter options line by line'
-        ..onDrop.listen(_onSegmentDrop)
-        ..onDragOver.listen(_onSegmentDragOver));
+        html.DivElement newEditableDiv = this.getEditableDiv();
+        this.refreshableDivs.add(newEditableDiv);
+        elementRowConfig.append(newEditableDiv);
         break;
       case 'multiple':
-        elementRowConfig.append(new html.DivElement()
-        ..contentEditable = 'true'
-        ..className = 'form-control input-sm'
-        ..text = 'Enter options line by line'
-        ..onDrop.listen(_onSegmentDrop)
-        ..onDragOver.listen(_onSegmentDragOver));
+        html.DivElement newEditableDiv = this.getEditableDiv();
+        this.refreshableDivs.add(newEditableDiv);
+        elementRowConfig.append(newEditableDiv);
         break;
     }
 
     count += 1;
     this.elementsDiv.append(elementRow);
+  }
+
+  html.DivElement getEditableDiv() {
+    return new html.DivElement()
+    ..contentEditable = 'true'
+    ..className = 'form-control input-sm'
+    ..text = 'Enter options line by line'
+    ..onDrop.listen(_onSegmentDrop)
+    ..onDragOver.listen(_onSegmentDragOver);
   }
 
   void _deleteInput(html.MouseEvent e, String rowId) {

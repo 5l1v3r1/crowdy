@@ -3470,6 +3470,7 @@ ElementUI: {"": "Object;id,type',label,input<",
     inputDiv.appendChild(this.input);
     outerDiv = document.createElement("div", null);
     outerDiv.className = "row";
+    outerDiv.hidden = this.type === "list";
     outerDiv.appendChild(this.label);
     outerDiv.appendChild(inputDiv);
     return outerDiv;
@@ -3498,9 +3499,9 @@ ElementUI: {"": "Object;id,type',label,input<",
     t1 = this.type;
     switch (t1) {
       case "editable":
-        this.input = document.createElement("div", null);
-        this.input.contentEditable = "true";
-        this.input.className = "content-editable";
+        t1 = document.createElement("div", null);
+        t1.contentEditable = "true";
+        this.input = t1;
         break;
       case "list":
         this.input = document.createElement("ul", null);
@@ -3697,33 +3698,133 @@ SourceFileDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,ba
   }
 },
 
-SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,rulesDiv,segmentList,instructions,question,_dragSegment,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,rulesDiv,segmentList,refreshableDivs,_dragSegment,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
+    var instructions, question, t1, t2, t3, t4;
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$5$features("segment-list", "list", "Available Segments", this.elements, H.fillLiteralMap(["class", "list-inline segments"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-    this.instructions = this.addElement$4("instructions", "editable", "Instructions for human workers", this.elements);
-    this.question = this.addElement$4("question", "editable", "Question", this.elements);
+    instructions = this.addElement$4("instructions", "editable", "Instructions for human workers", this.elements);
+    question = this.addElement$4("question", "editable", "Question", this.elements);
     this.configureHumanTasks$0();
+    t1 = P.List_List(null, W.DivElement);
+    H.setRuntimeTypeInfo(t1, [W.DivElement]);
+    this.refreshableDivs = t1;
+    t1 = instructions.input;
+    t1.toString;
+    t2 = C.EventStreamProvider_drop._eventType;
+    t1 = new W._ElementEventStreamImpl(t1, t2, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t3 = this.get$_onSegmentDrop();
+    t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t3._tryResume$0();
+    t3 = instructions.input;
+    t3.toString;
+    t1 = C.EventStreamProvider_dragover._eventType;
+    t3 = new W._ElementEventStreamImpl(t3, t1, false);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t4 = this.get$_onSegmentDragOver();
+    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
+    t4._tryResume$0();
+    t4 = question.input;
+    t4.toString;
+    t2 = new W._ElementEventStreamImpl(t4, t2, false);
+    H.setRuntimeTypeInfo(t2, [null]);
+    t4 = this.get$_onSegmentDrop();
+    t4 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t4), t2._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t4._tryResume$0();
+    t4 = question.input;
+    t4.toString;
+    t1 = new W._ElementEventStreamImpl(t4, t1, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t4 = this.get$_onSegmentDragOver();
+    t4 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t4), t1._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t4._tryResume$0();
+    this.refreshableDivs.push(instructions.input);
+    this.refreshableDivs.push(question.input);
   },
   refresh$1: function(specification) {
     var t1, prevSegments;
     t1 = J.get$children$x(this.segmentList);
     t1.clear$0(t1);
     prevSegments = specification.elements;
-    if (prevSegments._collection$_length > 0)
-      prevSegments.forEach$1(prevSegments, new D.SourceHumanDetailsUI_refresh_closure(this));
+    t1 = this.refreshableDivs;
+    t1.toString;
+    H.IterableMixinWorkaround_forEach(t1, new D.SourceHumanDetailsUI_refresh_closure(this, prevSegments));
+    if (prevSegments._collection$_length > 0) {
+      prevSegments.forEach$1(prevSegments, new D.SourceHumanDetailsUI_refresh_closure0(this));
+      this.segmentList.parentElement.parentElement.hidden = false;
+    } else
+      this.segmentList.parentElement.parentElement.hidden = true;
     return true;
   },
+  refreshSegmentFromPrevious$2: function(id, segment) {
+    var t1, t2, t3, t4, t5;
+    t1 = this.segmentList;
+    t2 = document.createElement("li", null);
+    t3 = document.createElement("span", null);
+    t4 = J.getInterceptor$x(segment);
+    t3.textContent = J.get$text$x(t4.get$name(segment));
+    t3.toString;
+    new W._ElementAttributeMap(t3)._element.setAttribute("data-segment", J.get$id$x(t4.get$name(segment)));
+    t3.className = "segment-name";
+    t3.draggable = true;
+    t4 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_drag._eventType, false);
+    H.setRuntimeTypeInfo(t4, [null]);
+    t5 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(new D.SourceHumanDetailsUI_refreshSegmentFromPrevious_closure(this, segment)), t4._useCapture);
+    H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
+    t5._tryResume$0();
+    t2.appendChild(t3);
+    t1.appendChild(t2);
+    t2 = this.refreshableDivs;
+    t2.toString;
+    H.IterableMixinWorkaround_forEach(t2, new D.SourceHumanDetailsUI_refreshSegmentFromPrevious_closure0(id, segment));
+  },
+  refreshSegmentFromCurrent$2: function(segments, prevSegments) {
+    var t1, i, t2, t3;
+    t1 = segments._nodeList;
+    P.print(t1.length);
+    for (i = t1.length - 1; i >= 0; --i) {
+      if (i >= t1.length)
+        throw H.ioore(t1, i);
+      if (!prevSegments.containsKey$1(J.get$attributes$x(t1[i])._element.getAttribute("data-segment"))) {
+        if (i >= t1.length)
+          throw H.ioore(t1, i);
+        t2 = t1[i];
+        t3 = t2.parentNode;
+        if (t3 != null)
+          t3.removeChild(t2);
+      }
+    }
+  },
   _onSegmentDrop$1: function(e) {
-    var segmentId, segmentValue, t1, t2;
+    var segmentId, segmentValue, t1, t2, t3, t4, t5;
     segmentId = J.get$id$x(J.get$name$x(this._dragSegment));
     segmentValue = J.get$text$x(J.get$name$x(this._dragSegment));
     t1 = H.interceptedTypeCast(J.get$target$x(e), "$isHtmlElement");
     t2 = document.createElement("span", null);
-    t2.id = segmentId;
-    t2.textContent = segmentValue;
+    t2.toString;
+    new W._ElementAttributeMap(t2)._element.setAttribute("data-segment", segmentId);
+    t2.contentEditable = "false";
+    t2.className = "segment-tag";
+    t3 = document.createElement("span", null);
+    t3.textContent = segmentValue;
+    t3.className = "segment-name";
+    t2.appendChild(t3);
+    t3 = document.createElement("span", null);
+    t3.textContent = "X";
+    t3.className = "segment-remove";
+    t3.toString;
+    t4 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_click._eventType, false);
+    H.setRuntimeTypeInfo(t4, [null]);
+    t5 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(new D.SourceHumanDetailsUI__onSegmentDrop_closure()), t4._useCapture);
+    H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
+    t5._tryResume$0();
+    t2.appendChild(t3);
     t1.appendChild(t2);
-    P.print("Dropping");
   },
   get$_onSegmentDrop: function() {
     return new H.BoundClosure$1(this, D.SourceHumanDetailsUI.prototype._onSegmentDrop$1, null, "_onSegmentDrop$1");
@@ -3735,57 +3836,23 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
     return new H.BoundClosure$1(this, D.SourceHumanDetailsUI.prototype._onSegmentDragOver$1, null, "_onSegmentDragOver$1");
   },
   configureHumanTasks$0: function() {
-    var t1, t2, t3, t4, buttonDiv, outerDiv;
+    var t1, t2, buttonDiv, outerDiv;
     this.segmentList = this.parametersView.querySelector("ul");
-    t1 = this.instructions.input;
-    t1.toString;
-    t2 = C.EventStreamProvider_drop._eventType;
-    t1 = new W._ElementEventStreamImpl(t1, t2, false);
-    H.setRuntimeTypeInfo(t1, [null]);
-    t3 = this.get$_onSegmentDrop();
-    t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
-    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
-    t3._tryResume$0();
-    t3 = this.instructions.input;
-    t3.toString;
-    t1 = C.EventStreamProvider_dragover._eventType;
-    t3 = new W._ElementEventStreamImpl(t3, t1, false);
-    H.setRuntimeTypeInfo(t3, [null]);
-    t4 = this.get$_onSegmentDragOver();
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
-    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
-    t4._tryResume$0();
-    t4 = this.question.input;
-    t4.toString;
-    t2 = new W._ElementEventStreamImpl(t4, t2, false);
-    H.setRuntimeTypeInfo(t2, [null]);
-    t4 = this.get$_onSegmentDrop();
-    t4 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t4), t2._useCapture);
-    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t4._tryResume$0();
-    t4 = this.question.input;
-    t4.toString;
-    t1 = new W._ElementEventStreamImpl(t4, t1, false);
-    H.setRuntimeTypeInfo(t1, [null]);
-    t4 = this.get$_onSegmentDragOver();
-    t4 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t4), t1._useCapture);
-    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
-    t4._tryResume$0();
     this.addInput = document.createElement("button", null);
     this.addInput.textContent = "Add";
     this.addInput.className = "btn btn-default btn-xs";
-    t4 = this.addInput;
-    t4.toString;
-    t4 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_click._eventType, false);
-    H.setRuntimeTypeInfo(t4, [null]);
-    t1 = this.get$_addNewInput();
-    t1 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(t1), t4._useCapture);
-    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
-    t1._tryResume$0();
+    t1 = this.addInput;
+    t1.toString;
+    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t2 = this.get$_addNewInput();
+    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t2._tryResume$0();
     this.availableInputs = document.createElement("select", null);
     this.availableInputs.className = "form-control input-xs";
-    t1 = $.get$SOURCE_OPTIONS_HUMAN_INPUTS();
-    t1.forEach$1(t1, new D.SourceHumanDetailsUI_configureHumanTasks_closure(this));
+    t2 = $.get$SOURCE_OPTIONS_HUMAN_INPUTS();
+    t2.forEach$1(t2, new D.SourceHumanDetailsUI_configureHumanTasks_closure(this));
     buttonDiv = document.createElement("div", null);
     buttonDiv.className = "col-sm-3";
     buttonDiv.appendChild(this.addInput);
@@ -3800,7 +3867,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
     this.parametersView.appendChild(outerDiv);
   },
   _addNewInput$1: function(e) {
-    var elementRow, inputType, elementRowDefinition, t1, elementRowConfig, t2, t3;
+    var elementRow, inputType, elementRowDefinition, t1, elementRowConfig, t2, t3, newEditableDiv;
     elementRow = document.createElement("div", null);
     elementRow.className = "row rule";
     elementRow.id = "segment-" + H.Primitives_objectHashCode(elementRow);
@@ -3845,16 +3912,14 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
         elementRowConfig.appendChild(t1);
         break;
       case "single":
-        t1 = document.createElement("textarea", null);
-        t1.className = "form-control input-sm";
-        J.set$placeholder$x(t1, "Enter options line by line");
-        elementRowConfig.appendChild(t1);
+        newEditableDiv = this.getEditableDiv$0();
+        this.refreshableDivs.push(newEditableDiv);
+        elementRowConfig.appendChild(newEditableDiv);
         break;
       case "multiple":
-        t1 = document.createElement("textarea", null);
-        t1.className = "form-control input-sm";
-        J.set$placeholder$x(t1, "Enter options line by line");
-        elementRowConfig.appendChild(t1);
+        newEditableDiv = this.getEditableDiv$0();
+        this.refreshableDivs.push(newEditableDiv);
+        elementRowConfig.appendChild(newEditableDiv);
         break;
       default:
     }
@@ -3863,6 +3928,27 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
   },
   get$_addNewInput: function() {
     return new H.BoundClosure$1(this, D.SourceHumanDetailsUI.prototype._addNewInput$1, null, "_addNewInput$1");
+  },
+  getEditableDiv$0: function() {
+    var t1, t2, t3;
+    t1 = document.createElement("div", null);
+    t1.contentEditable = "true";
+    t1.className = "form-control input-sm";
+    t1.textContent = "Enter options line by line";
+    t1.toString;
+    t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_drop._eventType, false);
+    H.setRuntimeTypeInfo(t2, [null]);
+    t3 = this.get$_onSegmentDrop();
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t3), t2._useCapture);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t3._tryResume$0();
+    t3 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_dragover._eventType, false);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t2 = this.get$_onSegmentDragOver();
+    t2 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t2), t3._useCapture);
+    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
+    t2._tryResume$0();
+    return t1;
   },
   _deleteInput$2: function(e, rowId) {
     J.remove$0$ax(this.elementsDiv.querySelector("#" + rowId));
@@ -3879,7 +3965,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
   static: {
 "": "SourceHumanDetailsUI_count",
 SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
-  var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
+  var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
   t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
   t1.SourceHumanDetailsUI$4(id, type, prevConn, nextConn);
   return t1;
@@ -3887,34 +3973,51 @@ SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
 
 },
 
-SourceHumanDetailsUI_refresh_closure: {"": "Closure;this_0",
+SourceHumanDetailsUI_refresh_closure: {"": "Closure;this_0,prevSegments_1",
+  call$1: function(e) {
+    return this.this_0.refreshSegmentFromCurrent$2(J.querySelectorAll$1$x(e, "span.segment-tag"), this.prevSegments_1);
+  },
+  $is_args1: true
+},
+
+SourceHumanDetailsUI_refresh_closure0: {"": "Closure;this_2",
   call$2: function(id, segment) {
-    var t1, t2, t3, t4, t5;
-    t1 = this.this_0;
-    t2 = t1.segmentList;
-    t3 = document.createElement("li", null);
-    t4 = document.createElement("span", null);
-    t5 = J.getInterceptor$x(segment);
-    t4.textContent = J.get$text$x(t5.get$name(segment));
-    t4.id = J.get$id$x(t5.get$name(segment));
-    t4.draggable = true;
-    t4.toString;
-    t5 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_drag._eventType, false);
-    H.setRuntimeTypeInfo(t5, [null]);
-    t1 = new W._EventStreamSubscription(0, t5._html$_target, t5._eventType, W._wrapZone(new D.SourceHumanDetailsUI_refresh__closure(t1, segment)), t5._useCapture);
-    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t5, "_EventStream", 0)]);
-    t1._tryResume$0();
-    t3.appendChild(t4);
-    return t2.appendChild(t3);
+    return this.this_2.refreshSegmentFromPrevious$2(id, segment);
   },
   $is_args2: true
 },
 
-SourceHumanDetailsUI_refresh__closure: {"": "Closure;this_1,segment_2",
+SourceHumanDetailsUI_refreshSegmentFromPrevious_closure: {"": "Closure;this_0,segment_1",
   call$1: function(e) {
-    var t1 = this.segment_2;
-    this.this_1._dragSegment = t1;
+    var t1 = this.segment_1;
+    this.this_0._dragSegment = t1;
     return t1;
+  },
+  $is_args1: true
+},
+
+SourceHumanDetailsUI_refreshSegmentFromPrevious_closure0: {"": "Closure;id_2,segment_3",
+  call$1: function(e) {
+    var t1 = J.querySelectorAll$1$x(e, "span[data-segment=\"" + H.S(this.id_2) + "\"]");
+    return t1.forEach$1(t1, new D.SourceHumanDetailsUI_refreshSegmentFromPrevious__closure(this.segment_3));
+  },
+  $is_args1: true
+},
+
+SourceHumanDetailsUI_refreshSegmentFromPrevious__closure: {"": "Closure;segment_4",
+  call$1: function(e) {
+    var t1, t2;
+    t1 = J.querySelector$1$x(e, "span.segment-name");
+    t2 = J.get$text$x(J.get$name$x(this.segment_4));
+    t1.textContent = t2;
+    return t2;
+  },
+  $is_args1: true
+},
+
+SourceHumanDetailsUI__onSegmentDrop_closure: {"": "Closure;",
+  call$1: function(e) {
+    return J.remove$0$ax(H.interceptedTypeCast(J.get$target$x(e), "$isSpanElement").parentElement);
   },
   $is_args1: true
 },
@@ -4387,10 +4490,8 @@ BaseOperatorUI: {"": "Object;group<",
   },
   _onKeyDown$1: function(e) {
     var t1;
-    if (J.get$keyCode$x(e) === 8)
-      e.preventDefault();
-    if ($.selectedOperator === this && e.keyCode === 8 && J.get$display$x($.get$modal().style) !== "block") {
-      e.preventDefault();
+    if ($.selectedOperator === this && J.get$keyCode$x(e) === 8 && J.get$display$x($.get$modal().style) !== "block") {
+      J.preventDefault$0$x(e);
       this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
       t1 = J.get$children$x($.canvas);
       t1.remove$1(t1, this.group);
@@ -9128,7 +9229,7 @@ _wrapZone: function(callback) {
   return t1.bindUnaryCallback$2$runGuarded(callback, true);
 },
 
-HtmlElement: {"": "Element;", $isHtmlElement: true, "%": "HTMLAppletElement|HTMLBRElement|HTMLBaseFontElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLSpanElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"},
+HtmlElement: {"": "Element;", $isHtmlElement: true, "%": "HTMLAppletElement|HTMLBRElement|HTMLBaseFontElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"},
 
 AnchorElement: {"": "HtmlElement;hostname=,href},port=,protocol=,target=,type}",
   toString$0: function(receiver) {
@@ -9183,6 +9284,18 @@ CustomEvent: {"": "Event;_dartDetail}",
 
 DataListElement: {"": "HtmlElement;options=", "%": "HTMLDataListElement"},
 
+DivElement: {"": "HtmlElement;", "%": "HTMLDivElement"},
+
+Document: {"": "Node;",
+  querySelector$1: function(receiver, selectors) {
+    return receiver.querySelector(selectors);
+  },
+  querySelectorAll$1: function(receiver, selectors) {
+    return W._FrozenElementList$_wrap(receiver.querySelectorAll(selectors), null);
+  },
+  "%": "Document|HTMLDocument|SVGDocument"
+},
+
 DocumentFragment: {"": "Node;",
   get$children: function(receiver) {
     var t1;
@@ -9192,6 +9305,12 @@ DocumentFragment: {"": "Node;",
       receiver._children = t1;
     }
     return receiver._children;
+  },
+  querySelectorAll$1: function(receiver, selectors) {
+    return W._FrozenElementList$_wrap(receiver.querySelectorAll(selectors), null);
+  },
+  querySelector$1: function(receiver, selectors) {
+    return receiver.querySelector(selectors);
   },
   "%": "DocumentFragment|ShadowRoot"
 },
@@ -9219,6 +9338,9 @@ Element: {"": "Node;className%,id=",
   },
   get$children: function(receiver) {
     return new W._ChildrenElementList(receiver, receiver.children);
+  },
+  querySelectorAll$1: function(receiver, selectors) {
+    return W._FrozenElementList$_wrap(receiver.querySelectorAll(selectors), null);
   },
   get$classes: function(receiver) {
     return new W._ElementCssClassSet(receiver);
@@ -9337,6 +9459,9 @@ Element: {"": "Node;className%,id=",
   },
   getBoundingClientRect$0: function(receiver) {
     return receiver.getBoundingClientRect();
+  },
+  querySelector$1: function(receiver, selectors) {
+    return receiver.querySelector(selectors);
   },
   $isElement: true,
   "%": ";Element"
@@ -9504,7 +9629,7 @@ Node: {"": "EventTarget;lastChild=,nodeType=,text:textContent%",
   _replaceChild$2: function(receiver, newChild, oldChild) {
     return receiver.replaceChild(newChild, oldChild);
   },
-  "%": "Document|DocumentType|Entity|HTMLDocument|Notation|SVGDocument;Node"
+  "%": "DocumentType|Entity|Notation;Node"
 },
 
 NodeList: {"": "Interceptor_ListMixin_ImmutableListMixin0;",
@@ -9576,6 +9701,8 @@ SelectElement: {"": "HtmlElement;length=,name=,value%",
 },
 
 SourceElement: {"": "HtmlElement;type}", "%": "HTMLSourceElement"},
+
+SpanElement: {"": "HtmlElement;", $isSpanElement: true, "%": "HTMLSpanElement"},
 
 SpeechRecognitionError: {"": "Event;error=", "%": "SpeechRecognitionError"},
 
@@ -11589,6 +11716,9 @@ W.NodeValidator.$isNodeValidator = true;
 W.NodeValidator.$isObject = true;
 D.OutputSegmentUI.$isObject = true;
 D.ElementUI.$isObject = true;
+W.DivElement.$isElement = true;
+W.DivElement.$isNode = true;
+W.DivElement.$isObject = true;
 W.Event.$isObject = true;
 P.ReceivePort.$isStream = true;
 P.ReceivePort.$asStream = [null];
@@ -12054,6 +12184,12 @@ J.insertAdjacentText$2$x = function(receiver, a0, a1) {
 };
 J.preventDefault$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).preventDefault$0(receiver);
+};
+J.querySelector$1$x = function(receiver, a0) {
+  return J.getInterceptor$x(receiver).querySelector$1(receiver, a0);
+};
+J.querySelectorAll$1$x = function(receiver, a0) {
+  return J.getInterceptor$x(receiver).querySelectorAll$1(receiver, a0);
 };
 J.remove$0$ax = function(receiver) {
   return J.getInterceptor$ax(receiver).remove$0(receiver);
