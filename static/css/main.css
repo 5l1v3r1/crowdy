@@ -40,21 +40,40 @@ textarea.form-control {
   max-width: 100%;
 }
 
-[contenteditable="true"],
-[contenteditable="false"] {
-  border: 1px dashed #ccc;
-  padding: 3px 6px;
-  font-style: italic;
+div[contenteditable="true"] {
+  width: 100%;
+  min-height: 80px;
+  max-height: 180px;
+  overflow: scroll;
 }
 
-[contenteditable="true"]:hover,
-[contenteditable="true"]:focus {
-  background: #F3F781;
+span.segment-tag,
+span[contenteditable="true"],
+span[contenteditable="false"],
+#operator_modal > .modal-dialog > .modal-content > .modal-body ul.segments > li > span[draggable] {
+  background-color: #E0EAF1;
+  border-bottom: 1px solid #b3cee1;
+  border-right: 1px solid #b3cee1;
+  padding: 3px 4px 3px 4px;
+  margin: 2px 2px 2px 0;
+  text-decoration: none;
 }
 
-[contenteditable="false"]:hover,
-[contenteditable="false"]:focus {
-  background: #CCC;
+span[contenteditable="true"]:hover,
+span[contenteditable="true"]:focus {
+  background: #FAFDFF;
+}
+
+span[contenteditable="false"]:hover,
+span[contenteditable="false"]:focus {
+  background: #B9C4CC;
+}
+
+span.segment-remove {
+  cursor: pointer;
+  margin: 0 2px;
+  background: #eee;
+  color: #aaa;
 }
 
 /*
@@ -207,6 +226,10 @@ div.container > div.row > div.section.side > div.panel-group > div.panel > div.p
   -moz-transition: -moz-transform 0.2s ease-out;
   -ms-transition: -moz-transform 0.2s ease-out;
   transition: transform 0.2s ease-out;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body > ul.units > li[draggable]:before {
+  content: "::";  
 }
 
 div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body > ul.units > li[draggable] {
@@ -388,6 +411,21 @@ section > svg#app_container > defs > marker#flow_marker:hover {
 
 #operator_modal > .modal-dialog > .modal-content > .modal-body > div .row {
   margin-bottom: 5px;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body ul.segments > li > span {
+  padding: 2px;
+  background: #ddd;
+  border: 1px solid #d8d8d8;
+  color: #4c4d4f;
+  font-weight: 300;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body ul.segments > li > span[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 #operator_modal > .modal-dialog > .modal-content > .modal-body .output-specification ul.segment-list > li {

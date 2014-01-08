@@ -52,7 +52,6 @@ class FlowLineUI {
     if (this.selected && e.keyCode == 8) {
       e.preventDefault();
       this.remove();
-      //canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_REMOVE, detail: [this.from.group.attributes['id'], this.to.group.attributes['id']]));
     }
   }
 

@@ -2560,8 +2560,7 @@ Application: {"": "Object;log,ui",
   _onDrop$1: function(e) {
     var t1, dropTarget, t2, operatorId;
     t1 = J.getInterceptor$x(e);
-    t1.stopImmediatePropagation$0(e);
-    dropTarget = W._convertNativeToDart_EventTarget(e.target);
+    dropTarget = t1.get$target(e);
     t2 = $._dragSource;
     if (t2 == null ? dropTarget != null : t2 !== dropTarget) {
       operatorId = "operator_" + $.opNumber;
@@ -2951,20 +2950,8 @@ SinkEmailOperator$: function(id, type, mouseX, mouseY) {
 
 HumanProcessingOperator: {"": "Operator;log,id,type,ui,details,next,prev",
   HumanProcessingOperator$4: function(id, type, mouseX, mouseY) {
-    var t1, t2, t3, t4, t5;
     this.ui = D.ProcessingOperatorUI$(this.id, mouseX, mouseY, 80, 60);
-    t1 = this.id;
-    t2 = this.type;
-    t3 = this.prev;
-    t4 = this.next;
-    t5 = new D.ProcessingDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null);
-    t5.BaseDetailsUI$4(t1, t2, t3, t4);
-    t4 = t5.id;
-    t3 = new D.OutputSpecification(t4, null, null, null, null, null);
-    t3.BaseSpecification$1(t4);
-    t5.output = t3;
-    t5.view.appendChild(t5.output.view);
-    this.details = t5;
+    this.details = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
   },
   static: {
 HumanProcessingOperator$: function(id, type, mouseX, mouseY) {
@@ -3510,6 +3497,14 @@ ElementUI: {"": "Object;id,type',label,input<",
     this.label = t1;
     t1 = this.type;
     switch (t1) {
+      case "editable":
+        this.input = document.createElement("div", null);
+        this.input.contentEditable = "true";
+        this.input.className = "content-editable";
+        break;
+      case "list":
+        this.input = document.createElement("ul", null);
+        break;
       case "select":
         this.input = document.createElement("select", null);
         for (options.length, i = 0; i < 5; ++i) {
@@ -3535,7 +3530,9 @@ ElementUI: {"": "Object;id,type',label,input<",
     if (attributes != null)
       attributes.forEach$1(attributes, new D.ElementUI_closure(this));
     this.input.id = this.id;
-    this.input.className = "form-control";
+    t1 = this.input;
+    if (t1.className.length === 0)
+      t1.className = "form-control";
   },
   static: {
 ElementUI$: function(id, type, description, attributes, options) {
@@ -3574,6 +3571,7 @@ BaseDetailsUI: {"": "Object;type'",
       this.detailsView.appendChild(newElement.getFormElement$0());
     else
       this.parametersView.appendChild(newElement.getFormElement$0());
+    return newElement;
   },
   addElement$5$features: function(identifier, type, description, list, features) {
     return this.addElement$6$features$options(identifier, type, description, list, features, null);
@@ -3699,30 +3697,95 @@ SourceFileDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,ba
   }
 },
 
-SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,rulesDiv,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,rulesDiv,segmentList,instructions,question,_dragSegment,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
-    this.addElement$5$features("input", "textarea", "Instructions for human workers", this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-    this.addElement$4("question", "text", "Question", this.elements);
+    this.addElement$5$features("segment-list", "list", "Available Segments", this.elements, H.fillLiteralMap(["class", "list-inline segments"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+    this.instructions = this.addElement$4("instructions", "editable", "Instructions for human workers", this.elements);
+    this.question = this.addElement$4("question", "editable", "Question", this.elements);
     this.configureHumanTasks$0();
   },
+  refresh$1: function(specification) {
+    var t1, prevSegments;
+    t1 = J.get$children$x(this.segmentList);
+    t1.clear$0(t1);
+    prevSegments = specification.elements;
+    if (prevSegments._collection$_length > 0)
+      prevSegments.forEach$1(prevSegments, new D.SourceHumanDetailsUI_refresh_closure(this));
+    return true;
+  },
+  _onSegmentDrop$1: function(e) {
+    var segmentId, segmentValue, t1, t2;
+    segmentId = J.get$id$x(J.get$name$x(this._dragSegment));
+    segmentValue = J.get$text$x(J.get$name$x(this._dragSegment));
+    t1 = H.interceptedTypeCast(J.get$target$x(e), "$isHtmlElement");
+    t2 = document.createElement("span", null);
+    t2.id = segmentId;
+    t2.textContent = segmentValue;
+    t1.appendChild(t2);
+    P.print("Dropping");
+  },
+  get$_onSegmentDrop: function() {
+    return new H.BoundClosure$1(this, D.SourceHumanDetailsUI.prototype._onSegmentDrop$1, null, "_onSegmentDrop$1");
+  },
+  _onSegmentDragOver$1: function(e) {
+    J.preventDefault$0$x(e);
+  },
+  get$_onSegmentDragOver: function() {
+    return new H.BoundClosure$1(this, D.SourceHumanDetailsUI.prototype._onSegmentDragOver$1, null, "_onSegmentDragOver$1");
+  },
   configureHumanTasks$0: function() {
-    var t1, t2, buttonDiv, outerDiv;
+    var t1, t2, t3, t4, buttonDiv, outerDiv;
+    this.segmentList = this.parametersView.querySelector("ul");
+    t1 = this.instructions.input;
+    t1.toString;
+    t2 = C.EventStreamProvider_drop._eventType;
+    t1 = new W._ElementEventStreamImpl(t1, t2, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t3 = this.get$_onSegmentDrop();
+    t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t3._tryResume$0();
+    t3 = this.instructions.input;
+    t3.toString;
+    t1 = C.EventStreamProvider_dragover._eventType;
+    t3 = new W._ElementEventStreamImpl(t3, t1, false);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t4 = this.get$_onSegmentDragOver();
+    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
+    t4._tryResume$0();
+    t4 = this.question.input;
+    t4.toString;
+    t2 = new W._ElementEventStreamImpl(t4, t2, false);
+    H.setRuntimeTypeInfo(t2, [null]);
+    t4 = this.get$_onSegmentDrop();
+    t4 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t4), t2._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t4._tryResume$0();
+    t4 = this.question.input;
+    t4.toString;
+    t1 = new W._ElementEventStreamImpl(t4, t1, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t4 = this.get$_onSegmentDragOver();
+    t4 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t4), t1._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+    t4._tryResume$0();
     this.addInput = document.createElement("button", null);
     this.addInput.textContent = "Add";
     this.addInput.className = "btn btn-default btn-xs";
-    t1 = this.addInput;
-    t1.toString;
-    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
-    H.setRuntimeTypeInfo(t1, [null]);
-    t2 = this.get$_addNewInput();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
-    H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
-    t2._tryResume$0();
+    t4 = this.addInput;
+    t4.toString;
+    t4 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_click._eventType, false);
+    H.setRuntimeTypeInfo(t4, [null]);
+    t1 = this.get$_addNewInput();
+    t1 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(t1), t4._useCapture);
+    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
+    t1._tryResume$0();
     this.availableInputs = document.createElement("select", null);
     this.availableInputs.className = "form-control input-xs";
-    t2 = $.get$SOURCE_OPTIONS_HUMAN_INPUTS();
-    t2.forEach$1(t2, new D.SourceHumanDetailsUI_configureHumanTasks_closure(this));
+    t1 = $.get$SOURCE_OPTIONS_HUMAN_INPUTS();
+    t1.forEach$1(t1, new D.SourceHumanDetailsUI_configureHumanTasks_closure(this));
     buttonDiv = document.createElement("div", null);
     buttonDiv.className = "col-sm-3";
     buttonDiv.appendChild(this.addInput);
@@ -3816,12 +3879,44 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
   static: {
 "": "SourceHumanDetailsUI_count",
 SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
-  var t1 = new D.SourceHumanDetailsUI(null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
+  var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
   t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
   t1.SourceHumanDetailsUI$4(id, type, prevConn, nextConn);
   return t1;
 }}
 
+},
+
+SourceHumanDetailsUI_refresh_closure: {"": "Closure;this_0",
+  call$2: function(id, segment) {
+    var t1, t2, t3, t4, t5;
+    t1 = this.this_0;
+    t2 = t1.segmentList;
+    t3 = document.createElement("li", null);
+    t4 = document.createElement("span", null);
+    t5 = J.getInterceptor$x(segment);
+    t4.textContent = J.get$text$x(t5.get$name(segment));
+    t4.id = J.get$id$x(t5.get$name(segment));
+    t4.draggable = true;
+    t4.toString;
+    t5 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_drag._eventType, false);
+    H.setRuntimeTypeInfo(t5, [null]);
+    t1 = new W._EventStreamSubscription(0, t5._html$_target, t5._eventType, W._wrapZone(new D.SourceHumanDetailsUI_refresh__closure(t1, segment)), t5._useCapture);
+    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t5, "_EventStream", 0)]);
+    t1._tryResume$0();
+    t3.appendChild(t4);
+    return t2.appendChild(t3);
+  },
+  $is_args2: true
+},
+
+SourceHumanDetailsUI_refresh__closure: {"": "Closure;this_1,segment_2",
+  call$1: function(e) {
+    var t1 = this.segment_2;
+    this.this_1._dragSegment = t1;
+    return t1;
+  },
+  $is_args1: true
 },
 
 SourceHumanDetailsUI_configureHumanTasks_closure: {"": "Closure;this_0",
@@ -3934,13 +4029,6 @@ SinkEmailDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,bas
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$4("email", "email", "email address", this.elements);
-  }
-},
-
-ProcessingDetailsUI: {"": "OutputDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
-  initialize$0: function(_) {
-    D.BaseDetailsUI.prototype.initialize$0.call(this, this);
-    this.addElement$5$features("input", "textarea", "Instructions", this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
   }
 },
 
@@ -9040,7 +9128,7 @@ _wrapZone: function(callback) {
   return t1.bindUnaryCallback$2$runGuarded(callback, true);
 },
 
-HtmlElement: {"": "Element;", "%": "HTMLAppletElement|HTMLBRElement|HTMLBaseFontElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLSpanElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"},
+HtmlElement: {"": "Element;", $isHtmlElement: true, "%": "HTMLAppletElement|HTMLBRElement|HTMLBaseFontElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLDivElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLSpanElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"},
 
 AnchorElement: {"": "HtmlElement;hostname=,href},port=,protocol=,target=,type}",
   toString$0: function(receiver) {
@@ -9264,9 +9352,6 @@ Event: {"": "Interceptor;",
   },
   preventDefault$0: function(receiver) {
     return receiver.preventDefault();
-  },
-  stopImmediatePropagation$0: function(receiver) {
-    return receiver.stopImmediatePropagation();
   },
   "%": "AudioProcessingEvent|AutocompleteErrorEvent|BeforeLoadEvent|BeforeUnloadEvent|CSSFontFaceLoadEvent|CloseEvent|DeviceMotionEvent|DeviceOrientationEvent|HashChangeEvent|IDBVersionChangeEvent|MIDIConnectionEvent|MIDIMessageEvent|MediaKeyEvent|MediaKeyMessageEvent|MediaKeyNeededEvent|MediaStreamEvent|MediaStreamTrackEvent|MessageEvent|MutationEvent|OfflineAudioCompletionEvent|OverflowEvent|PageTransitionEvent|PopStateEvent|ProgressEvent|RTCDTMFToneChangeEvent|RTCDataChannelEvent|RTCIceCandidateEvent|ResourceProgressEvent|SecurityPolicyViolationEvent|SpeechInputEvent|SpeechRecognitionEvent|StorageEvent|TrackEvent|TransitionEvent|WebGLContextEvent|WebKitAnimationEvent|WebKitTransitionEvent|XMLHttpRequestProgressEvent;Event"
 },
@@ -11623,6 +11708,7 @@ C.C__RootZone = new P._RootZone();
 C.Duration_0 = new P.Duration(0);
 C.EventStreamProvider_click = new W.EventStreamProvider("click");
 C.EventStreamProvider_dblclick = new W.EventStreamProvider("dblclick");
+C.EventStreamProvider_drag = new W.EventStreamProvider("drag");
 C.EventStreamProvider_dragend = new W.EventStreamProvider("dragend");
 C.EventStreamProvider_dragover = new W.EventStreamProvider("dragover");
 C.EventStreamProvider_dragstart = new W.EventStreamProvider("dragstart");

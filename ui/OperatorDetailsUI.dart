@@ -13,6 +13,13 @@ class ElementUI {
     ..className = 'col-sm-3 control-label';
 
     switch (this.type) {
+      case 'editable':
+        this.input = new html.DivElement()
+        ..contentEditable = 'true';
+        break;
+      case 'list':
+        this.input = new html.UListElement();
+        break;
       case 'select':
         this.input = new html.SelectElement();
         for(int i = 0; i < options.length; i++) {
@@ -34,7 +41,9 @@ class ElementUI {
     }
 
     this.input.id = this.id;
-    this.input.className = 'form-control';
+    if (this.input.className.isEmpty) {
+      this.input.className = 'form-control';
+    }
   }
 
   html.DivElement getFormElement() {
@@ -99,7 +108,7 @@ class BaseDetailsUI {
     this.addElement('description', 'textarea', 'Description', this.base, features: {'rows': '3'});
   }
 
-  void addElement(String identifier, String type, String description, Map<String, ElementUI> list,
+  ElementUI addElement(String identifier, String type, String description, Map<String, ElementUI> list,
                   { Map<String, String> features: null, List<String> options: null }) {
     ElementUI newElement = new ElementUI('${this.id}_${count}', type, description, options: options, attributes: features);
     list[identifier] = newElement;
@@ -111,6 +120,8 @@ class BaseDetailsUI {
     else {
       this.parametersView.append(newElement.getFormElement());
     }
+
+    return newElement;
   }
 
   void addTitles() {
@@ -223,6 +234,10 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   html.SelectElement availableInputs;
   html.DivElement elementsDiv;
   html.DivElement rulesDiv;
+  html.UListElement segmentList;
+
+  ElementUI instructions, question;
+  OutputSegmentUI _dragSegment;
 
   SourceHumanDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new InputHumanOutputSpecification(this.id);
@@ -231,12 +246,56 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
 
   void initialize() {
     super.initialize();
-    this.addElement('input', 'textarea', 'Instructions for human workers', this.elements, features: {'rows': '5'});
-    this.addElement('question', 'text', 'Question', this.elements);
+    //this.segmentList = new html.UListElement();
+    //this.parametersView.append(this.segmentList);
+    this.addElement('segment-list', 'list', 'Available Segments', this.elements, features: {'class': 'list-inline segments'});
+    this.instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', this.elements);
+    this.question = this.addElement('question', 'editable', 'Question', this.elements);
     this.configureHumanTasks();
   }
 
+  bool refresh(OutputSpecification specification) {
+    this.segmentList.children.clear();
+    Map<String, OutputSegmentUI> prevSegments = specification.elements;
+    if (prevSegments.length > 0) {
+      prevSegments.forEach((id, segment) => this.segmentList.append(
+          new html.LIElement()
+          ..append(new html.SpanElement()
+            ..text = segment.name.text
+            ..id = segment.name.id
+            ..draggable = true
+            ..onDrag.listen((e) => _dragSegment = segment))));
+    }
+    return true;
+  }
+
+  void _onSegmentDrop(html.MouseEvent e) {
+    String segmentId = _dragSegment.name.id;
+    String segmentValue = _dragSegment.name.text;
+    (e.target as html.HtmlElement).append(
+        new html.SpanElement()
+        ..id = segmentId
+        ..text = segmentValue
+        ..contentEditable = 'false'
+        ..className = 'segment-tag'
+        ..append(
+            new html.SpanElement()
+            ..text = 'X'
+            ..className = 'segment-remove'
+            ..onClick.listen((e) => (e.target as html.SpanElement).parent.remove())));
+  }
+
+  void _onSegmentDragOver(html.MouseEvent e) {
+    e.preventDefault();
+  }
+
   void configureHumanTasks() {
+    this.segmentList = this.parametersView.querySelector('ul');
+    this.instructions.input.onDrop.listen(_onSegmentDrop);
+    this.instructions.input.onDragOver.listen(_onSegmentDragOver);
+    this.question.input.onDrop.listen(_onSegmentDrop);
+    this.question.input.onDragOver.listen(_onSegmentDragOver);
+
     this.addInput = new html.ButtonElement();
     this.addInput.text = 'Add';
     this.addInput.className = 'btn btn-default btn-xs';
@@ -301,14 +360,20 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
                                   ..className = 'form-control input-xs');
         break;
       case 'single':
-        elementRowConfig.append(new html.TextAreaElement()
-                                  ..className = 'form-control input-sm'
-                                  ..placeholder = 'Enter options line by line');
+        elementRowConfig.append(new html.DivElement()
+        ..contentEditable = 'true'
+        ..className = 'form-control input-sm'
+        ..text = 'Enter options line by line'
+        ..onDrop.listen(_onSegmentDrop)
+        ..onDragOver.listen(_onSegmentDragOver));
         break;
       case 'multiple':
-        elementRowConfig.append(new html.TextAreaElement()
-                                  ..className = 'form-control input-sm'
-                                  ..placeholder = 'Enter options line by line');
+        elementRowConfig.append(new html.DivElement()
+        ..contentEditable = 'true'
+        ..className = 'form-control input-sm'
+        ..text = 'Enter options line by line'
+        ..onDrop.listen(_onSegmentDrop)
+        ..onDragOver.listen(_onSegmentDragOver));
         break;
     }
 

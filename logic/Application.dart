@@ -62,12 +62,6 @@ class Application {
     }
   }
 
-  /*
-  void removeLine(html.CustomEvent e) {
-    operators[e.detail[0]].removeNext(e.detail[1]);
-    operators[e.detail[1]].removePrevious(e.detail[0]);
-  }*/
-
   void _onDragStart(html.MouseEvent e) {
     html.Element dragTarget = e.target;
     dragTarget.classes.add('moving');
@@ -87,7 +81,7 @@ class Application {
   }
 
   void _onDrop(html.MouseEvent e) {
-    e.stopImmediatePropagation(); // .stopPropagation();
+    //e.stopImmediatePropagation(); // .stopPropagation();
     html.Element dropTarget = e.target;
     if (_dragSource != dropTarget) {
       String operatorId = 'operator_$opNumber';

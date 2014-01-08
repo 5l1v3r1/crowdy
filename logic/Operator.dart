@@ -136,7 +136,7 @@ class SinkEmailOperator extends Operator {
 class HumanProcessingOperator extends Operator {
   HumanProcessingOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
     this.ui = new ProcessingOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-    this.details = new ProcessingDetailsUI(this.id, this.type, this.prev, this.next);
+    this.details = new SourceHumanDetailsUI(this.id, this.type, this.prev, this.next);
   }
 }
 

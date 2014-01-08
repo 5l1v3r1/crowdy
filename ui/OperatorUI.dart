@@ -89,10 +89,6 @@ class BaseOperatorUI {
   }
 
   void _onKeyDown(html.KeyboardEvent e) {
-    if (e.keyCode == 8) {
-      e.preventDefault();
-    }
-
     if (selectedOperator == this && e.keyCode == 8 && modal.style.display != 'block') {
       e.preventDefault();
       //canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_REMOVE, detail: [this.group.attributes['id'], 'ALL']));
