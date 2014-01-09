@@ -232,7 +232,6 @@ class SourceFileDetailsUI extends BaseDetailsUI {
 class SourceHumanDetailsUI extends BaseDetailsUI {
 
   static int count = 1;
-  html.ButtonElement addInput;
   html.SelectElement availableInputs;
   html.DivElement elementsDiv;
   html.DivElement rulesDiv;
@@ -323,57 +322,58 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   void configureHumanTasks() {
     this.segmentList = this.parametersView.querySelector('ul');
 
-    this.addInput = new html.ButtonElement();
-    this.addInput.text = 'Add';
-    this.addInput.className = 'btn btn-default btn-xs';
-    this.addInput.onClick.listen(_addNewInput);
+    html.ButtonElement askInputFromUserButton = new html.ButtonElement()
+    ..text = 'Ask for'
+    ..className = 'btn btn-default btn-sm'
+    ..onClick.listen(_addNewInput);
 
-    this.availableInputs = new html.SelectElement();
-    this.availableInputs.className = 'form-control input-xs';
+    this.availableInputs = new html.SelectElement()..className = 'form-control input-sm';
     SOURCE_OPTIONS_HUMAN_INPUTS.forEach((name, value) => this.availableInputs.append(new html.OptionElement(data: name, value: value)));
 
-    html.DivElement buttonDiv = new html.DivElement();
-    buttonDiv.className = 'col-sm-3';
-    buttonDiv.append(this.addInput);
-    buttonDiv.appendText(' ');
-    buttonDiv.append(this.availableInputs);
+    html.DivElement buttonDiv = new html.DivElement()
+    ..className = 'col-sm-3'
+    ..append(askInputFromUserButton);
+    //buttonDiv.appendText(' ');
 
-    this.elementsDiv = new html.DivElement();
-    this.elementsDiv.className = 'col-sm-9';
+    this.elementsDiv = new html.DivElement()
+    ..className = 'col-sm-9'
+    ..append(this.availableInputs);
 
-    html.DivElement outerDiv = new html.DivElement();
-    outerDiv.className = 'row';
-    outerDiv.append(buttonDiv);
-    outerDiv.append(this.elementsDiv);
+    html.DivElement outerDiv = new html.DivElement()
+    ..className = 'row'
+    ..append(buttonDiv)
+    ..append(this.elementsDiv);
+
     this.parametersView.append(outerDiv);
   }
 
   void _addNewInput(html.MouseEvent e) {
-    html.DivElement elementRow = new html.DivElement();
-    elementRow.className = 'row rule';
-    elementRow.id = 'segment-${elementRow.hashCode}';
+    html.DivElement ruleRow = new html.DivElement();
+    ruleRow.className = 'row rule';
+    ruleRow.attributes['data-segment'] = 'segment-${ruleRow.hashCode}';
 
-    String inputType = this.availableInputs.value;
-    this.output.addElement('segment-${elementRow.hashCode}', example: '${inputType} from human workers');
+    String inputDef = SOURCE_OPTIONS_HUMAN_INPUTS.keys.elementAt(this.availableInputs.selectedIndex);
+    String inputType = SOURCE_OPTIONS_HUMAN_INPUTS[inputDef];
+    this.output.addElement('segment-${ruleRow.hashCode}', example: '${inputDef} from human workers');
 
-    html.DivElement elementRowDefinition = new html.DivElement();
-    elementRowDefinition.className = 'col-sm-2';
-    elementRowDefinition.append(new html.SpanElement()..text = inputType);
-    elementRow.append(elementRowDefinition);
+    html.DivElement elementRowDefinition = new html.DivElement()
+    ..className = 'col-sm-3'
+    ..append(new html.ButtonElement()
+    ..text = '-'
+    ..className = 'btn btn-danger btn-xs'
+    ..onClick.listen((e) => _deleteInput(e, ruleRow.attributes['data-segment'])))
+    ..append(new html.LabelElement()
+    ..text = inputDef
+    ..className = 'text-muted');
+    ruleRow.append(elementRowDefinition);
 
-    html.DivElement elementRowConfig = new html.DivElement();
-    elementRowConfig.className = 'col-sm-9';
-    elementRow.append(elementRowConfig);
-
-    elementRow.append(new html.ButtonElement()
-                        ..text = '-'
-                        ..className = 'btn btn-danger btn-sm'
-                        ..onClick.listen((e) => _deleteInput(e, elementRow.id)));
+    html.DivElement elementRowConfig = new html.DivElement()
+    ..className = 'col-sm-9';
 
     switch (inputType) {
       case 'text':
         elementRowConfig.append(new html.InputElement(type: 'number')
-                                  ..className = 'form-control input-xs col-xs-12'
+                                  ..className = 'form-control input-sm'
                                   ..placeholder = 'max. character length'
                                   ..attributes['min'] = '1'
                                   ..attributes['max'] = '255');
@@ -381,16 +381,12 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
       case 'number':
         elementRowConfig.append(new html.InputElement(type: 'number')
                                   ..placeholder = 'min. value'
-                                  ..className = 'form-control input-xs');
+                                  ..className = 'form-control input-sm input-xs');
         elementRowConfig.append(new html.InputElement(type: 'number')
                                   ..placeholder = 'max. value'
-                                  ..className = 'form-control input-xs');
+                                  ..className = 'form-control input-sm input-xs');
         break;
       case 'single':
-        html.DivElement newEditableDiv = this.getEditableDiv();
-        this.refreshableDivs.add(newEditableDiv);
-        elementRowConfig.append(newEditableDiv);
-        break;
       case 'multiple':
         html.DivElement newEditableDiv = this.getEditableDiv();
         this.refreshableDivs.add(newEditableDiv);
@@ -398,8 +394,10 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
         break;
     }
 
+    ruleRow.append(elementRowConfig);
+
     count += 1;
-    this.elementsDiv.append(elementRow);
+    this.parametersView.append(ruleRow);
   }
 
   html.DivElement getEditableDiv() {
@@ -412,7 +410,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   }
 
   void _deleteInput(html.MouseEvent e, String rowId) {
-    this.elementsDiv.querySelector('#${rowId}').remove();
+    this.parametersView.querySelector('div[data-segment="${rowId}"]').remove();
     this.output.removeElement(rowId);
   }
 }
@@ -533,23 +531,36 @@ class SelectionDetailsUI extends RuleDetailsUI {
 
     html.DivElement conditionDiv = new html.DivElement()
     ..className = 'col-sm-3'
-    ..appendText('Filter ')
-    ..append(new html.SelectElement()
-      ..append(new html.OptionElement(data: 'in', value: 'in'))
-      ..append(new html.OptionElement(data: 'out', value: 'out')));
+    ..append(new html.ButtonElement()
+    ..text = '-'
+    ..className = 'btn btn-danger btn-xs'
+    ..onClick.listen((e) => _deleteRule(e, parameter.id)))
+    ..append(new html.LabelElement()
+    ..text = 'Filter'
+    ..className = 'text-muted');
 
     html.DivElement configDiv = new html.DivElement()
     ..className = 'col-sm-9'
-    ..append(this.output.select(this.prevConn))
-    ..append(new html.SelectElement()
-      ..append(new html.OptionElement(data: 'equals', value: 'equals'))
-      ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
-      ..append(new html.OptionElement(data: 'contains', value: 'contains')))
-    ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm')
-    ..append(new html.ButtonElement()
-      ..text = '-'
-      ..className = 'btn btn-danger btn-sm'
-      ..onClick.listen((e) => _deleteRule(e, parameter.id)));;
+    ..append(new html.UListElement()
+      ..className = 'list-inline'
+      ..append(new html.LIElement()
+        ..append(new html.SelectElement()
+          ..className = 'form-control input-sm'
+          ..append(new html.OptionElement(data: 'in', value: 'in'))
+          ..append(new html.OptionElement(data: 'out', value: 'out'))))
+      ..append(new html.LIElement()
+        ..append(new html.SpanElement()..text = 'when'))
+      ..append(new html.LIElement()
+        ..append(this.output.select(this.prevConn)))
+      ..append(new html.LIElement()
+        ..append(new html.SelectElement()
+          ..className = 'form-control input-sm'
+          ..append(new html.OptionElement(data: 'equals', value: 'equals'))
+          ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
+          ..append(new html.OptionElement(data: 'contains', value: 'contains'))))
+      ..append(new html.LIElement()
+        ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm'))
+    );
 
     count += 1;
     parameter.append(conditionDiv);
@@ -579,25 +590,35 @@ class SortDetailsUI extends RuleDetailsUI {
     }
 
     html.DivElement parameter = new html.DivElement()
-    ..className = 'row'
+    ..className = 'row rule'
     ..id = '${this.id}-rule-${count}';
 
     html.DivElement conditionDiv = new html.DivElement()
     ..className = 'col-sm-3'
-    ..appendText('Sort using');
+    ..append(new html.ButtonElement()
+    ..text = '-'
+    ..className = 'btn btn-danger btn-xs'
+    ..onClick.listen((e) => _deleteRule(e, parameter.id)))
+    ..append(new html.LabelElement()
+    ..text = 'Sort using'
+    ..className = 'text-muted');
 
     html.DivElement configDiv = new html.DivElement()
     ..className = 'col-sm-9'
-    ..append(this.output.select(this.prevConn))
-    ..appendText('in')
-    ..append(new html.SelectElement()
-      ..append(new html.OptionElement(data: 'ascending', value: 'ascending'))
-      ..append(new html.OptionElement(data: 'descending', value: 'descending')))
-    ..appendText('order')
-    ..append(new html.ButtonElement()
-      ..text = '-'
-      ..className = 'btn btn-danger btn-sm'
-      ..onClick.listen((e) => _deleteRule(e, parameter.id)));
+    ..append(new html.UListElement()
+      ..className = 'list-inline'
+      ..append(new html.LIElement()
+        ..append(this.output.select(this.prevConn)))
+      ..append(new html.LIElement()
+        ..append(new html.SpanElement()..text = 'in'))
+      ..append(new html.LIElement()
+        ..append(new html.SelectElement()
+        ..className = 'form-control input-sm'
+        ..append(new html.OptionElement(data: 'ascending', value: 'ascending'))
+        ..append(new html.OptionElement(data: 'descending', value: 'descending'))))
+      ..append(new html.LIElement()
+        ..append(new html.SpanElement()..text = 'order'))
+    );
 
     count += 1;
     parameter.append(conditionDiv);
@@ -617,7 +638,7 @@ class SplitDetailsUI extends RuleDetailsUI {
 
   html.SelectElement outputSelectElement() {
     html.SelectElement selectElement = new html.SelectElement();
-    selectElement.className = 'output-flows';
+    selectElement.className = 'output-flows form-control input-sm';
     this.nextConn.forEach((identifier, connected) => selectElement.append(new html.OptionElement(data: identifier, value: identifier)));
     return selectElement;
   }
@@ -639,22 +660,35 @@ class SplitDetailsUI extends RuleDetailsUI {
 
     html.DivElement conditionDiv = new html.DivElement()
     ..className = 'col-sm-3'
-    ..appendText('Send to ')
-    ..append(this.outputSelectElement());
+    ..append(new html.UListElement()
+      ..className = 'list-inline'
+      ..append(new html.LIElement()
+        ..append(new html.ButtonElement()
+        ..text = '-'
+        ..className = 'btn btn-danger btn-xs'
+        ..onClick.listen((e) => _deleteRule(e, parameter.id))))
+      ..append(new html.LIElement()
+        ..append(new html.SpanElement()..text = 'Send to')));
 
     html.DivElement configDiv = new html.DivElement()
     ..className = 'col-sm-9'
-    ..appendText('when ')
-    ..append(this.output.select(this.prevConn))
-    ..append(new html.SelectElement()
-      ..append(new html.OptionElement(data: 'equals', value: 'equals'))
-      ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
-      ..append(new html.OptionElement(data: 'contains', value: 'contains')))
-    ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm')
-    ..append(new html.ButtonElement()
-      ..text = '-'
-      ..className = 'btn btn-danger btn-sm'
-      ..onClick.listen((e) => _deleteRule(e, parameter.id)));;
+    ..append(new html.UListElement()
+      ..className = 'list-inline'
+      ..append(new html.LIElement()
+        ..append(this.outputSelectElement()))
+      ..append(new html.LIElement()
+        ..append(new html.SpanElement()..text = 'when'))
+      ..append(new html.LIElement()
+        ..append(this.output.select(this.prevConn)))
+      ..append(new html.LIElement()
+        ..append(new html.SelectElement()
+        ..className = 'form-control input-sm'
+        ..append(new html.OptionElement(data: 'equals', value: 'equals'))
+        ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
+        ..append(new html.OptionElement(data: 'contains', value: 'contains'))))
+      ..append(new html.LIElement()
+        ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm'))
+    );
 
     count += 1;
     parameter.append(conditionDiv);

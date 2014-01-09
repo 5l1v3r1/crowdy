@@ -111,7 +111,7 @@ class BaseSpecification {
 
   html.SelectElement select(Map<String, bool> previousConnections) {
     html.SelectElement selectElement = new html.SelectElement();
-    selectElement.className = 'output-segments';
+    selectElement.className = 'output-segments form-control input-sm';
     if (previousConnections.length > 0) {
       Map<String, OutputSegmentUI> segmentList = operators[previousConnections.keys.first].details.output.elements;
       segmentList.forEach((identifier, segment) => selectElement.append(new html.OptionElement(data: segment.name.text, value: segment.name.id)));

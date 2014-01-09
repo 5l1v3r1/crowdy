@@ -3123,7 +3123,7 @@ BaseSpecification: {"": "Object;",
   select$1: function(_, previousConnections) {
     var selectElement, t1, t2, segmentList;
     selectElement = document.createElement("select", null);
-    selectElement.className = "output-segments";
+    selectElement.className = "output-segments form-control input-sm";
     if (previousConnections._collection$_length > 0) {
       t1 = $.operators;
       t2 = new P.LinkedHashMapKeyIterable(previousConnections);
@@ -3698,7 +3698,7 @@ SourceFileDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,ba
   }
 },
 
-SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,rulesDiv,segmentList,refreshableDivs,_dragSegment,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,segmentList,refreshableDivs,_dragSegment,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     var instructions, question, t1, t2, t3, t4;
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
@@ -3836,30 +3836,30 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
     return new H.BoundClosure$1(this, D.SourceHumanDetailsUI.prototype._onSegmentDragOver$1, null, "_onSegmentDragOver$1");
   },
   configureHumanTasks$0: function() {
-    var t1, t2, buttonDiv, outerDiv;
+    var askInputFromUserButton, t1, t2, buttonDiv, outerDiv;
     this.segmentList = this.parametersView.querySelector("ul");
-    this.addInput = document.createElement("button", null);
-    this.addInput.textContent = "Add";
-    this.addInput.className = "btn btn-default btn-xs";
-    t1 = this.addInput;
-    t1.toString;
-    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
+    askInputFromUserButton = document.createElement("button", null);
+    askInputFromUserButton.textContent = "Ask for";
+    askInputFromUserButton.className = "btn btn-default btn-sm";
+    askInputFromUserButton.toString;
+    t1 = new W._ElementEventStreamImpl(askInputFromUserButton, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t2 = this.get$_addNewInput();
     t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
-    this.availableInputs = document.createElement("select", null);
-    this.availableInputs.className = "form-control input-xs";
+    t2 = document.createElement("select", null);
+    t2.className = "form-control input-sm";
+    this.availableInputs = t2;
     t2 = $.get$SOURCE_OPTIONS_HUMAN_INPUTS();
     t2.forEach$1(t2, new D.SourceHumanDetailsUI_configureHumanTasks_closure(this));
     buttonDiv = document.createElement("div", null);
     buttonDiv.className = "col-sm-3";
-    buttonDiv.appendChild(this.addInput);
-    J.insertAdjacentText$2$x(buttonDiv, "beforeend", " ");
-    buttonDiv.appendChild(this.availableInputs);
-    this.elementsDiv = document.createElement("div", null);
-    this.elementsDiv.className = "col-sm-9";
+    buttonDiv.appendChild(askInputFromUserButton);
+    t2 = document.createElement("div", null);
+    t2.className = "col-sm-9";
+    t2.appendChild(this.availableInputs);
+    this.elementsDiv = t2;
     outerDiv = document.createElement("div", null);
     outerDiv.className = "row";
     outerDiv.appendChild(buttonDiv);
@@ -3867,35 +3867,38 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
     this.parametersView.appendChild(outerDiv);
   },
   _addNewInput$1: function(e) {
-    var elementRow, inputType, elementRowDefinition, t1, elementRowConfig, t2, t3, newEditableDiv;
-    elementRow = document.createElement("div", null);
-    elementRow.className = "row rule";
-    elementRow.id = "segment-" + H.Primitives_objectHashCode(elementRow);
-    inputType = J.get$value$x(this.availableInputs);
-    this.output.addElement$2$example("segment-" + H.Primitives_objectHashCode(elementRow), H.S(inputType) + " from human workers");
+    var ruleRow, t1, inputDef, inputType, elementRowDefinition, t2, t3, elementRowConfig, newEditableDiv;
+    ruleRow = document.createElement("div", null);
+    ruleRow.className = "row rule";
+    new W._ElementAttributeMap(ruleRow)._element.setAttribute("data-segment", "segment-" + H.Primitives_objectHashCode(ruleRow));
+    t1 = $.get$SOURCE_OPTIONS_HUMAN_INPUTS().get$keys();
+    inputDef = t1.elementAt$1(t1, J.get$selectedIndex$x(this.availableInputs));
+    t1 = $.get$SOURCE_OPTIONS_HUMAN_INPUTS();
+    inputType = t1.$index(t1, inputDef);
+    this.output.addElement$2$example("segment-" + H.Primitives_objectHashCode(ruleRow), H.S(inputDef) + " from human workers");
     elementRowDefinition = document.createElement("div", null);
-    elementRowDefinition.className = "col-sm-2";
-    t1 = document.createElement("span", null);
-    t1.textContent = inputType;
-    elementRowDefinition.appendChild(t1);
-    elementRow.appendChild(elementRowDefinition);
-    elementRowConfig = document.createElement("div", null);
-    elementRowConfig.className = "col-sm-9";
-    elementRow.appendChild(elementRowConfig);
+    elementRowDefinition.className = "col-sm-3";
     t1 = document.createElement("button", null);
     t1.textContent = "-";
-    t1.className = "btn btn-danger btn-sm";
+    t1.className = "btn btn-danger btn-xs";
     t1.toString;
     t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SourceHumanDetailsUI__addNewInput_closure(this, elementRow)), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SourceHumanDetailsUI__addNewInput_closure(this, ruleRow)), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
-    elementRow.appendChild(t1);
+    elementRowDefinition.appendChild(t1);
+    t1 = document.createElement("label", null);
+    t1.textContent = inputDef;
+    t1.className = "text-muted";
+    elementRowDefinition.appendChild(t1);
+    ruleRow.appendChild(elementRowDefinition);
+    elementRowConfig = document.createElement("div", null);
+    elementRowConfig.className = "col-sm-9";
     switch (inputType) {
       case "text":
         t1 = W.InputElement_InputElement("number");
-        t1.className = "form-control input-xs col-xs-12";
+        t1.className = "form-control input-sm";
         J.set$placeholder$x(t1, "max. character length");
         new W._ElementAttributeMap(t1)._element.setAttribute("min", "1");
         new W._ElementAttributeMap(t1)._element.setAttribute("max", "255");
@@ -3904,18 +3907,14 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
       case "number":
         t1 = W.InputElement_InputElement("number");
         J.set$placeholder$x(t1, "min. value");
-        t1.className = "form-control input-xs";
+        t1.className = "form-control input-sm input-xs";
         elementRowConfig.appendChild(t1);
         t1 = W.InputElement_InputElement("number");
         J.set$placeholder$x(t1, "max. value");
-        t1.className = "form-control input-xs";
+        t1.className = "form-control input-sm input-xs";
         elementRowConfig.appendChild(t1);
         break;
       case "single":
-        newEditableDiv = this.getEditableDiv$0();
-        this.refreshableDivs.push(newEditableDiv);
-        elementRowConfig.appendChild(newEditableDiv);
-        break;
       case "multiple":
         newEditableDiv = this.getEditableDiv$0();
         this.refreshableDivs.push(newEditableDiv);
@@ -3923,8 +3922,9 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
         break;
       default:
     }
+    ruleRow.appendChild(elementRowConfig);
     $.SourceHumanDetailsUI_count = $.SourceHumanDetailsUI_count + 1;
-    this.elementsDiv.appendChild(elementRow);
+    this.parametersView.appendChild(ruleRow);
   },
   get$_addNewInput: function() {
     return new H.BoundClosure$1(this, D.SourceHumanDetailsUI.prototype._addNewInput$1, null, "_addNewInput$1");
@@ -3951,7 +3951,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
     return t1;
   },
   _deleteInput$2: function(e, rowId) {
-    J.remove$0$ax(this.elementsDiv.querySelector("#" + rowId));
+    J.remove$0$ax(this.parametersView.querySelector("div[data-segment=\"" + rowId + "\"]"));
     this.output.removeElement$1(rowId);
   },
   SourceHumanDetailsUI$4: function(id, type, prevConn, nextConn) {
@@ -3965,7 +3965,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;addInput,availableInputs,elementsDiv,r
   static: {
 "": "SourceHumanDetailsUI_count",
 SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
-  var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
+  var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
   t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
   t1.SourceHumanDetailsUI$4(id, type, prevConn, nextConn);
   return t1;
@@ -4029,9 +4029,9 @@ SourceHumanDetailsUI_configureHumanTasks_closure: {"": "Closure;this_0",
   $is_args2: true
 },
 
-SourceHumanDetailsUI__addNewInput_closure: {"": "Closure;this_0,elementRow_1",
+SourceHumanDetailsUI__addNewInput_closure: {"": "Closure;this_0,ruleRow_1",
   call$1: function(e) {
-    return this.this_0._deleteInput$2(e, this.elementRow_1.id);
+    return this.this_0._deleteInput$2(e, new W._ElementAttributeMap(this.ruleRow_1)._element.getAttribute("data-segment"));
   },
   $is_args1: true
 },
@@ -4140,7 +4140,7 @@ SelectionDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevC
     D.RuleDetailsUI.prototype.initialize$0.call(this, this);
   },
   _addRule$1: function(e) {
-    var t1, parameter, conditionDiv, t2, configDiv, t3;
+    var t1, parameter, conditionDiv, t2, t3, t4, configDiv;
     t1 = this.prevConn;
     if (t1._collection$_length < 1) {
       this.log.warning$1("Please first make sure there is an input flow to this operator.");
@@ -4151,33 +4151,54 @@ SelectionDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevC
     parameter.id = this.id + "-rule-" + $.SelectionDetailsUI_count;
     conditionDiv = document.createElement("div", null);
     conditionDiv.className = "col-sm-3";
-    J.insertAdjacentText$2$x(conditionDiv, "beforeend", "Filter ");
-    t2 = document.createElement("select", null);
-    t2.appendChild(W.OptionElement_OptionElement$_("in", "in", null, false));
-    t2.appendChild(W.OptionElement_OptionElement$_("out", "out", null, false));
+    t2 = document.createElement("button", null);
+    t2.textContent = "-";
+    t2.className = "btn btn-danger btn-xs";
+    t2.toString;
+    t3 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(new D.SelectionDetailsUI__addRule_closure(this, parameter)), t3._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
+    t4._tryResume$0();
+    conditionDiv.appendChild(t2);
+    t2 = document.createElement("label", null);
+    t2.textContent = "Filter";
+    t2.className = "text-muted";
     conditionDiv.appendChild(t2);
     configDiv = document.createElement("div", null);
     configDiv.className = "col-sm-9";
-    t2 = this.output;
-    configDiv.appendChild(t2.select$1(t2, t1));
+    t2 = document.createElement("ul", null);
+    t2.className = "list-inline";
+    t4 = document.createElement("li", null);
+    t3 = document.createElement("select", null);
+    t3.className = "form-control input-sm";
+    t3.appendChild(W.OptionElement_OptionElement$_("in", "in", null, false));
+    t3.appendChild(W.OptionElement_OptionElement$_("out", "out", null, false));
+    t4.appendChild(t3);
+    t2.appendChild(t4);
+    t4 = document.createElement("li", null);
+    t3 = document.createElement("span", null);
+    t3.textContent = "when";
+    t4.appendChild(t3);
+    t2.appendChild(t4);
+    t4 = document.createElement("li", null);
+    t3 = this.output;
+    t4.appendChild(t3.select$1(t3, t1));
+    t2.appendChild(t4);
+    t4 = document.createElement("li", null);
     t1 = document.createElement("select", null);
+    t1.className = "form-control input-sm";
     t1.appendChild(W.OptionElement_OptionElement$_("equals", "equals", null, false));
     t1.appendChild(W.OptionElement_OptionElement$_("not equals", "not equals", null, false));
     t1.appendChild(W.OptionElement_OptionElement$_("contains", "contains", null, false));
-    configDiv.appendChild(t1);
+    t4.appendChild(t1);
+    t2.appendChild(t4);
+    t4 = document.createElement("li", null);
     t1 = W.InputElement_InputElement("text");
     t1.className = "form-control input-sm";
-    configDiv.appendChild(t1);
-    t1 = document.createElement("button", null);
-    t1.textContent = "-";
-    t1.className = "btn btn-danger btn-sm";
-    t1.toString;
-    t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
-    H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SelectionDetailsUI__addRule_closure(this, parameter)), t2._useCapture);
-    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t3._tryResume$0();
-    configDiv.appendChild(t1);
+    t4.appendChild(t1);
+    t2.appendChild(t4);
+    configDiv.appendChild(t2);
     $.SelectionDetailsUI_count = $.SelectionDetailsUI_count + 1;
     parameter.appendChild(conditionDiv);
     parameter.appendChild(configDiv);
@@ -4225,39 +4246,57 @@ SortDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,n
     D.RuleDetailsUI.prototype.initialize$0.call(this, this);
   },
   _addRule$1: function(e) {
-    var t1, parameter, conditionDiv, configDiv, t2, t3;
+    var t1, parameter, conditionDiv, t2, t3, t4, configDiv;
     t1 = this.prevConn;
     if (t1._collection$_length < 1) {
       this.log.warning$1("Please first make sure there is an input flow to this operator.");
       return;
     }
     parameter = document.createElement("div", null);
-    parameter.className = "row";
+    parameter.className = "row rule";
     parameter.id = this.id + "-rule-" + $.SortDetailsUI_count;
     conditionDiv = document.createElement("div", null);
     conditionDiv.className = "col-sm-3";
-    J.insertAdjacentText$2$x(conditionDiv, "beforeend", "Sort using");
+    t2 = document.createElement("button", null);
+    t2.textContent = "-";
+    t2.className = "btn btn-danger btn-xs";
+    t2.toString;
+    t3 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(new D.SortDetailsUI__addRule_closure(this, parameter)), t3._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
+    t4._tryResume$0();
+    conditionDiv.appendChild(t2);
+    t2 = document.createElement("label", null);
+    t2.textContent = "Sort using";
+    t2.className = "text-muted";
+    conditionDiv.appendChild(t2);
     configDiv = document.createElement("div", null);
     configDiv.className = "col-sm-9";
-    t2 = this.output;
-    configDiv.appendChild(t2.select$1(t2, t1));
-    t1 = J.getInterceptor$x(configDiv);
-    t1.insertAdjacentText$2(configDiv, "beforeend", "in");
-    t2 = document.createElement("select", null);
-    t2.appendChild(W.OptionElement_OptionElement$_("ascending", "ascending", null, false));
-    t2.appendChild(W.OptionElement_OptionElement$_("descending", "descending", null, false));
+    t2 = document.createElement("ul", null);
+    t2.className = "list-inline";
+    t4 = document.createElement("li", null);
+    t3 = this.output;
+    t4.appendChild(t3.select$1(t3, t1));
+    t2.appendChild(t4);
+    t4 = document.createElement("li", null);
+    t1 = document.createElement("span", null);
+    t1.textContent = "in";
+    t4.appendChild(t1);
+    t2.appendChild(t4);
+    t4 = document.createElement("li", null);
+    t1 = document.createElement("select", null);
+    t1.className = "form-control input-sm";
+    t1.appendChild(W.OptionElement_OptionElement$_("ascending", "ascending", null, false));
+    t1.appendChild(W.OptionElement_OptionElement$_("descending", "descending", null, false));
+    t4.appendChild(t1);
+    t2.appendChild(t4);
+    t4 = document.createElement("li", null);
+    t1 = document.createElement("span", null);
+    t1.textContent = "order";
+    t4.appendChild(t1);
+    t2.appendChild(t4);
     configDiv.appendChild(t2);
-    t1.insertAdjacentText$2(configDiv, "beforeend", "order");
-    t1 = document.createElement("button", null);
-    t1.textContent = "-";
-    t1.className = "btn btn-danger btn-sm";
-    t1.toString;
-    t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
-    H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SortDetailsUI__addRule_closure(this, parameter)), t2._useCapture);
-    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t3._tryResume$0();
-    configDiv.appendChild(t1);
     $.SortDetailsUI_count = $.SortDetailsUI_count + 1;
     parameter.appendChild(conditionDiv);
     parameter.appendChild(configDiv);
@@ -4303,13 +4342,13 @@ SplitDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,
   outputSelectElement$0: function() {
     var selectElement, t1;
     selectElement = document.createElement("select", null);
-    selectElement.className = "output-flows";
+    selectElement.className = "output-flows form-control input-sm";
     t1 = this.nextConn;
     t1.forEach$1(t1, new D.SplitDetailsUI_outputSelectElement_closure(selectElement));
     return selectElement;
   },
   _addRule$1: function(e) {
-    var t1, parameter, conditionDiv, configDiv, t2, t3;
+    var t1, parameter, conditionDiv, t2, t3, t4, t5, t6, configDiv;
     if (this.nextConn._collection$_length < 1) {
       this.log.warning$1("Please first make sure there is an output flow from this operator.");
       return;
@@ -4324,31 +4363,56 @@ SplitDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,
     parameter.id = this.id + "-rule-" + $.SplitDetailsUI_count;
     conditionDiv = document.createElement("div", null);
     conditionDiv.className = "col-sm-3";
-    J.insertAdjacentText$2$x(conditionDiv, "beforeend", "Send to ");
-    conditionDiv.appendChild(this.outputSelectElement$0());
+    t2 = document.createElement("ul", null);
+    t2.className = "list-inline";
+    t3 = document.createElement("li", null);
+    t4 = document.createElement("button", null);
+    t4.textContent = "-";
+    t4.className = "btn btn-danger btn-xs";
+    t4.toString;
+    t5 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_click._eventType, false);
+    H.setRuntimeTypeInfo(t5, [null]);
+    t6 = new W._EventStreamSubscription(0, t5._html$_target, t5._eventType, W._wrapZone(new D.SplitDetailsUI__addRule_closure(this, parameter)), t5._useCapture);
+    H.setRuntimeTypeInfo(t6, [H.getRuntimeTypeArgument(t5, "_EventStream", 0)]);
+    t6._tryResume$0();
+    t3.appendChild(t4);
+    t2.appendChild(t3);
+    t3 = document.createElement("li", null);
+    t4 = document.createElement("span", null);
+    t4.textContent = "Send to";
+    t3.appendChild(t4);
+    t2.appendChild(t3);
+    conditionDiv.appendChild(t2);
     configDiv = document.createElement("div", null);
     configDiv.className = "col-sm-9";
-    J.insertAdjacentText$2$x(configDiv, "beforeend", "when ");
-    t2 = this.output;
-    configDiv.appendChild(t2.select$1(t2, t1));
+    t2 = document.createElement("ul", null);
+    t2.className = "list-inline";
+    t3 = document.createElement("li", null);
+    t3.appendChild(this.outputSelectElement$0());
+    t2.appendChild(t3);
+    t3 = document.createElement("li", null);
+    t4 = document.createElement("span", null);
+    t4.textContent = "when";
+    t3.appendChild(t4);
+    t2.appendChild(t3);
+    t3 = document.createElement("li", null);
+    t4 = this.output;
+    t3.appendChild(t4.select$1(t4, t1));
+    t2.appendChild(t3);
+    t3 = document.createElement("li", null);
     t1 = document.createElement("select", null);
+    t1.className = "form-control input-sm";
     t1.appendChild(W.OptionElement_OptionElement$_("equals", "equals", null, false));
     t1.appendChild(W.OptionElement_OptionElement$_("not equals", "not equals", null, false));
     t1.appendChild(W.OptionElement_OptionElement$_("contains", "contains", null, false));
-    configDiv.appendChild(t1);
+    t3.appendChild(t1);
+    t2.appendChild(t3);
+    t3 = document.createElement("li", null);
     t1 = W.InputElement_InputElement("text");
     t1.className = "form-control input-sm";
-    configDiv.appendChild(t1);
-    t1 = document.createElement("button", null);
-    t1.textContent = "-";
-    t1.className = "btn btn-danger btn-sm";
-    t1.toString;
-    t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
-    H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SplitDetailsUI__addRule_closure(this, parameter)), t2._useCapture);
-    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t3._tryResume$0();
-    configDiv.appendChild(t1);
+    t3.appendChild(t1);
+    t2.appendChild(t3);
+    configDiv.appendChild(t2);
     $.SplitDetailsUI_count = $.SplitDetailsUI_count + 1;
     parameter.appendChild(conditionDiv);
     parameter.appendChild(configDiv);
@@ -8221,12 +8285,14 @@ IterableBase: {"": "Object;",
   },
   elementAt$1: function(_, index) {
     var t1, remaining, element;
-    if (index < 0)
+    if (typeof index !== "number" || Math.floor(index) !== index || index < 0)
       throw H.wrapException(P.RangeError$value(index));
     for (t1 = this.get$iterator(this), remaining = index; t1.moveNext$0();) {
       element = t1.get$current();
       if (remaining === 0)
         return element;
+      if (typeof remaining !== "number")
+        throw remaining.$sub();
       --remaining;
     }
     throw H.wrapException(P.RangeError$value(index));
@@ -9353,12 +9419,6 @@ Element: {"": "Node;className%,id=",
   toString$0: function(receiver) {
     return receiver.localName;
   },
-  insertAdjacentText$2: function(receiver, where, text) {
-    if (!!receiver.insertAdjacentText)
-      receiver.insertAdjacentText(where, text);
-    else
-      this._insertAdjacentNode$2(receiver, where, document.createTextNode(text));
-  },
   insertAdjacentHtml$2: function(receiver, where, html) {
     if (!!receiver.insertAdjacentHTML)
       receiver.insertAdjacentHTML(where, html);
@@ -9688,7 +9748,7 @@ Range: {"": "Interceptor;",
 
 ScriptElement0: {"": "HtmlElement;type}", "%": "HTMLScriptElement"},
 
-SelectElement: {"": "HtmlElement;length=,name=,value%",
+SelectElement: {"": "HtmlElement;length=,name=,selectedIndex=,value%",
   get$options: function(receiver) {
     var t1 = W._FrozenElementList$_wrap(receiver.querySelectorAll("option"), null);
     t1 = t1.where$1(t1, new W.SelectElement_options_closure());
@@ -10868,9 +10928,6 @@ SvgElement: {"": "Element;",
     for (; t1 = root.firstChild, t1 != null;)
       svgFragment.appendChild(t1);
     return svgFragment;
-  },
-  insertAdjacentText$2: function(receiver, where, text) {
-    throw H.wrapException(P.UnsupportedError$("Cannot invoke insertAdjacentText on SVG."));
   },
   insertAdjacentHtml$2: function(receiver, where, text) {
     throw H.wrapException(P.UnsupportedError$("Cannot invoke insertAdjacentHtml on SVG."));
@@ -12152,6 +12209,9 @@ J.get$options$x = function(receiver) {
 J.get$pathSegList$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$pathSegList(receiver);
 };
+J.get$selectedIndex$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$selectedIndex(receiver);
+};
 J.get$target$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$target(receiver);
 };
@@ -12178,9 +12238,6 @@ J.initialize$0$x = function(receiver) {
 };
 J.insertAdjacentHtml$2$x = function(receiver, a0, a1) {
   return J.getInterceptor$x(receiver).insertAdjacentHtml$2(receiver, a0, a1);
-};
-J.insertAdjacentText$2$x = function(receiver, a0, a1) {
-  return J.getInterceptor$x(receiver).insertAdjacentText$2(receiver, a0, a1);
 };
 J.preventDefault$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).preventDefault$0(receiver);

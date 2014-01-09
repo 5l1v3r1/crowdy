@@ -19,13 +19,9 @@ select.form-control.input-xs {
 }
 
 input.form-control.input-xs {
-  max-width: 45%;
+  max-width: 49.5%;
   float: left;
   margin-left: 5px;
-  height: 30px;
-  padding: 5px 10px;
-  font-size: 12px;
-  line-height: 1.5;
 }
 
 input.form-control.input-xs:first-child {
@@ -45,6 +41,20 @@ div[contenteditable="true"] {
   min-height: 80px;
   max-height: 180px;
   overflow: scroll;
+}
+
+div.rule label {
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+div.rule select {
+  max-width: 120px;
+}
+
+h4 > small,
+h4 > button {
+  margin-left: 10px;
 }
 
 span.segment-tag,
