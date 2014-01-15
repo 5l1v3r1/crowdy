@@ -89,17 +89,19 @@ class BaseOperatorUI {
   }
 
   void _onKeyDown(html.KeyboardEvent e) {
-    if (selectedOperator == this && e.keyCode == 8 && modal.style.display != 'block') {
+    if (e.keyCode == 8 && modal.style.display != 'block') {
       e.preventDefault();
-      //canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_REMOVE, detail: [this.group.attributes['id'], 'ALL']));
-      this.group.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE));
-      canvas.children.remove(this.group);
+
+      if (selectedOperator == this) {
+        this.group.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE));
+        canvas.children.remove(this.group);
+      }
     }
   }
 
-  dynamic getMouseCoordinates(e) {
-    return {'x': (e.offset.x - canvas.currentTranslate.x)/canvas.currentScale,
-            'y': (e.offset.y - canvas.currentTranslate.y)/canvas.currentScale};
+  dynamic getMouseCoordinates(html.MouseEvent e) {
+    return {'x': (e.client.x - canvas.currentTranslate.x)/canvas.currentScale,
+            'y': (e.client.y - canvas.currentTranslate.y)/canvas.currentScale};
   }
 
   void addBackgroundImage(String image) {

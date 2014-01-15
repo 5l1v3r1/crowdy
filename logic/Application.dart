@@ -16,10 +16,9 @@ class Application {
     operators = new Map<String, Operator>();
 
     canvas.onClick.listen(deselect);
-
     canvas.on[STREAM_LINE_DRAW].listen(drawLine);
-    //canvas.on[STREAM_LINE_REMOVE].listen(removeLine);
     canvas.onDragOver.listen(_onDragOver);
+    canvas.onDragEnter.listen(_onDragOver);
     canvas.onDrop.listen(_onDrop);
 
     // Add new operator

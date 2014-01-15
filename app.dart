@@ -6,6 +6,8 @@ import 'dart:svg' as svg;
 import 'package:logging/logging.dart';
 
 part 'constants.dart';
+part 'utilities.dart';
+
 part 'ui/PortUI.dart';
 part 'ui/FlowLineUI.dart';
 part 'ui/OperatorUI.dart';

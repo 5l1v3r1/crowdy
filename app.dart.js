@@ -2461,6 +2461,26 @@ main: function() {
   N.Logger_Logger("").get$onRecord().listen$1(new D.main_closure(messageList));
 },
 
+_editableKeyPressed: function(e, editable) {
+  var t1, target;
+  t1 = J.getInterceptor$x(e);
+  target = t1.get$target(e);
+  if (t1.get$keyCode(e) === 13 || J.get$text$x(target).length > 32)
+    e.preventDefault();
+},
+
+_tabbableTextAreaKeyPressed: function(e) {
+  var textArea, currentValue, start, end;
+  if (J.get$keyCode$x(e) === 9) {
+    e.preventDefault();
+    textArea = H.interceptedTypeCast(W._convertNativeToDart_EventTarget(e.target), "$isTextAreaElement");
+    currentValue = textArea.value;
+    start = textArea.selectionStart;
+    end = textArea.selectionEnd;
+    textArea.value = J.getInterceptor$s(currentValue).substring$2(currentValue, 0, start) + "\t" + C.JSString_methods.substring$1(currentValue, end);
+  }
+},
+
 main_closure: {"": "Closure;messageList_0",
   call$1: function(rec) {
     var t1, t2, newMessage, t3, t4;
@@ -2645,34 +2665,42 @@ Application: {"": "Object;log,ui",
     t3._tryResume$0();
     t3 = $.canvas;
     t3.toString;
-    t3 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_drop._eventType, false);
+    t3 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_dragenter._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
-    t1 = this.get$_onDrop();
+    t1 = this.get$_onDragOver();
     t1 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t1), t3._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t1._tryResume$0();
-    units = W._FrozenElementList$_wrap(document.querySelectorAll("ul.units li"), null);
-    t1 = new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragstart._eventType);
-    H.setRuntimeTypeInfo(t1, [null]);
-    t1.listen$1(this.get$_onDragStart());
-    t1 = new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragend._eventType);
-    H.setRuntimeTypeInfo(t1, [null]);
-    t1.listen$1(this.get$_onDragEnd());
-    t1 = $.get$closeButton();
+    t1 = $.canvas;
     t1.toString;
-    t1 = new W._ElementEventStreamImpl(t1, t2, false);
+    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_drop._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
-    t3 = this.get$_modalClosed();
+    t3 = this.get$_onDrop();
     t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t3._tryResume$0();
-    t3 = $.get$modalAlert().querySelector(".close");
+    units = W._FrozenElementList$_wrap(document.querySelectorAll("ul.units li"), null);
+    t3 = new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragstart._eventType);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t3.listen$1(this.get$_onDragStart());
+    t3 = new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragend._eventType);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t3.listen$1(this.get$_onDragEnd());
+    t3 = $.get$closeButton();
     t3.toString;
-    t2 = new W._ElementEventStreamImpl(t3, t2, false);
+    t3 = new W._ElementEventStreamImpl(t3, t2, false);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t1 = this.get$_modalClosed();
+    t1 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t1), t3._useCapture);
+    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
+    t1._tryResume$0();
+    t1 = $.get$modalAlert().querySelector(".close");
+    t1.toString;
+    t2 = new W._ElementEventStreamImpl(t1, t2, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.Application_closure()), t2._useCapture);
-    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t3._tryResume$0();
+    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.Application_closure()), t2._useCapture);
+    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t1._tryResume$0();
   },
   static: {
 Application$: function(canvas_id) {
@@ -3058,8 +3086,11 @@ OutputSegmentUI: {"": "Object;removable,segment,name>,value>,deleteButton",
     t1.textContent = defaultName.length !== 0 ? defaultName : "segment-name";
     t1.contentEditable = String(editable);
     t1.toString;
-    t2 = editable ? "return (this.innerText.length <= 32)" : "return";
-    new W._ElementAttributeMap(t1)._element.setAttribute("onKeyPress", t2);
+    t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_keypress._eventType, false);
+    H.setRuntimeTypeInfo(t2, [null]);
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.OutputSegmentUI_closure0(editable)), t2._useCapture);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t3._tryResume$0();
     this.name = t1;
     this.value = document.createElement("span", null);
     this.value.className = "example";
@@ -3077,6 +3108,13 @@ OutputSegmentUI_closure: {"": "Closure;this_0",
   call$1: function(e) {
     J.remove$0$ax(this.this_0.segment);
     return;
+  },
+  $is_args1: true
+},
+
+OutputSegmentUI_closure0: {"": "Closure;editable_1",
+  call$1: function(e) {
+    return D._editableKeyPressed(e, this.editable_1);
   },
   $is_args1: true
 },
@@ -3475,20 +3513,6 @@ ElementUI: {"": "Object;id,type',label,input<",
     outerDiv.appendChild(inputDiv);
     return outerDiv;
   },
-  _tabPressed$1: function(e) {
-    var textArea, currentValue, start, end;
-    if (J.get$keyCode$x(e) === 9) {
-      e.preventDefault();
-      textArea = H.interceptedTypeCast(this.input, "$isTextAreaElement");
-      currentValue = textArea.value;
-      start = textArea.selectionStart;
-      end = textArea.selectionEnd;
-      textArea.value = J.getInterceptor$s(currentValue).substring$2(currentValue, 0, start) + "\t" + C.JSString_methods.substring$1(currentValue, end);
-    }
-  },
-  get$_tabPressed: function() {
-    return new H.BoundClosure$1(this, D.ElementUI.prototype._tabPressed$1, null, "_tabPressed$1");
-  },
   ElementUI$5$attributes$options: function(id, type, description, attributes, options) {
     var t1, i, newOption, t2;
     t1 = document.createElement("label", null);
@@ -3519,8 +3543,7 @@ ElementUI: {"": "Object;id,type',label,input<",
         t1.toString;
         t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_keydown._eventType, false);
         H.setRuntimeTypeInfo(t1, [null]);
-        t2 = this.get$_tabPressed();
-        t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+        t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(D._tabbableTextAreaKeyPressed$closure), t1._useCapture);
         H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
         t2._tryResume$0();
         break;
@@ -4554,42 +4577,43 @@ BaseOperatorUI: {"": "Object;group<",
   },
   _onKeyDown$1: function(e) {
     var t1;
-    if ($.selectedOperator === this && J.get$keyCode$x(e) === 8 && J.get$display$x($.get$modal().style) !== "block") {
-      J.preventDefault$0$x(e);
-      this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
-      t1 = J.get$children$x($.canvas);
-      t1.remove$1(t1, this.group);
+    if (J.get$keyCode$x(e) === 8 && J.get$display$x($.get$modal().style) !== "block") {
+      e.preventDefault();
+      if ($.selectedOperator === this) {
+        this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
+        t1 = J.get$children$x($.canvas);
+        t1.remove$1(t1, this.group);
+      }
     }
   },
   get$_onKeyDown: function() {
     return new H.BoundClosure$1(this, D.BaseOperatorUI.prototype._onKeyDown$1, null, "_onKeyDown$1");
   },
   getMouseCoordinates$1: function(e) {
-    var t1, t2, t3, t4, t5, t6;
+    var t1, t2, t3, t4, t5;
     t1 = J.getInterceptor$x(e);
     t2 = t1.get$offset(e);
+    P.print(H.S(t2.get$x(t2)) + " " + H.S(J.get$currentTranslate$x($.canvas).x) + " " + H.S(J.get$currentScale$x($.canvas)));
+    t2 = t1.get$client(e);
     t2 = t2.get$x(t2);
     t3 = $.canvas;
-    t4 = J.get$currentTranslate$x(t3).x;
+    t4 = J.get$currentTranslate$x(t3);
+    t5 = t4.x;
     if (typeof t2 !== "number")
       throw t2.$sub();
-    if (typeof t4 !== "number")
-      throw H.iae(t4);
+    if (typeof t5 !== "number")
+      throw H.iae(t5);
     t3 = t3.currentScale;
     if (typeof t3 !== "number")
       throw H.iae(t3);
-    t1 = t1.get$offset(e);
+    t1 = t1.get$client(e);
     t1 = t1.get$y(t1);
-    t5 = $.canvas;
-    t6 = J.get$currentTranslate$x(t5).y;
+    t4 = t4.y;
     if (typeof t1 !== "number")
       throw t1.$sub();
-    if (typeof t6 !== "number")
-      throw H.iae(t6);
-    t5 = t5.currentScale;
-    if (typeof t5 !== "number")
-      throw H.iae(t5);
-    return H.fillLiteralMap(["x", (t2 - t4) / t3, "y", (t1 - t6) / t5], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
+    if (typeof t4 !== "number")
+      throw H.iae(t4);
+    return H.fillLiteralMap(["x", (t2 - t5) / t3, "y", (t1 - t4) / t3], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
   },
   addBackgroundImage$1: function(image) {
     var t1, temp, t2, t3;
@@ -9411,6 +9435,11 @@ Element: {"": "Node;className%,id=",
   get$classes: function(receiver) {
     return new W._ElementCssClassSet(receiver);
   },
+  get$client: function(receiver) {
+    var t1 = new P.Rectangle(receiver.clientLeft, receiver.clientTop, receiver.clientWidth, receiver.clientHeight);
+    H.setRuntimeTypeInfo(t1, [null]);
+    return t1;
+  },
   get$offset: function(receiver) {
     var t1 = new P.Rectangle(receiver.offsetLeft, receiver.offsetTop, receiver.offsetWidth, receiver.offsetHeight);
     H.setRuntimeTypeInfo(t1, [null]);
@@ -9637,6 +9666,11 @@ MidiOutput: {"": "MidiPort;",
 MidiPort: {"": "EventTarget;name=", "%": "MIDIInput;MIDIPort"},
 
 MouseEvent: {"": "UIEvent;dataTransfer=",
+  get$client: function(receiver) {
+    var t1 = new P.Point(receiver.clientX, receiver.clientY);
+    H.setRuntimeTypeInfo(t1, [null]);
+    return t1;
+  },
   get$offset: function(receiver) {
     var t1, t2, target, point;
     if (!!receiver.offsetX) {
@@ -10936,7 +10970,7 @@ SvgElement: {"": "Element;",
   "%": "SVGAltGlyphDefElement|SVGAltGlyphItemElement|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGAnimationElement|SVGComponentTransferFunctionElement|SVGCursorElement|SVGDescElement|SVGFEBlendElement|SVGFEColorMatrixElement|SVGFEComponentTransferElement|SVGFECompositeElement|SVGFEConvolveMatrixElement|SVGFEDiffuseLightingElement|SVGFEDisplacementMapElement|SVGFEDistantLightElement|SVGFEDropShadowElement|SVGFEFloodElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGFEGaussianBlurElement|SVGFEImageElement|SVGFEMergeElement|SVGFEMergeNodeElement|SVGFEMorphologyElement|SVGFEOffsetElement|SVGFEPointLightElement|SVGFESpecularLightingElement|SVGFESpotLightElement|SVGFETileElement|SVGFETurbulenceElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGGlyphElement|SVGGlyphRefElement|SVGGradientElement|SVGHKernElement|SVGLinearGradientElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMetadataElement|SVGMissingGlyphElement|SVGPatternElement|SVGRadialGradientElement|SVGSetElement|SVGStopElement|SVGSymbolElement|SVGTitleElement|SVGVKernElement|SVGViewElement;SVGElement"
 },
 
-SvgSvgElement: {"": "GraphicsElement;currentTranslate=",
+SvgSvgElement: {"": "GraphicsElement;currentScale=,currentTranslate=",
   createSvgPoint$0: function(receiver) {
     return receiver.createSVGPoint();
   },
@@ -11729,6 +11763,7 @@ init.globalFunctions.Primitives__throwFormatException$closure = H.Primitives__th
 init.globalFunctions.toStringWrapper$closure = H.toStringWrapper$closure = new H.Closure$0(H.toStringWrapper, "toStringWrapper$closure");
 init.globalFunctions.invokeClosure$closure = H.invokeClosure$closure = new H.Closure$7(H.invokeClosure, "invokeClosure$closure");
 init.globalFunctions.main$closure = D.main$closure = new H.Closure$0(D.main, "main$closure");
+init.globalFunctions._tabbableTextAreaKeyPressed$closure = D._tabbableTextAreaKeyPressed$closure = new H.Closure$1(D._tabbableTextAreaKeyPressed, "_tabbableTextAreaKeyPressed$closure");
 init.globalFunctions._asyncRunCallback$closure = P._asyncRunCallback$closure = new H.Closure$0(P._asyncRunCallback, "_asyncRunCallback$closure");
 init.globalFunctions._nullDataHandler$closure = P._nullDataHandler$closure = new H.Closure$1(P._nullDataHandler, "_nullDataHandler$closure");
 init.globalFunctions._nullErrorHandler$closure = P._nullErrorHandler$closure = new P.Closure$20(P._nullErrorHandler, "_nullErrorHandler$closure");
@@ -11897,10 +11932,12 @@ C.EventStreamProvider_click = new W.EventStreamProvider("click");
 C.EventStreamProvider_dblclick = new W.EventStreamProvider("dblclick");
 C.EventStreamProvider_drag = new W.EventStreamProvider("drag");
 C.EventStreamProvider_dragend = new W.EventStreamProvider("dragend");
+C.EventStreamProvider_dragenter = new W.EventStreamProvider("dragenter");
 C.EventStreamProvider_dragover = new W.EventStreamProvider("dragover");
 C.EventStreamProvider_dragstart = new W.EventStreamProvider("dragstart");
 C.EventStreamProvider_drop = new W.EventStreamProvider("drop");
 C.EventStreamProvider_keydown = new W.EventStreamProvider("keydown");
+C.EventStreamProvider_keypress = new W.EventStreamProvider("keypress");
 C.EventStreamProvider_mousedown = new W.EventStreamProvider("mousedown");
 C.EventStreamProvider_mouseenter = new W.EventStreamProvider("mouseenter");
 C.EventStreamProvider_mousemove = new W.EventStreamProvider("mousemove");
@@ -12160,6 +12197,9 @@ J.get$className$x = function(receiver) {
 };
 J.get$classes$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$classes(receiver);
+};
+J.get$currentScale$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$currentScale(receiver);
 };
 J.get$currentTranslate$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$currentTranslate(receiver);

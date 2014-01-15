@@ -29,7 +29,7 @@ class ElementUI {
         break;
       case 'textarea':
         this.input = new html.TextAreaElement();
-        this.input.onKeyDown.listen(_tabPressed);
+        this.input.onKeyDown.listen(_tabbableTextAreaKeyPressed);
         break;
       default:
         this.input = new html.InputElement(type: this.type);
@@ -58,19 +58,6 @@ class ElementUI {
     ..append(inputDiv);
 
     return outerDiv;
-  }
-
-  void _tabPressed(html.KeyboardEvent e) {
-    if (e.keyCode == 9) {
-      e.preventDefault();
-
-      html.TextAreaElement textArea = this.input as html.TextAreaElement;
-      String currentValue = textArea.value;
-      int start = textArea.selectionStart;
-      int end = textArea.selectionEnd;
-
-      textArea.value = currentValue.substring(0, start) + "\t" + currentValue.substring(end);
-    }
   }
 
 }
