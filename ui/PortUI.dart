@@ -62,9 +62,14 @@ class PortUI {
 
   void _onMouseMove(html.MouseEvent e) {
     if (selectedPort != null) {
-      tempLine.attributes['x2'] = '${e.offset.x}'; // (e.offsetX || e.clientX - $(e.target).offset().left);
-      tempLine.attributes['y2'] = '${e.offset.y}';
+      //var mouseCoordinates = getMouseCoordinates(e);
+      //tempLine.attributes['x2'] = '${mouseCoordinates['x']}';
+      //tempLine.attributes['y2'] = '${mouseCoordinates['y']}';
       //this.canvas.style.cursor = 'e-resize';
+
+      var mouseCoordinates = getMouseCoordinatesRelativeToCanvas(e);
+      tempLine.attributes['x2'] = '${mouseCoordinates['x']}';
+      tempLine.attributes['y2'] = '${mouseCoordinates['y']}';
     }
   }
 

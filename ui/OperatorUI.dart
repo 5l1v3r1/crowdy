@@ -58,7 +58,7 @@ class BaseOperatorUI {
     this.dragging = true;
     this.group.parentNode.append(this.group);
 
-    var mouseCoordinates = getMouseCoordinates(e);
+    var mouseCoordinates = getMouseCoordinatesProportinalToCanvas(e);
     this.dragOffsetX = mouseCoordinates['x'] - this.group.getCtm().e;
     this.dragOffsetY = mouseCoordinates['y'] - this.group.getCtm().f;
 
@@ -72,7 +72,7 @@ class BaseOperatorUI {
 
   void _moveStarted(html.MouseEvent e) {
     if (this.dragging) {
-      var mouseCoordinates = getMouseCoordinates(e);
+      var mouseCoordinates = getMouseCoordinatesProportinalToCanvas(e);
       num newX = mouseCoordinates['x'] - this.dragOffsetX;
       num newY = mouseCoordinates['y'] - this.dragOffsetY;
       this.group.setAttribute('transform', 'translate($newX, $newY)');

@@ -1,12 +1,20 @@
 part of crowdy;
 
-dynamic getMouseCoordinates(html.MouseEvent e) {
-  //return [e.offset.x, e.offset.y];
-  print('${e.client}');
-  print('${e.offset}');
-  print('${e.layer}');
-  //print('${e.movement}');
-  //print('${e.screen}');
+dynamic getMouseCoordinatesRelativeToCanvas(html.MouseEvent e) {
+  return {
+    'x': (e.client.x - canvas.getScreenCtm().e),
+    'y': (e.client.y - canvas.getScreenCtm().f)
+  };
+}
+
+dynamic getRelativeMouseCoordinates(html.MouseEvent e) {
+  return {
+    'x': (e.offset.x),
+    'y': (e.offset.y)
+  };
+}
+
+dynamic getMouseCoordinatesProportinalToCanvas(html.MouseEvent e) {
   return {
     'x': (e.client.x - canvas.currentTranslate.x)/canvas.currentScale,
     'y': (e.client.y - canvas.currentTranslate.y)/canvas.currentScale

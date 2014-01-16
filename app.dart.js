@@ -2462,36 +2462,57 @@ main: function() {
 },
 
 getMouseCoordinates: function(e) {
-  var t1, t2, t3, t4, t5, t6;
+  var t1, t2, t3, t4;
   t1 = J.getInterceptor$x(e);
-  P.print(H.S(t1.get$client(e)));
-  P.print(H.S(t1.get$offset(e)));
-  P.print(H.S(t1.get$layer(e)));
-  t1 = new P.Point(e.clientX, e.clientY);
-  H.setRuntimeTypeInfo(t1, [null]);
-  t1 = t1.x;
-  t2 = $.canvas;
-  t3 = J.get$currentTranslate$x(t2).x;
-  if (typeof t1 !== "number")
-    throw t1.$sub();
+  t2 = t1.get$client(e);
+  t2 = t2.get$x(t2);
+  t3 = J.getScreenCtm$0$x($.canvas).e;
+  if (typeof t2 !== "number")
+    throw t2.$sub();
   if (typeof t3 !== "number")
     throw H.iae(t3);
-  t2 = t2.currentScale;
-  if (typeof t2 !== "number")
-    throw H.iae(t2);
-  t4 = new P.Point(e.clientX, e.clientY);
-  H.setRuntimeTypeInfo(t4, [null]);
-  t4 = t4.y;
-  t5 = $.canvas;
-  t6 = J.get$currentTranslate$x(t5).y;
+  t1 = t1.get$client(e);
+  t1 = t1.get$y(t1);
+  t4 = J.getScreenCtm$0$x($.canvas).f;
+  if (typeof t1 !== "number")
+    throw t1.$sub();
   if (typeof t4 !== "number")
-    throw t4.$sub();
-  if (typeof t6 !== "number")
-    throw H.iae(t6);
-  t5 = t5.currentScale;
+    throw H.iae(t4);
+  return H.fillLiteralMap(["x", t2 - t3, "y", t1 - t4], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
+},
+
+getRelativeMouseCoordinates: function(e) {
+  var t1, t2;
+  t1 = J.getInterceptor$x(e);
+  t2 = t1.get$offset(e);
+  t2 = t2.get$x(t2);
+  t1 = t1.get$offset(e);
+  return H.fillLiteralMap(["x", t2, "y", t1.get$y(t1)], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
+},
+
+getRelativeToCanvasMouseCoordinates: function(e) {
+  var t1, t2, t3, t4, t5;
+  t1 = J.getInterceptor$x(e);
+  t2 = t1.get$client(e);
+  t2 = t2.get$x(t2);
+  t3 = $.canvas;
+  t4 = J.get$currentTranslate$x(t3);
+  t5 = t4.x;
+  if (typeof t2 !== "number")
+    throw t2.$sub();
   if (typeof t5 !== "number")
     throw H.iae(t5);
-  return H.fillLiteralMap(["x", (t1 - t3) / t2, "y", (t4 - t6) / t5], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
+  t3 = t3.currentScale;
+  if (typeof t3 !== "number")
+    throw H.iae(t3);
+  t1 = t1.get$client(e);
+  t1 = t1.get$y(t1);
+  t4 = t4.y;
+  if (typeof t1 !== "number")
+    throw t1.$sub();
+  if (typeof t4 !== "number")
+    throw H.iae(t4);
+  return H.fillLiteralMap(["x", (t2 - t5) / t3, "y", (t1 - t4) / t3], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
 },
 
 _editableKeyPressed: function(e, editable) {
@@ -2617,7 +2638,7 @@ Application: {"": "Object;log,ui",
     t2 = $._dragSource;
     if (t2 == null ? dropTarget != null : t2 !== dropTarget) {
       operatorId = "operator_" + $.opNumber;
-      mouseCoordinates = D.getMouseCoordinates(e);
+      mouseCoordinates = D.getRelativeMouseCoordinates(e);
       t2 = $.operators;
       t2.$indexSet(t2, "operator_" + $.opNumber, this.addOperator$4(operatorId, t1.get$dataTransfer(e).getData("unit-type"), mouseCoordinates.$index(mouseCoordinates, "x"), mouseCoordinates.$index(mouseCoordinates, "y")));
       t1 = $.operators;
@@ -4540,7 +4561,7 @@ BaseOperatorUI: {"": "Object;group<",
     this.dragging = true;
     t1 = this.group;
     t1.parentNode.appendChild(t1);
-    mouseCoordinates = D.getMouseCoordinates(e);
+    mouseCoordinates = D.getRelativeToCanvasMouseCoordinates(e);
     this.dragOffsetX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), J.getCtm$0$x(this.group).e);
     this.dragOffsetY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), J.getCtm$0$x(this.group).f);
     t1 = $.canvas;
@@ -4574,7 +4595,7 @@ BaseOperatorUI: {"": "Object;group<",
   _moveStarted$1: function(e) {
     var mouseCoordinates, newX, newY;
     if (this.dragging === true) {
-      mouseCoordinates = D.getMouseCoordinates(e);
+      mouseCoordinates = D.getRelativeToCanvasMouseCoordinates(e);
       newX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), this.dragOffsetX);
       newY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), this.dragOffsetY);
       this.group.setAttribute("transform", "translate(" + H.S(newX) + ", " + H.S(newY) + ")");
@@ -4829,17 +4850,15 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
     return new H.BoundClosure$1(this, D.PortUI.prototype._onMouseEnter$1, null, "_onMouseEnter$1");
   },
   _onMouseMove$1: function(e) {
-    var t1, t2, t3;
+    var mouseCoordinates, t1;
     if ($.selectedPort != null) {
+      mouseCoordinates = D.getMouseCoordinates(e);
       t1 = $.tempLine;
       t1.toString;
-      t2 = J.getInterceptor$x(e);
-      t3 = t2.get$offset(e);
-      new W._ElementAttributeMap(t1)._element.setAttribute("x2", H.S(t3.get$x(t3)));
-      t3 = $.tempLine;
-      t3.toString;
-      t2 = t2.get$offset(e);
-      new W._ElementAttributeMap(t3)._element.setAttribute("y2", H.S(t2.get$y(t2)));
+      new W._ElementAttributeMap(t1)._element.setAttribute("x2", H.S(mouseCoordinates.$index(mouseCoordinates, "x")));
+      t1 = $.tempLine;
+      t1.toString;
+      new W._ElementAttributeMap(t1)._element.setAttribute("y2", H.S(mouseCoordinates.$index(mouseCoordinates, "y")));
     }
   },
   get$_onMouseMove: function() {
@@ -9874,14 +9893,7 @@ TemplateElement: {"": "HtmlElement;",
 
 TextAreaElement: {"": "HtmlElement;name=,placeholder},value%", $isTextAreaElement: true, "%": "HTMLTextAreaElement"},
 
-UIEvent: {"": "Event;detail=",
-  get$layer: function(receiver) {
-    var t1 = new P.Point(receiver.layerX, receiver.layerY);
-    H.setRuntimeTypeInfo(t1, [null]);
-    return t1;
-  },
-  "%": "CompositionEvent|FocusEvent|SVGZoomEvent|TextEvent|TouchEvent;UIEvent"
-},
+UIEvent: {"": "Event;detail=", "%": "CompositionEvent|FocusEvent|SVGZoomEvent|TextEvent|TouchEvent;UIEvent"},
 
 Window: {"": "EventTarget;name=",
   get$location: function(receiver) {
@@ -10891,6 +10903,9 @@ AElement: {"": "GraphicsElement;target=", "%": "SVGAElement"},
 GraphicsElement: {"": "SvgElement;",
   getCtm$0: function(receiver) {
     return receiver.getCTM();
+  },
+  getScreenCtm$0: function(receiver) {
+    return receiver.getScreenCTM();
   },
   "%": "SVGAltGlyphElement|SVGCircleElement|SVGClipPathElement|SVGDefsElement|SVGEllipseElement|SVGForeignObjectElement|SVGGElement|SVGImageElement|SVGLineElement|SVGPolygonElement|SVGPolylineElement|SVGRectElement|SVGSwitchElement|SVGTSpanElement|SVGTextContentElement|SVGTextElement|SVGTextPathElement|SVGTextPositioningElement|SVGUseElement;SVGGraphicsElement"
 },
@@ -12306,6 +12321,9 @@ J.getBoundingClientRect$0$x = function(receiver) {
 };
 J.getCtm$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).getCtm$0(receiver);
+};
+J.getScreenCtm$0$x = function(receiver) {
+  return J.getInterceptor$x(receiver).getScreenCtm$0(receiver);
 };
 J.initialize$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).initialize$0(receiver);
