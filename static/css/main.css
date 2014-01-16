@@ -40,7 +40,7 @@ div[contenteditable="true"] {
   width: 100%;
   min-height: 80px;
   max-height: 180px;
-  overflow-x: scroll;
+  overflow-y: scroll;
 }
 
 div.rule label {

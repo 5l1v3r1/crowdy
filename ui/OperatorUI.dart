@@ -58,7 +58,7 @@ class BaseOperatorUI {
     this.dragging = true;
     this.group.parentNode.append(this.group);
 
-    var mouseCoordinates = this.getMouseCoordinates(e);
+    var mouseCoordinates = getMouseCoordinates(e);
     this.dragOffsetX = mouseCoordinates['x'] - this.group.getCtm().e;
     this.dragOffsetY = mouseCoordinates['y'] - this.group.getCtm().f;
 
@@ -72,7 +72,7 @@ class BaseOperatorUI {
 
   void _moveStarted(html.MouseEvent e) {
     if (this.dragging) {
-      var mouseCoordinates = this.getMouseCoordinates(e);
+      var mouseCoordinates = getMouseCoordinates(e);
       num newX = mouseCoordinates['x'] - this.dragOffsetX;
       num newY = mouseCoordinates['y'] - this.dragOffsetY;
       this.group.setAttribute('transform', 'translate($newX, $newY)');
@@ -97,11 +97,6 @@ class BaseOperatorUI {
         canvas.children.remove(this.group);
       }
     }
-  }
-
-  dynamic getMouseCoordinates(html.MouseEvent e) {
-    return {'x': (e.client.x - canvas.currentTranslate.x)/canvas.currentScale,
-            'y': (e.client.y - canvas.currentTranslate.y)/canvas.currentScale};
   }
 
   void addBackgroundImage(String image) {

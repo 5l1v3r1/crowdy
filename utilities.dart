@@ -1,5 +1,18 @@
 part of crowdy;
 
+dynamic getMouseCoordinates(html.MouseEvent e) {
+  //return [e.offset.x, e.offset.y];
+  print('${e.client}');
+  print('${e.offset}');
+  print('${e.layer}');
+  //print('${e.movement}');
+  //print('${e.screen}');
+  return {
+    'x': (e.client.x - canvas.currentTranslate.x)/canvas.currentScale,
+    'y': (e.client.y - canvas.currentTranslate.y)/canvas.currentScale
+  };
+}
+
 void _editableKeyPressed(html.KeyboardEvent e, bool editable) {
   html.SpanElement target = e.target;
   if (e.keyCode == 13 || target.text.length > 32) {

@@ -84,13 +84,14 @@ class Application {
     html.Element dropTarget = e.target;
     if (_dragSource != dropTarget) {
       String operatorId = 'operator_$opNumber';
-      operators['operator_$opNumber'] = addOperator(operatorId, e.dataTransfer.getData('unit-type'), e.offset.x, e.offset.y);
+      var mouseCoordinates = getMouseCoordinates(e);
+      operators['operator_$opNumber'] = addOperator(operatorId, e.dataTransfer.getData('unit-type'), mouseCoordinates['x'], mouseCoordinates['y']);
       operators['operator_$opNumber'].initialize();
       opNumber += 1;
     }
   }
 
-  Operator addOperator(String id, String type, int x, int y) {
+  Operator addOperator(String id, String type, double x, double y) {
     Operator newOperator;
     switch(type) {
       case 'enrich':

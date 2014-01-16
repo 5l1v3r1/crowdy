@@ -2461,6 +2461,39 @@ main: function() {
   N.Logger_Logger("").get$onRecord().listen$1(new D.main_closure(messageList));
 },
 
+getMouseCoordinates: function(e) {
+  var t1, t2, t3, t4, t5, t6;
+  t1 = J.getInterceptor$x(e);
+  P.print(H.S(t1.get$client(e)));
+  P.print(H.S(t1.get$offset(e)));
+  P.print(H.S(t1.get$layer(e)));
+  t1 = new P.Point(e.clientX, e.clientY);
+  H.setRuntimeTypeInfo(t1, [null]);
+  t1 = t1.x;
+  t2 = $.canvas;
+  t3 = J.get$currentTranslate$x(t2).x;
+  if (typeof t1 !== "number")
+    throw t1.$sub();
+  if (typeof t3 !== "number")
+    throw H.iae(t3);
+  t2 = t2.currentScale;
+  if (typeof t2 !== "number")
+    throw H.iae(t2);
+  t4 = new P.Point(e.clientX, e.clientY);
+  H.setRuntimeTypeInfo(t4, [null]);
+  t4 = t4.y;
+  t5 = $.canvas;
+  t6 = J.get$currentTranslate$x(t5).y;
+  if (typeof t4 !== "number")
+    throw t4.$sub();
+  if (typeof t6 !== "number")
+    throw H.iae(t6);
+  t5 = t5.currentScale;
+  if (typeof t5 !== "number")
+    throw H.iae(t5);
+  return H.fillLiteralMap(["x", (t1 - t3) / t2, "y", (t4 - t6) / t5], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
+},
+
 _editableKeyPressed: function(e, editable) {
   var t1, target;
   t1 = J.getInterceptor$x(e);
@@ -2578,14 +2611,15 @@ Application: {"": "Object;log,ui",
     return new H.BoundClosure$1(this, D.Application.prototype._onDragOver$1, null, "_onDragOver$1");
   },
   _onDrop$1: function(e) {
-    var t1, dropTarget, t2, operatorId;
+    var t1, dropTarget, t2, operatorId, mouseCoordinates;
     t1 = J.getInterceptor$x(e);
     dropTarget = t1.get$target(e);
     t2 = $._dragSource;
     if (t2 == null ? dropTarget != null : t2 !== dropTarget) {
       operatorId = "operator_" + $.opNumber;
+      mouseCoordinates = D.getMouseCoordinates(e);
       t2 = $.operators;
-      t2.$indexSet(t2, "operator_" + $.opNumber, this.addOperator$4(operatorId, t1.get$dataTransfer(e).getData("unit-type"), t1.get$offset(e).x, t1.get$offset(e).y));
+      t2.$indexSet(t2, "operator_" + $.opNumber, this.addOperator$4(operatorId, t1.get$dataTransfer(e).getData("unit-type"), mouseCoordinates.$index(mouseCoordinates, "x"), mouseCoordinates.$index(mouseCoordinates, "y")));
       t1 = $.operators;
       J.initialize$0$x(t1.$index(t1, "operator_" + $.opNumber));
       $.opNumber = $.opNumber + 1;
@@ -4506,7 +4540,7 @@ BaseOperatorUI: {"": "Object;group<",
     this.dragging = true;
     t1 = this.group;
     t1.parentNode.appendChild(t1);
-    mouseCoordinates = this.getMouseCoordinates$1(e);
+    mouseCoordinates = D.getMouseCoordinates(e);
     this.dragOffsetX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), J.getCtm$0$x(this.group).e);
     this.dragOffsetY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), J.getCtm$0$x(this.group).f);
     t1 = $.canvas;
@@ -4540,7 +4574,7 @@ BaseOperatorUI: {"": "Object;group<",
   _moveStarted$1: function(e) {
     var mouseCoordinates, newX, newY;
     if (this.dragging === true) {
-      mouseCoordinates = this.getMouseCoordinates$1(e);
+      mouseCoordinates = D.getMouseCoordinates(e);
       newX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), this.dragOffsetX);
       newY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), this.dragOffsetY);
       this.group.setAttribute("transform", "translate(" + H.S(newX) + ", " + H.S(newY) + ")");
@@ -4589,44 +4623,12 @@ BaseOperatorUI: {"": "Object;group<",
   get$_onKeyDown: function() {
     return new H.BoundClosure$1(this, D.BaseOperatorUI.prototype._onKeyDown$1, null, "_onKeyDown$1");
   },
-  getMouseCoordinates$1: function(e) {
-    var t1, t2, t3, t4, t5;
-    t1 = J.getInterceptor$x(e);
-    t2 = t1.get$offset(e);
-    P.print(H.S(t2.get$x(t2)) + " " + H.S(J.get$currentTranslate$x($.canvas).x) + " " + H.S(J.get$currentScale$x($.canvas)));
-    t2 = t1.get$client(e);
-    t2 = t2.get$x(t2);
-    t3 = $.canvas;
-    t4 = J.get$currentTranslate$x(t3);
-    t5 = t4.x;
-    if (typeof t2 !== "number")
-      throw t2.$sub();
-    if (typeof t5 !== "number")
-      throw H.iae(t5);
-    t3 = t3.currentScale;
-    if (typeof t3 !== "number")
-      throw H.iae(t3);
-    t1 = t1.get$client(e);
-    t1 = t1.get$y(t1);
-    t4 = t4.y;
-    if (typeof t1 !== "number")
-      throw t1.$sub();
-    if (typeof t4 !== "number")
-      throw H.iae(t4);
-    return H.fillLiteralMap(["x", (t2 - t5) / t3, "y", (t1 - t4) / t3], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
-  },
   addBackgroundImage$1: function(image) {
     var t1, temp, t2, t3;
     t1 = this.group;
     temp = document.createElementNS("http://www.w3.org/2000/svg", "image");
-    t2 = this.x;
-    if (typeof t2 !== "number")
-      throw t2.$add();
-    temp.setAttribute("x", H.S(t2 + this.width - 20 - 3));
-    t2 = this.y;
-    if (typeof t2 !== "number")
-      throw t2.$add();
-    temp.setAttribute("y", H.S(t2 + this.height - 14 - 3));
+    temp.setAttribute("x", H.S(J.$sub$n(J.$sub$n(J.$add$ns(this.x, this.width), 20), 3)));
+    temp.setAttribute("y", H.S(J.$sub$n(J.$sub$n(J.$add$ns(this.y, this.height), 14), 3)));
     temp.setAttribute("width", "20");
     temp.setAttribute("height", "14");
     temp.setAttributeNS("http://www.w3.org/1999/xlink", "href", "static/img/" + image);
@@ -4641,13 +4643,9 @@ BaseOperatorUI: {"": "Object;group<",
   BaseOperatorUI$5: function(id, mouseX, mouseY, width, height) {
     var t1, t2, temp;
     t1 = this.width;
-    if (typeof mouseX !== "number")
-      throw mouseX.$sub();
-    this.x = mouseX - t1 / 2;
+    this.x = J.$sub$n(mouseX, t1 / 2);
     t2 = this.height;
-    if (typeof mouseY !== "number")
-      throw mouseY.$sub();
-    this.y = mouseY - t2 / 2;
+    this.y = J.$sub$n(mouseY, t2 / 2);
     temp = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     temp.setAttribute("x", H.S(this.x));
     temp.setAttribute("y", H.S(this.y));
@@ -4932,74 +4930,71 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
     return new D.BoundClosure$i1(this, D.PortUI.prototype.remove$1, _receiver, "remove$1");
   },
   PortUI$7$input: function(group, x, y, width, height, size, input) {
-    var t1, t2, t3, xCoor, yCoor, t4, t5;
+    var t1, t2, t3, t4, xCoor, yCoor, t5;
     this.body = document.createElementNS("http://www.w3.org/2000/svg", "rect");
     t1 = this.size;
     t2 = t1 / 2;
-    if (typeof x !== "number")
-      throw x.$sub();
-    t3 = this.width;
+    t3 = J.$sub$n(x, t2);
+    t4 = this.width;
     if (this.input) {
-      if (typeof t3 !== "number")
-        throw H.iae(t3);
-      t3 = -1 * t3 / 2;
+      if (typeof t4 !== "number")
+        throw H.iae(t4);
+      t4 = -1 * t4 / 2;
     } else {
-      if (typeof t3 !== "number")
-        throw t3.$div();
-      t3 /= 2;
+      if (typeof t4 !== "number")
+        throw t4.$div();
+      t4 /= 2;
     }
-    xCoor = x - t2 + t3;
-    if (typeof y !== "number")
-      throw y.$sub();
-    yCoor = y - t2;
+    xCoor = J.$add$ns(t3, t4);
+    yCoor = J.$sub$n(y, t2);
     this.body.setAttribute("x", H.S(xCoor));
     this.body.setAttribute("y", H.S(yCoor));
     this.body.setAttribute("width", "" + t1);
     this.body.setAttribute("height", "" + t1);
-    t3 = J.get$classes$x(this.body);
-    t3.add$1(t3, "port");
-    t3 = this.body;
-    t3.toString;
-    t3 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_mousedown._eventType, false);
-    H.setRuntimeTypeInfo(t3, [null]);
-    t4 = this.get$_onMouseDown();
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
-    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
-    t4._tryResume$0();
+    t4 = J.get$classes$x(this.body);
+    t4.add$1(t4, "port");
     t4 = this.body;
     t4.toString;
-    t4 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_mouseenter._eventType, false);
+    t4 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_mousedown._eventType, false);
     H.setRuntimeTypeInfo(t4, [null]);
-    t3 = this.get$_onMouseEnter();
+    t3 = this.get$_onMouseDown();
     t3 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(t3), t4._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
     t3._tryResume$0();
     t3 = this.body;
     t3.toString;
-    t4 = C.EventStreamProvider_mouseup._eventType;
-    t3 = new W._ElementEventStreamImpl(t3, t4, false);
+    t3 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_mouseenter._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
-    t5 = this.get$_onMouseUpPort();
-    t5 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t5), t3._useCapture);
-    H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
-    t5._tryResume$0();
-    t4 = new W._EventStream(document, t4, false);
+    t4 = this.get$_onMouseEnter();
+    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
+    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
+    t4._tryResume$0();
+    t4 = this.body;
+    t4.toString;
+    t3 = C.EventStreamProvider_mouseup._eventType;
+    t4 = new W._ElementEventStreamImpl(t4, t3, false);
     H.setRuntimeTypeInfo(t4, [null]);
-    t5 = this.get$_onMouseUp();
+    t5 = this.get$_onMouseUpPort();
     t5 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(t5), t4._useCapture);
     H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
     t5._tryResume$0();
+    t3 = new W._EventStream(document, t3, false);
+    H.setRuntimeTypeInfo(t3, [null]);
+    t5 = this.get$_onMouseUp();
+    t5 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t5), t3._useCapture);
+    H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
+    t5._tryResume$0();
     t5 = new W._EventStream(document, C.EventStreamProvider_mousemove._eventType, false);
     H.setRuntimeTypeInfo(t5, [null]);
-    t4 = this.get$_onMouseMove();
-    t4 = new W._EventStreamSubscription(0, t5._html$_target, t5._eventType, W._wrapZone(t4), t5._useCapture);
-    H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t5, "_EventStream", 0)]);
-    t4._tryResume$0();
-    t4.cancel$0();
+    t3 = this.get$_onMouseMove();
+    t3 = new W._EventStreamSubscription(0, t5._html$_target, t5._eventType, W._wrapZone(t3), t5._useCapture);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t5, "_EventStream", 0)]);
+    t3._tryResume$0();
+    t3.cancel$0();
     this.point = J.createSvgPoint$0$x($.canvas);
-    t4 = this.point;
-    t4.x = xCoor + (this.input ? 0 : t1);
-    this.point.y = yCoor + t2;
+    t3 = this.point;
+    t3.x = J.$add$ns(xCoor, this.input ? 0 : t1);
+    this.point.y = J.$add$ns(yCoor, t2);
     this.initX = this.point.x;
     this.initY = this.point.y;
     this.group.appendChild(this.body);
@@ -8897,6 +8892,9 @@ DateTime_toString_twoDigits: {"": "Closure;",
 },
 
 Duration: {"": "Object;_duration<",
+  $add: function(_, other) {
+    return P.Duration$(0, 0, C.JSNumber_methods.$add(this._duration, other.get$_duration()), 0, 0, 0);
+  },
   $sub: function(_, other) {
     return P.Duration$(0, 0, this._duration - other.get$_duration(), 0, 0, 0);
   },
@@ -9876,7 +9874,14 @@ TemplateElement: {"": "HtmlElement;",
 
 TextAreaElement: {"": "HtmlElement;name=,placeholder},value%", $isTextAreaElement: true, "%": "HTMLTextAreaElement"},
 
-UIEvent: {"": "Event;detail=", "%": "CompositionEvent|FocusEvent|SVGZoomEvent|TextEvent|TouchEvent;UIEvent"},
+UIEvent: {"": "Event;detail=",
+  get$layer: function(receiver) {
+    var t1 = new P.Point(receiver.layerX, receiver.layerY);
+    H.setRuntimeTypeInfo(t1, [null]);
+    return t1;
+  },
+  "%": "CompositionEvent|FocusEvent|SVGZoomEvent|TextEvent|TouchEvent;UIEvent"
+},
 
 Window: {"": "EventTarget;name=",
   get$location: function(receiver) {
@@ -10970,7 +10975,7 @@ SvgElement: {"": "Element;",
   "%": "SVGAltGlyphDefElement|SVGAltGlyphItemElement|SVGAnimateColorElement|SVGAnimateElement|SVGAnimateMotionElement|SVGAnimateTransformElement|SVGAnimationElement|SVGComponentTransferFunctionElement|SVGCursorElement|SVGDescElement|SVGFEBlendElement|SVGFEColorMatrixElement|SVGFEComponentTransferElement|SVGFECompositeElement|SVGFEConvolveMatrixElement|SVGFEDiffuseLightingElement|SVGFEDisplacementMapElement|SVGFEDistantLightElement|SVGFEDropShadowElement|SVGFEFloodElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGFEGaussianBlurElement|SVGFEImageElement|SVGFEMergeElement|SVGFEMergeNodeElement|SVGFEMorphologyElement|SVGFEOffsetElement|SVGFEPointLightElement|SVGFESpecularLightingElement|SVGFESpotLightElement|SVGFETileElement|SVGFETurbulenceElement|SVGFilterElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGGlyphElement|SVGGlyphRefElement|SVGGradientElement|SVGHKernElement|SVGLinearGradientElement|SVGMPathElement|SVGMarkerElement|SVGMaskElement|SVGMetadataElement|SVGMissingGlyphElement|SVGPatternElement|SVGRadialGradientElement|SVGSetElement|SVGStopElement|SVGSymbolElement|SVGTitleElement|SVGVKernElement|SVGViewElement;SVGElement"
 },
 
-SvgSvgElement: {"": "GraphicsElement;currentScale=,currentTranslate=",
+SvgSvgElement: {"": "GraphicsElement;currentTranslate=",
   createSvgPoint$0: function(receiver) {
     return receiver.createSVGPoint();
   },
@@ -11042,6 +11047,22 @@ Point: {"": "Object;x>,y>",
     t1 = J.get$hashCode$(this.x);
     t2 = J.get$hashCode$(this.y);
     return P._JenkinsSmiHash_finish0(P._JenkinsSmiHash_combine0(P._JenkinsSmiHash_combine0(0, t1), t2));
+  },
+  $add: function(_, other) {
+    var t1, t2, t3;
+    t1 = this.x;
+    t2 = C.JSNumber_methods.get$x(other);
+    if (typeof t1 !== "number")
+      throw t1.$add();
+    t2 = C.JSNumber_methods.$add(t1, t2);
+    t1 = this.y;
+    t3 = C.JSNumber_methods.get$y(other);
+    if (typeof t1 !== "number")
+      throw t1.$add();
+    t3 = C.JSNumber_methods.$add(t1, t3);
+    t3 = new P.Point(t2, t3);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(this, "Point", 0)]);
+    return t3;
   },
   $sub: function(_, other) {
     var t1, t2, t3, t4;
@@ -11907,6 +11928,17 @@ J.getInterceptor$n = function(receiver) {
     return J.UnknownJavaScriptObject.prototype;
   return receiver;
 };
+J.getInterceptor$ns = function(receiver) {
+  if (typeof receiver == "number")
+    return J.JSNumber.prototype;
+  if (typeof receiver == "string")
+    return J.JSString.prototype;
+  if (receiver == null)
+    return receiver;
+  if (!(receiver instanceof P.Object))
+    return J.UnknownJavaScriptObject.prototype;
+  return receiver;
+};
 J.getInterceptor$s = function(receiver) {
   if (typeof receiver == "string")
     return J.JSString.prototype;
@@ -12116,6 +12148,11 @@ $.Device__isWebKit = null;
 $.hierarchicalLoggingEnabled = false;
 $._rootLevel = C.Level_INFO_800;
 $.LogRecord__nextNumber = 0;
+J.$add$ns = function(receiver, a0) {
+  if (typeof receiver == "number" && typeof a0 == "number")
+    return receiver + a0;
+  return J.getInterceptor$ns(receiver).$add(receiver, a0);
+};
 J.$eq = function(receiver, a0) {
   if (receiver == null)
     return a0 == null;
@@ -12197,9 +12234,6 @@ J.get$className$x = function(receiver) {
 };
 J.get$classes$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$classes(receiver);
-};
-J.get$currentScale$x = function(receiver) {
-  return J.getInterceptor$x(receiver).get$currentScale(receiver);
 };
 J.get$currentTranslate$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$currentTranslate(receiver);
