@@ -67,6 +67,9 @@ void translationExample(html.MouseEvent e) {
   details.base['name'].input.value = 'Write Operator';
   details.base['description'].input.value = 'This operator will write the results into a file. This file will be available to download.';
 
-  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [operators['operator_1'].ui.outputPort, operators['operator_2'].ui.inputPort]));
-  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [operators['operator_2'].ui.outputPort, operators['operator_3'].ui.inputPort]));
+  var op1 = operators['operator_1'] as SourceHumanOperator;
+  var op2 = operators['operator_2'] as HumanProcessingOperator;
+  var op3 = operators['operator_3'] as SinkFileOperator;
+  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op1.ui.outputPort, op2.ui.inputPort]));
+  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op2.ui.outputPort, op3.ui.inputPort]));
 }

@@ -65,35 +65,35 @@ var $$ = {};
 
 // Native classes
 // Method closures
-$$.BoundClosure$i0 = [H, {"": "BoundClosure;_self,_target,_receiver,__js_helper$_name",
+$$.BoundClosure$i0 = [H, {"": "BoundClosure;_self,__js_helper$_target,_receiver,__js_helper$_name",
   call$0: function() {
-    return this._target.call(this._self, this._receiver);
+    return this.__js_helper$_target.call(this._self, this._receiver);
   }
 }];
 
-$$.BoundClosure$1 = [H, {"": "BoundClosure;_self,_target,_receiver,__js_helper$_name",
+$$.BoundClosure$1 = [H, {"": "BoundClosure;_self,__js_helper$_target,_receiver,__js_helper$_name",
   call$1: function(p0) {
-    return this._target.call(this._self, p0);
+    return this.__js_helper$_target.call(this._self, p0);
   },
   $is_args1: true
 }];
 
-$$.BoundClosure$i1 = [D, {"": "BoundClosure;_self,_target,_receiver,__js_helper$_name",
+$$.BoundClosure$i1 = [D, {"": "BoundClosure;_self,__js_helper$_target,_receiver,__js_helper$_name",
   call$1: function(p0) {
-    return this._target.call(this._self, this._receiver, p0);
+    return this.__js_helper$_target.call(this._self, this._receiver, p0);
   },
   $is_args1: true
 }];
 
-$$.BoundClosure$0 = [P, {"": "BoundClosure;_self,_target,_receiver,__js_helper$_name",
+$$.BoundClosure$0 = [P, {"": "BoundClosure;_self,__js_helper$_target,_receiver,__js_helper$_name",
   call$0: function() {
-    return this._target.call(this._self);
+    return this.__js_helper$_target.call(this._self);
   }
 }];
 
-$$.BoundClosure$2 = [P, {"": "BoundClosure;_self,_target,_receiver,__js_helper$_name",
+$$.BoundClosure$2 = [P, {"": "BoundClosure;_self,__js_helper$_target,_receiver,__js_helper$_name",
   call$2: function(p0, p1) {
-    return this._target.call(this._self, p0, p1);
+    return this.__js_helper$_target.call(this._self, p0, p1);
   },
   call$1: function(p0) {
     return this.call$2(p0, null);
@@ -441,7 +441,7 @@ JSNumber: {"": "num/Interceptor;",
   },
   $shr: function(receiver, other) {
     if (other < 0)
-      throw H.wrapException(P.ArgumentError$(other));
+      throw H.wrapException(new P.ArgumentError(other));
     if (receiver > 0) {
       if (other > 31)
         return 0;
@@ -453,7 +453,7 @@ JSNumber: {"": "num/Interceptor;",
   },
   $lt: function(receiver, other) {
     if (typeof other !== "number")
-      throw H.wrapException(P.ArgumentError$(other));
+      throw H.wrapException(new P.ArgumentError(other));
     return receiver < other;
   },
   $gt: function(receiver, other) {
@@ -463,7 +463,7 @@ JSNumber: {"": "num/Interceptor;",
   },
   $ge: function(receiver, other) {
     if (typeof other !== "number")
-      throw H.wrapException(P.ArgumentError$(other));
+      throw H.wrapException(new P.ArgumentError(other));
     return receiver >= other;
   },
   $isnum: true,
@@ -1668,16 +1668,16 @@ Primitives_stringFromCodePoints: function(codePoints) {
   a = [];
   a.$builtinTypeInfo = [J.JSInt];
   for (t1 = new H.ListIterator(codePoints, codePoints.length, 0, null); t1.moveNext$0();) {
-    i = t1._dev$_current;
+    i = t1._current;
     if (typeof i !== "number" || Math.floor(i) !== i)
-      throw H.wrapException(P.ArgumentError$(i));
+      throw H.wrapException(new P.ArgumentError(i));
     if (i <= 65535)
       a.push(i);
     else if (i <= 1114111) {
       a.push(55296 + (C.JSInt_methods.$shr(i - 65536, 10) & 1023));
       a.push(56320 + (i & 1023));
     } else
-      throw H.wrapException(P.ArgumentError$(i));
+      throw H.wrapException(new P.ArgumentError(i));
   }
   return H.Primitives__fromCharCodeApply(a);
 },
@@ -1685,11 +1685,11 @@ Primitives_stringFromCodePoints: function(codePoints) {
 Primitives_stringFromCharCodes: function(charCodes) {
   var t1, i;
   for (t1 = new H.ListIterator(charCodes, charCodes.length, 0, null); t1.moveNext$0();) {
-    i = t1._dev$_current;
+    i = t1._current;
     if (typeof i !== "number" || Math.floor(i) !== i)
-      throw H.wrapException(P.ArgumentError$(i));
+      throw H.wrapException(new P.ArgumentError(i));
     if (i < 0)
-      throw H.wrapException(P.ArgumentError$(i));
+      throw H.wrapException(new P.ArgumentError(i));
     if (i > 65535)
       return H.Primitives_stringFromCodePoints(charCodes);
   }
@@ -2389,7 +2389,7 @@ Closure: {"": "Object;",
   }
 },
 
-BoundClosure: {"": "Closure;_self,_target,_receiver,__js_helper$_name",
+BoundClosure: {"": "Closure;_self,__js_helper$_target,_receiver,__js_helper$_name",
   $eq: function(_, other) {
     var t1;
     if (other == null)
@@ -2399,7 +2399,7 @@ BoundClosure: {"": "Closure;_self,_target,_receiver,__js_helper$_name",
     t1 = J.getInterceptor(other);
     if (typeof other !== "object" || other === null || !t1.$isBoundClosure)
       return false;
-    return this._self === other._self && this._target === other._target && this._receiver === other._receiver;
+    return this._self === other._self && this.__js_helper$_target === other.__js_helper$_target && this._receiver === other._receiver;
   },
   get$hashCode: function(_) {
     var t1, receiverHashCode;
@@ -2408,7 +2408,7 @@ BoundClosure: {"": "Closure;_self,_target,_receiver,__js_helper$_name",
       receiverHashCode = H.Primitives_objectHashCode(this._self);
     else
       receiverHashCode = typeof t1 !== "object" ? J.get$hashCode$(t1) : H.Primitives_objectHashCode(t1);
-    return (receiverHashCode ^ H.Primitives_objectHashCode(this._target)) >>> 0;
+    return (receiverHashCode ^ H.Primitives_objectHashCode(this.__js_helper$_target)) >>> 0;
   },
   $isBoundClosure: true
 },
@@ -2447,10 +2447,67 @@ initHooks_closure1: {"": "Closure;prototypeForTag_2",
 }}],
 ["crowdy", "app.dart", , D, {
 main: function() {
-  D.Application$("#app_container");
-  var messageList = document.querySelector("div#bottom-panes div#messages ul");
+  var messageList, t1, t2;
+  $.app = D.Application$("#app_container");
+  messageList = document.querySelector("div#bottom-panes div#messages ul");
   N.Logger_Logger("").set$level(C.Level_ALL_0);
   N.Logger_Logger("").get$onRecord().listen$1(new D.main_closure(messageList));
+  t1 = document.querySelector("#translationExample");
+  t1.toString;
+  t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
+  H.setRuntimeTypeInfo(t1, [null]);
+  t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(D.translationExample$closure), t1._useCapture);
+  H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
+  t2._tryResume$0();
+},
+
+translationExample: function(e) {
+  var t1, details, op1, op2, op3;
+  t1 = $.operators;
+  t1.forEach$1(t1, new D.translationExample_closure());
+  t1 = $.operators;
+  t1.$indexSet(t1, "operator_1", $.app.addOperator$4("operator_1", "source.manual", 100, 100));
+  t1 = $.operators;
+  J.initialize$0$x(t1.$index(t1, "operator_1"));
+  t1 = $.operators;
+  details = H.interceptedTypeCast(t1.$index(t1, "operator_1").get$details(), "$isSourceManualDetailsUI");
+  t1 = details.base;
+  J.set$value$x(t1.$index(t1, "name").get$input(), "Read Operator");
+  t1 = details.base;
+  J.set$value$x(t1.$index(t1, "description").get$input(), "This operator will read the manual entry. The content will be parsed with respect to the following parameters. This will basically result in a data flow with a number of data segments.");
+  t1 = details.elements;
+  J.set$value$x(t1.$index(t1, "input").get$input(), "line-1-segment-1 line-1-segment-2\nline-2-segment-1 line-2-segment-2");
+  t1 = details.elements;
+  J.set$value$x(t1.$index(t1, "delimiter").get$input(), "1");
+  details._onRefresh$0();
+  t1 = $.operators;
+  t1.$indexSet(t1, "operator_2", $.app.addOperator$4("operator_2", "processing.human", 300, 100));
+  t1 = $.operators;
+  J.initialize$0$x(t1.$index(t1, "operator_2"));
+  t1 = $.operators;
+  details = H.interceptedTypeCast(t1.$index(t1, "operator_2").get$details(), "$isSourceHumanDetailsUI");
+  t1 = details.base;
+  J.set$value$x(t1.$index(t1, "name").get$input(), "Human Processing Operator");
+  t1 = details.base;
+  J.set$value$x(t1.$index(t1, "description").get$input(), "This operator will receive the data segments from previous operator. These segments can be used to configure the human task.");
+  t1 = $.operators;
+  t1.$indexSet(t1, "operator_3", $.app.addOperator$4("operator_3", "sink.file", 500, 100));
+  t1 = $.operators;
+  J.initialize$0$x(t1.$index(t1, "operator_3"));
+  t1 = $.operators;
+  details = H.interceptedTypeCast(t1.$index(t1, "operator_3").get$details(), "$isSinkFileDetailsUI");
+  t1 = details.base;
+  J.set$value$x(t1.$index(t1, "name").get$input(), "Write Operator");
+  t1 = details.base;
+  J.set$value$x(t1.$index(t1, "description").get$input(), "This operator will write the results into a file. This file will be available to download.");
+  t1 = $.operators;
+  op1 = H.interceptedTypeCast(t1.$index(t1, "operator_1"), "$isSourceHumanOperator");
+  t1 = $.operators;
+  op2 = H.interceptedTypeCast(t1.$index(t1, "operator_2"), "$isHumanProcessingOperator");
+  t1 = $.operators;
+  op3 = H.interceptedTypeCast(t1.$index(t1, "operator_3"), "$isSinkFileOperator");
+  $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("stream_draw_line", true, true, [op1.ui.get$outputPort(), op2.ui.get$inputPort()]));
+  $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("stream_draw_line", true, true, [op2.ui.get$outputPort(), op3.ui.get$inputPort()]));
 },
 
 getMouseCoordinatesRelativeToCanvas: function(e) {
@@ -2546,7 +2603,15 @@ main_closure: {"": "Closure;messageList_0",
   $is_args1: true
 },
 
-Application: {"": "Object;log,ui",
+translationExample_closure: {"": "Closure;",
+  call$2: function(id, operator) {
+    var t1 = operator.get$ui();
+    return t1.remove$0(t1);
+  },
+  $is_args2: true
+},
+
+Application: {"": "Object;log,ui<",
   _modalClosed$1: function(e) {
     var t1 = J.get$children$x($.get$modalBody());
     t1.clear$0(t1);
@@ -2599,17 +2664,14 @@ Application: {"": "Object;log,ui",
     t2 = new W._ElementCssClassSet(t2);
     t2.add$1(t2, "moving");
     t1.get$dataTransfer(e).effectAllowed = "move";
-    P.print("Drag started " + window.navigator.appVersion);
-    if (!J.contains$1$asx(window.navigator.appVersion, "MSIE"))
+    if (J.contains$1$asx(window.navigator.appVersion, "Firefox"))
       e.dataTransfer.setData("text/plain", "God damn Firefox!");
   },
   get$_onDragStart: function() {
     return new H.BoundClosure$1(this, D.Application.prototype._onDragStart$1, null, "_onDragStart$1");
   },
   _onDragEnd$1: function(e) {
-    var t1;
-    P.print("Drag ended");
-    t1 = $._dragSource;
+    var t1 = $._dragSource;
     t1.toString;
     t1 = new W._ElementCssClassSet(t1);
     t1.remove$1(t1, "moving");
@@ -2624,20 +2686,18 @@ Application: {"": "Object;log,ui",
     return new H.BoundClosure$1(this, D.Application.prototype._onDragOver$1, null, "_onDragOver$1");
   },
   _onDrop$1: function(e) {
-    var operatorId, mouseCoordinates, t1, t2, t3;
-    P.print("Dropping");
+    var operatorId, mouseCoordinates, t1, t2;
     J.preventDefault$0$x(e);
     if (J.$eq(W._convertNativeToDart_EventTarget(e.target), $.canvas)) {
       operatorId = "operator_" + $.opNumber;
       mouseCoordinates = D.getRelativeMouseCoordinates(e);
       t1 = $.operators;
-      t2 = "operator_" + $.opNumber;
-      t3 = $._dragSource;
-      t3.toString;
-      t3 = new W._DataAttributeMap(new W._ElementAttributeMap(t3));
-      t1.$indexSet(t1, t2, this.addOperator$4(operatorId, t3._attributes._element.getAttribute("data-" + t3._toHyphenedName$1("unit-type")), mouseCoordinates.$index(mouseCoordinates, "x"), mouseCoordinates.$index(mouseCoordinates, "y")));
-      t3 = $.operators;
-      J.initialize$0$x(t3.$index(t3, "operator_" + $.opNumber));
+      t2 = $._dragSource;
+      t2.toString;
+      t2 = new W._DataAttributeMap(new W._ElementAttributeMap(t2));
+      t1.$indexSet(t1, operatorId, this.addOperator$4(operatorId, t2._attributes._element.getAttribute("data-" + t2._toHyphenedName$1("unit-type")), mouseCoordinates.$index(mouseCoordinates, "x"), mouseCoordinates.$index(mouseCoordinates, "y")));
+      t2 = $.operators;
+      J.initialize$0$x(t2.$index(t2, operatorId));
       $.opNumber = $.opNumber + 1;
     }
   },
@@ -2668,7 +2728,7 @@ Application: {"": "Object;log,ui",
       case "sink.email":
         newOperator = D.SinkEmailOperator$(id, type, x, y);
         break;
-      case "processing":
+      case "processing.human":
         newOperator = D.HumanProcessingOperator$(id, type, x, y);
         break;
       case "selection":
@@ -2696,13 +2756,13 @@ Application: {"": "Object;log,ui",
     t1 = new W._ElementEventStreamImpl(t1, t2, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t3 = this.get$deselect();
-    t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
+    t3 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t3), t1._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t3._tryResume$0();
     t3 = J.get$on$x($.canvas);
     t3 = t3.$index(t3, "stream_draw_line");
     t1 = this.get$drawLine();
-    t1 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t1), t3._useCapture);
+    t1 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(t1), t3._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t1._tryResume$0();
     t1 = $.canvas;
@@ -2710,7 +2770,7 @@ Application: {"": "Object;log,ui",
     t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_dragover._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t3 = this.get$_onDragOver();
-    t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
+    t3 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t3), t1._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t3._tryResume$0();
     t3 = $.canvas;
@@ -2718,7 +2778,7 @@ Application: {"": "Object;log,ui",
     t3 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_drop._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
     t1 = this.get$_onDrop();
-    t1 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t1), t3._useCapture);
+    t1 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(t1), t3._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t1._tryResume$0();
     units = W._FrozenElementList$_wrap(document.querySelectorAll("ul.units li"), null);
@@ -2733,14 +2793,14 @@ Application: {"": "Object;log,ui",
     t1 = new W._ElementEventStreamImpl(t1, t2, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t3 = this.get$_modalClosed();
-    t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
+    t3 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t3), t1._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t3._tryResume$0();
     t3 = $.get$modalAlert().querySelector(".close");
     t3.toString;
     t2 = new W._ElementEventStreamImpl(t3, t2, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.Application_closure()), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.Application_closure()), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
   },
@@ -2761,7 +2821,7 @@ Application_closure: {"": "Closure;",
   $is_args1: true
 },
 
-Operator: {"": "Object;log,id,type',ui,details<,next,prev",
+Operator: {"": "Object;log,id,type',ui<,details<,next,prev",
   initialize$0: function(_) {
     var t1, t2;
     t1 = this.ui;
@@ -2771,7 +2831,7 @@ Operator: {"": "Object;log,id,type',ui,details<,next,prev",
     t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_dblclick._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t2 = this.get$_onDoubleClick();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
     t2 = this.details;
@@ -2779,7 +2839,7 @@ Operator: {"": "Object;log,id,type',ui,details<,next,prev",
     t2 = J.get$on$x($.canvas);
     t2 = t2.$index(t2, "operator_output_refresh");
     t1 = this.get$_refresh();
-    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t1._tryResume$0();
   },
@@ -2927,6 +2987,7 @@ SourceHumanOperator: {"": "Operator;log,id,type,ui,details,next,prev",
     this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
     this.details = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
   },
+  $isSourceHumanOperator: true,
   static: {
 SourceHumanOperator$: function(id, type, mouseX, mouseY) {
   var t1 = new D.SourceHumanOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
@@ -2986,6 +3047,7 @@ SinkFileOperator: {"": "Operator;log,id,type,ui,details,next,prev",
     t5.BaseDetailsUI$4(t1, t2, t3, t4);
     this.details = t5;
   },
+  $isSinkFileOperator: true,
   static: {
 SinkFileOperator$: function(id, type, mouseX, mouseY) {
   var t1 = new D.SinkFileOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
@@ -3023,6 +3085,7 @@ HumanProcessingOperator: {"": "Operator;log,id,type,ui,details,next,prev",
     this.ui = D.ProcessingOperatorUI$(this.id, mouseX, mouseY, 80, 60);
     this.details = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
   },
+  $isHumanProcessingOperator: true,
   static: {
 HumanProcessingOperator$: function(id, type, mouseX, mouseY) {
   var t1 = new D.HumanProcessingOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
@@ -3118,7 +3181,7 @@ OutputSegmentUI: {"": "Object;removable,segment,name>,value>,deleteButton",
       t1.toString;
       t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
       H.setRuntimeTypeInfo(t2, [null]);
-      t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.OutputSegmentUI_closure(this)), t2._useCapture);
+      t3 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.OutputSegmentUI_closure(this)), t2._useCapture);
       H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
       t3._tryResume$0();
       this.deleteButton = t1;
@@ -3130,7 +3193,7 @@ OutputSegmentUI: {"": "Object;removable,segment,name>,value>,deleteButton",
     t1.toString;
     t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_keypress._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.OutputSegmentUI_closure0(editable)), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.OutputSegmentUI_closure0(editable)), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
     this.name = t1;
@@ -3498,38 +3561,38 @@ FlowLineUI: {"": "Object;path,from,to,selected",
     t8 = new W._ElementEventStreamImpl(t8, C.EventStreamProvider_mousedown._eventType, false);
     H.setRuntimeTypeInfo(t8, [null]);
     t7 = this.get$select(this);
-    t7 = new W._EventStreamSubscription(0, t8._html$_target, t8._eventType, W._wrapZone(t7), t8._useCapture);
+    t7 = new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(t7), t8._useCapture);
     H.setRuntimeTypeInfo(t7, [H.getRuntimeTypeArgument(t8, "_EventStream", 0)]);
     t7._tryResume$0();
     $.canvas.appendChild(this.path);
     t7 = new W._EventStream(window, C.EventStreamProvider_keydown._eventType, false);
     H.setRuntimeTypeInfo(t7, [null]);
     t8 = this.get$_keyPressed();
-    t8 = new W._EventStreamSubscription(0, t7._html$_target, t7._eventType, W._wrapZone(t8), t7._useCapture);
+    t8 = new W._EventStreamSubscription(0, t7._target, t7._eventType, W._wrapZone(t8), t7._useCapture);
     H.setRuntimeTypeInfo(t8, [H.getRuntimeTypeArgument(t7, "_EventStream", 0)]);
     t8._tryResume$0();
     t8 = J.get$on$x(t3.body);
     t8 = t8.$index(t8, "stream_port_moving");
     t7 = this.get$_move();
-    t7 = new W._EventStreamSubscription(0, t8._html$_target, t8._eventType, W._wrapZone(t7), t8._useCapture);
+    t7 = new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(t7), t8._useCapture);
     H.setRuntimeTypeInfo(t7, [H.getRuntimeTypeArgument(t8, "_EventStream", 0)]);
     t7._tryResume$0();
     t7 = J.get$on$x(t6.body);
     t7 = t7.$index(t7, "stream_port_moving");
     t8 = this.get$_move();
-    t8 = new W._EventStreamSubscription(0, t7._html$_target, t7._eventType, W._wrapZone(t8), t7._useCapture);
+    t8 = new W._EventStreamSubscription(0, t7._target, t7._eventType, W._wrapZone(t8), t7._useCapture);
     H.setRuntimeTypeInfo(t8, [H.getRuntimeTypeArgument(t7, "_EventStream", 0)]);
     t8._tryResume$0();
     t3 = J.get$on$x(t3.body);
     t3 = t3.$index(t3, "stream_port_removed");
     t8 = this.get$_remove();
-    t8 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t8), t3._useCapture);
+    t8 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(t8), t3._useCapture);
     H.setRuntimeTypeInfo(t8, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t8._tryResume$0();
     t6 = J.get$on$x(t6.body);
     t6 = t6.$index(t6, "stream_port_removed");
     t8 = this.get$_remove();
-    t8 = new W._EventStreamSubscription(0, t6._html$_target, t6._eventType, W._wrapZone(t8), t6._useCapture);
+    t8 = new W._EventStreamSubscription(0, t6._target, t6._eventType, W._wrapZone(t8), t6._useCapture);
     H.setRuntimeTypeInfo(t8, [H.getRuntimeTypeArgument(t6, "_EventStream", 0)]);
     t8._tryResume$0();
   },
@@ -3585,7 +3648,7 @@ ElementUI: {"": "Object;id,type',label,input<",
         t1.toString;
         t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_keydown._eventType, false);
         H.setRuntimeTypeInfo(t1, [null]);
-        t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(D._tabbableTextAreaKeyPressed$closure), t1._useCapture);
+        t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(D._tabbableTextAreaKeyPressed$closure), t1._useCapture);
         H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
         t2._tryResume$0();
         break;
@@ -3718,7 +3781,7 @@ RuleDetailsUI: {"": "OutputDetailsUI;",
     t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t3 = this.get$_addRule();
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t3), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t3), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
     this.addRuleButton = t1;
@@ -3780,7 +3843,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t1 = new W._ElementEventStreamImpl(t1, t2, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t3 = this.get$_onSegmentDrop();
-    t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
+    t3 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t3), t1._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t3._tryResume$0();
     t3 = instructions.input;
@@ -3789,7 +3852,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t3 = new W._ElementEventStreamImpl(t3, t1, false);
     H.setRuntimeTypeInfo(t3, [null]);
     t4 = this.get$_onSegmentDragOver();
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
+    t4 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(t4), t3._useCapture);
     H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t4._tryResume$0();
     t4 = question.input;
@@ -3797,7 +3860,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t2 = new W._ElementEventStreamImpl(t4, t2, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t4 = this.get$_onSegmentDrop();
-    t4 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t4), t2._useCapture);
+    t4 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t4), t2._useCapture);
     H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t4._tryResume$0();
     t4 = question.input;
@@ -3805,7 +3868,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t1 = new W._ElementEventStreamImpl(t4, t1, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t4 = this.get$_onSegmentDragOver();
-    t4 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t4), t1._useCapture);
+    t4 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t4), t1._useCapture);
     H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t4._tryResume$0();
     this.refreshableDivs.push(instructions.input);
@@ -3839,7 +3902,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t3.draggable = true;
     t4 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_drag._eventType, false);
     H.setRuntimeTypeInfo(t4, [null]);
-    t5 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(new D.SourceHumanDetailsUI_refreshSegmentFromPrevious_closure(this, segment)), t4._useCapture);
+    t5 = new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.SourceHumanDetailsUI_refreshSegmentFromPrevious_closure(this, segment)), t4._useCapture);
     H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
     t5._tryResume$0();
     t2.appendChild(t3);
@@ -3885,7 +3948,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t3.toString;
     t4 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t4, [null]);
-    t5 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(new D.SourceHumanDetailsUI__onSegmentDrop_closure()), t4._useCapture);
+    t5 = new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.SourceHumanDetailsUI__onSegmentDrop_closure()), t4._useCapture);
     H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
     t5._tryResume$0();
     t2.appendChild(t3);
@@ -3910,7 +3973,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t1 = new W._ElementEventStreamImpl(askInputFromUserButton, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t2 = this.get$_addNewInput();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
     t2 = document.createElement("select", null);
@@ -3949,7 +4012,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t1.toString;
     t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.SourceHumanDetailsUI__addNewInput_closure(this, ruleRow)), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.SourceHumanDetailsUI__addNewInput_closure(this, ruleRow)), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
     elementRowDefinition.appendChild(t1);
@@ -4004,13 +4067,13 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     t2 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_drop._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t3 = this.get$_onSegmentDrop();
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t3), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t3), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
     t3 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_dragover._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
     t2 = this.get$_onSegmentDragOver();
-    t2 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t2), t3._useCapture);
+    t2 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(t2), t3._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t2._tryResume$0();
     return t1;
@@ -4027,6 +4090,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     this.output = t2;
     this.view.appendChild(this.output.view);
   },
+  $isSourceHumanDetailsUI: true,
   static: {
 "": "SourceHumanDetailsUI_count",
 SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
@@ -4107,7 +4171,7 @@ SourceManualDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,
     this.addElement$5$features("input", "textarea", "Manual entry", this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
     this.addElement$5$options("delimiter", "select", "Delimiter", this.elements, $.get$SOURCE_OPTIONS_NAMES());
   },
-  _onRefresh$1: function(e) {
+  _onRefresh$0: function() {
     var t1, text, t2, delimiter, delimitedString, segment, dumpSpan, t3, newElement, t4;
     t1 = this.elements;
     text = H.interceptedTypeCast(t1.$index(t1, "input").get$input(), "$isTextAreaElement").value;
@@ -4131,7 +4195,7 @@ SourceManualDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,
       delimitedString.push("");
     }
     for (t1 = new H.ListIterator(delimitedString, delimitedString.length, 0, null); t1.moveNext$0();) {
-      segment = t1._dev$_current;
+      segment = t1._current;
       dumpSpan = document.createElement("span", null);
       t2 = this.output;
       t3 = "segment-" + J.get$hashCode$(dumpSpan);
@@ -4146,9 +4210,6 @@ SourceManualDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,
         t2.removeChild(dumpSpan);
     }
   },
-  get$_onRefresh: function() {
-    return new H.BoundClosure$1(this, D.SourceManualDetailsUI.prototype._onRefresh$1, null, "_onRefresh$1");
-  },
   SourceManualDetailsUI$4: function(id, type, prevConn, nextConn) {
     var t1, t2, t3, t4;
     t1 = this.id;
@@ -4162,13 +4223,13 @@ SourceManualDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,
     t1.toString;
     t3 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
-    t4 = this.get$_onRefresh();
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
+    t4 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SourceManualDetailsUI_closure(this)), t3._useCapture);
     H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t4._tryResume$0();
     t2.appendChild(t1);
     this.view.appendChild(this.output.view);
   },
+  $isSourceManualDetailsUI: true,
   static: {
 SourceManualDetailsUI$: function(id, type, prevConn, nextConn) {
   var t1 = new D.SourceManualDetailsUI(N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
@@ -4177,6 +4238,13 @@ SourceManualDetailsUI$: function(id, type, prevConn, nextConn) {
   return t1;
 }}
 
+},
+
+SourceManualDetailsUI_closure: {"": "Closure;this_0",
+  call$1: function(e) {
+    return this.this_0._onRefresh$0();
+  },
+  $is_args1: true
 },
 
 SourceRSSDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
@@ -4190,7 +4258,8 @@ SinkFileDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$4("output", "text", "File name", this.elements);
-  }
+  },
+  $isSinkFileDetailsUI: true
 },
 
 SinkEmailDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
@@ -4222,7 +4291,7 @@ SelectionDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevC
     t2.toString;
     t3 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(new D.SelectionDetailsUI__addRule_closure(this, parameter)), t3._useCapture);
+    t4 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SelectionDetailsUI__addRule_closure(this, parameter)), t3._useCapture);
     H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t4._tryResume$0();
     conditionDiv.appendChild(t2);
@@ -4328,7 +4397,7 @@ SortDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,n
     t2.toString;
     t3 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(new D.SortDetailsUI__addRule_closure(this, parameter)), t3._useCapture);
+    t4 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SortDetailsUI__addRule_closure(this, parameter)), t3._useCapture);
     H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t4._tryResume$0();
     conditionDiv.appendChild(t2);
@@ -4437,7 +4506,7 @@ SplitDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,
     t4.toString;
     t5 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_click._eventType, false);
     H.setRuntimeTypeInfo(t5, [null]);
-    t6 = new W._EventStreamSubscription(0, t5._html$_target, t5._eventType, W._wrapZone(new D.SplitDetailsUI__addRule_closure(this, parameter)), t5._useCapture);
+    t6 = new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.SplitDetailsUI__addRule_closure(this, parameter)), t5._useCapture);
     H.setRuntimeTypeInfo(t6, [H.getRuntimeTypeArgument(t5, "_EventStream", 0)]);
     t6._tryResume$0();
     t3.appendChild(t4);
@@ -4556,7 +4625,7 @@ BaseOperatorUI: {"": "Object;group<",
     t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mousemove._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t2 = this.get$_moveStarted();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
     t2.resume$0();
@@ -4565,7 +4634,7 @@ BaseOperatorUI: {"": "Object;group<",
     t2 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_mouseup._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t1 = this.get$_moveCompleted();
-    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t1._tryResume$0();
     t1.resume$0();
@@ -4600,7 +4669,7 @@ BaseOperatorUI: {"": "Object;group<",
     t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mousemove._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t2 = this.get$_moveStarted();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
     t2.cancel$0();
@@ -4609,7 +4678,7 @@ BaseOperatorUI: {"": "Object;group<",
     t2 = new W._ElementEventStreamImpl(t2, C.EventStreamProvider_mouseup._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t1 = this.get$_moveCompleted();
-    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t1._tryResume$0();
     t1.cancel$0();
@@ -4618,18 +4687,20 @@ BaseOperatorUI: {"": "Object;group<",
     return new H.BoundClosure$1(this, D.BaseOperatorUI.prototype._moveCompleted$1, null, "_moveCompleted$1");
   },
   _onKeyDown$1: function(e) {
-    var t1;
     if (J.get$keyCode$x(e) === 8 && J.get$display$x($.get$modal().style) !== "block") {
       e.preventDefault();
-      if ($.selectedOperator === this) {
-        this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
-        t1 = J.get$children$x($.canvas);
-        t1.remove$1(t1, this.group);
-      }
+      if ($.selectedOperator === this)
+        this.remove$0(this);
     }
   },
   get$_onKeyDown: function() {
     return new H.BoundClosure$1(this, D.BaseOperatorUI.prototype._onKeyDown$1, null, "_onKeyDown$1");
+  },
+  remove$0: function(_) {
+    var t1;
+    this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
+    t1 = J.get$children$x($.canvas);
+    t1.remove$1(t1, this.group);
   },
   addBackgroundImage$1: function(image) {
     var t1, temp, t2, t3;
@@ -4643,7 +4714,7 @@ BaseOperatorUI: {"": "Object;group<",
     t2 = new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mousedown._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t3 = this.get$_onMouseDown();
-    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t3), t2._useCapture);
+    t3 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t3), t2._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t3._tryResume$0();
     t1.appendChild(temp);
@@ -4664,13 +4735,13 @@ BaseOperatorUI: {"": "Object;group<",
     t2 = new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mousedown._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t1 = this.get$_onMouseDown();
-    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t1._tryResume$0();
     t1 = new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mouseenter._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t2 = this.get$_onMouseEnter();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
     this.body = temp;
@@ -4682,15 +4753,15 @@ BaseOperatorUI: {"": "Object;group<",
     t2 = new W._EventStream(document, C.EventStreamProvider_keydown._eventType, false);
     H.setRuntimeTypeInfo(t2, [null]);
     t1 = this.get$_onKeyDown();
-    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t1._tryResume$0();
   }
 },
 
-SourceOperatorUI: {"": "BaseOperatorUI;port,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SourceOperatorUI: {"": "BaseOperatorUI;outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SourceOperatorUI$5: function(id, x, y, width, height) {
-    this.port = D.PortUI$(this.group, x, y, width, height, 6, false);
+    this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
     this.addBackgroundImage$1("input.png");
   },
   static: {
@@ -4703,9 +4774,9 @@ SourceOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-SinkOperatorUI: {"": "BaseOperatorUI;port,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SinkOperatorUI: {"": "BaseOperatorUI;inputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SinkOperatorUI$5: function(id, x, y, width, height) {
-    this.port = D.PortUI$(this.group, x, y, width, height, 6, true);
+    this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.addBackgroundImage$1("output.png");
   },
   static: {
@@ -4718,7 +4789,7 @@ SinkOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-ProcessingOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+ProcessingOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   ProcessingOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4734,7 +4805,7 @@ ProcessingOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-SelectionOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SelectionOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SelectionOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4750,7 +4821,7 @@ SelectionOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-SplitOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SplitOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SplitOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4766,7 +4837,7 @@ SplitOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-SortOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SortOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SortOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4782,7 +4853,7 @@ SortOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-EnrichOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+EnrichOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   EnrichOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4822,7 +4893,7 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
     t1 = new W._EventStream(document, C.EventStreamProvider_mousemove._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t2 = this.get$_onMouseMove();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
     t2.resume$0();
@@ -4873,7 +4944,7 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
     t1 = new W._EventStream(document, C.EventStreamProvider_mousemove._eventType, false);
     H.setRuntimeTypeInfo(t1, [null]);
     t2 = this.get$_onMouseMove();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
     t2.cancel$0();
@@ -4964,7 +5035,7 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
     t4 = new W._ElementEventStreamImpl(t4, C.EventStreamProvider_mousedown._eventType, false);
     H.setRuntimeTypeInfo(t4, [null]);
     t3 = this.get$_onMouseDown();
-    t3 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(t3), t4._useCapture);
+    t3 = new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(t3), t4._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
     t3._tryResume$0();
     t3 = this.body;
@@ -4972,7 +5043,7 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
     t3 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_mouseenter._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
     t4 = this.get$_onMouseEnter();
-    t4 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t4), t3._useCapture);
+    t4 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(t4), t3._useCapture);
     H.setRuntimeTypeInfo(t4, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t4._tryResume$0();
     t4 = this.body;
@@ -4981,19 +5052,19 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
     t4 = new W._ElementEventStreamImpl(t4, t3, false);
     H.setRuntimeTypeInfo(t4, [null]);
     t5 = this.get$_onMouseUpPort();
-    t5 = new W._EventStreamSubscription(0, t4._html$_target, t4._eventType, W._wrapZone(t5), t4._useCapture);
+    t5 = new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(t5), t4._useCapture);
     H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t4, "_EventStream", 0)]);
     t5._tryResume$0();
     t3 = new W._EventStream(document, t3, false);
     H.setRuntimeTypeInfo(t3, [null]);
     t5 = this.get$_onMouseUp();
-    t5 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t5), t3._useCapture);
+    t5 = new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(t5), t3._useCapture);
     H.setRuntimeTypeInfo(t5, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t5._tryResume$0();
     t5 = new W._EventStream(document, C.EventStreamProvider_mousemove._eventType, false);
     H.setRuntimeTypeInfo(t5, [null]);
     t3 = this.get$_onMouseMove();
-    t3 = new W._EventStreamSubscription(0, t5._html$_target, t5._eventType, W._wrapZone(t3), t5._useCapture);
+    t3 = new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(t3), t5._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t5, "_EventStream", 0)]);
     t3._tryResume$0();
     t3.cancel$0();
@@ -5007,13 +5078,13 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
     t1 = J.get$on$x(this.body.parentElement);
     t1 = t1.$index(t1, "stream_unit_moving");
     t2 = this.get$move();
-    t2 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t2), t1._useCapture);
+    t2 = new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(t2), t1._useCapture);
     H.setRuntimeTypeInfo(t2, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t2._tryResume$0();
     t2 = J.get$on$x(this.body.parentElement);
     t2 = t2.$index(t2, "stream_unit_removed");
     t1 = this.get$remove(this);
-    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(t1), t2._useCapture);
+    t1 = new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(t1), t2._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t1._tryResume$0();
   },
@@ -5046,13 +5117,13 @@ Arrays_copy: function(src, srcStart, dst, dstStart, count) {
 IterableMixinWorkaround_forEach: function(iterable, f) {
   var t1;
   for (t1 = new H.ListIterator(iterable, iterable.length, 0, null); t1.moveNext$0();)
-    f.call$1(t1._dev$_current);
+    f.call$1(t1._current);
 },
 
 IterableMixinWorkaround_any: function(iterable, f) {
   var t1;
   for (t1 = new H.ListIterator(iterable, iterable.length, 0, null); t1.moveNext$0();)
-    if (f.call$1(t1._dev$_current) === true)
+    if (f.call$1(t1._current) === true)
       return true;
   return false;
 },
@@ -5146,26 +5217,26 @@ ListIterable: {"": "IterableBase;",
   $isEfficientLength: true
 },
 
-ListIterator: {"": "Object;_iterable,_dev$_length,_index,_dev$_current",
+ListIterator: {"": "Object;_iterable,_length,_index,_current",
   get$current: function() {
-    return this._dev$_current;
+    return this._current;
   },
   moveNext$0: function() {
     var t1, t2, $length, t3;
     t1 = this._iterable;
     t2 = J.getInterceptor$asx(t1);
     $length = t2.get$length(t1);
-    t3 = this._dev$_length;
+    t3 = this._length;
     if (t3 == null ? $length != null : t3 !== $length)
       throw H.wrapException(P.ConcurrentModificationError$(t1));
     t3 = this._index;
     if (typeof $length !== "number")
       throw H.iae($length);
     if (t3 >= $length) {
-      this._dev$_current = null;
+      this._current = null;
       return false;
     }
-    this._dev$_current = t2.elementAt$1(t1, t3);
+    this._current = t2.elementAt$1(t1, t3);
     this._index = this._index + 1;
     return true;
   }
@@ -5214,21 +5285,21 @@ MappedIterable_MappedIterable: function(iterable, $function, $S, $T) {
 
 EfficientLengthMappedIterable: {"": "MappedIterable;_iterable,_f", $asMappedIterable: null, $isEfficientLength: true},
 
-MappedIterator: {"": "Iterator;_dev$_current,_iterator,_f",
+MappedIterator: {"": "Iterator;_current,_iterator,_f",
   _f$1: function(arg0) {
     return this._f.call$1(arg0);
   },
   moveNext$0: function() {
     var t1 = this._iterator;
     if (t1.moveNext$0()) {
-      this._dev$_current = this._f$1(t1.get$current());
+      this._current = this._f$1(t1.get$current());
       return true;
     }
-    this._dev$_current = null;
+    this._current = null;
     return false;
   },
   get$current: function() {
-    return this._dev$_current;
+    return this._current;
   },
   $asIterator: function($S, $T) {
     return [$T];
@@ -5340,7 +5411,7 @@ Future_wait: function(futures) {
   t2 = new P.Future_wait_handleError(t1);
   t1.remaining_2 = 0;
   for (t3 = new H.ListIterator(futures, futures.length, 0, null); t3.moveNext$0();) {
-    future = t3._dev$_current;
+    future = t3._current;
     pos = t1.remaining_2;
     t1.remaining_2 = pos + 1;
     t4 = future.catchError$1(t2);
@@ -5555,7 +5626,7 @@ _AsyncError: {"": "Object;error>,stackTrace<", $isError: true},
 
 _BroadcastStream: {"": "_ControllerStream;_async$_controller", $as_ControllerStream: null},
 
-_BroadcastSubscription: {"": "_ControllerSubscription;_eventState,_async$_next@,_async$_previous?,_async$_controller,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
+_BroadcastSubscription: {"": "_ControllerSubscription;_eventState,_async$_next@,_async$_previous?,_async$_controller,_async$_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
   get$_async$_controller: function() {
     return this._async$_controller;
   },
@@ -5610,7 +5681,7 @@ _BroadcastStreamController: {"": "Object;_async$_next?,_async$_previous?",
   _subscribe$1: function(cancelOnError) {
     var t1, t2, t3, subscription;
     if ((this._state & 4) !== 0)
-      throw H.wrapException(P.StateError$("Subscribing to closed stream"));
+      throw H.wrapException(new P.StateError("Subscribing to closed stream"));
     t1 = H.getRuntimeTypeArgument(this, "_BroadcastStreamController", 0);
     t2 = $.Zone__current;
     t3 = cancelOnError ? 1 : 0;
@@ -5693,7 +5764,7 @@ _BroadcastStreamController: {"": "Object;_async$_next?,_async$_previous?",
     var t1, id, link, link0;
     t1 = this._state;
     if ((t1 & 2) !== 0)
-      throw H.wrapException(P.StateError$("Cannot fire new event. Controller is already firing an event"));
+      throw H.wrapException(new P.StateError("Cannot fire new event. Controller is already firing an event"));
     if (this._async$_next === this)
       return;
     id = t1 & 1;
@@ -5953,7 +6024,7 @@ _Future: {"": "Object;_state,_zone<,_resultOrListeners,_nextListener<,_onValueCa
   },
   _asyncComplete$1: function(value) {
     if (this._state !== 0)
-      H.throwExpression(P.StateError$("Future already completed"));
+      H.throwExpression(new P.StateError("Future already completed"));
     this._state = 1;
     this._zone.toString;
     P._scheduleAsyncCallback(new P._Future__asyncComplete_closure(this, value));
@@ -6531,7 +6602,7 @@ _ControllerStream: {"": "_StreamImpl;_async$_controller",
   $as_StreamImpl: null
 },
 
-_ControllerSubscription: {"": "_BufferingStreamSubscription;_async$_controller<,_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
+_ControllerSubscription: {"": "_BufferingStreamSubscription;_async$_controller<,_async$_onData,_onError,_onDone,_zone,_state,_cancelFuture,_pending",
   _onCancel$0: function() {
     return this.get$_async$_controller()._recordCancel$1(this);
   },
@@ -6552,7 +6623,7 @@ _ControllerSubscription: {"": "_BufferingStreamSubscription;_async$_controller<,
 
 _EventSink: {"": "Object;"},
 
-_BufferingStreamSubscription: {"": "Object;_onData,_onError,_onDone,_zone<,_state,_cancelFuture,_pending",
+_BufferingStreamSubscription: {"": "Object;_async$_onData,_onError,_onDone,_zone<,_state,_cancelFuture,_pending",
   _setPendingEvents$1: function(pendingEvents) {
     if (pendingEvents == null)
       return;
@@ -6564,7 +6635,7 @@ _BufferingStreamSubscription: {"": "Object;_onData,_onError,_onDone,_zone<,_stat
   },
   onData$1: function(handleData) {
     $.Zone__current.toString;
-    this._onData = handleData;
+    this._async$_onData = handleData;
   },
   onError$1: function(_, handleError) {
     if (handleError == null)
@@ -6695,7 +6766,7 @@ _BufferingStreamSubscription: {"": "Object;_onData,_onError,_onDone,_zone<,_stat
   _sendData$1: function(data) {
     var t1 = this._state;
     this._state = (t1 | 32) >>> 0;
-    this._zone.runUnaryGuarded$2(this._onData, data);
+    this._zone.runUnaryGuarded$2(this._async$_onData, data);
     this._state = (this._state & 4294967263) >>> 0;
     this._checkState$1((t1 & 4) !== 0);
   },
@@ -8226,17 +8297,17 @@ IterableBase: {"": "Object;",
   get$first: function(_) {
     var it = this.get$iterator(this);
     if (!it.moveNext$0())
-      throw H.wrapException(new P.StateError("No elements"));
+      throw H.wrapException(P.StateError$("No elements"));
     return it.get$current();
   },
   get$single: function(_) {
     var it, result;
     it = this.get$iterator(this);
     if (!it.moveNext$0())
-      throw H.wrapException(new P.StateError("No elements"));
+      throw H.wrapException(P.StateError$("No elements"));
     result = it.get$current();
     if (it.moveNext$0())
-      throw H.wrapException(new P.StateError("More than one element"));
+      throw H.wrapException(P.StateError$("More than one element"));
     return result;
   },
   elementAt$1: function(_, index) {
@@ -8475,7 +8546,7 @@ ListQueue$: function(initialCapacity, $E) {
 
 },
 
-_ListQueueIterator: {"": "Object;_queue,_end,_modificationCount,_collection$_position,_collection$_current",
+_ListQueueIterator: {"": "Object;_queue,_end,_modificationCount,_position,_collection$_current",
   get$current: function() {
     return this._collection$_current;
   },
@@ -8484,7 +8555,7 @@ _ListQueueIterator: {"": "Object;_queue,_end,_modificationCount,_collection$_pos
     t1 = this._queue;
     if (this._modificationCount !== t1._modificationCount)
       H.throwExpression(P.ConcurrentModificationError$(t1));
-    t2 = this._collection$_position;
+    t2 = this._position;
     if (t2 === this._end) {
       this._collection$_current = null;
       return false;
@@ -8493,7 +8564,7 @@ _ListQueueIterator: {"": "Object;_queue,_end,_modificationCount,_collection$_pos
     if (t2 < 0 || t2 >= t3.length)
       throw H.ioore(t3, t2);
     this._collection$_current = t3[t2];
-    this._collection$_position = (this._collection$_position + 1 & t1._table.length - 1) >>> 0;
+    this._position = (this._position + 1 & t1._table.length - 1) >>> 0;
     return true;
   },
   static: {
@@ -8570,14 +8641,14 @@ List_List: function($length, $E) {
   if ($length == null)
     return new Array(0);
   if (typeof $length !== "number" || Math.floor($length) !== $length || $length < 0)
-    throw H.wrapException(P.ArgumentError$("Length must be a positive integer: " + H.S($length) + "."));
+    throw H.wrapException(new P.ArgumentError("Length must be a positive integer: " + H.S($length) + "."));
   return H.Primitives_newFixedList($length);
 },
 
 List_List$filled: function($length, fill, $E) {
   var result, t1, i;
   if ($length < 0)
-    throw H.wrapException(P.ArgumentError$("Length must be a positive integer: " + $length + "."));
+    throw H.wrapException(new P.ArgumentError("Length must be a positive integer: " + $length + "."));
   result = H.Primitives_newFixedList($length);
   if ($length !== 0 && true)
     for (t1 = result.length, i = 0; i < t1; ++i)
@@ -8650,12 +8721,12 @@ DateTime: {"": "Object;millisecondsSinceEpoch,isUtc",
   add$1: function(_, duration) {
     return P.DateTime$fromMillisecondsSinceEpoch(C.JSNumber_methods.$add(this.millisecondsSinceEpoch, duration.get$inMilliseconds()), this.isUtc);
   },
-  DateTime$_now$0: function() {
-    H.Primitives_lazyAsJsDate(this);
-  },
   DateTime$fromMillisecondsSinceEpoch$2$isUtc: function(millisecondsSinceEpoch, isUtc) {
     if (Math.abs(millisecondsSinceEpoch) > 8640000000000000)
       throw H.wrapException(new P.ArgumentError(millisecondsSinceEpoch));
+  },
+  DateTime$_now$0: function() {
+    H.Primitives_lazyAsJsDate(this);
   },
   $isDateTime: true,
   static: {
@@ -9980,9 +10051,9 @@ _ChildNodeListLazy: {"": "ListBase;_this",
     t1 = this._this;
     l = t1.childNodes.length;
     if (l === 0)
-      throw H.wrapException(new P.StateError("No elements"));
+      throw H.wrapException(P.StateError$("No elements"));
     if (l > 1)
-      throw H.wrapException(new P.StateError("More than one element"));
+      throw H.wrapException(P.StateError$("More than one element"));
     return t1.firstChild;
   },
   add$1: function(_, value) {
@@ -10069,7 +10140,7 @@ _AttributeMap: {"": "Object;",
   forEach$1: function(_, f) {
     var t1, key;
     for (t1 = this.get$keys(), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();) {
-      key = t1._dev$_current;
+      key = t1._current;
       f.call$2(key, this.$index(this, key));
     }
   },
@@ -10234,7 +10305,7 @@ _ElementCssClassSet: {"": "CssClassSetImpl;_element",
     var s, t1, trimmed;
     s = P.LinkedHashSet_LinkedHashSet(null, null, null, J.JSString);
     for (t1 = J.get$className$x(this._element).split(" "), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();) {
-      trimmed = J.trim$0$s(t1._dev$_current);
+      trimmed = J.trim$0$s(t1._current);
       if (trimmed.length !== 0)
         s.add$1(s, trimmed);
     }
@@ -10248,9 +10319,9 @@ _ElementCssClassSet: {"": "CssClassSetImpl;_element",
 
 EventStreamProvider: {"": "Object;_eventType"},
 
-_EventStream: {"": "Stream;_html$_target,_eventType,_useCapture",
+_EventStream: {"": "Stream;_target,_eventType,_useCapture",
   listen$4$cancelOnError$onDone$onError: function(onData, cancelOnError, onDone, onError) {
-    var t1 = new W._EventStreamSubscription(0, this._html$_target, this._eventType, W._wrapZone(onData), this._useCapture);
+    var t1 = new W._EventStreamSubscription(0, this._target, this._eventType, W._wrapZone(onData), this._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(this, "_EventStream", 0)]);
     t1._tryResume$0();
     return t1;
@@ -10261,14 +10332,14 @@ _EventStream: {"": "Stream;_html$_target,_eventType,_useCapture",
   $asStream: null
 },
 
-_ElementEventStreamImpl: {"": "_EventStream;_html$_target,_eventType,_useCapture", $as_EventStream: null},
+_ElementEventStreamImpl: {"": "_EventStream;_target,_eventType,_useCapture", $as_EventStream: null},
 
 _ElementListEventStreamImpl: {"": "Stream;_targetList,_useCapture,_eventType",
   listen$4$cancelOnError$onDone$onError: function(onData, cancelOnError, onDone, onError) {
     var pool, t1, t2, t3, t4;
     pool = W._StreamPool$broadcast(null);
     for (t1 = this._targetList, t1 = t1.get$iterator(t1), t2 = this._eventType, t3 = this._useCapture; t1.moveNext$0();) {
-      t4 = new W._EventStream(t1._dev$_current, t2, t3);
+      t4 = new W._EventStream(t1._current, t2, t3);
       t4.$builtinTypeInfo = [null];
       pool.add$1(pool, t4);
     }
@@ -10284,29 +10355,29 @@ _ElementListEventStreamImpl: {"": "Stream;_targetList,_useCapture,_eventType",
   $asStream: null
 },
 
-_EventStreamSubscription: {"": "StreamSubscription;_pauseCount,_html$_target,_eventType,_html$_onData,_useCapture",
+_EventStreamSubscription: {"": "StreamSubscription;_pauseCount,_target,_eventType,_onData,_useCapture",
   cancel$0: function() {
-    if (this._html$_target == null)
+    if (this._target == null)
       return;
     this._unlisten$0();
-    this._html$_target = null;
-    this._html$_onData = null;
+    this._target = null;
+    this._onData = null;
   },
   resume$0: function() {
-    if (this._html$_target == null || this._pauseCount <= 0)
+    if (this._target == null || this._pauseCount <= 0)
       return;
     this._pauseCount = this._pauseCount - 1;
     this._tryResume$0();
   },
   _tryResume$0: function() {
-    var t1 = this._html$_onData;
+    var t1 = this._onData;
     if (t1 != null && this._pauseCount <= 0)
-      J.addEventListener$3$x(this._html$_target, this._eventType, t1, this._useCapture);
+      J.addEventListener$3$x(this._target, this._eventType, t1, this._useCapture);
   },
   _unlisten$0: function() {
-    var t1 = this._html$_onData;
+    var t1 = this._onData;
     if (t1 != null)
-      J.removeEventListener$3$x(this._html$_target, this._eventType, t1, this._useCapture);
+      J.removeEventListener$3$x(this._target, this._eventType, t1, this._useCapture);
   },
   $asStreamSubscription: null
 },
@@ -10330,7 +10401,7 @@ _StreamPool: {"": "Object;_html$_controller,_subscriptions",
   close$0: function(_) {
     var t1, t2, t3;
     for (t1 = this._subscriptions, t2 = t1.get$values(t1), t3 = t2._iterable, t3 = t3.get$iterator(t3), t3 = new H.MappedIterator(null, t3, t2._f), H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "MappedIterable", 0), H.getRuntimeTypeArgument(t2, "MappedIterable", 1)]); t3.moveNext$0();)
-      t3._dev$_current.cancel$0();
+      t3._current.cancel$0();
     t1.clear$0(t1);
     t1 = this._html$_controller;
     t1.close$0(t1);
@@ -10381,12 +10452,12 @@ _Html5NodeValidator: {"": "Object;uriPolicy<",
     t1 = $.get$_Html5NodeValidator__attributeValidators();
     if (t1.get$isEmpty(t1)) {
       for (t1 = new H.ListIterator(C.List_1GN, 261, 0, null); t1.moveNext$0();) {
-        attr = t1._dev$_current;
+        attr = t1._current;
         t2 = $.get$_Html5NodeValidator__attributeValidators();
         t2.$indexSet(t2, attr, W._Html5NodeValidator__standardAttributeValidator$closure);
       }
       for (t1 = new H.ListIterator(C.List_yrN, 12, 0, null); t1.moveNext$0();) {
-        attr = t1._dev$_current;
+        attr = t1._current;
         t2 = $.get$_Html5NodeValidator__attributeValidators();
         t2.$indexSet(t2, attr, W._Html5NodeValidator__uriAttributeValidator$closure);
       }
@@ -10535,27 +10606,27 @@ _SvgNodeValidator: {"": "Object;",
   }
 },
 
-FixedSizeListIterator: {"": "Object;_array,_length,_position,_current",
+FixedSizeListIterator: {"": "Object;_array,_html$_length,_html$_position,_html$_current",
   moveNext$0: function() {
     var t1, nextPosition;
-    t1 = this._position;
+    t1 = this._html$_position;
     if (typeof t1 !== "number")
       throw t1.$add();
     nextPosition = t1 + 1;
-    t1 = this._length;
+    t1 = this._html$_length;
     if (typeof t1 !== "number")
       throw H.iae(t1);
     if (nextPosition < t1) {
-      this._current = J.$index$asx(this._array, nextPosition);
-      this._position = nextPosition;
+      this._html$_current = J.$index$asx(this._array, nextPosition);
+      this._html$_position = nextPosition;
       return true;
     }
-    this._current = null;
-    this._position = t1;
+    this._html$_current = null;
+    this._html$_position = t1;
     return false;
   },
   get$current: function() {
-    return this._current;
+    return this._html$_current;
   },
   static: {
 FixedSizeListIterator$: function(array) {
@@ -10810,7 +10881,7 @@ _AttributeClassSet: {"": "CssClassSetImpl;_svg$_element",
     if (classname == null)
       return s;
     for (t1 = classname.split(" "), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();) {
-      trimmed = J.trim$0$s(t1._dev$_current);
+      trimmed = J.trim$0$s(t1._current);
       if (trimmed.length !== 0)
         s.add$1(s, trimmed);
     }
@@ -11009,7 +11080,7 @@ TypedData: {"": "Interceptor;",
     if (t1.$lt(index, 0) || t1.$ge(index, $length))
       throw H.wrapException(P.RangeError$range(index, 0, $length));
     else
-      throw H.wrapException(P.ArgumentError$("Invalid list index " + H.S(index)));
+      throw H.wrapException(new P.ArgumentError("Invalid list index " + H.S(index)));
   },
   $isTypedData: true,
   "%": ";ArrayBufferView;TypedData_ListMixin|TypedData_ListMixin_FixedLengthListMixin"
@@ -11246,7 +11317,7 @@ convertNativeToDart_AcceptStructuredClone_walk: {"": "Closure;mustCopy_4,findSlo
       copy = H.fillLiteralMap([], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
       this.writeSlot_7.call$2(slot, copy);
       for (t1 = Object.keys(e), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();) {
-        key = t1._dev$_current;
+        key = t1._current;
         copy.$indexSet(copy, key, this.call$1(e[key]));
       }
       return copy;
@@ -11589,6 +11660,7 @@ init.globalFunctions.Primitives__throwFormatException$closure = H.Primitives__th
 init.globalFunctions.toStringWrapper$closure = H.toStringWrapper$closure = new H.Closure$0(H.toStringWrapper, "toStringWrapper$closure");
 init.globalFunctions.invokeClosure$closure = H.invokeClosure$closure = new H.Closure$7(H.invokeClosure, "invokeClosure$closure");
 init.globalFunctions.main$closure = D.main$closure = new H.Closure$0(D.main, "main$closure");
+init.globalFunctions.translationExample$closure = D.translationExample$closure = new H.Closure$1(D.translationExample, "translationExample$closure");
 init.globalFunctions._tabbableTextAreaKeyPressed$closure = D._tabbableTextAreaKeyPressed$closure = new H.Closure$1(D._tabbableTextAreaKeyPressed, "_tabbableTextAreaKeyPressed$closure");
 init.globalFunctions._asyncRunCallback$closure = P._asyncRunCallback$closure = new H.Closure$0(P._asyncRunCallback, "_asyncRunCallback$closure");
 init.globalFunctions._nullDataHandler$closure = P._nullDataHandler$closure = new H.Closure$1(P._nullDataHandler, "_nullDataHandler$closure");
@@ -11611,23 +11683,16 @@ J.JSString.$isObject = true;
 N.Level.$isLevel = true;
 N.Level.$isObject = true;
 J.JSNumber.$isObject = true;
+P.Duration.$isDuration = true;
+P.Duration.$isObject = true;
 W.Element.$isElement = true;
 W.Element.$isNode = true;
 W.Element.$isObject = true;
-P.Duration.$isDuration = true;
-P.Duration.$isObject = true;
-N.LogRecord.$isLogRecord = true;
-N.LogRecord.$isObject = true;
-N.Logger.$isObject = true;
-D.Operator.$isObject = true;
 W.MouseEvent.$isMouseEvent = true;
 W.MouseEvent.$isObject = true;
-P.Stream.$isStream = true;
-P.Stream.$isObject = true;
-P.StreamSubscription.$isStreamSubscription = true;
-P.StreamSubscription.$isObject = true;
 J.JSBool.$isbool = true;
 J.JSBool.$isObject = true;
+N.Logger.$isObject = true;
 W.KeyboardEvent.$isKeyboardEvent = true;
 W.KeyboardEvent.$isObject = true;
 W.NodeValidator.$isNodeValidator = true;
@@ -11638,6 +11703,13 @@ W.DivElement.$isElement = true;
 W.DivElement.$isNode = true;
 W.DivElement.$isObject = true;
 W.Event.$isObject = true;
+N.LogRecord.$isLogRecord = true;
+N.LogRecord.$isObject = true;
+D.Operator.$isObject = true;
+P.Stream.$isStream = true;
+P.Stream.$isObject = true;
+P.StreamSubscription.$isStreamSubscription = true;
+P.StreamSubscription.$isObject = true;
 P.ReceivePort.$isStream = true;
 P.ReceivePort.$asStream = [null];
 P.ReceivePort.$isObject = true;
@@ -11648,6 +11720,10 @@ P.Symbol.$isSymbol = true;
 P.Symbol.$isObject = true;
 P.StackTrace.$isStackTrace = true;
 P.StackTrace.$isObject = true;
+W.SelectElement.$isSelectElement = true;
+W.SelectElement.$isElement = true;
+W.SelectElement.$isNode = true;
+W.SelectElement.$isObject = true;
 P._BufferingStreamSubscription.$is_BufferingStreamSubscription = true;
 P._BufferingStreamSubscription.$is_EventSink = true;
 P._BufferingStreamSubscription.$isStreamSubscription = true;
@@ -11657,26 +11733,22 @@ P._BroadcastSubscription.$is_BufferingStreamSubscription = true;
 P._BroadcastSubscription.$is_EventSink = true;
 P._BroadcastSubscription.$isStreamSubscription = true;
 P._BroadcastSubscription.$isObject = true;
-W.SelectElement.$isSelectElement = true;
-W.SelectElement.$isElement = true;
-W.SelectElement.$isNode = true;
-W.SelectElement.$isObject = true;
 P.Object.$isObject = true;
 P.Function.$isFunction = true;
 P.Function.$isObject = true;
 W._Html5NodeValidator.$is_Html5NodeValidator = true;
 W._Html5NodeValidator.$isNodeValidator = true;
 W._Html5NodeValidator.$isObject = true;
-P.Future.$isFuture = true;
-P.Future.$isObject = true;
 P._EventSink.$is_EventSink = true;
 P._EventSink.$isObject = true;
+P.Future.$isFuture = true;
+P.Future.$isObject = true;
 W.CustomEvent.$isCustomEvent = true;
 W.CustomEvent.$isObject = true;
-P._DelayedEvent.$is_DelayedEvent = true;
-P._DelayedEvent.$isObject = true;
 P.DateTime.$isDateTime = true;
 P.DateTime.$isObject = true;
+P._DelayedEvent.$is_DelayedEvent = true;
+P._DelayedEvent.$isObject = true;
 P.Map.$isMap = true;
 P.Map.$isObject = true;
 // getInterceptor methods
@@ -11926,6 +11998,7 @@ $.prototypeForTagFunction = null;
 $.dispatchRecordsForInstanceTags = null;
 $.interceptorsForUncacheableTags = null;
 $.initNativeDispatchFlag = null;
+$.app = null;
 $.operators = null;
 $._dragSource = null;
 $.opNumber = 1;
@@ -12174,6 +12247,9 @@ J.set$text$x = function(receiver, value) {
 J.set$type$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$type(receiver, value);
 };
+J.set$value$x = function(receiver, value) {
+  return J.getInterceptor$x(receiver).set$value(receiver, value);
+};
 J.startsWith$1$s = function(receiver, a0) {
   return J.getInterceptor$s(receiver).startsWith$1(receiver, a0);
 };
@@ -12252,17 +12328,20 @@ Isolate.$lazy($, "SOURCE_OPTIONS_NAMES", "SOURCE_OPTIONS_NAMES", "get$SOURCE_OPT
 Isolate.$lazy($, "SOURCE_OPTIONS_HUMAN_INPUTS", "SOURCE_OPTIONS_HUMAN_INPUTS", "get$SOURCE_OPTIONS_HUMAN_INPUTS", function() {
   return H.fillLiteralMap(["text input", "text", "number input", "number", "single choice", "single", "multiple choice", "multiple"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
 });
-Isolate.$lazy($, "modalAlert", "modalAlert", "get$modalAlert", function() {
-  return document.querySelector("#operator_modal .modal-dialog .modal-content .modal-header .alert");
-});
 Isolate.$lazy($, "modal", "modal", "get$modal", function() {
   return document.querySelector("#operator_modal");
 });
+Isolate.$lazy($, "modalDialog", "modalDialog", "get$modalDialog", function() {
+  return $.get$modal().querySelector(".modal-dialog");
+});
+Isolate.$lazy($, "modalAlert", "modalAlert", "get$modalAlert", function() {
+  return $.get$modalDialog().querySelector(".modal-content .modal-header .alert");
+});
 Isolate.$lazy($, "modalBody", "modalBody", "get$modalBody", function() {
-  return document.querySelector("#operator_modal .modal-dialog .modal-content .modal-body");
+  return $.get$modalDialog().querySelector(".modal-content .modal-body");
 });
 Isolate.$lazy($, "closeButton", "closeButton", "get$closeButton", function() {
-  return document.querySelector("#operator_modal .modal-footer #close_operator_modal");
+  return $.get$modalDialog().querySelector(".modal-footer #close_operator_modal");
 });
 Isolate.$lazy($, "_toStringList", "IterableMixinWorkaround__toStringList", "get$IterableMixinWorkaround__toStringList", function() {
   return P.List_List(null, null);
