@@ -62,16 +62,13 @@ class Application {
   }
 
   void _onDragStart(html.MouseEvent e) {
-    html.Element dragTarget = e.target;
-    dragTarget.classes.add('moving');
-    _dragSource = dragTarget;
+    _dragSource = e.target as html.LIElement;
+    _dragSource.classes.add('moving');
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('unit-type', dragTarget.attributes['data-unit-type']);
   }
 
   void _onDragEnd(html.MouseEvent e) {
-    html.Element dragTarget = e.target;
-    dragTarget.classes.remove('moving');
+    _dragSource.classes.remove('moving');
   }
 
   void _onDragOver(html.MouseEvent e) {
@@ -85,7 +82,7 @@ class Application {
     if (_dragSource != dropTarget) {
       String operatorId = 'operator_$opNumber';
       var mouseCoordinates = getRelativeMouseCoordinates(e);
-      operators['operator_$opNumber'] = addOperator(operatorId, e.dataTransfer.getData('unit-type'), mouseCoordinates['x'], mouseCoordinates['y']);
+      operators['operator_$opNumber'] = addOperator(operatorId, _dragSource.dataset['unit-type'], mouseCoordinates['x'], mouseCoordinates['y']);
       operators['operator_$opNumber'].initialize();
       opNumber += 1;
     }

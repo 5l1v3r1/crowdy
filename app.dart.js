@@ -292,17 +292,6 @@ JSArray: {"": "List/Interceptor;",
       H.throwExpression(P.UnsupportedError$("add"));
     receiver.push(value);
   },
-  remove$1: function(receiver, element) {
-    var i;
-    if (!!receiver.fixed$length)
-      H.throwExpression(P.UnsupportedError$("remove"));
-    for (i = 0; i < receiver.length; ++i)
-      if (J.$eq(receiver[i], element)) {
-        receiver.splice(i, 1);
-        return true;
-      }
-    return false;
-  },
   addAll$1: function(receiver, collection) {
     var t1;
     for (t1 = J.get$iterator$ax(collection); t1.moveNext$0();)
@@ -534,6 +523,9 @@ JSString: {"": "String/Interceptor;",
   },
   toLowerCase$0: function(receiver) {
     return receiver.toLowerCase();
+  },
+  toUpperCase$0: function(receiver) {
+    return receiver.toUpperCase();
   },
   trim$0: function(receiver) {
     var endIndex, startIndex, codeUnit, endIndex0, endIndex1;
@@ -2461,7 +2453,7 @@ main: function() {
   N.Logger_Logger("").get$onRecord().listen$1(new D.main_closure(messageList));
 },
 
-getMouseCoordinates: function(e) {
+getMouseCoordinatesRelativeToCanvas: function(e) {
   var t1, t2, t3, t4;
   t1 = J.getInterceptor$x(e);
   t2 = t1.get$client(e);
@@ -2490,7 +2482,7 @@ getRelativeMouseCoordinates: function(e) {
   return H.fillLiteralMap(["x", t2, "y", t1.get$y(t1)], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
 },
 
-getRelativeToCanvasMouseCoordinates: function(e) {
+getMouseCoordinatesProportinalToCanvas: function(e) {
   var t1, t2, t3, t4, t5;
   t1 = J.getInterceptor$x(e);
   t2 = t1.get$client(e);
@@ -2603,21 +2595,22 @@ Application: {"": "Object;log,ui",
     return new H.BoundClosure$1(this, D.Application.prototype.drawLine$1, null, "drawLine$1");
   },
   _onDragStart$1: function(e) {
-    var t1, dragTarget, t2, t3;
+    var t1, t2;
     t1 = J.getInterceptor$x(e);
-    dragTarget = t1.get$target(e);
-    t2 = J.getInterceptor$x(dragTarget);
-    t3 = t2.get$classes(dragTarget);
-    t3.add$1(t3, "moving");
-    $._dragSource = dragTarget;
+    $._dragSource = H.interceptedTypeCast(t1.get$target(e), "$isLIElement");
+    t2 = $._dragSource;
+    t2.toString;
+    t2 = new W._ElementCssClassSet(t2);
+    t2.add$1(t2, "moving");
     t1.get$dataTransfer(e).effectAllowed = "move";
-    e.dataTransfer.setData("unit-type", t2.get$attributes(dragTarget)._element.getAttribute("data-unit-type"));
   },
   get$_onDragStart: function() {
     return new H.BoundClosure$1(this, D.Application.prototype._onDragStart$1, null, "_onDragStart$1");
   },
   _onDragEnd$1: function(e) {
-    var t1 = J.get$classes$x(J.get$target$x(e));
+    var t1 = $._dragSource;
+    t1.toString;
+    t1 = new W._ElementCssClassSet(t1);
     t1.remove$1(t1, "moving");
   },
   get$_onDragEnd: function() {
@@ -2632,17 +2625,20 @@ Application: {"": "Object;log,ui",
     return new H.BoundClosure$1(this, D.Application.prototype._onDragOver$1, null, "_onDragOver$1");
   },
   _onDrop$1: function(e) {
-    var t1, dropTarget, t2, operatorId, mouseCoordinates;
-    t1 = J.getInterceptor$x(e);
-    dropTarget = t1.get$target(e);
-    t2 = $._dragSource;
-    if (t2 == null ? dropTarget != null : t2 !== dropTarget) {
+    var dropTarget, t1, operatorId, mouseCoordinates, t2, t3;
+    dropTarget = J.get$target$x(e);
+    t1 = $._dragSource;
+    if (t1 == null ? dropTarget != null : t1 !== dropTarget) {
       operatorId = "operator_" + $.opNumber;
       mouseCoordinates = D.getRelativeMouseCoordinates(e);
-      t2 = $.operators;
-      t2.$indexSet(t2, "operator_" + $.opNumber, this.addOperator$4(operatorId, t1.get$dataTransfer(e).getData("unit-type"), mouseCoordinates.$index(mouseCoordinates, "x"), mouseCoordinates.$index(mouseCoordinates, "y")));
       t1 = $.operators;
-      J.initialize$0$x(t1.$index(t1, "operator_" + $.opNumber));
+      t2 = "operator_" + $.opNumber;
+      t3 = $._dragSource;
+      t3.toString;
+      t3 = new W._DataAttributeMap(new W._ElementAttributeMap(t3));
+      t1.$indexSet(t1, t2, this.addOperator$4(operatorId, t3._attributes._element.getAttribute("data-" + t3._toHyphenedName$1("unit-type")), mouseCoordinates.$index(mouseCoordinates, "x"), mouseCoordinates.$index(mouseCoordinates, "y")));
+      t3 = $.operators;
+      J.initialize$0$x(t3.$index(t3, "operator_" + $.opNumber));
       $.opNumber = $.opNumber + 1;
     }
   },
@@ -3119,7 +3115,7 @@ OutputSegmentUI: {"": "Object;removable,segment,name>,value>,deleteButton",
     }
     return this.segment;
   },
-  _crowdy$_remove$0: function() {
+  _remove$0: function() {
     J.remove$0$ax(this.segment);
   },
   OutputSegmentUI$3: function(defaultName, removable, editable) {
@@ -3209,7 +3205,7 @@ BaseSpecification: {"": "Object;",
   },
   removeElement$1: function(identifier) {
     var t1 = this.elements;
-    t1.$index(t1, identifier)._crowdy$_remove$0();
+    t1.$index(t1, identifier)._remove$0();
     t1 = this.elements;
     t1.remove$1(t1, identifier);
   },
@@ -3307,7 +3303,7 @@ OutputSpecification: {"": "BaseSpecification;id,elements,title,view,innerView,el
     if (!previousElements.containsKey$1(id)) {
       t1 = J.get$id$x(J.get$name$x(segment));
       t2 = this.elements;
-      t2.$index(t2, t1)._crowdy$_remove$0();
+      t2.$index(t2, t1)._remove$0();
       t2 = this.elements;
       t2.remove$1(t2, t1);
       return true;
@@ -3466,11 +3462,11 @@ FlowLineUI: {"": "Object;path,from,to,selected",
   get$_move: function() {
     return new H.BoundClosure$1(this, D.FlowLineUI.prototype._move$1, null, "_move$1");
   },
-  _crowdy$_remove$1: function(e) {
+  _remove$1: function(e) {
     this.remove$0(this);
   },
-  get$_crowdy$_remove: function() {
-    return new H.BoundClosure$1(this, D.FlowLineUI.prototype._crowdy$_remove$1, null, "_crowdy$_remove$1");
+  get$_remove: function() {
+    return new H.BoundClosure$1(this, D.FlowLineUI.prototype._remove$1, null, "_remove$1");
   },
   FlowLineUI$2: function(from, to) {
     var t1, t2, t3, t4, t5, t6, t7, t8;
@@ -3535,13 +3531,13 @@ FlowLineUI: {"": "Object;path,from,to,selected",
     t8._tryResume$0();
     t3 = J.get$on$x(t3.body);
     t3 = t3.$index(t3, "stream_port_removed");
-    t8 = this.get$_crowdy$_remove();
+    t8 = this.get$_remove();
     t8 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t8), t3._useCapture);
     H.setRuntimeTypeInfo(t8, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t8._tryResume$0();
     t6 = J.get$on$x(t6.body);
     t6 = t6.$index(t6, "stream_port_removed");
-    t8 = this.get$_crowdy$_remove();
+    t8 = this.get$_remove();
     t8 = new W._EventStreamSubscription(0, t6._html$_target, t6._eventType, W._wrapZone(t8), t6._useCapture);
     H.setRuntimeTypeInfo(t8, [H.getRuntimeTypeArgument(t6, "_EventStream", 0)]);
     t8._tryResume$0();
@@ -4561,7 +4557,7 @@ BaseOperatorUI: {"": "Object;group<",
     this.dragging = true;
     t1 = this.group;
     t1.parentNode.appendChild(t1);
-    mouseCoordinates = D.getRelativeToCanvasMouseCoordinates(e);
+    mouseCoordinates = D.getMouseCoordinatesProportinalToCanvas(e);
     this.dragOffsetX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), J.getCtm$0$x(this.group).e);
     this.dragOffsetY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), J.getCtm$0$x(this.group).f);
     t1 = $.canvas;
@@ -4595,7 +4591,7 @@ BaseOperatorUI: {"": "Object;group<",
   _moveStarted$1: function(e) {
     var mouseCoordinates, newX, newY;
     if (this.dragging === true) {
-      mouseCoordinates = D.getRelativeToCanvasMouseCoordinates(e);
+      mouseCoordinates = D.getMouseCoordinatesProportinalToCanvas(e);
       newX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), this.dragOffsetX);
       newY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), this.dragOffsetY);
       this.group.setAttribute("transform", "translate(" + H.S(newX) + ", " + H.S(newY) + ")");
@@ -4852,7 +4848,7 @@ PortUI: {"": "Object;log,group<,body,point<,size,width,height,initX,initY,input<
   _onMouseMove$1: function(e) {
     var mouseCoordinates, t1;
     if ($.selectedPort != null) {
-      mouseCoordinates = D.getMouseCoordinates(e);
+      mouseCoordinates = D.getMouseCoordinatesRelativeToCanvas(e);
       t1 = $.tempLine;
       t1.toString;
       new W._ElementAttributeMap(t1)._element.setAttribute("x2", H.S(mouseCoordinates.$index(mouseCoordinates, "x")));
@@ -5155,20 +5151,6 @@ ListIterable: {"": "IterableBase;",
   get$isEmpty: function(_) {
     return this.get$length(this) === 0;
   },
-  fold$2: function(_, initialValue, combine) {
-    var $length, value, i;
-    $length = this.get$length(this);
-    if (typeof $length !== "number")
-      throw H.iae($length);
-    value = initialValue;
-    i = 0;
-    for (; i < $length; ++i) {
-      value = combine.call$2(value, this.elementAt$1(this, i));
-      if ($length !== this.get$length(this))
-        throw H.wrapException(P.ConcurrentModificationError$(this));
-    }
-    return value;
-  },
   $asIterableBase: null,
   $isEfficientLength: true
 },
@@ -5314,9 +5296,6 @@ FixedLengthListMixin: {"": "Object;",
   addAll$1: function(receiver, iterable) {
     throw H.wrapException(P.UnsupportedError$("Cannot add to a fixed-length list"));
   },
-  remove$1: function(receiver, element) {
-    throw H.wrapException(P.UnsupportedError$("Cannot remove from a fixed-length list"));
-  },
   clear$0: function(receiver) {
     throw H.wrapException(P.UnsupportedError$("Cannot clear a fixed-length list"));
   }
@@ -5335,14 +5314,8 @@ UnmodifiableListMixin: {"": "Object;",
   addAll$1: function(_, iterable) {
     throw H.wrapException(P.UnsupportedError$("Cannot add to an unmodifiable list"));
   },
-  remove$1: function(_, element) {
-    throw H.wrapException(P.UnsupportedError$("Cannot remove from an unmodifiable list"));
-  },
   clear$0: function(_) {
     throw H.wrapException(P.UnsupportedError$("Cannot clear an unmodifiable list"));
-  },
-  setRange$4: function(_, start, end, iterable, skipCount) {
-    throw H.wrapException(P.UnsupportedError$("Cannot modify an unmodifiable list"));
   },
   $isList: true,
   $asList: null,
@@ -7344,23 +7317,6 @@ _HashMap: {"": "Object;_collection$_length,_strings,_nums,_rest,_keys",
       }
     }
   },
-  remove$1: function(_, key) {
-    var rest, bucket, index;
-    if (key !== "__proto__")
-      return this._removeHashTableEntry$2(this._strings, key);
-    else {
-      rest = this._rest;
-      if (rest == null)
-        return;
-      bucket = rest[this._computeHashCode$1(key)];
-      index = this._findBucketIndex$2(bucket, key);
-      if (index < 0)
-        return;
-      this._collection$_length = this._collection$_length - 1;
-      this._keys = null;
-      return bucket.splice(index, 2)[1];
-    }
-  },
   forEach$1: function(_, action) {
     var keys, $length, i, key;
     keys = this._computeKeys$0();
@@ -7419,17 +7375,6 @@ _HashMap: {"": "Object;_collection$_length,_strings,_nums,_rest,_keys",
     }
     P._HashMap__setTableEntry(table, key, value);
   },
-  _removeHashTableEntry$2: function(table, key) {
-    var value;
-    if (table != null && table[key] != null) {
-      value = P._HashMap__getTableEntry(table, key);
-      delete table[key];
-      this._collection$_length = this._collection$_length - 1;
-      this._keys = null;
-      return value;
-    } else
-      return;
-  },
   _computeHashCode$1: function(key) {
     return J.get$hashCode$(key) & 0x3ffffff;
   },
@@ -7445,11 +7390,6 @@ _HashMap: {"": "Object;_collection$_length,_strings,_nums,_rest,_keys",
   },
   $isMap: true,
   static: {
-_HashMap__getTableEntry: function(table, key) {
-  var entry = table[key];
-  return entry === table ? null : entry;
-},
-
 _HashMap__setTableEntry: function(table, key, value) {
   if (value == null)
     table[key] = table;
@@ -7888,21 +7828,17 @@ _HashSet: {"": "_HashSetBase;",
   },
   remove$1: function(_, object) {
     var rest, bucket, index;
-    if (typeof object === "string" && object !== "__proto__")
-      return this._removeHashTableEntry$2(this._strings, object);
-    else {
-      rest = this._rest;
-      if (rest == null)
-        return false;
-      bucket = rest[this._computeHashCode$1(object)];
-      index = this._findBucketIndex$2(bucket, object);
-      if (index < 0)
-        return false;
-      this._collection$_length = this._collection$_length - 1;
-      this._elements = null;
-      bucket.splice(index, 1);
-      return true;
-    }
+    rest = this._rest;
+    if (rest == null)
+      return false;
+    bucket = rest[this._computeHashCode$1(object)];
+    index = this._findBucketIndex$2(bucket, object);
+    if (index < 0)
+      return false;
+    this._collection$_length = this._collection$_length - 1;
+    this._elements = null;
+    bucket.splice(index, 1);
+    return true;
   },
   _computeElements$0: function() {
     var t1, result, strings, names, entries, index, i, nums, rest, bucket, $length, i0;
@@ -7952,15 +7888,6 @@ _HashSet: {"": "_HashSetBase;",
     this._collection$_length = this._collection$_length + 1;
     this._elements = null;
     return true;
-  },
-  _removeHashTableEntry$2: function(table, element) {
-    if (table != null && table[element] != null) {
-      delete table[element];
-      this._collection$_length = this._collection$_length - 1;
-      this._elements = null;
-      return true;
-    } else
-      return false;
   },
   _computeHashCode$1: function(element) {
     return J.get$hashCode$(element) & 0x3ffffff;
@@ -8418,72 +8345,8 @@ ListMixin: {"": "Object;",
       this.$indexSet(receiver, t2, element);
     }
   },
-  remove$1: function(receiver, element) {
-    var i, t1;
-    i = 0;
-    while (true) {
-      t1 = this.get$length(receiver);
-      if (typeof t1 !== "number")
-        throw H.iae(t1);
-      if (!(i < t1))
-        break;
-      if (J.$eq(this.$index(receiver, i), element)) {
-        t1 = this.get$length(receiver);
-        if (typeof t1 !== "number")
-          throw t1.$sub();
-        this.setRange$4(receiver, i, t1 - 1, receiver, i + 1);
-        t1 = this.get$length(receiver);
-        if (typeof t1 !== "number")
-          throw t1.$sub();
-        this.set$length(receiver, t1 - 1);
-        return true;
-      }
-      ++i;
-    }
-    return false;
-  },
   clear$0: function(receiver) {
     this.set$length(receiver, 0);
-  },
-  setRange$4: function(receiver, start, end, iterable, skipCount) {
-    var t1, $length, t2, i;
-    if (start >= 0) {
-      t1 = this.get$length(receiver);
-      if (typeof t1 !== "number")
-        throw H.iae(t1);
-      t1 = start > t1;
-    } else
-      t1 = true;
-    if (t1)
-      H.throwExpression(P.RangeError$range(start, 0, this.get$length(receiver)));
-    if (typeof end !== "number")
-      throw end.$lt();
-    if (end >= start) {
-      t1 = this.get$length(receiver);
-      if (typeof t1 !== "number")
-        throw H.iae(t1);
-      t1 = end > t1;
-    } else
-      t1 = true;
-    if (t1)
-      H.throwExpression(P.RangeError$range(end, start, this.get$length(receiver)));
-    $length = end - start;
-    if ($length === 0)
-      return;
-    if (skipCount < 0)
-      throw H.wrapException(new P.ArgumentError(skipCount));
-    t1 = J.getInterceptor$asx(iterable);
-    t2 = t1.get$length(iterable);
-    if (typeof t2 !== "number")
-      throw H.iae(t2);
-    if (skipCount + $length > t2)
-      throw H.wrapException(P.StateError$("Not enough elements"));
-    if (skipCount < start)
-      for (i = $length - 1; i >= 0; --i)
-        this.$indexSet(receiver, start + i, t1.$index(iterable, skipCount + i));
-    else
-      for (i = 0; i < $length; ++i)
-        this.$indexSet(receiver, start + i, t1.$index(iterable, skipCount + i));
   },
   toString$0: function(receiver) {
     var result, t1;
@@ -8558,20 +8421,6 @@ ListQueue: {"": "IterableBase;_table,_head,_tail,_modificationCount",
   add$1: function(_, element) {
     this._add$1(element);
   },
-  remove$1: function(_, object) {
-    var i, t1;
-    for (i = this._head; i !== this._tail; i = (i + 1 & this._table.length - 1) >>> 0) {
-      t1 = this._table;
-      if (i < 0 || i >= t1.length)
-        throw H.ioore(t1, i);
-      if (J.$eq(t1[i], object)) {
-        this._remove$1(i);
-        this._modificationCount = this._modificationCount + 1;
-        return true;
-      }
-    }
-    return false;
-  },
   toString$0: function(_) {
     return H.IterableMixinWorkaround_toStringIterable(this, "{", "}");
   },
@@ -8601,45 +8450,6 @@ ListQueue: {"": "IterableBase;_table,_head,_tail,_modificationCount",
     if (this._head === this._tail)
       this._grow$0();
     this._modificationCount = this._modificationCount + 1;
-  },
-  _remove$1: function(offset) {
-    var t1, t2, mask, t3, t4, i, prevOffset, nextOffset;
-    t1 = this._table;
-    t2 = t1.length;
-    mask = t2 - 1;
-    t3 = this._head;
-    t4 = this._tail;
-    if ((offset - t3 & mask) >>> 0 < (t4 - offset & mask) >>> 0) {
-      for (i = offset; i !== t3; i = prevOffset) {
-        prevOffset = (i - 1 & mask) >>> 0;
-        if (prevOffset < 0 || prevOffset >= t2)
-          throw H.ioore(t1, prevOffset);
-        t4 = t1[prevOffset];
-        if (i < 0 || i >= t2)
-          throw H.ioore(t1, i);
-        t1[i] = t4;
-      }
-      if (t3 < 0 || t3 >= t2)
-        throw H.ioore(t1, t3);
-      t1[t3] = null;
-      this._head = (t3 + 1 & mask) >>> 0;
-      return (offset + 1 & mask) >>> 0;
-    } else {
-      this._tail = (t4 - 1 & mask) >>> 0;
-      for (t1 = this._tail, t2 = this._table, t3 = t2.length, i = offset; i !== t1; i = nextOffset) {
-        nextOffset = (i + 1 & mask) >>> 0;
-        if (nextOffset < 0 || nextOffset >= t3)
-          throw H.ioore(t2, nextOffset);
-        t4 = t2[nextOffset];
-        if (i < 0 || i >= t3)
-          throw H.ioore(t2, i);
-        t2[i] = t4;
-      }
-      if (t1 < 0 || t1 >= t3)
-        throw H.ioore(t2, t1);
-      t2[t1] = null;
-      return offset;
-    }
   },
   _grow$0: function() {
     var newTable, t1, t2, split;
@@ -9648,7 +9458,7 @@ KeyboardEvent: {"": "UIEvent;",
 
 KeygenElement: {"": "HtmlElement;name=", "%": "HTMLKeygenElement"},
 
-LIElement: {"": "HtmlElement;value%", "%": "HTMLLIElement"},
+LIElement: {"": "HtmlElement;value%", $isLIElement: true, "%": "HTMLLIElement"},
 
 LabelElement: {"": "HtmlElement;htmlFor}", "%": "HTMLLabelElement"},
 
@@ -10062,9 +9872,6 @@ _ChildrenElementList: {"": "ListBase;_element,_childElements",
     for (t1 = J.get$iterator$ax(iterable), t2 = this._element; t1.moveNext$0();)
       t2.appendChild(t1.get$current());
   },
-  setRange$4: function(_, start, end, iterable, skipCount) {
-    throw H.wrapException(P.UnimplementedError$(null));
-  },
   remove$1: function(_, object) {
     var t1 = J.getInterceptor(object);
     if (typeof object === "object" && object !== null && !!t1.$isElement) {
@@ -10114,9 +9921,6 @@ _FrozenElementList: {"": "ListBase;_nodeList,_elementList",
   },
   set$length: function(_, newLength) {
     throw H.wrapException(P.UnsupportedError$("Cannot modify list"));
-  },
-  get$classes: function(_) {
-    return W._MultiElementCssClassSet$(this._elementList);
   },
   _html$_FrozenElementList$_wrap$1: function(_nodeList, $T) {
     var t1 = C.NodeList_methods.where$1(this._nodeList, new W._FrozenElementList$_wrap_closure());
@@ -10227,9 +10031,6 @@ _ChildNodeListLazy: {"": "ListBase;_this",
       t1.insertBefore(node, t2[index]);
     }
   },
-  remove$1: function(_, object) {
-    return false;
-  },
   clear$0: function(_) {
     this._this.textContent = "";
   },
@@ -10243,9 +10044,6 @@ _ChildNodeListLazy: {"": "ListBase;_this",
   },
   get$iterator: function(_) {
     return C.NodeList_methods.get$iterator(this._this.childNodes);
-  },
-  setRange$4: function(_, start, end, iterable, skipCount) {
-    throw H.wrapException(P.UnsupportedError$("Cannot setRange on Node list"));
   },
   get$length: function(_) {
     return this._this.childNodes.length;
@@ -10333,13 +10131,6 @@ _ElementAttributeMap: {"": "_AttributeMap;_element",
   $indexSet: function(_, key, value) {
     this._element.setAttribute(key, value);
   },
-  remove$1: function(_, key) {
-    var t1, value;
-    t1 = this._element;
-    value = t1.getAttribute(key);
-    t1.removeAttribute(key);
-    return value;
-  },
   get$length: function(_) {
     return this.get$keys().length;
   },
@@ -10348,77 +10139,106 @@ _ElementAttributeMap: {"": "_AttributeMap;_element",
   }
 },
 
-_MultiElementCssClassSet: {"": "CssClassSetImpl;_elementIterable,_elementCssClassSetIterable",
-  readClasses$0: function() {
-    var s, t1;
-    s = P.LinkedHashSet_LinkedHashSet(null, null, null, J.JSString);
-    t1 = this._elementCssClassSetIterable;
-    t1.forEach$1(t1, new W._MultiElementCssClassSet_readClasses_closure(s));
-    return s;
+_DataAttributeMap: {"": "Object;_attributes",
+  $index: function(_, key) {
+    return this._attributes._element.getAttribute("data-" + this._toHyphenedName$1(key));
   },
-  writeClasses$1: function(s) {
-    var classes, t1;
-    classes = C.JSArray_methods.join$1(P.List_List$from(s, true, null), " ");
-    for (t1 = this._elementIterable, t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();)
-      J.set$className$x(t1._dev$_current, classes);
+  $indexSet: function(_, key, value) {
+    this._attributes._element.setAttribute("data-" + this._toHyphenedName$1(key), value);
   },
-  modify$1: function(f) {
-    var t1 = this._elementCssClassSetIterable;
-    t1.forEach$1(t1, new W._MultiElementCssClassSet_modify_closure(f));
+  forEach$1: function(_, f) {
+    var t1 = this._attributes;
+    t1.forEach$1(t1, new W._DataAttributeMap_forEach_closure(this, f));
   },
-  remove$1: function(_, value) {
-    return this._modifyWithReturnValue$1(new W._MultiElementCssClassSet_remove_closure(value));
+  get$keys: function() {
+    var keys, t1;
+    keys = P.List_List(null, J.JSString);
+    H.setRuntimeTypeInfo(keys, [J.JSString]);
+    t1 = this._attributes;
+    t1.forEach$1(t1, new W._DataAttributeMap_keys_closure(this, keys));
+    return keys;
   },
-  _modifyWithReturnValue$1: function(f) {
-    var t1 = this._elementCssClassSetIterable;
-    return t1.fold$2(t1, false, new W._MultiElementCssClassSet__modifyWithReturnValue_closure(f));
+  get$values: function(_) {
+    var values, t1;
+    values = P.List_List(null, J.JSString);
+    H.setRuntimeTypeInfo(values, [J.JSString]);
+    t1 = this._attributes;
+    t1.forEach$1(t1, new W._DataAttributeMap_values_closure(this, values));
+    return values;
   },
-  _MultiElementCssClassSet$1: function(_elementIterable) {
-    var t1 = new H.MappedListIterable(P.List_List$from(this._elementIterable, true, null), new W._MultiElementCssClassSet_closure());
-    H.setRuntimeTypeInfo(t1, [null, null]);
-    this._elementCssClassSetIterable = t1;
+  get$length: function(_) {
+    return this.get$keys().length;
   },
-  static: {
-_MultiElementCssClassSet$: function(_elementIterable) {
-  var t1 = new W._MultiElementCssClassSet(_elementIterable, null);
-  t1._MultiElementCssClassSet$1(_elementIterable);
-  return t1;
-}}
-
+  get$isNotEmpty: function(_) {
+    return this.get$keys().length !== 0;
+  },
+  _toCamelCase$2$startUppercase: function(hyphenedName, startUppercase) {
+    var segments, start, i, segment, t1, t2;
+    segments = hyphenedName.split("-");
+    start = startUppercase ? 0 : 1;
+    for (i = start; i < segments.length; ++i) {
+      segment = segments[i];
+      t1 = J.getInterceptor$asx(segment);
+      t2 = t1.get$length(segment);
+      if (typeof t2 !== "number")
+        throw t2.$gt();
+      if (t2 > 0) {
+        t1 = J.toUpperCase$0$s(t1.$index(segment, 0)) + t1.substring$1(segment, 1);
+        if (i >= segments.length)
+          throw H.ioore(segments, i);
+        segments[i] = t1;
+      }
+    }
+    return C.JSArray_methods.join$1(segments, "");
+  },
+  _toCamelCase$1: function(hyphenedName) {
+    return this._toCamelCase$2$startUppercase(hyphenedName, false);
+  },
+  _toHyphenedName$1: function(word) {
+    var sb, t1, i, t2, lower;
+    sb = P.StringBuffer$("");
+    t1 = J.getInterceptor$asx(word);
+    i = 0;
+    while (true) {
+      t2 = t1.get$length(word);
+      if (typeof t2 !== "number")
+        throw H.iae(t2);
+      if (!(i < t2))
+        break;
+      lower = J.toLowerCase$0$s(t1.$index(word, i));
+      if (!J.$eq(t1.$index(word, i), lower) && i > 0)
+        sb._contents = sb._contents + "-";
+      sb._contents = sb._contents + lower;
+      ++i;
+    }
+    return sb._contents;
+  },
+  $isMap: true,
+  $asMap: function() {
+    return [J.JSString, J.JSString];
+  }
 },
 
-_MultiElementCssClassSet_closure: {"": "Closure;",
-  call$1: function(e) {
-    return new W._ElementCssClassSet(e);
+_DataAttributeMap_forEach_closure: {"": "Closure;this_0,f_1",
+  call$2: function(key, value) {
+    if (J.getInterceptor$s(key).startsWith$1(key, "data-"))
+      this.f_1.call$2(this.this_0._toCamelCase$1(C.JSString_methods.substring$1(key, 5)), value);
   },
-  $is_args1: true
+  $is_args2: true
 },
 
-_MultiElementCssClassSet_readClasses_closure: {"": "Closure;s_0",
-  call$1: function(e) {
-    var t1 = this.s_0;
-    return t1.addAll$1(t1, e.readClasses$0());
+_DataAttributeMap_keys_closure: {"": "Closure;this_0,keys_1",
+  call$2: function(key, value) {
+    if (J.getInterceptor$s(key).startsWith$1(key, "data-"))
+      this.keys_1.push(this.this_0._toCamelCase$1(C.JSString_methods.substring$1(key, 5)));
   },
-  $is_args1: true
+  $is_args2: true
 },
 
-_MultiElementCssClassSet_modify_closure: {"": "Closure;f_0",
-  call$1: function(e) {
-    return e.modify$1(this.f_0);
-  },
-  $is_args1: true
-},
-
-_MultiElementCssClassSet_remove_closure: {"": "Closure;value_0",
-  call$1: function(e) {
-    return J.remove$1$ax(e, this.value_0);
-  },
-  $is_args1: true
-},
-
-_MultiElementCssClassSet__modifyWithReturnValue_closure: {"": "Closure;f_0",
-  call$2: function(prevValue, element) {
-    return this.f_0.call$1(element) === true || prevValue === true;
+_DataAttributeMap_values_closure: {"": "Closure;this_0,values_1",
+  call$2: function(key, value) {
+    if (J.startsWith$1$s(key, "data-"))
+      this.values_1.push(value);
   },
   $is_args2: true
 },
@@ -10614,12 +10434,6 @@ ImmutableListMixin: {"": "Object;",
   },
   addAll$1: function(receiver, iterable) {
     throw H.wrapException(P.UnsupportedError$("Cannot add to immutable List."));
-  },
-  remove$1: function(receiver, object) {
-    throw H.wrapException(P.UnsupportedError$("Cannot remove from immutable List."));
-  },
-  setRange$4: function(receiver, start, end, iterable, skipCount) {
-    throw H.wrapException(P.UnsupportedError$("Cannot setRange on immutable List."));
   },
   $isList: true,
   $asList: null,
@@ -11164,9 +10978,6 @@ UnmodifiableMapMixin: {"": "Object;",
   addAll$1: function(_, other) {
     return Q.UnmodifiableMapMixin__throw();
   },
-  remove$1: function(_, key) {
-    Q.UnmodifiableMapMixin__throw();
-  },
   clear$0: function(_) {
     return Q.UnmodifiableMapMixin__throw();
   },
@@ -11198,10 +11009,6 @@ DelegatingMap: {"": "Object;",
   },
   get$length: function(_) {
     return this._base._collection$_length;
-  },
-  remove$1: function(_, key) {
-    var t1 = this._base;
-    return t1.remove$1(t1, key);
   },
   get$values: function(_) {
     var t1 = this._base;
@@ -11568,9 +11375,6 @@ FilteredElementList: {"": "ListBase;_node,_childNodes",
     var t1, t2;
     for (t1 = J.get$iterator$ax(iterable), t2 = this._childNodes._this; t1.moveNext$0();)
       t2.appendChild(t1.get$current());
-  },
-  setRange$4: function(_, start, end, iterable, skipCount) {
-    throw H.wrapException(P.UnsupportedError$("Cannot setRange on filtered list"));
   },
   removeRange$2: function(_, start, end) {
     H.IterableMixinWorkaround_forEach(C.JSArray_methods.sublist$2(this.get$_filtered(), start, end), new P.FilteredElementList_removeRange_closure());
@@ -12343,9 +12147,6 @@ J.querySelectorAll$1$x = function(receiver, a0) {
 J.remove$0$ax = function(receiver) {
   return J.getInterceptor$ax(receiver).remove$0(receiver);
 };
-J.remove$1$ax = function(receiver, a0) {
-  return J.getInterceptor$ax(receiver).remove$1(receiver, a0);
-};
 J.removeEventListener$3$x = function(receiver, a0, a1, a2) {
   return J.getInterceptor$x(receiver).removeEventListener$3(receiver, a0, a1, a2);
 };
@@ -12385,6 +12186,9 @@ J.set$text$x = function(receiver, value) {
 J.set$type$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$type(receiver, value);
 };
+J.startsWith$1$s = function(receiver, a0) {
+  return J.getInterceptor$s(receiver).startsWith$1(receiver, a0);
+};
 J.toInt$0$n = function(receiver) {
   return J.getInterceptor$n(receiver).toInt$0(receiver);
 };
@@ -12396,6 +12200,9 @@ J.toLowerCase$0$s = function(receiver) {
 };
 J.toString$0 = function(receiver) {
   return J.getInterceptor(receiver).toString$0(receiver);
+};
+J.toUpperCase$0$s = function(receiver) {
+  return J.getInterceptor$s(receiver).toUpperCase$0(receiver);
 };
 J.trim$0$s = function(receiver) {
   return J.getInterceptor$s(receiver).trim$0(receiver);
