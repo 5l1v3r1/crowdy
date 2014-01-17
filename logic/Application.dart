@@ -63,9 +63,12 @@ class Application {
   void _onDragStart(html.MouseEvent e) {
     _dragSource = e.target as html.LIElement;
     _dragSource.classes.add('moving');
-    e.dataTransfer.setData('text/plain', 'God damn Firefox!');
     e.dataTransfer.effectAllowed = 'move';
-    print('Drag started');
+    print('Drag started ${html.window.navigator.appVersion}');
+
+    if (!html.window.navigator.appVersion.contains('MSIE')) {
+      e.dataTransfer.setData('text/plain', 'God damn Firefox!');
+    }
   }
 
   void _onDragEnd(html.MouseEvent e) {

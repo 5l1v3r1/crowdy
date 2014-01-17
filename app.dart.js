@@ -2598,9 +2598,10 @@ Application: {"": "Object;log,ui",
     t2.toString;
     t2 = new W._ElementCssClassSet(t2);
     t2.add$1(t2, "moving");
-    t1.get$dataTransfer(e).setData("text/plain", "God damn Firefox!");
-    e.dataTransfer.effectAllowed = "move";
-    P.print("Drag started");
+    t1.get$dataTransfer(e).effectAllowed = "move";
+    P.print("Drag started " + window.navigator.appVersion);
+    if (!J.contains$1$asx(window.navigator.appVersion, "MSIE"))
+      e.dataTransfer.setData("text/plain", "God damn Firefox!");
   },
   get$_onDragStart: function() {
     return new H.BoundClosure$1(this, D.Application.prototype._onDragStart$1, null, "_onDragStart$1");
@@ -12004,6 +12005,9 @@ J.addEventListener$3$x = function(receiver, a0, a1, a2) {
 };
 J.clear$0$ax = function(receiver) {
   return J.getInterceptor$ax(receiver).clear$0(receiver);
+};
+J.contains$1$asx = function(receiver, a0) {
+  return J.getInterceptor$asx(receiver).contains$1(receiver, a0);
 };
 J.contains$2$asx = function(receiver, a0, a1) {
   return J.getInterceptor$asx(receiver).contains$2(receiver, a0, a1);
