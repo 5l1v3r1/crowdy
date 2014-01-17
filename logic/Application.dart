@@ -18,7 +18,6 @@ class Application {
     canvas.onClick.listen(deselect);
     canvas.on[STREAM_LINE_DRAW].listen(drawLine);
     canvas.onDragOver.listen(_onDragOver);
-    canvas.onDragEnter.listen(_onDragOver);
     canvas.onDrop.listen(_onDrop);
 
     // Add new operator
@@ -64,22 +63,27 @@ class Application {
   void _onDragStart(html.MouseEvent e) {
     _dragSource = e.target as html.LIElement;
     _dragSource.classes.add('moving');
+    e.dataTransfer.setData('text/plain', 'God damn Firefox!');
     e.dataTransfer.effectAllowed = 'move';
+    print('Drag started');
   }
 
   void _onDragEnd(html.MouseEvent e) {
+    print('Drag ended');
     _dragSource.classes.remove('moving');
   }
 
   void _onDragOver(html.MouseEvent e) {
     e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
+    //e.dataTransfer.dropEffect = 'move';
   }
 
   void _onDrop(html.MouseEvent e) {
+    print('Dropping');
+    e.preventDefault();
     //e.stopImmediatePropagation(); // .stopPropagation();
     html.Element dropTarget = e.target;
-    if (_dragSource != dropTarget) {
+    if (dropTarget == canvas) {
       String operatorId = 'operator_$opNumber';
       var mouseCoordinates = getRelativeMouseCoordinates(e);
       operators['operator_$opNumber'] = addOperator(operatorId, _dragSource.dataset['unit-type'], mouseCoordinates['x'], mouseCoordinates['y']);

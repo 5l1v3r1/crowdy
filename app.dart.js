@@ -2474,12 +2474,8 @@ getMouseCoordinatesRelativeToCanvas: function(e) {
 },
 
 getRelativeMouseCoordinates: function(e) {
-  var t1, t2;
-  t1 = J.getInterceptor$x(e);
-  t2 = t1.get$offset(e);
-  t2 = t2.get$x(t2);
-  t1 = t1.get$offset(e);
-  return H.fillLiteralMap(["x", t2, "y", t1.get$y(t1)], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
+  var t1 = J.getInterceptor$x(e);
+  return H.fillLiteralMap(["x", t1.get$offset(e).x, "y", t1.get$offset(e).y], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null));
 },
 
 getMouseCoordinatesProportinalToCanvas: function(e) {
@@ -2602,13 +2598,17 @@ Application: {"": "Object;log,ui",
     t2.toString;
     t2 = new W._ElementCssClassSet(t2);
     t2.add$1(t2, "moving");
-    t1.get$dataTransfer(e).effectAllowed = "move";
+    t1.get$dataTransfer(e).setData("text/plain", "God damn Firefox!");
+    e.dataTransfer.effectAllowed = "move";
+    P.print("Drag started");
   },
   get$_onDragStart: function() {
     return new H.BoundClosure$1(this, D.Application.prototype._onDragStart$1, null, "_onDragStart$1");
   },
   _onDragEnd$1: function(e) {
-    var t1 = $._dragSource;
+    var t1;
+    P.print("Drag ended");
+    t1 = $._dragSource;
     t1.toString;
     t1 = new W._ElementCssClassSet(t1);
     t1.remove$1(t1, "moving");
@@ -2617,18 +2617,16 @@ Application: {"": "Object;log,ui",
     return new H.BoundClosure$1(this, D.Application.prototype._onDragEnd$1, null, "_onDragEnd$1");
   },
   _onDragOver$1: function(e) {
-    var t1 = J.getInterceptor$x(e);
-    t1.preventDefault$0(e);
-    t1.get$dataTransfer(e).dropEffect = "move";
+    J.preventDefault$0$x(e);
   },
   get$_onDragOver: function() {
     return new H.BoundClosure$1(this, D.Application.prototype._onDragOver$1, null, "_onDragOver$1");
   },
   _onDrop$1: function(e) {
-    var dropTarget, t1, operatorId, mouseCoordinates, t2, t3;
-    dropTarget = J.get$target$x(e);
-    t1 = $._dragSource;
-    if (t1 == null ? dropTarget != null : t1 !== dropTarget) {
+    var operatorId, mouseCoordinates, t1, t2, t3;
+    P.print("Dropping");
+    J.preventDefault$0$x(e);
+    if (J.$eq(W._convertNativeToDart_EventTarget(e.target), $.canvas)) {
       operatorId = "operator_" + $.opNumber;
       mouseCoordinates = D.getRelativeMouseCoordinates(e);
       t1 = $.operators;
@@ -2716,42 +2714,34 @@ Application: {"": "Object;log,ui",
     t3._tryResume$0();
     t3 = $.canvas;
     t3.toString;
-    t3 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_dragenter._eventType, false);
+    t3 = new W._ElementEventStreamImpl(t3, C.EventStreamProvider_drop._eventType, false);
     H.setRuntimeTypeInfo(t3, [null]);
-    t1 = this.get$_onDragOver();
+    t1 = this.get$_onDrop();
     t1 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t1), t3._useCapture);
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
     t1._tryResume$0();
-    t1 = $.canvas;
-    t1.toString;
-    t1 = new W._ElementEventStreamImpl(t1, C.EventStreamProvider_drop._eventType, false);
+    units = W._FrozenElementList$_wrap(document.querySelectorAll("ul.units li"), null);
+    t1 = new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragstart._eventType);
     H.setRuntimeTypeInfo(t1, [null]);
-    t3 = this.get$_onDrop();
+    t1.listen$1(this.get$_onDragStart());
+    t1 = new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragend._eventType);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t1.listen$1(this.get$_onDragEnd());
+    t1 = $.get$closeButton();
+    t1.toString;
+    t1 = new W._ElementEventStreamImpl(t1, t2, false);
+    H.setRuntimeTypeInfo(t1, [null]);
+    t3 = this.get$_modalClosed();
     t3 = new W._EventStreamSubscription(0, t1._html$_target, t1._eventType, W._wrapZone(t3), t1._useCapture);
     H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t1, "_EventStream", 0)]);
     t3._tryResume$0();
-    units = W._FrozenElementList$_wrap(document.querySelectorAll("ul.units li"), null);
-    t3 = new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragstart._eventType);
-    H.setRuntimeTypeInfo(t3, [null]);
-    t3.listen$1(this.get$_onDragStart());
-    t3 = new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragend._eventType);
-    H.setRuntimeTypeInfo(t3, [null]);
-    t3.listen$1(this.get$_onDragEnd());
-    t3 = $.get$closeButton();
+    t3 = $.get$modalAlert().querySelector(".close");
     t3.toString;
-    t3 = new W._ElementEventStreamImpl(t3, t2, false);
-    H.setRuntimeTypeInfo(t3, [null]);
-    t1 = this.get$_modalClosed();
-    t1 = new W._EventStreamSubscription(0, t3._html$_target, t3._eventType, W._wrapZone(t1), t3._useCapture);
-    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t3, "_EventStream", 0)]);
-    t1._tryResume$0();
-    t1 = $.get$modalAlert().querySelector(".close");
-    t1.toString;
-    t2 = new W._ElementEventStreamImpl(t1, t2, false);
+    t2 = new W._ElementEventStreamImpl(t3, t2, false);
     H.setRuntimeTypeInfo(t2, [null]);
-    t1 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.Application_closure()), t2._useCapture);
-    H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
-    t1._tryResume$0();
+    t3 = new W._EventStreamSubscription(0, t2._html$_target, t2._eventType, W._wrapZone(new D.Application_closure()), t2._useCapture);
+    H.setRuntimeTypeInfo(t3, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
+    t3._tryResume$0();
   },
   static: {
 Application$: function(canvas_id) {
@@ -9267,11 +9257,6 @@ Element: {"": "Node;className%,id=",
     H.setRuntimeTypeInfo(t1, [null]);
     return t1;
   },
-  get$offset: function(receiver) {
-    var t1 = new P.Rectangle(receiver.offsetLeft, receiver.offsetTop, receiver.offsetWidth, receiver.offsetHeight);
-    H.setRuntimeTypeInfo(t1, [null]);
-    return t1;
-  },
   toString$0: function(receiver) {
     return receiver.localName;
   },
@@ -11783,7 +11768,6 @@ C.EventStreamProvider_click = new W.EventStreamProvider("click");
 C.EventStreamProvider_dblclick = new W.EventStreamProvider("dblclick");
 C.EventStreamProvider_drag = new W.EventStreamProvider("drag");
 C.EventStreamProvider_dragend = new W.EventStreamProvider("dragend");
-C.EventStreamProvider_dragenter = new W.EventStreamProvider("dragenter");
 C.EventStreamProvider_dragover = new W.EventStreamProvider("dragover");
 C.EventStreamProvider_dragstart = new W.EventStreamProvider("dragstart");
 C.EventStreamProvider_drop = new W.EventStreamProvider("drop");
