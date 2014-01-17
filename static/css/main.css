@@ -143,6 +143,7 @@ div.container > div.row > div.section.side > div#details {
 
 div.container > div.row > div.section.side > div#messages {
 	height: 165px;
+	overflow-y: scroll;
 }
 
 div.container > div.row > div.section.side > div.row > ul {
