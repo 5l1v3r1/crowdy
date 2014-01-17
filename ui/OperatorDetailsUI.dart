@@ -409,7 +409,7 @@ class SourceManualDetailsUI extends BaseDetailsUI {
     this.output.title.append(new html.ButtonElement()
     ..text = '(re)generate'
     ..className = 'btn btn-default btn-xs'
-    ..onClick.listen(_onRefresh));
+    ..onClick.listen((e) => _onRefresh()));
     this.view.append(this.output.view);
   }
 
@@ -419,7 +419,7 @@ class SourceManualDetailsUI extends BaseDetailsUI {
     this.addElement('delimiter', 'select', 'Delimiter', this.elements, options: SOURCE_OPTIONS_NAMES);
   }
 
-  void _onRefresh(html.MouseEvent e) {
+  void _onRefresh() {
     String text = (this.elements['input'].input as html.TextAreaElement).value;
     String delimiter = SOURCE_OPTIONS_VALUES[int.parse((this.elements['delimiter'].input as html.SelectElement).value)];
 

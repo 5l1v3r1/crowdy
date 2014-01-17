@@ -20,6 +20,17 @@
     <div class="page-container">
       <div id="content" class="container">
         <div class="row">
+          <p class="lead">Basic Instructions</p>
+          <dl class="dl-horizontal">
+            <dt>Add New Operator</dt><dd>Drag and drop from the list of operators on the left</dd>
+            <dt>Create Flow</dt><dd>Drag from one operator's output port to another's input port</dd>
+            <dt>Select Operator/Flow</dt><dd>Click on operator or flow</dd>
+            <dt>Delete Operator/Flow</dt><dd>Press backspace after selecting operator/flow</dd>
+            <dt>Configure Operator</dt><dd>Double click the operator</dd>
+            <dt>Examples</dt><dd><a href="#" id="translationExample">sample scenario</a></dd>
+          </dl>
+        </div>
+        <div class="row">
           <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2 section side">
             <p class="section_header"><span>Operators</span></p>
             <div class="panel-group" id="units-accordion">
@@ -64,7 +75,7 @@
                 <div id="units_collapse_three" class="panel-collapse collapse in">
                   <div class="panel-body">
                     <ul class="units">
-                      <li draggable="true" data-unit-type="processing" data-toggle="tooltip" data-placement="right" title="Use people to process data">Human</li>
+                      <li draggable="true" data-unit-type="processing.human" data-toggle="tooltip" data-placement="right" title="Use people to process data">Human</li>
                     </ul>
                   </div>
                 </div>

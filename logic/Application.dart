@@ -64,33 +64,28 @@ class Application {
     _dragSource = e.target as html.LIElement;
     _dragSource.classes.add('moving');
     e.dataTransfer.effectAllowed = 'move';
-    print('Drag started ${html.window.navigator.appVersion}');
 
-    if (!html.window.navigator.appVersion.contains('MSIE')) {
+    if (html.window.navigator.appVersion.contains('Firefox')) {
       e.dataTransfer.setData('text/plain', 'God damn Firefox!');
     }
   }
 
   void _onDragEnd(html.MouseEvent e) {
-    print('Drag ended');
     _dragSource.classes.remove('moving');
   }
 
   void _onDragOver(html.MouseEvent e) {
     e.preventDefault();
-    //e.dataTransfer.dropEffect = 'move';
   }
 
   void _onDrop(html.MouseEvent e) {
-    print('Dropping');
     e.preventDefault();
-    //e.stopImmediatePropagation(); // .stopPropagation();
     html.Element dropTarget = e.target;
     if (dropTarget == canvas) {
       String operatorId = 'operator_$opNumber';
       var mouseCoordinates = getRelativeMouseCoordinates(e);
-      operators['operator_$opNumber'] = addOperator(operatorId, _dragSource.dataset['unit-type'], mouseCoordinates['x'], mouseCoordinates['y']);
-      operators['operator_$opNumber'].initialize();
+      operators[operatorId] = addOperator(operatorId, _dragSource.dataset['unit-type'], mouseCoordinates['x'], mouseCoordinates['y']);
+      operators[operatorId].initialize();
       opNumber += 1;
     }
   }
@@ -119,7 +114,7 @@ class Application {
       case 'sink.email':
         newOperator = new SinkEmailOperator(id, type, x, y);
         break;
-      case 'processing':
+      case 'processing.human':
         newOperator = new HumanProcessingOperator(id, type, x, y);
         break;
       case 'selection':

@@ -93,10 +93,14 @@ class BaseOperatorUI {
       e.preventDefault();
 
       if (selectedOperator == this) {
-        this.group.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE));
-        canvas.children.remove(this.group);
+        this.remove();
       }
     }
+  }
+
+  void remove() {
+    this.group.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE));
+    canvas.children.remove(this.group);
   }
 
   void addBackgroundImage(String image) {
@@ -112,20 +116,20 @@ class BaseOperatorUI {
 
 class SourceOperatorUI extends BaseOperatorUI {
 
-  PortUI port;
+  PortUI outputPort;
 
   SourceOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.port = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_INPUT);
   }
 }
 
 class SinkOperatorUI extends BaseOperatorUI {
 
-  PortUI port;
+  PortUI inputPort;
 
   SinkOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.port = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
+    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.addBackgroundImage(OPERATOR_ICON_OUTPUT);
   }
 }

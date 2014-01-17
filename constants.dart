@@ -49,4 +49,8 @@ const WARNING_LINE_DUPLICATE = 'You already have a flow line between those units
 const WARNING_LINE_DIRECTION = 'You can only direct flow from an input port to outpot port.';
 const WARNING_LINE_ALREADY_CONNECTED = 'You can connect only one flow to an operator.';
 
-final html.DivElement modalAlert = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-dialog .modal-content .modal-header .alert');
+final html.DivElement modal = html.document.querySelector('#$OPERATOR_MODAL_ID');
+final html.DivElement modalDialog = modal.querySelector('.modal-dialog');
+final html.DivElement modalAlert = modalDialog.querySelector('.modal-content .modal-header .alert');
+final html.DivElement modalBody = modalDialog.querySelector('.modal-content .modal-body');
+final closeButton = modalDialog.querySelector('.modal-footer #close_operator_modal');

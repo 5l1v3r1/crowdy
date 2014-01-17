@@ -1,9 +1,5 @@
 part of crowdy;
 
-final html.DivElement modal = html.document.querySelector('#$OPERATOR_MODAL_ID');
-final html.DivElement modalBody = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-dialog .modal-content .modal-body');
-final closeButton = html.document.querySelector('#$OPERATOR_MODAL_ID .modal-footer #close_operator_modal');
-
 String currentOperatorId;
 
 class Operator {
