@@ -2501,7 +2501,7 @@ translationExample: function(e) {
   t1 = details.base;
   J.set$value$x(t1.$index(t1, "description").get$input(), "This operator will write the results into a file. This file will be available to download.");
   t1 = $.operators;
-  op1 = H.interceptedTypeCast(t1.$index(t1, "operator_1"), "$isSourceHumanOperator");
+  op1 = H.interceptedTypeCast(t1.$index(t1, "operator_1"), "$isSourceManualOperator");
   t1 = $.operators;
   op2 = H.interceptedTypeCast(t1.$index(t1, "operator_2"), "$isHumanProcessingOperator");
   t1 = $.operators;
@@ -2987,7 +2987,6 @@ SourceHumanOperator: {"": "Operator;log,id,type,ui,details,next,prev",
     this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
     this.details = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
   },
-  $isSourceHumanOperator: true,
   static: {
 SourceHumanOperator$: function(id, type, mouseX, mouseY) {
   var t1 = new D.SourceHumanOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
@@ -3003,6 +3002,7 @@ SourceManualOperator: {"": "Operator;log,id,type,ui,details,next,prev",
     this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
     this.details = D.SourceManualDetailsUI$(this.id, this.type, this.prev, this.next);
   },
+  $isSourceManualOperator: true,
   static: {
 SourceManualOperator$: function(id, type, mouseX, mouseY) {
   var t1 = new D.SourceManualOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
