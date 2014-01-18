@@ -200,7 +200,6 @@ class EnrichDetailsUI extends OutputDetailsUI {
   void initialize() {
     super.initialize();
     this.addElement('copy', 'number', 'Iterations', this.elements, features: {'min': '1', 'max': '5', 'value': '1'});
-    this.rulesView.
   }
 }
 

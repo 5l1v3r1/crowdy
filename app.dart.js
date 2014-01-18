@@ -2611,7 +2611,7 @@ translationExample_closure: {"": "Closure;",
   $is_args2: true
 },
 
-Application: {"": "Object;log,ui<",
+Application: {"": "Object;log",
   _modalClosed$1: function(e) {
     var t1 = J.get$children$x($.get$modalBody());
     t1.clear$0(t1);
@@ -2747,8 +2747,14 @@ Application: {"": "Object;log,ui<",
     return newOperator;
   },
   Application$1: function(canvas_id) {
-    var t1, t2, t3, units;
-    this.ui = D.ApplicationUI$(canvas_id);
+    var temp, t1, t2, t3, units;
+    $.canvas = document.querySelector(canvas_id);
+    temp = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    temp.toString;
+    new W._ElementAttributeMap(temp)._element.setAttribute("stroke", "#ddd");
+    new W._ElementAttributeMap(temp)._element.setAttribute("strokeLength", "1");
+    $.tempLine = temp;
+    $.canvas.appendChild($.tempLine);
     $.operators = P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, D.Operator);
     t1 = $.canvas;
     t1.toString;
@@ -2806,7 +2812,7 @@ Application: {"": "Object;log,ui<",
   },
   static: {
 Application$: function(canvas_id) {
-  var t1 = new D.Application(N.Logger_Logger("Application"), null);
+  var t1 = new D.Application(N.Logger_Logger("Application"));
   t1.Application$1(canvas_id);
   return t1;
 }}
@@ -3424,26 +3430,6 @@ SplitOutputSpecification_refreshOutput_closure: {"": "Closure;this_0",
   $is_args1: true
 },
 
-ApplicationUI: {"": "Object;log",
-  ApplicationUI$1: function(canvas_id) {
-    var temp;
-    $.canvas = document.querySelector(canvas_id);
-    temp = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    temp.toString;
-    new W._ElementAttributeMap(temp)._element.setAttribute("stroke", "#ddd");
-    new W._ElementAttributeMap(temp)._element.setAttribute("strokeLength", "1");
-    $.tempLine = temp;
-    $.canvas.appendChild($.tempLine);
-  },
-  static: {
-ApplicationUI$: function(canvas_id) {
-  var t1 = new D.ApplicationUI(N.Logger_Logger("Application"));
-  t1.ApplicationUI$1(canvas_id);
-  return t1;
-}}
-
-},
-
 FlowLineUI: {"": "Object;path,from,to,selected",
   select$1: function(_, e) {
     var t1, t2;
@@ -3913,9 +3899,7 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
   },
   refreshSegmentFromCurrent$2: function(segments, prevSegments) {
     var t1, i, t2, t3;
-    t1 = segments._nodeList;
-    P.print(t1.length);
-    for (i = t1.length - 1; i >= 0; --i) {
+    for (t1 = segments._nodeList, i = t1.length - 1; i >= 0; --i) {
       if (i >= t1.length)
         throw H.ioore(t1, i);
       if (!prevSegments.containsKey$1(J.get$attributes$x(t1[i])._element.getAttribute("data-segment"))) {
@@ -4376,8 +4360,9 @@ SelectionDetailsUI__addRule_closure: {"": "Closure;this_0,parameter_1",
 
 SortDetailsUI: {"": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
-    this.addElement$5$features("size", "number", "Window size", this.elements, H.fillLiteralMap(["min", "1", "max", "100", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
     D.RuleDetailsUI.prototype.initialize$0.call(this, this);
+    this.addElement$5$features("size", "number", "Window size", this.elements, H.fillLiteralMap(["min", "1", "max", "100", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+    this.parametersView.appendChild(this.rulesDiv);
   },
   _addRule$1: function(e) {
     var t1, parameter, conditionDiv, t2, t3, t4, configDiv;
@@ -11998,20 +11983,20 @@ $.prototypeForTagFunction = null;
 $.dispatchRecordsForInstanceTags = null;
 $.interceptorsForUncacheableTags = null;
 $.initNativeDispatchFlag = null;
-$.app = null;
-$.operators = null;
-$._dragSource = null;
-$.opNumber = 1;
-$.currentOperatorId = null;
-$.canvas = null;
-$.selectedPort = null;
-$.tempLine = null;
-$.selectedOperator = null;
 $.BaseDetailsUI_count = 1;
 $.SourceHumanDetailsUI_count = 1;
 $.SelectionDetailsUI_count = 1;
 $.SortDetailsUI_count = 1;
 $.SplitDetailsUI_count = 1;
+$.app = null;
+$.canvas = null;
+$.operators = null;
+$.currentOperatorId = null;
+$.selectedOperator = null;
+$.selectedPort = null;
+$.tempLine = null;
+$._dragSource = null;
+$.opNumber = 1;
 $.printToZone = null;
 $._callbacksAreEnqueued = false;
 $.Zone__current = C.C__RootZone;
