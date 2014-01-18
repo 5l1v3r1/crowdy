@@ -78,8 +78,6 @@ class PortUI {
     tempLine.attributes['x2'] = '0';
     tempLine.attributes['y2'] = '0';
     html.document.onMouseMove.listen(_onMouseMove).cancel();
-
-    //this.canvas.style.removeProperty('cursor');
   }
 
   void _onMouseUpPort(html.MouseEvent e) {

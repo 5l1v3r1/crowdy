@@ -200,6 +200,7 @@ class EnrichDetailsUI extends OutputDetailsUI {
   void initialize() {
     super.initialize();
     this.addElement('copy', 'number', 'Iterations', this.elements, features: {'min': '1', 'max': '5', 'value': '1'});
+    this.rulesView.
   }
 }
 
@@ -275,7 +276,6 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   }
 
   void refreshSegmentFromCurrent(List<html.HtmlElement> segments, Map<String, OutputSegmentUI> prevSegments) {
-    print(segments.length);
     for (int i = segments.length-1; i >= 0; i--) {
       String segmentId = segments[i].attributes['data-segment'];
       if (!prevSegments.containsKey(segmentId)) {
@@ -566,8 +566,11 @@ class SortDetailsUI extends RuleDetailsUI {
   }
 
   void initialize() {
-    this.addElement('size', 'number', 'Window size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
     super.initialize();
+    this.addElement('size', 'number', 'Window size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
+
+    // Ugly Hack to move rules after size parameter
+    this.parametersView.append(this.rulesDiv);
   }
 
   void _addRule(html.MouseEvent e) {

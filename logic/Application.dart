@@ -1,17 +1,16 @@
 part of crowdy;
 
-Map<String, Operator> operators;
-html.Element _dragSource;
-int opNumber = 1;
-
 class Application {
 
   final Logger log = new Logger('Application');
 
-  ApplicationUI ui;
-
   Application(String canvas_id) {
-    this.ui = new ApplicationUI(canvas_id);
+    canvas = html.document.querySelector(canvas_id);
+
+    tempLine = new svg.LineElement()
+    ..attributes['stroke'] = '#ddd'
+    ..attributes['strokeLength'] = '1';
+    canvas.append(tempLine);
 
     operators = new Map<String, Operator>();
 

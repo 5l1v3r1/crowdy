@@ -1,7 +1,5 @@
 part of crowdy;
 
-String currentOperatorId;
-
 class Operator {
 
   final Logger log = new Logger('Operator');

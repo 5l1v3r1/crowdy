@@ -5,20 +5,18 @@ import 'dart:html' as html;
 import 'dart:svg' as svg;
 import 'package:logging/logging.dart';
 
-part 'constants.dart';
-part 'utilities.dart';
+part 'utils/globals.dart';
+part 'utils/constants.dart';
+part 'utils/utilities.dart';
 
 part 'ui/PortUI.dart';
 part 'ui/FlowLineUI.dart';
 part 'ui/OperatorUI.dart';
 part 'ui/OperatorDetailsUI.dart';
-part 'ui/ApplicationUI.dart';
 
 part 'logic/Operator.dart';
 part 'logic/OutputSpecification.dart';
 part 'logic/Application.dart';
-
-Application app;
 
 void main() {
   app = new Application("#app_container");
