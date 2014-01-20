@@ -63,10 +63,7 @@ class Application {
     _dragSource = e.target as html.LIElement;
     _dragSource.classes.add('moving');
     e.dataTransfer.effectAllowed = 'move';
-
-    if (html.window.navigator.appVersion.contains('Firefox')) {
-      e.dataTransfer.setData('text/plain', 'God damn Firefox!');
-    }
+    e.dataTransfer.setData('text/plain', 'God damn Firefox!');
   }
 
   void _onDragEnd(html.MouseEvent e) {
