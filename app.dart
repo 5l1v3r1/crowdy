@@ -41,7 +41,7 @@ void main() {
 void translationExample(html.MouseEvent e) {
   operators.forEach((id, operator) => operator.ui.remove());
 
-  String operatorId = 'operator_1';
+  /*String operatorId = 'operator_1';
   operators[operatorId] = app.addOperator(operatorId, 'source.manual', 100, 100);
   operators[operatorId].initialize();
   var details = operators[operatorId].details as SourceManualDetailsUI;
@@ -69,5 +69,5 @@ void translationExample(html.MouseEvent e) {
   var op2 = operators['operator_2'] as HumanProcessingOperator;
   var op3 = operators['operator_3'] as SinkFileOperator;
   canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op1.ui.outputPort, op2.ui.inputPort]));
-  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op2.ui.outputPort, op3.ui.inputPort]));
+  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op2.ui.outputPort, op3.ui.inputPort]));*/
 }

@@ -170,6 +170,18 @@ class SplitOperatorUI extends BaseOperatorUI {
   }
 }
 
+class UnionOperatorUI extends BaseOperatorUI {
+
+  PortUI inputPort;
+  PortUI outputPort;
+
+  UnionOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
+    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+    this.addBackgroundImage(OPERATOR_ICON_UNION);
+  }
+}
+
 class SortOperatorUI extends BaseOperatorUI {
 
   PortUI inputPort;

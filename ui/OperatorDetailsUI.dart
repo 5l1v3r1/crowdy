@@ -203,6 +203,17 @@ class EnrichDetailsUI extends OutputDetailsUI {
   }
 }
 
+class UnionDetailsUI extends OutputDetailsUI {
+
+  UnionDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+    this.view.append(this.output.view);
+  }
+
+  void initialize() {
+    super.initialize();
+  }
+}
+
 class SourceFileDetailsUI extends BaseDetailsUI {
 
   SourceFileDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {

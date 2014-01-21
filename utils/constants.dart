@@ -14,6 +14,7 @@ const OPERATOR_ICON_SELECTION = 'selection.png';
 const OPERATOR_ICON_SPLIT = 'split.png';
 const OPERATOR_ICON_SORT = 'sort.png';
 const OPERATOR_ICON_OUTPUT = 'output.png';
+const OPERATOR_ICON_UNION = 'union.png';
 
 const OPERATOR_MODAL_ID = 'operator_modal';
 
@@ -47,7 +48,9 @@ const STREAM_LINE_DRAW = 'stream_draw_line';
 const WARNING_LINE_SAME_UNIT = 'You cannot add a flow within the same unit.';
 const WARNING_LINE_DUPLICATE = 'You already have a flow line between those units.';
 const WARNING_LINE_DIRECTION = 'You can only direct flow from an input port to outpot port.';
-const WARNING_LINE_ALREADY_CONNECTED = 'You can connect only one flow to an operator.';
+const WARNING_LINE_ALREADY_CONNECTED = 'You can connect only one flow to an operator unless it\'s type is union.';
+const WARNING_LINE_DIFFERENT_SPECIFICATION = 'Flows should have a consistent specification to aggregate.';
+const WARNING_LINE_INCONSISTENT_SPECIFICATION = 'Consistency in output speficications of union operator. Clearing aggregation.';
 
 final html.DivElement modal = html.document.querySelector('#$OPERATOR_MODAL_ID');
 final html.DivElement modalDialog = modal.querySelector('.modal-dialog');

@@ -24,19 +24,27 @@ class Operator {
     canvas.on[OPERATOR_OUTPUT_REFRESH].listen(_refresh);
   }
 
-  bool alreadyConnected() {
-    return this.prev.length > 0;
-  }
-
-  bool connectNext(String nextOperatorId) {
-    if (this.next.containsKey(nextOperatorId)) {
-      return false;
+  bool canConnectTo(String nextOperatorId) {
+    bool canConnect = !this.next.containsKey(nextOperatorId);
+    if (!canConnect) {
+      log.warning(WARNING_LINE_DUPLICATE);
     }
-    this.next[nextOperatorId] = true;
-    return this.next[nextOperatorId];
+    return canConnect;
   }
 
-  void connectPrevious(String previousOperatorId) {
+  void connectTo(String nextOperatorId) {
+    this.next[nextOperatorId] = true;
+  }
+
+  bool canConnectFrom(String previousOperatorId) {
+    bool canConnect = this.prev.length == 0;
+    if (!canConnect) {
+      log.warning(WARNING_LINE_ALREADY_CONNECTED);
+    }
+    return canConnect;
+  }
+
+  void connectFrom(String previousOperatorId) {
     this.prev[previousOperatorId] = true;
     this.updateDownFlow(previousOperatorId);
   }
@@ -155,16 +163,67 @@ class SplitOperator extends Operator {
     this.details = new SplitDetailsUI(this.id, this.type, this.prev, this.next);
   }
 
-  bool connectNext(String nextOperatorId) {
-    bool result = super.connectNext(nextOperatorId);
-    if (result) {
-      (this.details.output as SplitOutputSpecification).refreshOutput();
-    }
-    return result;
+  void connectTo(String nextOperatorId) {
+    super.connectTo(nextOperatorId);
+    (this.details.output as SplitOutputSpecification).refreshOutput();
   }
 
   void removeNext(String nextOperatorId) {
     super.removeNext(nextOperatorId);
     (this.details.output as SplitOutputSpecification).refreshOutput();
+  }
+}
+
+class UnionOperator extends Operator {
+
+  UnionOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
+    this.ui = new UnionOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+    this.details = new UnionDetailsUI(this.id, this.type, this.prev, this.next);
+  }
+
+  bool alreadyConnected() {
+    return false;
+  }
+
+  bool canConnectFrom(String previousOperatorId) {
+    if (this.prev.length > 0) {
+      bool isConsistent = this.isConsistent(previousOperatorId);
+      if (!isConsistent) {
+        log.warning(WARNING_LINE_DIFFERENT_SPECIFICATION);
+      }
+      return isConsistent;
+    }
+    else {
+      return true;
+    }
+  }
+
+  void updateDownFlow(String prevId) {
+    bool isConsistent = this.isConsistent(prevId, 1);
+
+    if (isConsistent) {
+      bool updated = this.details.refresh(operators[prevId].details.output);
+      if (updated && this.next.length > 0) {
+        this.next.forEach((nextId, connected) => operators[nextId].updateDownFlow(prevId));
+      }
+    }
+    else {
+      log.warning(WARNING_LINE_INCONSISTENT_SPECIFICATION);
+      (this.ui as UnionOperatorUI).inputPort.body.dispatchEvent(new html.CustomEvent(OPERATOR_PORT_REMOVED));
+      if (this.next.length > 0) {
+        this.clearDownFlow();
+      }
+    }
+  }
+
+  bool isConsistent(String previousOperatorId, [int updating = 0]) {
+    bool isConsistent = true;
+    if (this.prev.length > (0 + updating)) {
+      Map<String, OutputSegmentUI> existingOutputSpec = this.details.output.elements;
+      Map<String, OutputSegmentUI> newOutputSpec = operators[previousOperatorId].details.output.elements;
+      existingOutputSpec.forEach((id, segment) => isConsistent = isConsistent && newOutputSpec.containsKey(id));
+      newOutputSpec.forEach((id, segment) => isConsistent = isConsistent && existingOutputSpec.containsKey(id));
+    }
+    return isConsistent;
   }
 }

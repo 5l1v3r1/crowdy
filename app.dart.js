@@ -2462,52 +2462,8 @@ main: function() {
 },
 
 translationExample: function(e) {
-  var t1, details, op1, op2, op3;
-  t1 = $.operators;
+  var t1 = $.operators;
   t1.forEach$1(t1, new D.translationExample_closure());
-  t1 = $.operators;
-  t1.$indexSet(t1, "operator_1", $.app.addOperator$4("operator_1", "source.manual", 100, 100));
-  t1 = $.operators;
-  J.initialize$0$x(t1.$index(t1, "operator_1"));
-  t1 = $.operators;
-  details = H.interceptedTypeCast(t1.$index(t1, "operator_1").get$details(), "$isSourceManualDetailsUI");
-  t1 = details.base;
-  J.set$value$x(t1.$index(t1, "name").get$input(), "Read Operator");
-  t1 = details.base;
-  J.set$value$x(t1.$index(t1, "description").get$input(), "This operator will read the manual entry. The content will be parsed with respect to the following parameters. This will basically result in a data flow with a number of data segments.");
-  t1 = details.elements;
-  J.set$value$x(t1.$index(t1, "input").get$input(), "line-1-segment-1 line-1-segment-2\nline-2-segment-1 line-2-segment-2");
-  t1 = details.elements;
-  J.set$value$x(t1.$index(t1, "delimiter").get$input(), "1");
-  details._onRefresh$0();
-  t1 = $.operators;
-  t1.$indexSet(t1, "operator_2", $.app.addOperator$4("operator_2", "processing.human", 300, 100));
-  t1 = $.operators;
-  J.initialize$0$x(t1.$index(t1, "operator_2"));
-  t1 = $.operators;
-  details = H.interceptedTypeCast(t1.$index(t1, "operator_2").get$details(), "$isSourceHumanDetailsUI");
-  t1 = details.base;
-  J.set$value$x(t1.$index(t1, "name").get$input(), "Human Processing Operator");
-  t1 = details.base;
-  J.set$value$x(t1.$index(t1, "description").get$input(), "This operator will receive the data segments from previous operator. These segments can be used to configure the human task.");
-  t1 = $.operators;
-  t1.$indexSet(t1, "operator_3", $.app.addOperator$4("operator_3", "sink.file", 500, 100));
-  t1 = $.operators;
-  J.initialize$0$x(t1.$index(t1, "operator_3"));
-  t1 = $.operators;
-  details = H.interceptedTypeCast(t1.$index(t1, "operator_3").get$details(), "$isSinkFileDetailsUI");
-  t1 = details.base;
-  J.set$value$x(t1.$index(t1, "name").get$input(), "Write Operator");
-  t1 = details.base;
-  J.set$value$x(t1.$index(t1, "description").get$input(), "This operator will write the results into a file. This file will be available to download.");
-  t1 = $.operators;
-  op1 = H.interceptedTypeCast(t1.$index(t1, "operator_1"), "$isSourceManualOperator");
-  t1 = $.operators;
-  op2 = H.interceptedTypeCast(t1.$index(t1, "operator_2"), "$isHumanProcessingOperator");
-  t1 = $.operators;
-  op3 = H.interceptedTypeCast(t1.$index(t1, "operator_3"), "$isSinkFileOperator");
-  $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("stream_draw_line", true, true, [op1.ui.get$outputPort(), op2.ui.get$inputPort()]));
-  $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("stream_draw_line", true, true, [op2.ui.get$outputPort(), op3.ui.get$inputPort()]));
 },
 
 getMouseCoordinatesRelativeToCanvas: function(e) {
@@ -2640,16 +2596,17 @@ Application: {"": "Object;log",
     fromId = J.get$attributes$x(J.$index$asx(t1.get$detail(e), 0).get$group())._element.getAttribute("id");
     toId = J.get$attributes$x(J.$index$asx(t1.get$detail(e), 1).get$group())._element.getAttribute("id");
     t2 = $.operators;
-    if (t2.$index(t2, toId).alreadyConnected$0())
-      this.log.warning$1("You can connect only one flow to an operator.");
-    else {
+    if (t2.$index(t2, fromId).canConnectTo$1(toId)) {
       t2 = $.operators;
-      if (t2.$index(t2, fromId).connectNext$1(toId) === true) {
-        t2 = $.operators;
-        t2.$index(t2, toId).connectPrevious$1(fromId);
-        D.FlowLineUI$(J.$index$asx(t1.get$detail(e), 0), J.$index$asx(t1.get$detail(e), 1));
-      } else
-        this.log.warning$1("You already have a flow line between those units.");
+      t2 = t2.$index(t2, toId).canConnectFrom$1(fromId);
+    } else
+      t2 = false;
+    if (t2) {
+      t2 = $.operators;
+      t2.$index(t2, fromId).connectTo$1(toId);
+      t2 = $.operators;
+      t2.$index(t2, toId).connectFrom$1(fromId);
+      D.FlowLineUI$(J.$index$asx(t1.get$detail(e), 0), J.$index$asx(t1.get$detail(e), 1));
     }
   },
   get$drawLine: function() {
@@ -2738,6 +2695,9 @@ Application: {"": "Object;log",
         break;
       case "split":
         newOperator = D.SplitOperator$(id, type, x, y);
+        break;
+      case "union":
+        newOperator = D.UnionOperator$(id, type, x, y);
         break;
       default:
         newOperator = D.Operator$(id, type, x, y);
@@ -2848,19 +2808,23 @@ Operator: {"": "Object;log,id,type',ui<,details<,next,prev",
     H.setRuntimeTypeInfo(t1, [H.getRuntimeTypeArgument(t2, "_EventStream", 0)]);
     t1._tryResume$0();
   },
-  alreadyConnected$0: function() {
-    return this.prev._collection$_length > 0;
+  canConnectTo$1: function(nextOperatorId) {
+    var t1 = this.next.containsKey$1(nextOperatorId);
+    if (t1)
+      this.log.warning$1("You already have a flow line between those units.");
+    return !t1;
   },
-  connectNext$1: function(nextOperatorId) {
-    var t1;
-    if (this.next.containsKey$1(nextOperatorId))
-      return false;
-    t1 = this.next;
+  connectTo$1: function(nextOperatorId) {
+    var t1 = this.next;
     t1.$indexSet(t1, nextOperatorId, true);
-    t1 = this.next;
-    return t1.$index(t1, nextOperatorId);
   },
-  connectPrevious$1: function(previousOperatorId) {
+  canConnectFrom$1: function(previousOperatorId) {
+    var canConnect = this.prev._collection$_length === 0;
+    if (!canConnect)
+      this.log.warning$1("You can connect only one flow to an operator unless it's type is union.");
+    return canConnect;
+  },
+  connectFrom$1: function(previousOperatorId) {
     var t1 = this.prev;
     t1.$indexSet(t1, previousOperatorId, true);
     this.updateDownFlow$1(previousOperatorId);
@@ -3007,7 +2971,6 @@ SourceManualOperator: {"": "Operator;log,id,type,ui,details,next,prev",
     this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
     this.details = D.SourceManualDetailsUI$(this.id, this.type, this.prev, this.next);
   },
-  $isSourceManualOperator: true,
   static: {
 SourceManualOperator$: function(id, type, mouseX, mouseY) {
   var t1 = new D.SourceManualOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
@@ -3052,7 +3015,6 @@ SinkFileOperator: {"": "Operator;log,id,type,ui,details,next,prev",
     t5.BaseDetailsUI$4(t1, t2, t3, t4);
     this.details = t5;
   },
-  $isSinkFileOperator: true,
   static: {
 SinkFileOperator$: function(id, type, mouseX, mouseY) {
   var t1 = new D.SinkFileOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
@@ -3090,7 +3052,6 @@ HumanProcessingOperator: {"": "Operator;log,id,type,ui,details,next,prev",
     this.ui = D.ProcessingOperatorUI$(this.id, mouseX, mouseY, 80, 60);
     this.details = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
   },
-  $isHumanProcessingOperator: true,
   static: {
 HumanProcessingOperator$: function(id, type, mouseX, mouseY) {
   var t1 = new D.HumanProcessingOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
@@ -3132,11 +3093,9 @@ SortOperator$: function(id, type, mouseX, mouseY) {
 },
 
 SplitOperator: {"": "Operator;log,id,type,ui,details,next,prev",
-  connectNext$1: function(nextOperatorId) {
-    var result = D.Operator.prototype.connectNext$1.call(this, nextOperatorId);
-    if (result === true)
-      H.interceptedTypeCast(this.details.output, "$isSplitOutputSpecification").refreshOutput$0();
-    return result;
+  connectTo$1: function(nextOperatorId) {
+    D.Operator.prototype.connectTo$1.call(this, nextOperatorId);
+    H.interceptedTypeCast(this.details.output, "$isSplitOutputSpecification").refreshOutput$0();
   },
   removeNext$1: function(nextOperatorId) {
     D.Operator.prototype.removeNext$1.call(this, nextOperatorId);
@@ -3154,6 +3113,105 @@ SplitOperator$: function(id, type, mouseX, mouseY) {
   return t1;
 }}
 
+},
+
+UnionOperator: {"": "Operator;log,id,type,ui,details,next,prev",
+  canConnectFrom$1: function(previousOperatorId) {
+    var isConsistent;
+    if (this.prev._collection$_length > 0) {
+      isConsistent = this.isConsistent$1(previousOperatorId);
+      if (!isConsistent)
+        this.log.warning$1("Flows should have a consistent specification to aggregate.");
+      return isConsistent;
+    } else
+      return true;
+  },
+  updateDownFlow$1: function(prevId) {
+    var t1, t2;
+    if (this.isConsistent$2(prevId, 1)) {
+      t1 = this.details;
+      t2 = $.operators;
+      if (t1.refresh$1(t2.$index(t2, prevId).get$details().output) && this.next._collection$_length > 0) {
+        t1 = this.next;
+        t1.forEach$1(t1, new D.UnionOperator_updateDownFlow_closure(prevId));
+      }
+    } else {
+      this.log.warning$1("Consistency in output speficications of union operator. Clearing aggregation.");
+      H.interceptedTypeCast(this.ui, "$isUnionOperatorUI").inputPort.body.dispatchEvent(W.CustomEvent_CustomEvent("stream_port_removed", true, true, null));
+      if (this.next._collection$_length > 0)
+        this.clearDownFlow$0();
+    }
+  },
+  isConsistent$2: function(previousOperatorId, updating) {
+    var t1, existingOutputSpec, t2, newOutputSpec;
+    t1 = {};
+    t1.isConsistent_0 = true;
+    if (this.prev._collection$_length > 0 + updating) {
+      existingOutputSpec = this.details.output.elements;
+      t2 = $.operators;
+      newOutputSpec = t2.$index(t2, previousOperatorId).get$details().output.elements;
+      existingOutputSpec.forEach$1(existingOutputSpec, new D.UnionOperator_isConsistent_closure(t1, newOutputSpec));
+      newOutputSpec.forEach$1(newOutputSpec, new D.UnionOperator_isConsistent_closure0(t1, existingOutputSpec));
+    }
+    return t1.isConsistent_0;
+  },
+  isConsistent$1: function(previousOperatorId) {
+    return this.isConsistent$2(previousOperatorId, 0);
+  },
+  UnionOperator$4: function(id, type, mouseX, mouseY) {
+    var t1, t2, t3, t4, t5;
+    this.ui = D.UnionOperatorUI$(this.id, mouseX, mouseY, 40, 60);
+    t1 = this.id;
+    t2 = this.type;
+    t3 = this.prev;
+    t4 = this.next;
+    t5 = new D.UnionDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null);
+    t5.BaseDetailsUI$4(t1, t2, t3, t4);
+    t4 = t5.id;
+    t3 = new D.OutputSpecification(t4, null, null, null, null, null);
+    t3.BaseSpecification$1(t4);
+    t5.output = t3;
+    t5.view.appendChild(t5.output.view);
+    this.details = t5;
+  },
+  static: {
+UnionOperator$: function(id, type, mouseX, mouseY) {
+  var t1 = new D.UnionOperator(N.Logger_Logger("Operator"), id, type, null, null, null, null);
+  t1.Operator$4(id, type, mouseX, mouseY);
+  t1.UnionOperator$4(id, type, mouseX, mouseY);
+  return t1;
+}}
+
+},
+
+UnionOperator_updateDownFlow_closure: {"": "Closure;prevId_0",
+  call$2: function(nextId, connected) {
+    var t1 = $.operators;
+    return t1.$index(t1, nextId).updateDownFlow$1(this.prevId_0);
+  },
+  $is_args2: true
+},
+
+UnionOperator_isConsistent_closure: {"": "Closure;box_0,newOutputSpec_1",
+  call$2: function(id, segment) {
+    var t1, isConsistent;
+    t1 = this.box_0;
+    isConsistent = t1.isConsistent_0 && this.newOutputSpec_1.containsKey$1(id);
+    t1.isConsistent_0 = isConsistent;
+    return isConsistent;
+  },
+  $is_args2: true
+},
+
+UnionOperator_isConsistent_closure0: {"": "Closure;box_0,existingOutputSpec_2",
+  call$2: function(id, segment) {
+    var t1, isConsistent;
+    t1 = this.box_0;
+    isConsistent = t1.isConsistent_0 && this.existingOutputSpec_2.containsKey$1(id);
+    t1.isConsistent_0 = isConsistent;
+    return isConsistent;
+  },
+  $is_args2: true
 },
 
 OutputSegmentUI: {"": "Object;removable,segment,name>,value>,deleteButton",
@@ -3803,6 +3861,12 @@ EnrichDetailsUI: {"": "OutputDetailsUI;log,id,type,prevConn,nextConn,output,base
   }
 },
 
+UnionDetailsUI: {"": "OutputDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
+  initialize$0: function(_) {
+    D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+  }
+},
+
 SourceFileDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
@@ -4073,7 +4137,6 @@ SourceHumanDetailsUI: {"": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,s
     this.output = t2;
     this.view.appendChild(this.output.view);
   },
-  $isSourceHumanDetailsUI: true,
   static: {
 "": "SourceHumanDetailsUI_count",
 SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
@@ -4212,7 +4275,6 @@ SourceManualDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,
     t2.appendChild(t1);
     this.view.appendChild(this.output.view);
   },
-  $isSourceManualDetailsUI: true,
   static: {
 SourceManualDetailsUI$: function(id, type, prevConn, nextConn) {
   var t1 = new D.SourceManualDetailsUI(N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null);
@@ -4241,8 +4303,7 @@ SinkFileDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base
   initialize$0: function(_) {
     D.BaseDetailsUI.prototype.initialize$0.call(this, this);
     this.addElement$4("output", "text", "File name", this.elements);
-  },
-  $isSinkFileDetailsUI: true
+  }
 },
 
 SinkEmailDetailsUI: {"": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsView,parametersView",
@@ -4743,7 +4804,7 @@ BaseOperatorUI: {"": "Object;group<",
   }
 },
 
-SourceOperatorUI: {"": "BaseOperatorUI;outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SourceOperatorUI: {"": "BaseOperatorUI;outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SourceOperatorUI$5: function(id, x, y, width, height) {
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
     this.addBackgroundImage$1("input.png");
@@ -4758,7 +4819,7 @@ SourceOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-SinkOperatorUI: {"": "BaseOperatorUI;inputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SinkOperatorUI: {"": "BaseOperatorUI;inputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SinkOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.addBackgroundImage$1("output.png");
@@ -4773,7 +4834,7 @@ SinkOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-ProcessingOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+ProcessingOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   ProcessingOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4789,7 +4850,7 @@ ProcessingOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-SelectionOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SelectionOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SelectionOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4805,7 +4866,7 @@ SelectionOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-SplitOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+SplitOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SplitOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4821,7 +4882,24 @@ SplitOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-SortOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+UnionOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+  UnionOperatorUI$5: function(id, x, y, width, height) {
+    this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
+    this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
+    this.addBackgroundImage$1("union.png");
+  },
+  $isUnionOperatorUI: true,
+  static: {
+UnionOperatorUI$: function(id, x, y, width, height) {
+  var t1 = new D.UnionOperatorUI(null, null, null, null, id, null, null, null, null, null, width, height);
+  t1.BaseOperatorUI$5(id, x, y, width, height);
+  t1.UnionOperatorUI$5(id, x, y, width, height);
+  return t1;
+}}
+
+},
+
+SortOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   SortOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -4837,7 +4915,7 @@ SortOperatorUI$: function(id, x, y, width, height) {
 
 },
 
-EnrichOperatorUI: {"": "BaseOperatorUI;inputPort<,outputPort<,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+EnrichOperatorUI: {"": "BaseOperatorUI;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
   EnrichOperatorUI$5: function(id, x, y, width, height) {
     this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
     this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
@@ -5665,7 +5743,7 @@ _BroadcastStreamController: {"": "Object;_async$_next?,_async$_previous?",
   _subscribe$1: function(cancelOnError) {
     var t1, t2, t3, subscription;
     if ((this._state & 4) !== 0)
-      throw H.wrapException(new P.StateError("Subscribing to closed stream"));
+      throw H.wrapException(P.StateError$("Subscribing to closed stream"));
     t1 = H.getRuntimeTypeArgument(this, "_BroadcastStreamController", 0);
     t2 = $.Zone__current;
     t3 = cancelOnError ? 1 : 0;
@@ -5748,7 +5826,7 @@ _BroadcastStreamController: {"": "Object;_async$_next?,_async$_previous?",
     var t1, id, link, link0;
     t1 = this._state;
     if ((t1 & 2) !== 0)
-      throw H.wrapException(new P.StateError("Cannot fire new event. Controller is already firing an event"));
+      throw H.wrapException(P.StateError$("Cannot fire new event. Controller is already firing an event"));
     if (this._async$_next === this)
       return;
     id = t1 & 1;
@@ -6008,7 +6086,7 @@ _Future: {"": "Object;_state,_zone<,_resultOrListeners,_nextListener<,_onValueCa
   },
   _asyncComplete$1: function(value) {
     if (this._state !== 0)
-      H.throwExpression(new P.StateError("Future already completed"));
+      H.throwExpression(P.StateError$("Future already completed"));
     this._state = 1;
     this._zone.toString;
     P._scheduleAsyncCallback(new P._Future__asyncComplete_closure(this, value));
@@ -8281,17 +8359,17 @@ IterableBase: {"": "Object;",
   get$first: function(_) {
     var it = this.get$iterator(this);
     if (!it.moveNext$0())
-      throw H.wrapException(P.StateError$("No elements"));
+      throw H.wrapException(new P.StateError("No elements"));
     return it.get$current();
   },
   get$single: function(_) {
     var it, result;
     it = this.get$iterator(this);
     if (!it.moveNext$0())
-      throw H.wrapException(P.StateError$("No elements"));
+      throw H.wrapException(new P.StateError("No elements"));
     result = it.get$current();
     if (it.moveNext$0())
-      throw H.wrapException(P.StateError$("More than one element"));
+      throw H.wrapException(new P.StateError("More than one element"));
     return result;
   },
   elementAt$1: function(_, index) {
@@ -8705,12 +8783,12 @@ DateTime: {"": "Object;millisecondsSinceEpoch,isUtc",
   add$1: function(_, duration) {
     return P.DateTime$fromMillisecondsSinceEpoch(C.JSNumber_methods.$add(this.millisecondsSinceEpoch, duration.get$inMilliseconds()), this.isUtc);
   },
+  DateTime$_now$0: function() {
+    H.Primitives_lazyAsJsDate(this);
+  },
   DateTime$fromMillisecondsSinceEpoch$2$isUtc: function(millisecondsSinceEpoch, isUtc) {
     if (Math.abs(millisecondsSinceEpoch) > 8640000000000000)
       throw H.wrapException(new P.ArgumentError(millisecondsSinceEpoch));
-  },
-  DateTime$_now$0: function() {
-    H.Primitives_lazyAsJsDate(this);
   },
   $isDateTime: true,
   static: {
@@ -10035,9 +10113,9 @@ _ChildNodeListLazy: {"": "ListBase;_this",
     t1 = this._this;
     l = t1.childNodes.length;
     if (l === 0)
-      throw H.wrapException(P.StateError$("No elements"));
+      throw H.wrapException(new P.StateError("No elements"));
     if (l > 1)
-      throw H.wrapException(P.StateError$("More than one element"));
+      throw H.wrapException(new P.StateError("More than one element"));
     return t1.firstChild;
   },
   add$1: function(_, value) {
@@ -11657,10 +11735,10 @@ init.globalFunctions.identityHashCode$closure = P.identityHashCode$closure = new
 init.globalFunctions._Html5NodeValidator__standardAttributeValidator$closure = W._Html5NodeValidator__standardAttributeValidator$closure = new W.Closure$4(W._Html5NodeValidator__standardAttributeValidator, "_Html5NodeValidator__standardAttributeValidator$closure");
 init.globalFunctions._Html5NodeValidator__uriAttributeValidator$closure = W._Html5NodeValidator__uriAttributeValidator$closure = new W.Closure$4(W._Html5NodeValidator__uriAttributeValidator, "_Html5NodeValidator__uriAttributeValidator$closure");
 // Runtime type support
-W.Node.$isNode = true;
-W.Node.$isObject = true;
 J.JSInt.$isint = true;
 J.JSInt.$isObject = true;
+W.Node.$isNode = true;
+W.Node.$isObject = true;
 P.PathSeg.$isObject = true;
 J.JSString.$isString = true;
 J.JSString.$isObject = true;
@@ -11674,26 +11752,26 @@ W.Element.$isNode = true;
 W.Element.$isObject = true;
 W.MouseEvent.$isMouseEvent = true;
 W.MouseEvent.$isObject = true;
-J.JSBool.$isbool = true;
-J.JSBool.$isObject = true;
-N.Logger.$isObject = true;
-W.KeyboardEvent.$isKeyboardEvent = true;
-W.KeyboardEvent.$isObject = true;
-W.NodeValidator.$isNodeValidator = true;
-W.NodeValidator.$isObject = true;
-D.OutputSegmentUI.$isObject = true;
-D.ElementUI.$isObject = true;
-W.DivElement.$isElement = true;
-W.DivElement.$isNode = true;
-W.DivElement.$isObject = true;
-W.Event.$isObject = true;
 N.LogRecord.$isLogRecord = true;
 N.LogRecord.$isObject = true;
+N.Logger.$isObject = true;
 D.Operator.$isObject = true;
 P.Stream.$isStream = true;
 P.Stream.$isObject = true;
 P.StreamSubscription.$isStreamSubscription = true;
 P.StreamSubscription.$isObject = true;
+J.JSBool.$isbool = true;
+J.JSBool.$isObject = true;
+D.OutputSegmentUI.$isObject = true;
+D.ElementUI.$isObject = true;
+W.KeyboardEvent.$isKeyboardEvent = true;
+W.KeyboardEvent.$isObject = true;
+W.NodeValidator.$isNodeValidator = true;
+W.NodeValidator.$isObject = true;
+W.DivElement.$isElement = true;
+W.DivElement.$isNode = true;
+W.DivElement.$isObject = true;
+W.Event.$isObject = true;
 P.ReceivePort.$isStream = true;
 P.ReceivePort.$asStream = [null];
 P.ReceivePort.$isObject = true;
@@ -11704,10 +11782,6 @@ P.Symbol.$isSymbol = true;
 P.Symbol.$isObject = true;
 P.StackTrace.$isStackTrace = true;
 P.StackTrace.$isObject = true;
-W.SelectElement.$isSelectElement = true;
-W.SelectElement.$isElement = true;
-W.SelectElement.$isNode = true;
-W.SelectElement.$isObject = true;
 P._BufferingStreamSubscription.$is_BufferingStreamSubscription = true;
 P._BufferingStreamSubscription.$is_EventSink = true;
 P._BufferingStreamSubscription.$isStreamSubscription = true;
@@ -11717,6 +11791,10 @@ P._BroadcastSubscription.$is_BufferingStreamSubscription = true;
 P._BroadcastSubscription.$is_EventSink = true;
 P._BroadcastSubscription.$isStreamSubscription = true;
 P._BroadcastSubscription.$isObject = true;
+W.SelectElement.$isSelectElement = true;
+W.SelectElement.$isElement = true;
+W.SelectElement.$isNode = true;
+W.SelectElement.$isObject = true;
 P.Object.$isObject = true;
 P.Function.$isFunction = true;
 P.Function.$isObject = true;
@@ -11729,10 +11807,10 @@ P.Future.$isFuture = true;
 P.Future.$isObject = true;
 W.CustomEvent.$isCustomEvent = true;
 W.CustomEvent.$isObject = true;
-P.DateTime.$isDateTime = true;
-P.DateTime.$isObject = true;
 P._DelayedEvent.$is_DelayedEvent = true;
 P._DelayedEvent.$isObject = true;
+P.DateTime.$isDateTime = true;
+P.DateTime.$isObject = true;
 P.Map.$isMap = true;
 P.Map.$isObject = true;
 // getInterceptor methods
@@ -12227,9 +12305,6 @@ J.set$text$x = function(receiver, value) {
 };
 J.set$type$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$type(receiver, value);
-};
-J.set$value$x = function(receiver, value) {
-  return J.getInterceptor$x(receiver).set$value(receiver, value);
 };
 J.startsWith$1$s = function(receiver, a0) {
   return J.getInterceptor$s(receiver).startsWith$1(receiver, a0);

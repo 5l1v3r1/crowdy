@@ -47,15 +47,11 @@ class Application {
   void drawLine(html.CustomEvent e) {
     String fromId = e.detail[0].group.attributes['id'];
     String toId = e.detail[1].group.attributes['id'];
-    if (operators[toId].alreadyConnected()) {
-      log.warning(WARNING_LINE_ALREADY_CONNECTED);
-    }
-    else if (operators[fromId].connectNext(toId)) {
-      operators[toId].connectPrevious(fromId);
+
+    if (operators[fromId].canConnectTo(toId) && operators[toId].canConnectFrom(fromId)) {
+      operators[fromId].connectTo(toId);
+      operators[toId].connectFrom(fromId);
       FlowLineUI newLine = new FlowLineUI(e.detail[0], e.detail[1]);
-    }
-    else {
-      log.warning(WARNING_LINE_DUPLICATE);
     }
   }
 
@@ -121,6 +117,9 @@ class Application {
         break;
       case 'split':
         newOperator = new SplitOperator(id, type, x, y);
+        break;
+      case 'union':
+        newOperator = new UnionOperator(id, type, x, y);
         break;
       default:
         newOperator = new Operator(id, type, x, y);
