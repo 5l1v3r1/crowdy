@@ -76,7 +76,7 @@ class Operator {
   void updateDownFlow(String prevId) {
     bool updated = this.details.refresh(operators[prevId].details.output);
     if (updated && this.next.length > 0) {
-      this.next.forEach((nextId, connected) => operators[nextId].updateDownFlow(prevId));
+      this.next.forEach((nextId, connected) => operators[nextId].type != 'union' && operators[nextId].updateDownFlow(prevId));
     }
   }
 

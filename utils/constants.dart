@@ -50,7 +50,7 @@ const WARNING_LINE_DUPLICATE = 'You already have a flow line between those units
 const WARNING_LINE_DIRECTION = 'You can only direct flow from an input port to outpot port.';
 const WARNING_LINE_ALREADY_CONNECTED = 'You can connect only one flow to an operator unless it\'s type is union.';
 const WARNING_LINE_DIFFERENT_SPECIFICATION = 'Flows should have a consistent specification to aggregate.';
-const WARNING_LINE_INCONSISTENT_SPECIFICATION = 'Consistency in output speficications of union operator. Clearing aggregation.';
+const WARNING_LINE_INCONSISTENT_SPECIFICATION = 'Inconsistency in output speficication of union operator. Clearing aggregation.';
 
 final html.DivElement modal = html.document.querySelector('#$OPERATOR_MODAL_ID');
 final html.DivElement modalDialog = modal.querySelector('.modal-dialog');
