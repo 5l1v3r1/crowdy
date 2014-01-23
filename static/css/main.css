@@ -412,12 +412,36 @@ section > svg#app_container > defs > marker#flow_marker:hover {
   /*overflow: scroll;*/ 
 }
 
+#operator_modal > .modal-dialog > .modal-content > .modal-body div.inner.hide {
+  height: 0px;
+  overflow: hidden;
+}
+
 #operator_modal > .modal-dialog > .modal-content > .modal-body hr {
   margin-top: 0;
 }
 
 #operator_modal > .modal-dialog > .modal-content > .modal-body h4.margin-top {
   margin-top: 40px;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body label {
+  margin-top: 5px;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body h4.details-title {
+  cursor: pointer;
+  
+  -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
 }
 
 #operator_modal > .modal-dialog > .modal-content > .modal-body > div .row {

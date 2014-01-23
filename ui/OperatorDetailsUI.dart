@@ -75,6 +75,8 @@ class BaseDetailsUI {
   Map<String, ElementUI> base;
   Map<String, ElementUI> elements;
   html.DivElement view;
+  html.DivElement detailsViewOuter;
+  html.DivElement parametersViewOuter;
   html.DivElement detailsView;
   html.DivElement parametersView;
 
@@ -84,9 +86,11 @@ class BaseDetailsUI {
     this.base = new Map<String, ElementUI>();
     this.elements = new Map<String, ElementUI>();
 
-    this.detailsView = new html.DivElement()..id = '${this.id}-details'..className = 'operator-details';
-    this.parametersView = new html.DivElement()..id = '${this.id}-parameters'..className = 'operator-parameters';
-    this.view = new html.DivElement()..append(this.detailsView)..append(this.parametersView);
+    this.detailsViewOuter = new html.DivElement()..id = '${this.id}-details'..className = 'operator-details';
+    this.detailsView = new html.DivElement()..className = 'inner';
+    this.parametersViewOuter = new html.DivElement()..id = '${this.id}-parameters'..className = 'operator-parameters';
+    this.parametersView = new html.DivElement()..className = 'inner';
+    this.view = new html.DivElement()..append(this.detailsViewOuter)..append(this.parametersViewOuter);
   }
 
   void initialize() {
@@ -114,17 +118,23 @@ class BaseDetailsUI {
   }
 
   void addTitles() {
-    this.detailsView.append(new html.HeadingElement.h4()
+    this.detailsViewOuter.append(new html.HeadingElement.h4()
     ..id = 'details'
     ..text = 'Details'
-    ..appendHtml('<small>for bookkeeping purposes</small>'));
-    this.detailsView.append(new html.HRElement());
+    ..className = 'details-title'
+    ..appendHtml('<small>for bookkeeping purposes</small>')
+    ..onClick.listen((e) => _triggerDetails(this.detailsView)));
+    this.detailsViewOuter.append(new html.HRElement());
+    this.detailsViewOuter.append(this.detailsView);
 
-    this.parametersView.append(new html.HeadingElement.h4()
+    this.parametersViewOuter.append(new html.HeadingElement.h4()
     ..id = 'parameters'
     ..text = 'Parameters'
-    ..appendHtml('<small>specific to this operator</small>'));
-    this.parametersView.append(new html.HRElement());
+    ..className = 'details-title'
+    ..appendHtml('<small>specific to this operator</small>')
+      ..onClick.listen((e) => _triggerDetails(this.parametersView)));
+    this.parametersViewOuter.append(new html.HRElement());
+    this.parametersViewOuter.append(this.parametersView);
   }
 
   bool refresh(OutputSpecification specification) {
@@ -133,6 +143,11 @@ class BaseDetailsUI {
 
   void clear() {
     this.output.clear();
+  }
+
+  void updateOperatorDetails() {
+    this.base.forEach((id, element) => operators[this.id].updateDetail(id, element.input.value));
+    this.elements.forEach((id, element) => operators[this.id].updateDetail(id, element.input.value));
   }
 }
 
@@ -167,7 +182,7 @@ class RuleDetailsUI extends OutputDetailsUI {
     ..text = 'add new rule'
     ..onClick.listen(_addRule);
 
-    this.parametersView.querySelector('#parameters').append(this.addRuleButton);
+    this.parametersViewOuter.querySelector('#parameters').append(this.addRuleButton);
   }
 
   void clear() {
@@ -245,6 +260,9 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
 
   void initialize() {
     super.initialize();
+    this.addElement('iteration', 'number', 'Number of copies', this.elements, features: {'value': '1', 'min': '1', 'max': '1000'});
+    this.addElement('expiry', 'number', 'Max alloted time (sec)', this.elements, features: {'value': '60', 'min': '10', 'max': '300'});
+    this.addElement('payment', 'number', 'Payment (¢)', this.elements, features: {'value': '10', 'min': '5', 'max': '300'});
     this.addElement('segment-list', 'list', 'Available Segments', this.elements, features: {'class': 'list-inline segments'});
     ElementUI instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', this.elements);
     ElementUI question = this.addElement('question', 'editable', 'Question', this.elements);

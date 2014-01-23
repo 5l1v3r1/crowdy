@@ -40,3 +40,12 @@ void _tabbableTextAreaKeyPressed(html.KeyboardEvent e) {
     textArea.value = currentValue.substring(0, start) + "\t" + currentValue.substring(end);
   }
 }
+
+void _triggerDetails(html.DivElement div) {
+  if (div.className.contains('hide')) {
+    div.className = 'inner';
+  }
+  else {
+    div.className = 'inner hide';
+  }
+}

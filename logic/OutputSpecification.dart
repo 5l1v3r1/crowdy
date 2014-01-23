@@ -65,7 +65,7 @@ class BaseSpecification {
   BaseSpecification(String this.id) {
     this.elements = new Map<String, OutputSegmentUI>();
     this.view = new html.DivElement();
-    this.innerView = new html.DivElement();
+    this.innerView = new html.DivElement()..className = 'inner';
     this.elementList = new html.UListElement();
     this.initialize();
   }
@@ -75,9 +75,10 @@ class BaseSpecification {
     this.view.className = 'output-specification';
     this.elementList.className = 'segment-list';
 
-    this.title = new html.HeadingElement.h4();
-    this.title.text = 'Output Specification ';
-    this.title.className = 'margin-top';
+    this.title = new html.HeadingElement.h4()
+    ..text = 'Output Specification'
+    ..className = 'details-title'
+    ..onClick.listen((e) => _triggerDetails(this.innerView));
     this.view.append(this.title);
     this.view.append(new html.HRElement());
 
@@ -114,7 +115,7 @@ class BaseSpecification {
     html.SelectElement selectElement = new html.SelectElement();
     selectElement.className = 'output-segments form-control input-sm';
     if (previousConnections.length > 0) {
-      Map<String, OutputSegmentUI> segmentList = operators[previousConnections.keys.first].details.output.elements;
+      Map<String, OutputSegmentUI> segmentList = operators[previousConnections.keys.first].uiDetails.output.elements;
       segmentList.forEach((identifier, segment) => selectElement.append(new html.OptionElement(data: segment.name.text, value: segment.name.id)));
     }
     return selectElement;
