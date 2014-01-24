@@ -120,19 +120,25 @@ class BaseDetailsUI {
   void addTitles() {
     this.detailsViewOuter.append(new html.HeadingElement.h4()
     ..id = 'details'
-    ..text = 'Details'
     ..className = 'details-title'
+    ..append(new html.SpanElement()
+    ..text = 'Details'
+    ..onClick.listen((e) => _triggerDetails(this.detailsView)))
+    ..append(new html.SpanElement()
     ..appendHtml('<small>for bookkeeping purposes</small>')
-    ..onClick.listen((e) => _triggerDetails(this.detailsView)));
+    ..onClick.listen((e) => _triggerDetails(this.detailsView))));
     this.detailsViewOuter.append(new html.HRElement());
     this.detailsViewOuter.append(this.detailsView);
 
     this.parametersViewOuter.append(new html.HeadingElement.h4()
     ..id = 'parameters'
-    ..text = 'Parameters'
     ..className = 'details-title'
+    ..append(new html.SpanElement()
+    ..text = 'Parameters'
+    ..onClick.listen((e) => _triggerDetails(this.parametersView)))
+    ..append(new html.SpanElement()
     ..appendHtml('<small>specific to this operator</small>')
-      ..onClick.listen((e) => _triggerDetails(this.parametersView)));
+    ..onClick.listen((e) => _triggerDetails(this.parametersView))));
     this.parametersViewOuter.append(new html.HRElement());
     this.parametersViewOuter.append(this.parametersView);
   }
@@ -146,8 +152,8 @@ class BaseDetailsUI {
   }
 
   void updateOperatorDetails() {
-    this.base.forEach((id, element) => operators[this.id].updateDetail(id, element.input.value));
-    this.elements.forEach((id, element) => operators[this.id].updateDetail(id, element.input.value));
+    this.base.forEach((id, element) => operators[this.id].updateDetail(id, element.input));
+    this.elements.forEach((id, element) => operators[this.id].updateDetail(id, element.input));
   }
 }
 

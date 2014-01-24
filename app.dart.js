@@ -3191,9 +3191,21 @@ var $$ = {};
       if (this.id === operatorId)
         this.uiDetails.updateOperatorDetails$0();
     }, "call$1", "get$_refresh", 2, 0, 17],
-    updateDetail$2: function(identifier, value) {
-      var t1 = this.details;
-      t1.$indexSet(t1, identifier, value);
+    updateDetail$2: function(identifier, input) {
+      var t1 = J.getInterceptor(input);
+      if (typeof input === "object" && input !== null && !!t1.$isInputElement) {
+        t1 = this.details;
+        t1.$indexSet(t1, identifier, input.value);
+      } else if (typeof input === "object" && input !== null && !!t1.$isTextAreaElement) {
+        t1 = this.details;
+        t1.$indexSet(t1, identifier, input.value);
+      } else if (typeof input === "object" && input !== null && !!t1.$isSelectElement) {
+        t1 = this.details;
+        t1.$indexSet(t1, identifier, input.value);
+      } else if (typeof input === "object" && input !== null && !!t1.$isDivElement) {
+        t1 = this.details;
+        t1.$indexSet(t1, identifier, input.textContent);
+      }
     },
     updateDownFlow$1: function(prevId) {
       var t1, t2;
@@ -3203,6 +3215,7 @@ var $$ = {};
         t1 = this.next;
         t1.forEach$1(t1, new D.Operator_updateDownFlow_closure(prevId));
       }
+      return true;
     },
     clearDownFlow$0: function() {
       var t1 = this.uiDetails;
@@ -3227,9 +3240,10 @@ var $$ = {};
       var t1 = $.operators;
       if (J.get$type$x(t1.$index(t1, nextId)) !== "union") {
         t1 = $.operators;
-        t1.$index(t1, nextId).updateDownFlow$1(this.prevId_0);
-      }
-      return false;
+        t1 = t1.$index(t1, nextId).updateDownFlow$1(this.prevId_0);
+      } else
+        t1 = false;
+      return t1;
     }
   },
   Operator_clearDownFlow_closure: {
@@ -3448,6 +3462,7 @@ var $$ = {};
         if (this.next._collection$_length > 0)
           this.clearDownFlow$0();
       }
+      return true;
     },
     isConsistent$2: function(previousOperatorId, updating) {
       var t1, existingOutputSpec, t2, newOutputSpec;
@@ -4008,27 +4023,41 @@ var $$ = {};
       return this.addElement$6$features$options(identifier, type, description, list, null, options);
     },
     addTitles$0: function() {
-      var t1, t2, t3, t4;
+      var t1, t2, t3, t4, t5;
       t1 = this.detailsViewOuter;
       t2 = document.createElement("h4", null);
       t2.id = "details";
-      t2.textContent = "Details";
       t2.className = "details-title";
-      J.insertAdjacentHtml$2$x(t2, "beforeend", "<small>for bookkeeping purposes</small>");
-      t3 = C.EventStreamProvider_click._eventType;
-      t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, t3, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure(this)), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
+      t3 = document.createElement("span", null);
+      t3.textContent = "Details";
+      t3.toString;
+      t4 = C.EventStreamProvider_click._eventType;
+      t5 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, t4, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
+      t2.appendChild(t3);
+      t3 = document.createElement("span", null);
+      J.insertAdjacentHtml$2$x(t3, "beforeend", "<small>for bookkeeping purposes</small>");
+      t5 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, t4, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure0(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
+      t2.appendChild(t3);
       t1.appendChild(t2);
       this.detailsViewOuter.appendChild(document.createElement("hr", null));
       this.detailsViewOuter.appendChild(this.detailsView);
       t2 = this.parametersViewOuter;
       t1 = document.createElement("h4", null);
       t1.id = "parameters";
-      t1.textContent = "Parameters";
       t1.className = "details-title";
-      J.insertAdjacentHtml$2$x(t1, "beforeend", "<small>specific to this operator</small>");
-      t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t3, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure0(this)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+      t3 = document.createElement("span", null);
+      t3.textContent = "Parameters";
+      t3.toString;
+      t5 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, t4, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure1(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
+      t1.appendChild(t3);
+      t3 = document.createElement("span", null);
+      J.insertAdjacentHtml$2$x(t3, "beforeend", "<small>specific to this operator</small>");
+      t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, t4, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure2(this)), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
+      t1.appendChild(t3);
       t2.appendChild(t1);
       this.parametersViewOuter.appendChild(document.createElement("hr", null));
       this.parametersViewOuter.appendChild(this.parametersView);
@@ -4085,21 +4114,33 @@ var $$ = {};
   BaseDetailsUI_addTitles_closure0: {
     "": "Closure:14;this_1",
     call$1: function(e) {
-      return D._triggerDetails(this.this_1.parametersView);
+      return D._triggerDetails(this.this_1.detailsView);
+    }
+  },
+  BaseDetailsUI_addTitles_closure1: {
+    "": "Closure:14;this_2",
+    call$1: function(e) {
+      return D._triggerDetails(this.this_2.parametersView);
+    }
+  },
+  BaseDetailsUI_addTitles_closure2: {
+    "": "Closure:14;this_3",
+    call$1: function(e) {
+      return D._triggerDetails(this.this_3.parametersView);
     }
   },
   BaseDetailsUI_updateOperatorDetails_closure: {
     "": "Closure:13;this_0",
     call$2: function(id, element) {
       var t1 = $.operators;
-      return t1.$index(t1, this.this_0.id).updateDetail$2(id, J.get$value$x(element.get$input()));
+      return t1.$index(t1, this.this_0.id).updateDetail$2(id, element.get$input());
     }
   },
   BaseDetailsUI_updateOperatorDetails_closure0: {
     "": "Closure:13;this_1",
     call$2: function(id, element) {
       var t1 = $.operators;
-      return t1.$index(t1, this.this_1.id).updateDetail$2(id, J.get$value$x(element.get$input()));
+      return t1.$index(t1, this.this_1.id).updateDetail$2(id, element.get$input());
     }
   },
   OutputDetailsUI: {
@@ -9030,6 +9071,7 @@ var $$ = {};
   },
   DivElement: {
     "": "HtmlElement;",
+    $isDivElement: true,
     "%": "HTMLDivElement"
   },
   Document: {
@@ -9282,6 +9324,7 @@ var $$ = {};
   },
   InputElement: {
     "": "HtmlElement;name=,placeholder},type%,value%",
+    $isInputElement: true,
     $isElement: true,
     $isEventTarget: true,
     "%": "HTMLInputElement"

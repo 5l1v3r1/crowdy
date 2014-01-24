@@ -52,7 +52,7 @@ div.rule select {
   max-width: 120px;
 }
 
-h4 > small,
+h4 > span > small,
 h4 > button {
   margin-left: 10px;
 }

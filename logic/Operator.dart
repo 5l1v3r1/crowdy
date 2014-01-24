@@ -79,15 +79,27 @@ class Operator {
     }
   }
 
-  void updateDetail(String identifier, String value) {
-    this.details[identifier] = value;
+  void updateDetail(String identifier, html.Element input) {
+    if (input is html.InputElement) {
+      this.details[identifier] = input.value;
+    }
+    else if (input is html.TextAreaElement) {
+      this.details[identifier] = input.value;
+    }
+    else if (input is html.SelectElement) {
+      this.details[identifier] = input.value;
+    }
+    else if (input is html.DivElement) {
+      this.details[identifier] = input.text;
+    }
   }
 
-  void updateDownFlow(String prevId) {
+  bool updateDownFlow(String prevId) {
     bool updated = this.uiDetails.refresh(operators[prevId].uiDetails.output);
     if (updated && this.next.length > 0) {
       this.next.forEach((nextId, connected) => operators[nextId].type != 'union' && operators[nextId].updateDownFlow(prevId));
     }
+    return true;
   }
 
   void clearDownFlow() {
@@ -208,7 +220,7 @@ class UnionOperator extends Operator {
     }
   }
 
-  void updateDownFlow(String prevId) {
+  bool updateDownFlow(String prevId) {
     bool isConsistent = this.isConsistent(prevId, 1);
 
     if (isConsistent) {
@@ -224,6 +236,7 @@ class UnionOperator extends Operator {
         this.clearDownFlow();
       }
     }
+    return true;
   }
 
   bool isConsistent(String previousOperatorId, [int updating = 0]) {
