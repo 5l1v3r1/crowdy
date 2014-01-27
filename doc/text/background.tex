@@ -1,4 +1,5 @@
 \chapter{Background}
+\label{chap:background}
 
 \section{Preliminaries}
 In the following, first the preliminary information about crowdsourcing concepts 
@@ -147,31 +148,10 @@ crowdsourcing and proposing new way of creating crowdsourcing workflows are
 considered as related. Otherwise, the related work list would be too long, 
 since many views Wikipedia and Linux as crowdsourcing systems.
 
-\begin{table}
-\centering
-\begin{tabular}{ l | c | c | c | c | c | c | c | c }
-& Jabberwocky & WeFlow & TurKit & CrowdLang & AutoMan & Turkomatic & CrowdForge & CrowdWeaver \\ \hline
-Concept & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle \\
-Human components & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle \\
-Software components & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle \\
-Programming & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle \\
-Heterogeneity & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle \\
-Human Components & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle & \LEFTcircle \\
-\end{tabular}
-\end{table}
-
-\begin{sidewaystable}[h]\caption{Performance After Post Filtering} % title name of the table\centering\begin{tabular}{l c c rrrrrrr} \hline\hline% centering table% creating 10 columns% inserting double-line Audio &Audibility & Decision &\multicolumn{7}{c}{Sum of Extracted Bits}\\ [0.5ex]\hline % inserts single-line% Entering 1st row &&soft&1&$-1$&1&1&$-1$&$-1$&1 \\[-1ex]\raisebox{1.5ex}{Police} & \raisebox{1.5ex}{5}&hard & 2&$-4$&4&4&$-2$&$-4$&4\\[1ex]% Entering 2nd row &&soft&1&$-1$&1&1&$-1$&$-1$&1 \\[-1ex] \raisebox{1.5ex}{Beethoven} & \raisebox{1.5ex}{5}& hard &8 & $-8$ & 2 & 8 & $-8$ & $-8$ & 6 \\[1ex]% Entering 3rd row &&soft&1&$-1$&1&1&$-1$&$-1$&1 \\[-1ex] \raisebox{1.5ex}{Metallica} & \raisebox{1.5ex}{5}& hard &4&$-8$&8&4&$-8$&$-8$&8 \\[1ex]% [1ex] adds vertical space\hline % inserts single-line \end{tabular}\label{tab:LPer}\end{sidewaystable}
 
 
-Human: Yes
-Machine: Yes
-Heterogeneity: Yes
-Concept: MapReduce
-User-interface: No
-Progress: No
-Programming: Yes
-
-\subsection{Jabberwocky}
+\subsection{Crowdsourcing Platforms}
+\subsubsection{Jabberwocky}
 Jabberwocky~\cite{Ahmad2011} is a social computing stack consists of three 
 main components: Dormouse, ManReduce, and Dog. Dormouse is created to 
 enable cross-platform human and machine resource management. It acts like a 
@@ -205,16 +185,16 @@ appropriate to be solved using such a paradigm or system, which is another limit
 However, Jabberwocky's notion of real identity and social structure, 
 which would allow end users to define person-level constraints, is noteworthy.
 
-Human: Yes
-Machine: Yes
-Heterogeneity: Yes
-Concept: MapReduce
-User-interface: No
-Progress: No
-Programming: Yes
+%Human: Yes
+%Machine: Yes
+%Heterogeneity: Yes
+%Concept: MapReduce
+%User-interface: No
+%Progress: No
+%Programming: Yes
 
 
-\subsection{WeFlow}
+\subsubsection{WeFlow}
 WeFlow~\cite{Kokciyan2012} is a collaborative application specification, 
 application generator and execution engine proposed in a master thesis~\cite{Kokciyan}. 
 A framework is introduced to create and run collaboration-based applications. 
@@ -243,15 +223,15 @@ with a role. Although the whole role definition would allow end user handle acce
 control by describing permission-like roles, it does not discriminate human 
 performers based on their characteristics such as age, gender, interest, expertise etc.
 
-Human: Yes
-Machine: Yes
-Heterogeneity: Partially
-Concept: Workflow
-User-interface: No
-Progress: No
-Programming: No
+%Human: Yes
+%Machine: Yes
+%Heterogeneity: Partially
+%Concept: Workflow
+%User-interface: No
+%Progress: No
+%Programming: No
 
-\subsection{TurKit}
+\subsubsection{TurKit}
 TurKit~\cite{Little2009} is a toolkit for deploying iterative tasks to MTurk. 
 Toolkit is based on a model that concentrate on iterative work in which series of 
 individuals work on tasks that are previously completed by others. Although 
@@ -273,15 +253,15 @@ the trace of a program's execution. This trace is used whenever program crashes
 and to put the program back into it's previous state. Thus, toolkit does not 
 re-execute the whole program, but the sections where they are left unfinished.
 
-Human: Yes
-Machine: No
-Heterogeneity: No
-Concept: Iterative
-User-interface: No
-Progress: No
-Programming: Yes
+%Human: Yes
+%Machine: No
+%Heterogeneity: No
+%Concept: Iterative
+%User-interface: No
+%Progress: No
+%Programming: Yes
 
-\subsection{CrowdLang}
+\subsubsection{CrowdLang}
 CrowdLang~\cite{Minder2011} is a general-purpose framework and a concept of 
 an executable, model-based programming language for workflow definition. The 
 framework is developed based on the assumption that a complex problem is 
@@ -302,15 +282,15 @@ supports complex coordination mechanisms. In this respect, translation, which is
 sophisticated and difficult problem for crowdsourcing, is attempted in ~\cite{Minder2012} 
 and the results (translation of 15 different articles in less an hour) are promising.
 
-Human: Yes
-Machine: Yes
-Heterogeneity: No
-Concept: None
-User-interface: No
-Progress: No 
-Programming: Yes
+%Human: Yes
+%Machine: Yes
+%Heterogeneity: No
+%Concept: None
+%User-interface: No
+%Progress: No 
+%Programming: Yes
 
-\subsection{AutoMan}
+\subsubsection{AutoMan}
 AutoMan~\cite{Barowy2012} is described to be a fully automatic crowd programming s
 ystem. It is a programming system integrating human and computer computation. 
 On top of AutoMan system, a domain specific programming language is defined. 
@@ -334,15 +314,15 @@ periodically checks the current situation of the results, and reprices and resta
 human tasks as necessary. By making this, system tries to achieve the predefined 
 confidence level (by end user) while staying under budget.
 
-Human: Yes
-Machine: Yes
-Heterogeneity: No
-Concept: None
-User-interface: No
-Progress: No
-Programming: Yes
+%Human: Yes
+%Machine: Yes
+%Heterogeneity: No
+%Concept: None
+%User-interface: No
+%Progress: No
+%Programming: Yes
 
-\subsection{Turkomatic}
+\subsubsection{Turkomatic}
 Turkomatic~\cite{Kulkarni2012} is a tool that recruits workers for planning and 
 solving complex tasks. The system executes price-divide-solve approach by 
 asking workers to divide complex steps into simpler ones until they are at a simple 
@@ -369,15 +349,15 @@ context free. This restricts the set of problems that the system can tackle,
 but still this study presents promising results by demonstrating and managing 
 complex problems through acyclic graphs.
 
-Human: Yes
-Machine: No
-Heterogeneity: No
-Concept: Divide-and-Conquer
-User-interface: Yes
-Progress: No
-Programming: No
+%Human: Yes
+%Machine: No
+%Heterogeneity: No
+%Concept: Divide-and-Conquer
+%User-interface: Yes
+%Progress: No
+%Programming: No
 
-\subsection{CrowdForge}
+\subsubsection{CrowdForge}
 CrowdForge~\cite{Kittur2011} is a general-purpose framework and toolkit for 
 accomplishing complex and interdependent tasks using micro-task markets. 
 The framework is built on MapReduce~\cite{Dean2008} approach, which first breaks 
@@ -396,15 +376,15 @@ expected to fit well in crowdsourcing.
 Additionally system has no support for iteration or recursion. It requires the 
 end user (task designer) to specify each stage (partition, map, reduce) in the task flow.
 
-Human: Yes
-Machine: No
-Heterogeneity: No
-Concept: MapReduce
-User-interface: Yes
-Progress: No
-Programming: No
+%Human: Yes
+%Machine: No
+%Heterogeneity: No
+%Concept: MapReduce
+%User-interface: Yes
+%Progress: No
+%Programming: No
 
-\subsection{CrowdWeaver}
+\subsubsection{CrowdWeaver}
 CrowdWeaver~\cite{Kittur2012} is a system to visually manage crowd work. 
 This system comes forward among various other works with it's visual representation 
 abilities. High-level representation of a workflow makes it easier for end user to grasp, 
@@ -426,15 +406,39 @@ with no programming background, the system is currently limited by predefined se
 of templates. In fact, it's visual abilities are restricted by only showing the workflow, 
 but not enabling users make changes on it directly.
 
-Human: Yes
-Machine: Yes
-Heterogeneity: No
-Concept: Dataflow
-User-interface: Yes
-Progress: Yes
-Programming: No
+%Human: Yes
+%Machine: Yes
+%Heterogeneity: No
+%Concept: Dataflow
+%User-interface: Yes
+%Progress: Yes
+%Programming: No
 
-\subsection{Soylent}
+
+\begin{sidewaystable}
+\caption{Comparison of related works}
+\label{tab:comparison}
+%\bigskip
+\centering
+  \begin{tabular}{| l | c | c | c | c | c | c | c | c | }
+  \hline
+  Feature & Jabberwocky & WeFlow & TurKit & CrowdLang & AutoMan & Turkomatic & CrowdForge & CrowdWeaver \\ \hline
+  Concept & MapReduce & Workflow & Iterative & N/A & N/A & Divide-and-Conquer & MapReduce & Data Flow \\ \hline
+  Human components & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE \\ \hline
+  Software components & \CIRCLE & \CIRCLE & \Circle & \CIRCLE & \CIRCLE & \Circle & \Circle & \CIRCLE \\ \hline
+  Requires programming & \CIRCLE & \Circle & \CIRCLE & \CIRCLE & \CIRCLE & \Circle & \Circle & \Circle \\ \hline
+  Heterogeneity & \CIRCLE & \LEFTcircle & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle \\ \hline
+  User Interface & \Circle & \Circle & \Circle & \Circle & \Circle & \CIRCLE & \CIRCLE & \CIRCLE \\ \hline
+  Progress & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle & \CIRCLE \\ \hline
+  \\ \\ \\
+  \multicolumn{9}{l}{\CIRCLE: Yes, \LEFTcircle: Partially, \Circle: No} \\
+  \end{tabular}  
+\end{sidewaystable}
+
+\newpage
+
+\subsection{Other Studies}
+\subsubsection{Soylent}
 Soylent~\cite{Bernstein2010} is a word processing interface enabling Microsoft Word 
 users to employ MTurk workers to shorten, proofread and edit parts of their 
 documents on demand. The system is developed with respect to the 
@@ -453,7 +457,7 @@ crowdsourcing. The system can only be employed by Microsoft Word users
 for editing text. The pattern is limited to the problems where decomposition 
 into subproblems is possible.
 
-\subsection{Qurk}
+\subsubsection{Qurk}
 Qurk~\cite{Marcus2011, Marcus2011b} is query processing system that 
 automatically translates queries into tasks to-be-completed by humans. The system 
 has domain-specific language to express tasks. A UDF-like approach is taken 
@@ -467,7 +471,7 @@ input are made available, still processing is done on input data obtained from t
 underlying database system. However, this study provides an important example 
 by employing people in a database system for managing various queries.
 
-\subsection{Mobi}
+\subsubsection{Mobi}
 Mobi~\cite{Zhang2012} is a system to crowdsource itinerary plans. The system 
 illustrates a use case of crowdware paradigm. The paradigm focuses on tasks 
 with global requirements and provides a single workspace in which a crowd of 
@@ -481,7 +485,7 @@ on only one aspect of crowdsourcing. However, the study provides insights
 on the effectiveness of using unified solution context for workers or directing 
 crowd's submissions through a structured guide or benefits of iterative refinements.
 
-\subsection{CrowdSpace}
+\subsubsection{CrowdSpace}
 CrowdSpace~\cite{Rzeszotarski2012} is a system that supports the evaluation 
 of complex crowd work by combining information about worker results through 
 visualization. This system focuses on exploration and assessment of worker 
@@ -500,7 +504,7 @@ pages in which Javascript can be inserted or assuming that worker does all the p
 on the page etc, the quality control approach taken in the study can be used to 
 better understand and address the nature of the crowd.
 
-\subsection{Human Architecture}
+\subsubsection{Human Architecture}
 Human Architecture~\cite{Dorn2012} is an adaptation mechanism to the changing 
 requirements of the various type collaborations. Unlike other studies, this work focuses 
 on collaboration problem from the architectural perspective. An architecture description 
