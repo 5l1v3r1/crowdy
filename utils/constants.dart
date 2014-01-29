@@ -17,6 +17,7 @@ const OPERATOR_ICON_OUTPUT = 'output.png';
 const OPERATOR_ICON_UNION = 'union.png';
 
 const OPERATOR_MODAL_ID = 'operator_modal';
+const HUMAN_MODAL_ID = 'human_modal';
 
 const OPERATOR_OUTPUT_REFRESH = 'operator_output_refresh';
 
@@ -57,3 +58,7 @@ final html.DivElement modalDialog = modal.querySelector('.modal-dialog');
 final html.DivElement modalAlert = modalDialog.querySelector('.modal-content .modal-header .alert');
 final html.DivElement modalBody = modalDialog.querySelector('.modal-content .modal-body');
 final closeButton = modalDialog.querySelector('.modal-footer #close_operator_modal');
+
+final html.DivElement humanModal = html.document.querySelector('#$HUMAN_MODAL_ID');
+final html.DivElement humanModalBody = humanModal.querySelector('.modal-content .modal-body');
+final closeHumanButton = humanModal.querySelector('.modal-footer #close_human_modal');
