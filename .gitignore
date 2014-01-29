@@ -3,4 +3,4 @@ packages
 *.deps
 *.map
 *.precompiled.js
-doc
+doc/
