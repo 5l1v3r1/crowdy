@@ -13,6 +13,9 @@ class ElementUI {
     ..className = 'col-sm-3 control-label';
 
     switch (this.type) {
+      case 'button':
+        this.input = new html.ButtonElement();
+        break;
       case 'editable':
         this.input = new html.DivElement()
         ..contentEditable = 'true';
@@ -253,7 +256,6 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   static int count = 1;
   html.SelectElement availableInputs;
   html.DivElement elementsDiv;
-  html.DivElement rulesDiv;
   html.UListElement segmentList;
 
   List<html.DivElement> refreshableDivs;
@@ -262,6 +264,58 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   SourceHumanDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new InputHumanOutputSpecification(this.id);
     this.view.append(this.output.view);
+    closeHumanButton.onClick.listen(_onHumanClose);
+  }
+
+  void _onHumanClick(html.MouseEvent e) {
+    modal.style.display = 'none';
+    humanModal.classes.add('in');
+    humanModal.style.display = 'block';
+    humanModalBody
+      ..append(new html.ParagraphElement()..className = 'lead'..appendHtml(this.refreshableDivs.elementAt(0).innerHtml))
+      ..append(new html.ParagraphElement()..appendHtml(this.refreshableDivs.elementAt(1).innerHtml));
+
+    this.parametersView.querySelectorAll('.rule').forEach((e) => _appendInputToPreview(e));
+  }
+
+  void _appendInputToPreview(html.Element e) {
+    String type = e.querySelector('label').text;
+    String name = e.dataset['segment'];
+    if (type == 'text input') {
+      humanModalBody.append(new html.ParagraphElement()
+      ..append(new html.InputElement(type: 'text')..className = 'form-control'..name = name));
+    }
+    else if (type == 'number input') {
+      List<html.InputElement> options = e.querySelectorAll('input');
+      humanModalBody.append(new html.ParagraphElement()
+      ..append(new html.InputElement(type: 'number')
+      ..className = 'form-control'..name = name
+      ..attributes['min'] = options.first.value
+      ..attributes['max'] = options.last.value));
+    }
+    else if (type == 'single choice') {
+      List<html.Element> options = e.querySelector('div.options').children;
+      options.forEach((e) => humanModalBody.append(new html.DivElement()
+      ..className = 'radio'
+      ..append(new html.LabelElement()
+      ..append(new html.InputElement(type: 'radio')..name = name)
+      ..appendText(e.text))));
+    }
+    else if (type == 'multiple choice') {
+      List<html.Element> options = e.querySelector('div.options').children;
+      options.forEach((e) => humanModalBody.append(new html.DivElement()
+      ..className = 'checkbox'
+      ..append(new html.LabelElement()
+      ..append(new html.InputElement(type: 'checkbox')..name = name)
+      ..appendText(e.text))));
+    }
+  }
+
+  void _onHumanClose(html.MouseEvent e) {
+    humanModal.style.display = 'none';
+    humanModal.querySelector('.modal-content .modal-body').children.clear();
+    modal.classes.add('in');
+    modal.style.display = 'block';
   }
 
   void initialize() {
@@ -269,6 +323,11 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     this.addElement('iteration', 'number', 'Number of copies', this.elements, features: {'value': '1', 'min': '1', 'max': '1000'});
     this.addElement('expiry', 'number', 'Max alloted time (sec)', this.elements, features: {'value': '60', 'min': '10', 'max': '300'});
     this.addElement('payment', 'number', 'Payment (¢)', this.elements, features: {'value': '10', 'min': '5', 'max': '300'});
+
+    ElementUI previewButton = this.addElement('preview', 'button', '', this.elements);
+    previewButton.input.text = 'Preview Human Task';
+    previewButton.input..onClick.listen(_onHumanClick);
+
     this.addElement('segment-list', 'list', 'Available Segments', this.elements, features: {'class': 'list-inline segments'});
     ElementUI instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', this.elements);
     ElementUI question = this.addElement('question', 'editable', 'Question', this.elements);
@@ -424,8 +483,8 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   html.DivElement getEditableDiv() {
     return new html.DivElement()
     ..contentEditable = 'true'
-    ..className = 'form-control input-sm'
-    ..text = 'Enter options line by line'
+    ..className = 'form-control input-sm options'
+    ..appendHtml('<div>Enter options line by line</div>')
     ..onDrop.listen(_onSegmentDrop)
     ..onDragOver.listen(_onSegmentDragOver);
   }
