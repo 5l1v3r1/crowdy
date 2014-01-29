@@ -3948,6 +3948,9 @@ var $$ = {};
       this.label = t1;
       t1 = this.type;
       switch (t1) {
+        case "button":
+          this.input = document.createElement("button", null);
+          break;
         case "editable":
           t1 = document.createElement("div", null);
           t1.contentEditable = "true";
@@ -4209,13 +4212,87 @@ var $$ = {};
     }
   },
   SourceHumanDetailsUI: {
-    "": "BaseDetailsUI;availableInputs,elementsDiv,rulesDiv,segmentList,refreshableDivs,_dragSegment,log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+    "": "BaseDetailsUI;availableInputs,elementsDiv,segmentList,refreshableDivs,_dragSegment,log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+    _onHumanClick$1: [function(e) {
+      var t1, t2, t3;
+      J.set$display$x($.get$modal().style, "none");
+      t1 = $.get$humanModal();
+      t2 = J.get$classes$x(t1);
+      t2.add$1(t2, "in");
+      J.set$display$x(t1.style, "block");
+      t1 = $.get$humanModalBody();
+      t2 = document.createElement("p", null);
+      t2.className = "lead";
+      t3 = this.refreshableDivs;
+      if (0 >= t3.length)
+        return H.ioore(t3, 0);
+      J.insertAdjacentHtml$2$x(t2, "beforeend", J.get$innerHtml$x(t3[0]));
+      t1.appendChild(t2);
+      t2 = document.createElement("p", null);
+      t3 = this.refreshableDivs;
+      if (1 >= t3.length)
+        return H.ioore(t3, 1);
+      J.insertAdjacentHtml$2$x(t2, "beforeend", J.get$innerHtml$x(t3[1]));
+      t1.appendChild(t2);
+      t2 = W._FrozenElementList$_wrap(this.parametersView.querySelectorAll(".rule"), null);
+      t2.forEach$1(t2, new D.SourceHumanDetailsUI__onHumanClick_closure(this));
+    }, "call$1", "get$_onHumanClick", 2, 0, 2],
+    _appendInputToPreview$1: function(e) {
+      var t1, type, $name, t2, t3, options, t4;
+      t1 = J.getInterceptor$x(e);
+      type = t1.querySelector$1(e, "label").textContent;
+      t1 = t1.get$dataset(e);
+      $name = t1._attributes._element.getAttribute("data-" + t1._toHyphenedName$1("segment"));
+      if (type === "text input") {
+        t1 = $.get$humanModalBody();
+        t2 = document.createElement("p", null);
+        t3 = W.InputElement_InputElement("text");
+        t3.className = "form-control";
+        J.set$name$x(t3, $name);
+        t2.appendChild(t3);
+        t1.appendChild(t2);
+      } else if (type === "number input") {
+        options = W._FrozenElementList$_wrap(e.querySelectorAll("input"), null);
+        t1 = $.get$humanModalBody();
+        t2 = document.createElement("p", null);
+        t3 = W.InputElement_InputElement("number");
+        t3.className = "form-control";
+        J.set$name$x(t3, $name);
+        t4 = options._nodeList;
+        t3.setAttribute("min", J.get$value$x(C.NodeList_methods.get$first(t4)));
+        t3.setAttribute("max", J.get$value$x(C.NodeList_methods.get$last(t4)));
+        t2.appendChild(t3);
+        t1.appendChild(t2);
+      } else if (type === "single choice") {
+        options = J.get$children$x(e.querySelector("div.options"));
+        options.forEach$1(options, new D.SourceHumanDetailsUI__appendInputToPreview_closure($name));
+      } else if (type === "multiple choice") {
+        options = J.get$children$x(e.querySelector("div.options"));
+        options.forEach$1(options, new D.SourceHumanDetailsUI__appendInputToPreview_closure0($name));
+      }
+    },
+    _onHumanClose$1: [function(e) {
+      var t1, t2;
+      t1 = $.get$humanModal();
+      J.set$display$x(t1.style, "none");
+      t1 = J.get$children$x(t1.querySelector(".modal-content .modal-body"));
+      t1.clear$0(t1);
+      t1 = $.get$modal();
+      t2 = J.get$classes$x(t1);
+      t2.add$1(t2, "in");
+      J.set$display$x(t1.style, "block");
+    }, "call$1", "get$_onHumanClose", 2, 0, 2],
     initialize$0: function(_) {
-      var instructions, question, t1, t2, t3;
+      var t1, instructions, question, t2, t3;
       D.BaseDetailsUI.prototype.initialize$0.call(this, this);
       this.addElement$5$features("iteration", "number", "Number of copies", this.elements, H.fillLiteralMap(["value", "1", "min", "1", "max", "1000"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$features("expiry", "number", "Max alloted time (sec)", this.elements, H.fillLiteralMap(["value", "60", "min", "10", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$features("payment", "number", "Payment (\u00a2)", this.elements, H.fillLiteralMap(["value", "10", "min", "5", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      t1 = this.addElement$4("preview", "button", "", this.elements).input;
+      t1.textContent = "Preview Human Task";
+      t1.toString;
+      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_onHumanClick()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       this.addElement$5$features("segment-list", "list", "Available Segments", this.elements, H.fillLiteralMap(["class", "list-inline segments"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       instructions = this.addElement$4("instructions", "editable", "Instructions for human workers", this.elements);
       question = this.addElement$4("question", "editable", "Question", this.elements);
@@ -4392,9 +4469,8 @@ var $$ = {};
         case "multiple":
           newEditableDiv = document.createElement("div", null);
           newEditableDiv.contentEditable = "true";
-          newEditableDiv.className = "form-control input-sm";
-          newEditableDiv.textContent = "Enter options line by line";
-          newEditableDiv.toString;
+          newEditableDiv.className = "form-control input-sm options";
+          J.insertAdjacentHtml$2$x(newEditableDiv, "beforeend", "<div>Enter options line by line</div>");
           t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(newEditableDiv, C.EventStreamProvider_drop._eventType, false), [null]);
           H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_onSegmentDrop()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
           t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(newEditableDiv, C.EventStreamProvider_dragover._eventType, false), [null]);
@@ -4415,13 +4491,55 @@ var $$ = {};
       t2.BaseSpecification$1(t1);
       this.output = t2;
       this.view.appendChild(t2.view);
+      t2 = $.get$closeHumanButton();
+      t2.toString;
+      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onHumanClose()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
     },
     static: {"": "SourceHumanDetailsUI_count", SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
-        var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null, null, null);
+        var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null, null, null);
         t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
         t1.SourceHumanDetailsUI$4(id, type, prevConn, nextConn);
         return t1;
       }}
+  },
+  SourceHumanDetailsUI__onHumanClick_closure: {
+    "": "Closure:14;this_0",
+    call$1: function(e) {
+      return this.this_0._appendInputToPreview$1(e);
+    }
+  },
+  SourceHumanDetailsUI__appendInputToPreview_closure: {
+    "": "Closure:14;name_0",
+    call$1: function(e) {
+      var t1, t2, t3, t4;
+      t1 = $.get$humanModalBody();
+      t2 = document.createElement("div", null);
+      t2.className = "radio";
+      t3 = document.createElement("label", null);
+      t4 = W.InputElement_InputElement("radio");
+      J.set$name$x(t4, this.name_0);
+      t3.appendChild(t4);
+      J.insertAdjacentText$2$x(t3, "beforeend", J.get$text$x(e));
+      t2.appendChild(t3);
+      return t1.appendChild(t2);
+    }
+  },
+  SourceHumanDetailsUI__appendInputToPreview_closure0: {
+    "": "Closure:14;name_1",
+    call$1: function(e) {
+      var t1, t2, t3, t4;
+      t1 = $.get$humanModalBody();
+      t2 = document.createElement("div", null);
+      t2.className = "checkbox";
+      t3 = document.createElement("label", null);
+      t4 = W.InputElement_InputElement("checkbox");
+      J.set$name$x(t4, this.name_1);
+      t3.appendChild(t4);
+      J.insertAdjacentText$2$x(t3, "beforeend", J.get$text$x(e));
+      t2.appendChild(t3);
+      return t1.appendChild(t2);
+    }
   },
   SourceHumanDetailsUI_refresh_closure: {
     "": "Closure:14;this_0,prevSegments_1",
@@ -8947,6 +9065,9 @@ var $$ = {};
     t1 = t1.where$1(t1, new W.Element_Element$html_closure());
     return t1.get$single(t1);
   },
+  _ElementFactoryProvider_createElement_tag: function(tag, typeExtension) {
+    return document.createElement(tag);
+  },
   InputElement_InputElement: function(type) {
     var e, exception;
     e = document.createElement("input", null);
@@ -9024,7 +9145,7 @@ var $$ = {};
     "%": "HTMLBodyElement"
   },
   ButtonElement: {
-    "": "HtmlElement;name=,type%,value%",
+    "": "HtmlElement;name%,type%,value%",
     "%": "HTMLButtonElement"
   },
   CharacterData: {
@@ -9094,10 +9215,17 @@ var $$ = {};
     querySelectorAll$1: function(receiver, selectors) {
       return W._FrozenElementList$_wrap(receiver.querySelectorAll(selectors), null);
     },
+    get$innerHtml: function(receiver) {
+      var e, t1;
+      e = W._ElementFactoryProvider_createElement_tag("div", null);
+      t1 = J.getInterceptor$x(e);
+      t1.append$1(e, this.clone$1(receiver, true));
+      return t1.get$innerHtml(e);
+    },
     querySelector$1: function(receiver, selectors) {
       return receiver.querySelector(selectors);
     },
-    "%": "DocumentFragment|ShadowRoot"
+    "%": ";DocumentFragment"
   },
   DomError: {
     "": "Interceptor;name=",
@@ -9132,41 +9260,51 @@ var $$ = {};
     get$classes: function(receiver) {
       return new W._ElementCssClassSet(receiver);
     },
+    get$dataset: function(receiver) {
+      return new W._DataAttributeMap(new W._ElementAttributeMap(receiver));
+    },
     get$client: function(receiver) {
       return H.setRuntimeTypeInfo(new P.Rectangle(receiver.clientLeft, receiver.clientTop, receiver.clientWidth, receiver.clientHeight), [null]);
     },
     toString$0: function(receiver) {
       return receiver.localName;
     },
+    insertAdjacentText$2: function(receiver, where, text) {
+      if (!!receiver.insertAdjacentText)
+        receiver.insertAdjacentText(where, text);
+      else
+        this._insertAdjacentNode$2(receiver, where, document.createTextNode(text));
+    },
     insertAdjacentHtml$2: function(receiver, where, html) {
-      var t1, t2, first;
       if (!!receiver.insertAdjacentHTML)
         receiver.insertAdjacentHTML(where, html);
-      else {
-        t1 = J.createFragment$3$treeSanitizer$validator$x(document.body, html, null, null);
-        switch (where.toLowerCase()) {
-          case "beforebegin":
-            receiver.parentNode.insertBefore(t1, receiver);
-            break;
-          case "afterbegin":
-            if (receiver.childNodes.length > 0) {
-              t2 = receiver.childNodes;
-              if (0 >= t2.length)
-                return H.ioore(t2, 0);
-              first = t2[0];
-            } else
-              first = null;
-            receiver.insertBefore(t1, first);
-            break;
-          case "beforeend":
-            receiver.appendChild(t1);
-            break;
-          case "afterend":
-            receiver.parentNode.insertBefore(t1, receiver.nextSibling);
-            break;
-          default:
-            H.throwExpression(new P.ArgumentError("Invalid position " + where));
-        }
+      else
+        this._insertAdjacentNode$2(receiver, where, J.createFragment$3$treeSanitizer$validator$x(document.body, html, null, null));
+    },
+    _insertAdjacentNode$2: function(receiver, where, node) {
+      var t1, first;
+      switch (where.toLowerCase()) {
+        case "beforebegin":
+          receiver.parentNode.insertBefore(node, receiver);
+          break;
+        case "afterbegin":
+          if (receiver.childNodes.length > 0) {
+            t1 = receiver.childNodes;
+            if (0 >= t1.length)
+              return H.ioore(t1, 0);
+            first = t1[0];
+          } else
+            first = null;
+          receiver.insertBefore(node, first);
+          break;
+        case "beforeend":
+          receiver.appendChild(node);
+          break;
+        case "afterend":
+          receiver.parentNode.insertBefore(node, receiver.nextSibling);
+          break;
+        default:
+          throw H.wrapException(new P.ArgumentError("Invalid position " + where));
       }
     },
     createFragment$3$treeSanitizer$validator: function(receiver, html, treeSanitizer, validator) {
@@ -9236,6 +9374,9 @@ var $$ = {};
     setInnerHtml$1: function($receiver, html) {
       return this.setInnerHtml$3$treeSanitizer$validator($receiver, html, null, null);
     },
+    get$innerHtml: function(receiver) {
+      return receiver.innerHTML;
+    },
     get$on: function(receiver) {
       return new W.ElementEvents(receiver, receiver);
     },
@@ -9249,7 +9390,7 @@ var $$ = {};
     "%": ";Element"
   },
   EmbedElement: {
-    "": "HtmlElement;name=,type%",
+    "": "HtmlElement;name%,type%",
     "%": "HTMLEmbedElement"
   },
   ErrorEvent: {
@@ -9281,11 +9422,11 @@ var $$ = {};
     "%": "MediaStream;EventTarget"
   },
   FieldSetElement: {
-    "": "HtmlElement;name=,type=",
+    "": "HtmlElement;name%,type=",
     "%": "HTMLFieldSetElement"
   },
   FormElement: {
-    "": "HtmlElement;length=,name=,target=",
+    "": "HtmlElement;length=,name%,target=",
     "%": "HTMLFormElement"
   },
   HtmlCollection: {
@@ -9319,11 +9460,11 @@ var $$ = {};
     "%": "HTMLCollection|HTMLFormControlsCollection|HTMLOptionsCollection"
   },
   IFrameElement: {
-    "": "HtmlElement;name=",
+    "": "HtmlElement;name%",
     "%": "HTMLIFrameElement"
   },
   InputElement: {
-    "": "HtmlElement;name=,placeholder},type%,value%",
+    "": "HtmlElement;name%,placeholder},type%,value%",
     $isInputElement: true,
     $isElement: true,
     $isEventTarget: true,
@@ -9337,7 +9478,7 @@ var $$ = {};
     "%": "KeyboardEvent"
   },
   KeygenElement: {
-    "": "HtmlElement;name=,type=",
+    "": "HtmlElement;name%,type=",
     "%": "HTMLKeygenElement"
   },
   LIElement: {
@@ -9362,7 +9503,7 @@ var $$ = {};
     "%": "Location"
   },
   MapElement: {
-    "": "HtmlElement;name=",
+    "": "HtmlElement;name%",
     "%": "HTMLMapElement"
   },
   MediaElement: {
@@ -9370,7 +9511,7 @@ var $$ = {};
     "%": "HTMLAudioElement|HTMLMediaElement|HTMLVideoElement"
   },
   MetaElement: {
-    "": "HtmlElement;name=",
+    "": "HtmlElement;name%",
     "%": "HTMLMetaElement"
   },
   MeterElement: {
@@ -9442,6 +9583,12 @@ var $$ = {};
       var t1 = receiver.nodeValue;
       return t1 == null ? J.Interceptor.prototype.toString$0.call(this, receiver) : t1;
     },
+    append$1: function(receiver, newChild) {
+      return receiver.appendChild(newChild);
+    },
+    clone$1: function(receiver, deep) {
+      return receiver.cloneNode(deep);
+    },
     _replaceChild$2: function(receiver, newChild, oldChild) {
       return receiver.replaceChild(newChild, oldChild);
     },
@@ -9464,6 +9611,17 @@ var $$ = {};
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$first: function(receiver) {
+      if (receiver.length > 0)
+        return receiver[0];
+      throw H.wrapException(new P.StateError("No elements"));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(new P.StateError("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
@@ -9482,7 +9640,7 @@ var $$ = {};
     "%": "HTMLOListElement"
   },
   ObjectElement: {
-    "": "HtmlElement;name=,type%",
+    "": "HtmlElement;name%,type%",
     "%": "HTMLObjectElement"
   },
   OptionElement: {
@@ -9491,11 +9649,11 @@ var $$ = {};
     "%": "HTMLOptionElement"
   },
   OutputElement: {
-    "": "HtmlElement;name=,type=,value%",
+    "": "HtmlElement;name%,type=,value%",
     "%": "HTMLOutputElement"
   },
   ParamElement: {
-    "": "HtmlElement;name=,value%",
+    "": "HtmlElement;name%,value%",
     "%": "HTMLParamElement"
   },
   ProcessingInstruction: {
@@ -9521,7 +9679,7 @@ var $$ = {};
     "%": "HTMLScriptElement"
   },
   SelectElement: {
-    "": "HtmlElement;length=,name=,selectedIndex=,type=,value%",
+    "": "HtmlElement;length=,name%,selectedIndex=,type=,value%",
     get$options: function(receiver) {
       var t1 = W._FrozenElementList$_wrap(receiver.querySelectorAll("option"), null);
       t1 = t1.where$1(t1, new W.SelectElement_options_closure());
@@ -9529,6 +9687,13 @@ var $$ = {};
     },
     $isSelectElement: true,
     "%": "HTMLSelectElement"
+  },
+  ShadowRoot: {
+    "": "DocumentFragment;innerHtml:innerHTML=",
+    clone$1: function(receiver, deep) {
+      return receiver.cloneNode(deep);
+    },
+    "%": "ShadowRoot"
   },
   SourceElement: {
     "": "HtmlElement;type%",
@@ -9622,7 +9787,7 @@ var $$ = {};
     "%": "HTMLTemplateElement"
   },
   TextAreaElement: {
-    "": "HtmlElement;name=,placeholder},type=,value%",
+    "": "HtmlElement;name%,placeholder},type=,value%",
     $isTextAreaElement: true,
     "%": "HTMLTextAreaElement"
   },
@@ -9790,7 +9955,8 @@ var $$ = {};
     },
     addAll$1: function(_, iterable) {
       var t1, t2;
-      for (t1 = J.get$iterator$ax(iterable), t2 = this._element; t1.moveNext$0();)
+      t1 = J.getInterceptor(iterable);
+      for (t1 = J.get$iterator$ax(typeof iterable === "object" && iterable !== null && !!t1.$is_ChildNodeListLazy ? P.List_List$from(iterable, true, null) : iterable), t2 = this._element; t1.moveNext$0();)
         t2.appendChild(t1.get$current());
     },
     remove$1: function(_, object) {
@@ -10666,6 +10832,14 @@ var $$ = {};
     get$children: function(receiver) {
       return H.setRuntimeTypeInfo(new P.FilteredElementList(receiver, new W._ChildNodeListLazy(receiver)), [W.Element]);
     },
+    get$innerHtml: function(receiver) {
+      var container, cloned, t1;
+      container = W._ElementFactoryProvider_createElement_tag("div", null);
+      cloned = receiver.cloneNode(true);
+      t1 = J.getInterceptor$x(container);
+      J.addAll$1$ax(t1.get$children(container), J.get$children$x(cloned));
+      return t1.get$innerHtml(container);
+    },
     set$innerHtml: function(receiver, value) {
       receiver.textContent = null;
       receiver.appendChild(this.createFragment$3$treeSanitizer$validator(receiver, value, null, null));
@@ -10687,6 +10861,9 @@ var $$ = {};
       for (; t1 = root.firstChild, t1 != null;)
         svgFragment.appendChild(t1);
       return svgFragment;
+    },
+    insertAdjacentText$2: function(receiver, where, text) {
+      throw H.wrapException(P.UnsupportedError$("Cannot invoke insertAdjacentText on SVG."));
     },
     insertAdjacentHtml$2: function(receiver, where, text) {
       throw H.wrapException(P.UnsupportedError$("Cannot invoke insertAdjacentHtml on SVG."));
@@ -11791,6 +11968,9 @@ J.get$hashCode$ = function(receiver) {
 J.get$id$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$id(receiver);
 };
+J.get$innerHtml$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$innerHtml(receiver);
+};
 J.get$isNotEmpty$asx = function(receiver) {
   return J.getInterceptor$asx(receiver).get$isNotEmpty(receiver);
 };
@@ -11854,6 +12034,9 @@ J.initialize$0$x = function(receiver) {
 J.insertAdjacentHtml$2$x = function(receiver, a0, a1) {
   return J.getInterceptor$x(receiver).insertAdjacentHtml$2(receiver, a0, a1);
 };
+J.insertAdjacentText$2$x = function(receiver, a0, a1) {
+  return J.getInterceptor$x(receiver).insertAdjacentText$2(receiver, a0, a1);
+};
 J.preventDefault$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).preventDefault$0(receiver);
 };
@@ -11895,6 +12078,9 @@ J.set$htmlFor$x = function(receiver, value) {
 };
 J.set$innerHtml$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$innerHtml(receiver, value);
+};
+J.set$name$x = function(receiver, value) {
+  return J.getInterceptor$x(receiver).set$name(receiver, value);
 };
 J.set$placeholder$x = function(receiver, value) {
   return J.getInterceptor$x(receiver).set$placeholder(receiver, value);
@@ -12231,6 +12417,15 @@ Isolate.$lazy($, "modalBody", "modalBody", "get$modalBody", function() {
 });
 Isolate.$lazy($, "closeButton", "closeButton", "get$closeButton", function() {
   return $.get$modalDialog().querySelector(".modal-footer #close_operator_modal");
+});
+Isolate.$lazy($, "humanModal", "humanModal", "get$humanModal", function() {
+  return document.querySelector("#human_modal");
+});
+Isolate.$lazy($, "humanModalBody", "humanModalBody", "get$humanModalBody", function() {
+  return $.get$humanModal().querySelector(".modal-content .modal-body");
+});
+Isolate.$lazy($, "closeHumanButton", "closeHumanButton", "get$closeHumanButton", function() {
+  return $.get$humanModal().querySelector(".modal-footer #close_human_modal");
 });
 Isolate.$lazy($, "_toStringList", "IterableMixinWorkaround__toStringList", "get$IterableMixinWorkaround__toStringList", function() {
   return [];
