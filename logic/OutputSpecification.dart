@@ -76,10 +76,9 @@ class BaseSpecification {
     this.elementList.className = 'segment-list';
 
     this.title = new html.HeadingElement.h4()
-    ..className = 'details-title'
-    ..append(new html.SpanElement()
     ..text = 'Output Specification'
-    ..onClick.listen((e) => _triggerDetails(this.innerView)));
+    ..className = 'details-title'
+    ..onClick.listen((e) => _triggerDetails(this.innerView));
     this.view.append(this.title);
     this.view.append(new html.HRElement());
 
