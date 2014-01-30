@@ -2167,6 +2167,25 @@ var $$ = {};
     }
     return $arguments;
   },
+  checkSubtype: function(object, isField, checks, asField) {
+    var $arguments, interceptor;
+    if (object == null)
+      return false;
+    $arguments = H.getRuntimeTypeInfo(object);
+    interceptor = J.getInterceptor(object);
+    if (interceptor[isField] == null)
+      return false;
+    return H.areSubtypes(H.substitute(interceptor[asField], $arguments), checks);
+  },
+  computeTypeName: function(isField, $arguments) {
+    var t1 = J.getInterceptor$asx(isField);
+    return t1.substring$2(isField, 3, t1.get$length(isField)) + H.joinArguments($arguments, 0, null);
+  },
+  subtypeCast: function(object, isField, checks, asField) {
+    if (object != null && !H.checkSubtype(object, isField, checks, asField))
+      throw H.wrapException(H.CastErrorImplementation$(H.Primitives_objectTypeName(object), H.computeTypeName(isField, checks)));
+    return object;
+  },
   areSubtypes: function(s, t) {
     var len, i;
     if (s == null || t == null)
@@ -3207,6 +3226,14 @@ var $$ = {};
         t1.$indexSet(t1, identifier, input.textContent);
       }
     },
+    cleanRules$0: function() {
+      var t1 = this.details;
+      J.clear$0$ax(t1.$index(t1, "rules"));
+    },
+    addRule$1: function(value) {
+      var t1 = this.details;
+      J.add$1$ax(H.subtypeCast(t1.$index(t1, "rules"), "$isList", [J.JSString], "$asList"), value);
+    },
     updateDownFlow$1: function(prevId) {
       var t1, t2;
       t1 = this.uiDetails;
@@ -3224,9 +3251,12 @@ var $$ = {};
       t1.forEach$1(t1, new D.Operator_clearDownFlow_closure());
     },
     Operator$4: function(id, type, mouseX, mouseY) {
+      var t1;
       this.next = P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, J.JSBool);
       this.prev = P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, J.JSBool);
-      this.details = P.LinkedHashMap_LinkedHashMap(null, null, null, null, null);
+      t1 = P.LinkedHashMap_LinkedHashMap(null, null, null, null, null);
+      this.details = t1;
+      t1.$indexSet(t1, "rules", H.setRuntimeTypeInfo([], [J.JSString]));
     },
     static: {Operator$: function(id, type, mouseX, mouseY) {
         var t1 = new D.Operator(N.Logger_Logger("Operator"), id, type, null, null, null, null, null);
@@ -3600,17 +3630,19 @@ var $$ = {};
   BaseSpecification: {
     "": "Object;",
     initialize$0: function(_) {
-      var t1, t2;
+      var t1, t2, t3;
       t1 = this.view;
       t1.id = this.id + "-specification";
       t1.className = "output-specification";
       this.elementList.className = "segment-list";
       t1 = document.createElement("h4", null);
-      t1.textContent = "Output Specification";
       t1.className = "details-title";
-      t1.toString;
-      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.BaseSpecification_initialize_closure(this)), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      t2 = document.createElement("span", null);
+      t2.textContent = "Output Specification";
+      t2.toString;
+      t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.BaseSpecification_initialize_closure(this)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+      t1.appendChild(t2);
       this.title = t1;
       this.view.appendChild(t1);
       this.view.appendChild(document.createElement("hr", null));
@@ -3641,6 +3673,12 @@ var $$ = {};
       t1.$index(t1, identifier)._remove$0();
       t1 = this.elements;
       t1.remove$1(t1, identifier);
+    },
+    clear$0: function(_) {
+      var t1;
+      J.set$innerHtml$x(this.elementList, "");
+      t1 = this.elements;
+      t1.clear$0(t1);
     },
     select$1: function(_, previousConnections) {
       var selectElement, t1, t2, segmentList;
@@ -3948,9 +3986,6 @@ var $$ = {};
       this.label = t1;
       t1 = this.type;
       switch (t1) {
-        case "button":
-          this.input = document.createElement("button", null);
-          break;
         case "editable":
           t1 = document.createElement("div", null);
           t1.contentEditable = "true";
@@ -4283,16 +4318,11 @@ var $$ = {};
       J.set$display$x(t1.style, "block");
     }, "call$1", "get$_onHumanClose", 2, 0, 2],
     initialize$0: function(_) {
-      var t1, instructions, question, t2, t3;
+      var instructions, question, t1, t2, t3, t4;
       D.BaseDetailsUI.prototype.initialize$0.call(this, this);
       this.addElement$5$features("iteration", "number", "Number of copies", this.elements, H.fillLiteralMap(["value", "1", "min", "1", "max", "1000"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$features("expiry", "number", "Max alloted time (sec)", this.elements, H.fillLiteralMap(["value", "60", "min", "10", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$features("payment", "number", "Payment (\u00a2)", this.elements, H.fillLiteralMap(["value", "10", "min", "5", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      t1 = this.addElement$4("preview", "button", "", this.elements).input;
-      t1.textContent = "Preview Human Task";
-      t1.toString;
-      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_onHumanClick()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       this.addElement$5$features("segment-list", "list", "Available Segments", this.elements, H.fillLiteralMap(["class", "list-inline segments"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       instructions = this.addElement$4("instructions", "editable", "Instructions for human workers", this.elements);
       question = this.addElement$4("question", "editable", "Question", this.elements);
@@ -4318,6 +4348,19 @@ var $$ = {};
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(this.get$_onSegmentDragOver()), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
       this.refreshableDivs.push(instructions.input);
       this.refreshableDivs.push(question.input);
+      t3 = this.parametersViewOuter.querySelector("#parameters");
+      t2 = document.createElement("button", null);
+      t2.textContent = "preview human task";
+      t2.className = "btn btn-default btn-xs";
+      t2.toString;
+      t1 = C.EventStreamProvider_click._eventType;
+      t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, t1, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(this.get$_onHumanClick()), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
+      t3.appendChild(t2);
+      t2 = $.get$closeHumanButton();
+      t2.toString;
+      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, t1, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_onHumanClose()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     },
     refresh$1: function(specification) {
       var t1, prevSegments;
@@ -4491,10 +4534,6 @@ var $$ = {};
       t2.BaseSpecification$1(t1);
       this.output = t2;
       this.view.appendChild(t2.view);
-      t2 = $.get$closeHumanButton();
-      t2.toString;
-      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onHumanClose()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
     },
     static: {"": "SourceHumanDetailsUI_count", SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
         var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null, null, null);
@@ -4700,6 +4739,22 @@ var $$ = {};
     initialize$0: function(_) {
       D.RuleDetailsUI.prototype.initialize$0.call(this, this);
     },
+    updateOperatorDetails$0: function() {
+      var t1, e, t2, segment, action, condition, conditionInput;
+      D.BaseDetailsUI.prototype.updateOperatorDetails$0.call(this);
+      t1 = $.operators;
+      t1.$index(t1, this.id).cleanRules$0();
+      for (t1 = J.get$children$x(this.rulesDiv), t1 = t1.get$iterator(t1); t1.moveNext$0();) {
+        e = t1._current;
+        t2 = J.getInterceptor$x(e);
+        segment = H.interceptedTypeCast(t2.querySelector$1(e, ".output-segments"), "$isSelectElement").value;
+        action = H.interceptedTypeCast(t2.querySelector$1(e, ".f1"), "$isSelectElement").value;
+        condition = H.interceptedTypeCast(t2.querySelector$1(e, ".f2"), "$isSelectElement").value;
+        conditionInput = H.interceptedTypeCast(t2.querySelector$1(e, ".f3"), "$isInputElement").value;
+        t2 = $.operators;
+        t2.$index(t2, this.id).addRule$1(action + "::" + segment + "::" + condition + "::" + conditionInput);
+      }
+    },
     _addRule$1: [function(e) {
       var t1, parameter, conditionDiv, t2, t3, configDiv, t4;
       t1 = this.prevConn;
@@ -4729,7 +4784,7 @@ var $$ = {};
       t2.className = "list-inline";
       t3 = document.createElement("li", null);
       t4 = document.createElement("select", null);
-      t4.className = "form-control input-sm";
+      t4.className = "form-control input-sm f1";
       t4.appendChild(W.OptionElement_OptionElement$_("in", "in", null, false));
       t4.appendChild(W.OptionElement_OptionElement$_("out", "out", null, false));
       t3.appendChild(t4);
@@ -4745,7 +4800,7 @@ var $$ = {};
       t2.appendChild(t3);
       t3 = document.createElement("li", null);
       t1 = document.createElement("select", null);
-      t1.className = "form-control input-sm";
+      t1.className = "form-control input-sm f2";
       t1.appendChild(W.OptionElement_OptionElement$_("equals", "equals", null, false));
       t1.appendChild(W.OptionElement_OptionElement$_("not equals", "not equals", null, false));
       t1.appendChild(W.OptionElement_OptionElement$_("contains", "contains", null, false));
@@ -4753,7 +4808,7 @@ var $$ = {};
       t2.appendChild(t3);
       t3 = document.createElement("li", null);
       t1 = W.InputElement_InputElement("text");
-      t1.className = "form-control input-sm";
+      t1.className = "form-control input-sm f3";
       t3.appendChild(t1);
       t2.appendChild(t3);
       configDiv.appendChild(t2);
@@ -4786,6 +4841,20 @@ var $$ = {};
       D.RuleDetailsUI.prototype.initialize$0.call(this, this);
       this.addElement$5$features("size", "number", "Window size", this.elements, H.fillLiteralMap(["min", "1", "max", "100", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.parametersView.appendChild(this.rulesDiv);
+    },
+    updateOperatorDetails$0: function() {
+      var t1, e, t2, segment, order;
+      D.BaseDetailsUI.prototype.updateOperatorDetails$0.call(this);
+      t1 = $.operators;
+      t1.$index(t1, this.id).cleanRules$0();
+      for (t1 = J.get$children$x(this.rulesDiv), t1 = t1.get$iterator(t1); t1.moveNext$0();) {
+        e = t1._current;
+        t2 = J.getInterceptor$x(e);
+        segment = H.interceptedTypeCast(t2.querySelector$1(e, ".output-segments"), "$isSelectElement").value;
+        order = H.interceptedTypeCast(t2.querySelector$1(e, ".order"), "$isSelectElement").value;
+        t2 = $.operators;
+        t2.$index(t2, this.id).addRule$1(segment + "::" + order);
+      }
     },
     _addRule$1: [function(e) {
       var t1, parameter, conditionDiv, t2, t3, configDiv, t4;
@@ -4825,7 +4894,7 @@ var $$ = {};
       t2.appendChild(t3);
       t3 = document.createElement("li", null);
       t1 = document.createElement("select", null);
-      t1.className = "form-control input-sm";
+      t1.className = "form-control input-sm order";
       t1.appendChild(W.OptionElement_OptionElement$_("ascending", "ascending", null, false));
       t1.appendChild(W.OptionElement_OptionElement$_("descending", "descending", null, false));
       t3.appendChild(t1);
@@ -4868,6 +4937,22 @@ var $$ = {};
       t1 = this.nextConn;
       t1.forEach$1(t1, new D.SplitDetailsUI_outputSelectElement_closure(selectElement));
       return selectElement;
+    },
+    updateOperatorDetails$0: function() {
+      var t1, e, t2, operator, segment, condition, conditionInput;
+      D.BaseDetailsUI.prototype.updateOperatorDetails$0.call(this);
+      t1 = $.operators;
+      t1.$index(t1, this.id).cleanRules$0();
+      for (t1 = J.get$children$x(this.rulesDiv), t1 = t1.get$iterator(t1); t1.moveNext$0();) {
+        e = t1._current;
+        t2 = J.getInterceptor$x(e);
+        operator = H.interceptedTypeCast(t2.querySelector$1(e, ".output-flows"), "$isSelectElement").value;
+        segment = H.interceptedTypeCast(t2.querySelector$1(e, ".output-segments"), "$isSelectElement").value;
+        condition = H.interceptedTypeCast(t2.querySelector$1(e, ".f1"), "$isSelectElement").value;
+        conditionInput = H.interceptedTypeCast(t2.querySelector$1(e, ".f2"), "$isInputElement").value;
+        t2 = $.operators;
+        t2.$index(t2, this.id).addRule$1(operator + "::" + segment + "::" + condition + "::" + conditionInput);
+      }
     },
     _addRule$1: [function(e) {
       var t1, parameter, conditionDiv, t2, t3, t4, t5, configDiv;
@@ -4920,7 +5005,7 @@ var $$ = {};
       t2.appendChild(t3);
       t3 = document.createElement("li", null);
       t1 = document.createElement("select", null);
-      t1.className = "form-control input-sm";
+      t1.className = "form-control input-sm f1";
       t1.appendChild(W.OptionElement_OptionElement$_("equals", "equals", null, false));
       t1.appendChild(W.OptionElement_OptionElement$_("not equals", "not equals", null, false));
       t1.appendChild(W.OptionElement_OptionElement$_("contains", "contains", null, false));
@@ -4928,7 +5013,7 @@ var $$ = {};
       t2.appendChild(t3);
       t3 = document.createElement("li", null);
       t1 = W.InputElement_InputElement("text");
-      t1.className = "form-control input-sm";
+      t1.className = "form-control input-sm f2";
       t3.appendChild(t1);
       t2.appendChild(t3);
       configDiv.appendChild(t2);
@@ -5552,6 +5637,9 @@ var $$ = {};
     set$length: function(receiver, newLength) {
       throw H.wrapException(P.UnsupportedError$("Cannot change the length of a fixed-length list"));
     },
+    add$1: function(receiver, value) {
+      throw H.wrapException(P.UnsupportedError$("Cannot add to a fixed-length list"));
+    },
     addAll$1: function(receiver, iterable) {
       throw H.wrapException(P.UnsupportedError$("Cannot add to a fixed-length list"));
     },
@@ -5566,6 +5654,9 @@ var $$ = {};
     },
     set$length: function(_, newLength) {
       throw H.wrapException(P.UnsupportedError$("Cannot change the length of an unmodifiable list"));
+    },
+    add$1: function(_, value) {
+      throw H.wrapException(P.UnsupportedError$("Cannot add to an unmodifiable list"));
     },
     addAll$1: function(_, iterable) {
       throw H.wrapException(P.UnsupportedError$("Cannot add to an unmodifiable list"));
@@ -7028,6 +7119,12 @@ var $$ = {};
       if (t1 == null)
         this.lastPendingEvent = null;
       $event.perform$1(dispatch);
+    },
+    clear$0: function(_) {
+      if (this._state === 1)
+        this._state = 3;
+      this.lastPendingEvent = null;
+      this.firstPendingEvent = null;
     }
   },
   _cancelAndError_closure: {
@@ -7398,6 +7495,15 @@ var $$ = {};
             this._keys = null;
           }
         }
+      }
+    },
+    clear$0: function(_) {
+      if (this._collection$_length > 0) {
+        this._keys = null;
+        this._rest = null;
+        this._nums = null;
+        this._strings = null;
+        this._collection$_length = 0;
       }
     },
     forEach$1: function(_, action) {
@@ -7902,6 +8008,15 @@ var $$ = {};
       bucket.splice(index, 1);
       return true;
     },
+    clear$0: function(_) {
+      if (this._collection$_length > 0) {
+        this._elements = null;
+        this._rest = null;
+        this._nums = null;
+        this._strings = null;
+        this._collection$_length = 0;
+      }
+    },
     _computeElements$0: function() {
       var t1, result, strings, names, entries, index, i, nums, rest, bucket, $length, i0;
       t1 = this._elements;
@@ -8128,6 +8243,17 @@ var $$ = {};
           return false;
         this._unlinkCell$1(bucket.splice(index, 1)[0]);
         return true;
+      }
+    },
+    clear$0: function(_) {
+      if (this._collection$_length > 0) {
+        this._last = null;
+        this._first = null;
+        this._rest = null;
+        this._nums = null;
+        this._strings = null;
+        this._collection$_length = 0;
+        this._modifications = this._modifications + 1 & 67108863;
       }
     },
     _addHashTableEntry$2: function(table, element) {
@@ -8386,6 +8512,13 @@ var $$ = {};
     toList$0: function($receiver) {
       return this.toList$1$growable($receiver, true);
     },
+    add$1: function(receiver, element) {
+      var t1 = this.get$length(receiver);
+      if (typeof t1 !== "number")
+        return t1.$add();
+      this.set$length(receiver, t1 + 1);
+      this.$indexSet(receiver, t1, element);
+    },
     addAll$1: function(receiver, iterable) {
       var t1, element, t2;
       for (t1 = J.get$iterator$ax(iterable); t1.moveNext$0();) {
@@ -8468,6 +8601,21 @@ var $$ = {};
       if (t3 < 0 || t3 >= t2)
         return H.ioore(t1, t3);
       return t1[t3];
+    },
+    clear$0: function(_) {
+      var i, t1, t2, t3, t4;
+      i = this._head;
+      t1 = this._tail;
+      if (i !== t1) {
+        for (t2 = this._table, t3 = t2.length, t4 = t3 - 1; i !== t1; i = (i + 1 & t4) >>> 0) {
+          if (i < 0 || i >= t3)
+            return H.ioore(t2, i);
+          t2[i] = null;
+        }
+        this._tail = 0;
+        this._head = 0;
+        this._modificationCount = this._modificationCount + 1;
+      }
     },
     toString$0: function(_) {
       return H.IterableMixinWorkaround_toStringIterable(this, "{", "}");
@@ -9005,6 +9153,9 @@ var $$ = {};
           this._contents = this._contents + str;
         }
       }
+    },
+    clear$0: function(_) {
+      this._contents = "";
     },
     toString$0: function(_) {
       return this._contents;
@@ -9912,6 +10063,12 @@ var $$ = {};
   },
   CssStyleDeclarationBase: {
     "": "Object;",
+    get$clear: function(receiver) {
+      return this.getPropertyValue$1(receiver, "clear");
+    },
+    clear$0: function($receiver) {
+      return this.get$clear($receiver).call$0();
+    },
     set$cursor: function(receiver, value) {
       this.setProperty$3(receiver, "cursor", value, "");
     },
@@ -10082,6 +10239,9 @@ var $$ = {};
         throw H.wrapException(new P.StateError("More than one element"));
       return t1.firstChild;
     },
+    add$1: function(_, value) {
+      this._this.appendChild(value);
+    },
     addAll$1: function(_, iterable) {
       var t1, t2, len, i;
       t1 = J.getInterceptor$ax(iterable);
@@ -10168,6 +10328,11 @@ var $$ = {};
   },
   _AttributeMap: {
     "": "Object;",
+    clear$0: function(_) {
+      var t1;
+      for (t1 = this.get$keys(), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();)
+        this.remove$1(this, t1._current);
+    },
     forEach$1: function(_, f) {
       var t1, key;
       for (t1 = this.get$keys(), t1 = new H.ListIterator(t1, t1.length, 0, null); t1.moveNext$0();) {
@@ -10217,6 +10382,13 @@ var $$ = {};
     $indexSet: function(_, key, value) {
       this._element.setAttribute(key, value);
     },
+    remove$1: function(_, key) {
+      var t1, value;
+      t1 = this._element;
+      value = t1.getAttribute(key);
+      t1.removeAttribute(key);
+      return value;
+    },
     get$length: function(_) {
       return this.get$keys().length;
     },
@@ -10231,6 +10403,14 @@ var $$ = {};
     },
     $indexSet: function(_, key, value) {
       this._attributes._element.setAttribute("data-" + this._toHyphenedName$1(key), value);
+    },
+    clear$0: function(_) {
+      var t1, t2, t3;
+      for (t1 = this.get$keys(), t1 = new H.ListIterator(t1, t1.length, 0, null), t2 = this._attributes._element; t1.moveNext$0();) {
+        t3 = "data-" + this._toHyphenedName$1(t1._current);
+        t2.getAttribute(t3);
+        t2.removeAttribute(t3);
+      }
     },
     forEach$1: function(_, f) {
       var t1 = this._attributes;
@@ -10512,6 +10692,9 @@ var $$ = {};
     "": "Object;",
     get$iterator: function(receiver) {
       return new W.FixedSizeListIterator(receiver, this.get$length(receiver), -1, null);
+    },
+    add$1: function(receiver, value) {
+      throw H.wrapException(P.UnsupportedError$("Cannot add to immutable List."));
     },
     addAll$1: function(receiver, iterable) {
       throw H.wrapException(P.UnsupportedError$("Cannot add to immutable List."));
@@ -11083,6 +11266,10 @@ var $$ = {};
       var t1 = this._base;
       t1.$indexSet(t1, key, value);
     },
+    clear$0: function(_) {
+      var t1 = this._base;
+      t1.clear$0(t1);
+    },
     forEach$1: function(_, f) {
       var t1 = this._base;
       t1.forEach$1(t1, f);
@@ -11444,6 +11631,9 @@ var $$ = {};
       var t1 = this.readClasses$0();
       return t1.elementAt$1(t1, index);
     },
+    clear$0: function(_) {
+      this.modify$1(new P.CssClassSetImpl_clear_closure());
+    },
     modify$1: function(f) {
       var s, ret;
       s = this.readClasses$0();
@@ -11457,6 +11647,12 @@ var $$ = {};
     "": "Closure:14;value_0",
     call$1: function(s) {
       return s.add$1(s, this.value_0);
+    }
+  },
+  CssClassSetImpl_clear_closure: {
+    "": "Closure:14;",
+    call$1: function(s) {
+      return s.clear$0(s);
     }
   },
   FilteredElementList: {
@@ -11901,6 +12097,9 @@ J._initCustomEvent$4$x = function(receiver, a0, a1, a2, a3) {
 };
 J._replaceChild$2$x = function(receiver, a0, a1) {
   return J.getInterceptor$x(receiver)._replaceChild$2(receiver, a0, a1);
+};
+J.add$1$ax = function(receiver, a0) {
+  return J.getInterceptor$ax(receiver).add$1(receiver, a0);
 };
 J.addAll$1$ax = function(receiver, a0) {
   return J.getInterceptor$ax(receiver).addAll$1(receiver, a0);

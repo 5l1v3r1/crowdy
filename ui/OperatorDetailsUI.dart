@@ -13,9 +13,6 @@ class ElementUI {
     ..className = 'col-sm-3 control-label';
 
     switch (this.type) {
-      case 'button':
-        this.input = new html.ButtonElement();
-        break;
       case 'editable':
         this.input = new html.DivElement()
         ..contentEditable = 'true';
@@ -264,7 +261,6 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   SourceHumanDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new InputHumanOutputSpecification(this.id);
     this.view.append(this.output.view);
-    closeHumanButton.onClick.listen(_onHumanClose);
   }
 
   void _onHumanClick(html.MouseEvent e) {
@@ -324,10 +320,6 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     this.addElement('expiry', 'number', 'Max alloted time (sec)', this.elements, features: {'value': '60', 'min': '10', 'max': '300'});
     this.addElement('payment', 'number', 'Payment (¢)', this.elements, features: {'value': '10', 'min': '5', 'max': '300'});
 
-    ElementUI previewButton = this.addElement('preview', 'button', '', this.elements);
-    previewButton.input.text = 'Preview Human Task';
-    previewButton.input..onClick.listen(_onHumanClick);
-
     this.addElement('segment-list', 'list', 'Available Segments', this.elements, features: {'class': 'list-inline segments'});
     ElementUI instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', this.elements);
     ElementUI question = this.addElement('question', 'editable', 'Question', this.elements);
@@ -340,6 +332,13 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     question.input.onDragOver.listen(_onSegmentDragOver);
     this.refreshableDivs.add(instructions.input);
     this.refreshableDivs.add(question.input);
+
+    this.parametersViewOuter.querySelector('#parameters').append(new html.ButtonElement()
+    ..text = 'preview human task'
+    ..className = 'btn btn-default btn-xs'
+    ..onClick.listen(_onHumanClick));
+
+    closeHumanButton.onClick.listen(_onHumanClose);
   }
 
   bool refresh(OutputSpecification specification) {
@@ -599,6 +598,18 @@ class SelectionDetailsUI extends RuleDetailsUI {
     super.initialize();
   }
 
+  void updateOperatorDetails() {
+    super.updateOperatorDetails();
+    operators[this.id].cleanRules();
+    for (html.Element e in this.rulesDiv.children) {
+      String segment = (e.querySelector('.output-segments') as html.SelectElement).value;
+      String action = (e.querySelector('.f1') as html.SelectElement).value;
+      String condition = (e.querySelector('.f2') as html.SelectElement).value;
+      String conditionInput = (e.querySelector('.f3') as html.InputElement).value;
+      operators[this.id].addRule('${action}::${segment}::${condition}::${conditionInput}');
+    }
+  }
+
   void _addRule(html.MouseEvent e) {
     if (this.prevConn.length < 1) {
       log.warning('Please first make sure there is an input flow to this operator.');
@@ -625,7 +636,7 @@ class SelectionDetailsUI extends RuleDetailsUI {
       ..className = 'list-inline'
       ..append(new html.LIElement()
         ..append(new html.SelectElement()
-          ..className = 'form-control input-sm'
+          ..className = 'form-control input-sm f1'
           ..append(new html.OptionElement(data: 'in', value: 'in'))
           ..append(new html.OptionElement(data: 'out', value: 'out'))))
       ..append(new html.LIElement()
@@ -634,12 +645,12 @@ class SelectionDetailsUI extends RuleDetailsUI {
         ..append(this.output.select(this.prevConn)))
       ..append(new html.LIElement()
         ..append(new html.SelectElement()
-          ..className = 'form-control input-sm'
+          ..className = 'form-control input-sm f2'
           ..append(new html.OptionElement(data: 'equals', value: 'equals'))
           ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
           ..append(new html.OptionElement(data: 'contains', value: 'contains'))))
       ..append(new html.LIElement()
-        ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm'))
+        ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm f3'))
     );
 
     count += 1;
@@ -664,6 +675,16 @@ class SortDetailsUI extends RuleDetailsUI {
 
     // Ugly Hack to move rules after size parameter
     this.parametersView.append(this.rulesDiv);
+  }
+
+  void updateOperatorDetails() {
+    super.updateOperatorDetails();
+    operators[this.id].cleanRules();
+    for (html.Element e in this.rulesDiv.children) {
+      String segment = (e.querySelector('.output-segments') as html.SelectElement).value;
+      String order = (e.querySelector('.order') as html.SelectElement).value;
+      operators[this.id].addRule('${segment}::${order}');
+    }
   }
 
   void _addRule(html.MouseEvent e) {
@@ -696,7 +717,7 @@ class SortDetailsUI extends RuleDetailsUI {
         ..append(new html.SpanElement()..text = 'in'))
       ..append(new html.LIElement()
         ..append(new html.SelectElement()
-        ..className = 'form-control input-sm'
+        ..className = 'form-control input-sm order'
         ..append(new html.OptionElement(data: 'ascending', value: 'ascending'))
         ..append(new html.OptionElement(data: 'descending', value: 'descending'))))
       ..append(new html.LIElement()
@@ -724,6 +745,18 @@ class SplitDetailsUI extends RuleDetailsUI {
     selectElement.className = 'output-flows form-control input-sm';
     this.nextConn.forEach((identifier, connected) => selectElement.append(new html.OptionElement(data: identifier, value: identifier)));
     return selectElement;
+  }
+
+  void updateOperatorDetails() {
+    super.updateOperatorDetails();
+    operators[this.id].cleanRules();
+    for (html.Element e in this.rulesDiv.children) {
+      String operator = (e.querySelector('.output-flows') as html.SelectElement).value;
+      String segment = (e.querySelector('.output-segments') as html.SelectElement).value;
+      String condition = (e.querySelector('.f1') as html.SelectElement).value;
+      String conditionInput = (e.querySelector('.f2') as html.InputElement).value;
+      operators[this.id].addRule('${operator}::${segment}::${condition}::${conditionInput}');
+    }
   }
 
   void _addRule(html.MouseEvent e) {
@@ -765,12 +798,12 @@ class SplitDetailsUI extends RuleDetailsUI {
         ..append(this.output.select(this.prevConn)))
       ..append(new html.LIElement()
         ..append(new html.SelectElement()
-        ..className = 'form-control input-sm'
+        ..className = 'form-control input-sm f1'
         ..append(new html.OptionElement(data: 'equals', value: 'equals'))
         ..append(new html.OptionElement(data: 'not equals', value: 'not equals'))
         ..append(new html.OptionElement(data: 'contains', value: 'contains'))))
       ..append(new html.LIElement()
-        ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm'))
+        ..append(new html.InputElement(type: 'text')..className = 'form-control input-sm f2'))
     );
 
     count += 1;
