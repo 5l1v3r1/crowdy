@@ -11,9 +11,10 @@ class Operator {
   Map details;
 
   Operator(String this.id, String this.type, num mouseX, num mouseY) {
-    next = new Map<String, bool>();
-    prev = new Map<String, bool>();
-    details = new Map();
+    this.next = new Map<String, bool>();
+    this.prev = new Map<String, bool>();
+    this.details = new Map();
+    this.details['rules'] = new List<String>();
   }
 
   void initialize() {
@@ -92,6 +93,14 @@ class Operator {
     else if (input is html.DivElement) {
       this.details[identifier] = input.text;
     }
+  }
+
+  void cleanRules() {
+    this.details['rules'].clear();
+  }
+
+  void addRule(String value) {
+    (this.details['rules'] as List<String>).add(value);
   }
 
   bool updateDownFlow(String prevId) {
