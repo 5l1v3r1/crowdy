@@ -1,16 +1,24 @@
 \chapter{Background}
 \label{chap:background}
 
-\section{Preliminaries}
 In the following, first the preliminary information about crowdsourcing concepts 
-is summarized, since crowdsourcing is a relatively area of computation. 
+is summarized, since crowdsourcing is a relatively area of computation. Later,
+the related studies and works are examined thoroughly.
+
+\section{Preliminaries}
 Crowdsourcing term is first proposed by Jeff Howe~\cite{Howe2006b} in 2006. 
 Although there are a long list of terms (collective intelligence, social computing, 
 human computation, global brain etc.), in which some of them are new and some 
 others are old, the use of term "crowdsourcing" in the academia (demonstrated in 
-Figure 1) indicates that research on this domain is promisingly increasing. 
-Similarly Figure 2 shows increasing trend of crowdsourcing among others 
-in term of search results.
+Figure~\ref{fig:keywordstats}) indicates that research on this domain is promisingly 
+increasing.
+
+\begin{figure}[ht]
+	\label{fig:keywordstats}
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/keyword_statistics.png}
+	\caption{The frequency of crowdsourcing keyword in academic papers.}
+\end{figure}
 
 The discussion in this section concentrates on Amazon's Mechanical Turk (MTurk).
 MTurk is an intermediary platform between employers (known as requesters) 
@@ -416,10 +424,9 @@ but not enabling users make changes on it directly.
 
 
 \begin{sidewaystable}
-\caption{Comparison of related works}
 \label{tab:comparison}
 %\bigskip
-\centering
+%\centering
   \begin{tabular}{| l | c | c | c | c | c | c | c | c | }
   \hline
   Feature & Jabberwocky & WeFlow & TurKit & CrowdLang & AutoMan & Turkomatic & CrowdForge & CrowdWeaver \\ \hline
@@ -430,9 +437,18 @@ but not enabling users make changes on it directly.
   Heterogeneity & \CIRCLE & \LEFTcircle & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle \\ \hline
   User Interface & \Circle & \Circle & \Circle & \Circle & \Circle & \CIRCLE & \CIRCLE & \CIRCLE \\ \hline
   Progress & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle & \CIRCLE \\ \hline
-  \\ \\ \\
-  \multicolumn{9}{l}{\CIRCLE: Yes, \LEFTcircle: Partially, \Circle: No} \\
-  \end{tabular}  
+  %\\ \\ \\
+  %\multicolumn{9}{l}{\CIRCLE: Yes, \LEFTcircle: Partially, \Circle: No} \\
+  \end{tabular}
+  \vspace{3 mm}
+  \caption*{
+  	\begin{tabular*}{1\textwidth}{l l}
+		\CIRCLE: & Yes \\
+		\LEFTcircle: & Partially \\
+		\Circle: & No \\
+	\end{tabular*}
+  }
+  \caption{Comparison of related works}
 \end{sidewaystable}
 
 \newpage
