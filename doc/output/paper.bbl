@@ -64,11 +64,6 @@ A.~Kittur, J.~V. Nickerson, M.~Bernstein, E.~Gerber, A.~Shaw, J.~Zimmerman,
 A.~Bernstein, M.~Klein, and T.~W. Malone, ``Programming the global brain,''
   {\em Communications of the ACM}, vol.~55, no.~5, pp.~41--43, 2012.
 
-\bibitem{Dorn2012a}
-C.~Dorn, R.~N. Taylor, and S.~Dustdar, ``Flexible social workflows:
-  Collaborations as human architecture,'' {\em Internet Computing, IEEE},
-  vol.~16, no.~2, pp.~72--77, 2012.
-
 \bibitem{Ahmad2011}
 S.~Ahmad, A.~Battle, Z.~Malkani, and S.~Kamvar, ``The jabberwocky programming
   environment for structured social computing,'' in {\em Proceedings of the
@@ -134,6 +129,11 @@ C.~Dorn and R.~N. Taylor, ``Architecture-driven modeling of adaptive
 \bibitem{Schall2010}
 D.~Schall, S.~Dustdar, and M.~B. Blake, ``Programming human and software-based
   web services,'' {\em Computer}, pp.~82--85, 2010.
+
+\bibitem{Dorn2012a}
+C.~Dorn, R.~N. Taylor, and S.~Dustdar, ``Flexible social workflows:
+  Collaborations as human architecture,'' {\em Internet Computing, IEEE},
+  vol.~16, no.~2, pp.~72--77, 2012.
 
 \bibitem{Ipeirotis2010}
 P.~G. Ipeirotis, ``Analyzing the amazon mechanical turk marketplace,'' {\em

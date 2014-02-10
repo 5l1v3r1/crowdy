@@ -2,37 +2,43 @@
 
 %% Background
 
-Over the past years there has been a trend towards systems of systems. This new concept
-goes beyond the size of current system definition by several measures such as number of people
-the system employing for different purposes; number of connections and interdependencies 
-among software components; number of hardware elements; amount of data stored, accessed, 
-manipulated, and refined and number of lines of code. These systems are called 
-Ultra-Large-Scale (ULS) systems in~\cite{ULSReport} and perceived as socio-technical 
-ecosystems. The socio-technical aspect is a result of decentralized and dynamic structure
-formed by people and software components interacting in complex ways.
+The asynchrony, heterogeneity and inherent loose coupling that characterize applications 
+promote system of systems as a natural design abstraction for growing class of software 
+systems. This new concept goes beyond the size of current system definition by several 
+measures such as 
+number of people the system employing for different purposes; 
+number of connections and interdependencies among components; 
+number of hardware elements; 
+amount of data stored, accessed, manipulated, and refined 
+and number of lines of code. Such systems are called 
+Ultra-Large-Scale (ULS) systems and perceived as socio-technical 
+ecosystems~\cite{ULSReport}.
 
-Therefore, people become not only users, but also an integral part of the system providing 
-content and computation, and the overall behavior along with the erosion of the people and 
-system boundary~\cite{ULSReport}. The difference between the roles concerning systems 
-and humans (user, developer) becomes less distinct. Together with the increasing scale 
-and variety of people and software components involved within system, the homogeneity 
-of system components ceases. Thus, system becomes a social and technical ecosystem 
-with ability to solve numerous problems, even the ones requiring human intelligence.
+The socio-technical aspect of an ULS system is a result of decentralized and dynamic 
+structure formed by people and software components interacting in complex ways. 
+People become not only users, but also an integral part of the system providing 
+content and computation, and the overall behavior~\cite{ULSReport}. 
+The difference between the roles concerning system components and 
+humans (user, developer) becomes less distinct. The homogeneity 
+of components ceases together with the increasing scale and variety of people 
+and software components involved within the system. Thus, system gains a social 
+and technical characteristic with the ability to solve numerous problems, 
+even the ones requiring human intelligence.
 
-This "social" aspect of systems has expanded the scale of collaboration from small or 
+Social aspect of systems has expanded the scale of collaboration from small or 
 medium sized to internet-scale~\cite{Dorn2012b} leading to new era of computation. 
-This new ways of combining creative and cognitive people with number-crunching 
+Collaboration of creative and cognitive people with number-crunching 
 computer systems have appeared under many names such as crowdsourcing, 
 human computation, collective intelligence, social computing, global brain etc, 
 for which you can find detailed studies on classification of systems and ideas 
 in~\cite{Quinn2009, Quinn2011} collected under distributed human computation term.
 
-The term "crowdsourcing", which is the main consideration in this body of work, 
+The term $crowdsourcing$, which is the main consideration in this body of work, 
 is first coined by Jeff Howe in the June 2006 issue of Wired magazine~\cite{Howe2006b} 
 as an alternative to the traditional, in-house approaches focusing on assigning tasks 
 to employees in the company for solving problems. Crowdsourcing describes a new 
 mainly web-based business model that exploits collaboration of individuals in a 
-distributed network through an open call for proposals. Howe offers the following definition:
+distributed network through an open call for proposals. The term is described by Howe as:
 
 \begin{quotation}
 Simply defined, crowdsourcing represents the act of a company or institution taking 
@@ -52,11 +58,11 @@ cannot be easily completed by computers or computerized. Hundreds of thousands
 of people have worked on various tasks including deciphering scanned text (recaptcha.net), 
 discovering new galaxies (galaxyzoo.org), seeking missing people (helpfindjim.com), 
 solving research problems (Innocentive), designing t-shirts (Threadless). Even 
-Wikipedia and Linux can be viewed as crowdsourcing systems, from that point of view, 
-we can say that a crowdsourcing system enables explicit collaboration of users to 
+Wikipedia and Linux can be viewed as crowdsourcing systems from a point of view that
+conceives crowdsourcing as explicit collaboration of users to 
 build a long-lasting and beneficial artefact~\cite{Doan2011}.
 
-Indeed, one the most interesting developments in terms of crowdsourcing is 
+Indeed, one of the most interesting developments in terms of crowdsourcing is 
 Amazon's Mechanical Turk (MTurk), which is a general purpose crowdsourcing platform 
 recruiting large numbers of people to complete diverse jobs. Assignments on MTurk 
 range from labeling images with keywords, transcribing an audio snippet, finding some 
@@ -95,55 +101,62 @@ to-be-completed.
 Recently detailed analyses on current mechanisms based on foundations of 
 crowdsourcing reveal the necessity of a more sophisticated problem-solving 
 paradigm. Researchers explicitly state the need for a new generic platform 
-with ability to tackle advanced problems. Kittur et al.~\cite{Kittur2013} in discusion on future of 
-crowdsourcing suggest researchers to form new concepts of crowd work beyond 
+with ability to tackle advanced problems. Kittur et al.~\cite{Kittur2013} 
+suggest researchers to form new concepts of crowd work beyond 
 the simple, independent and deskilled tasks. Based on the fact that complex 
-work cannot be accomplished via the current simple and parallel approaches, 
-the authors assert requirement of a platform to design multi-stage workflows 
+work cannot be accomplished via existing simple and parallel approaches,
+the authors state requirement for a platform to design multi-stage workflows 
 to complete complex tasks, which can be decomposed into smaller subtasks, 
 by appropriate groups of workers selected through a set of constraints.
 
 In another piece of work, Bernstein et al.~\cite{Bernstein2012} regard all the 
-people and computers as constituting a "global brain", and they indicate the 
+people and computers as constituting a $global$ $brain$, and they indicate the 
 need for powerful new programming metaphors that can more accurately 
 demonstrate the way people and computer work in collaboration. These 
-metaphors are to solve dependent sections of more complex problems by 
+metaphors are expected to solve dependent sections of more complex problems by 
 decompositions and management of interdependencies. Further, the specification 
 of task sequence and information flow are expected with deliberate collaboration 
 over solutions.
 
-From architectural perspective human involvement in current mechanisms should 
-be rethought due to two major reasons: limited support for collaboration and 
-ignorance of collaboration patterns in problem-solving~\cite{Dorn2012a}.
-
 However, recent research only partially addresses these challenges by 
 providing programming frameworks and models
-~\cite{Ahmad2011, Kokciyan2012, Little2009, Minder2011, Barowy2012, Kulkarni2012, Kittur2011, Kittur2012} 
+~\cite{Kittur2011, Ahmad2011, Kokciyan2012, Little2009, Minder2011, Barowy2012, Kulkarni2012, Kittur2012} 
 for massive parallel human computation, limited-scope and ability user interfaces
-~\cite{Bernstein2010, Marcus2011, Marcus2011b, Rzeszotarski2012}, 
+~\cite{Marcus2011, Bernstein2010, Marcus2011b, Rzeszotarski2012}, 
 concepts for planning~\cite{Zhang2012}, 
 analysis of collaboration~\cite{Dorn2012}. 
 These works fail to tackle challenges of crowdsourcing due to various reasons: 
 having rigid structure and requirements, being only applicable to a small and 
 bounded problem-set, focusing on a specific aspect of crowdsourcing, 
 being developed in ad hoc manner, requiring a significant amount of work in 
-order to implement and integrate. These works and related issues are further 
-explained and examined thoroughly in the following section.
+order to implement and integrate.
+
+%These works and related issues are further 
+%explained and examined thoroughly in the following section.
 
 Further, human workers are often regarded as homogeneous and 
 interchangeable due to the issues of scalability and availability in existing 
-mechanisms~\cite{Ahmad2011}. However, people in a crowd may have different 
-skills, and perform different roles on their interests and expertise~\cite{Zhang2011}. 
-This reveals the current lack of consideration of availability and preferences of people, 
-constraints and relationships~\cite{Schall2010}. This deficiency additionally restricts 
-the scope and complexity of tasks that can be addressed by these systems, and 
-disregards one of the main characteristics of crowdsourcing, which is the diversity 
-of computation sources. Again there is a fundamental requirement for development 
-of general-purpose infrastructures that more accurately reflect the collaboration 
-of people and computers~\cite{Bernstein2012, Minder2012}.
+mechanisms~\cite{Ahmad2011}. However, people in a crowd have different 
+skills, and can perform different roles based on their interests and expertise~\cite{Zhang2011}. 
+Current services are created without considering the availability and preferences of 
+people, constraints and relationships, and the support of dynamic 
+collaborations~\cite{Schall2010}. Thus, human involvement in current mechanisms should 
+be rethought due to limited support for collaboration and 
+ignorance of collaboration patterns in problem-solving~\cite{Dorn2012a} 
+over general-purpose infrastructures that can more accurately reflect 
+the collaboration of people and computers~\cite{Minder2012, Bernstein2012}.
 
-Nevertheless, the development of more generic crowdsourcing platforms, 
-more applications and structures, and complex contributions is expected 
+%This additionally restricts 
+%the scope and complexity of tasks that can be addressed by crowdsourcing systems, and 
+%disregards one of the main characteristics of crowdsourcing, which is the diversity 
+%of computation sources.
+
+%Again there is a fundamental requirement for general-purpose 
+%infrastructures that can more accurately reflect the collaboration 
+%of people and computers~\cite{Minder2012, Bernstein2012}.
+ 
+Nevertheless, the development of more generic crowdsourcing platforms 
+along with new applications and structures are expected 
 by the research community~\cite{Doan2011}.
 
 %% Purpose

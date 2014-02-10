@@ -7,20 +7,24 @@ the related studies and works are examined thoroughly.
 
 \section{Preliminaries}
 Crowdsourcing term is first proposed by Jeff Howe~\cite{Howe2006b} in 2006. 
-Although there are a long list of terms (collective intelligence, social computing, 
+Although there is a long list of terms (collective intelligence, social computing, 
 human computation, global brain etc.), in which some of them are new and some 
 others are old, the use of term "crowdsourcing" in the academia (demonstrated in 
 Figure~\ref{fig:keywordstats}) indicates that research on this domain is promisingly 
 increasing.
 
 \begin{figure}[ht]
-	\label{fig:keywordstats}
 	\centering
 	\includegraphics[width=0.85\textwidth]{figures/keyword_statistics.png}
-	\caption{The frequency of crowdsourcing keyword in academic papers.}
+	\caption[The frequency of crowdsourcing keyword in academic papers.]{The frequency of crowdsourcing keyword in academic papers.\footnotemark}
+	\label{fig:keywordstats}
 \end{figure}
 
-The discussion in this section concentrates on Amazon's Mechanical Turk (MTurk).
+\footnotetext{The statistics are gathered through ACM Digital Library.}
+
+Amazon's Mechanical Turk (MTurk) is the main consideration for the recent 
+academic studies on crowdsourcing. Similar approach is 
+taken in this work to discuss the common terms and form a preliminary list of concepts. 
 MTurk is an intermediary platform between employers (known as requesters) 
 and employees (workers or turkers) for various-sized and difficulty assignments. 
 The platform has become successful for tackling the problems that cannot be 
@@ -150,15 +154,22 @@ to accept assignments.
 
 \section{Related Work}
 In response to the challenges of crowdsourcing a number of attempts have been made 
-by the researchers. In the following, the studies that related to this work are listed, 
+by the researchers. In the following, the studies related to this work are listed, 
 described and examined in detail. The studies that try to address the challenges of 
 crowdsourcing and proposing new way of creating crowdsourcing workflows are
-considered as related. Otherwise, the related work list would be too long, 
+considered as related only. Otherwise, the related work list would be too long, 
 since many views Wikipedia and Linux as crowdsourcing systems.
 
 
 
 \subsection{Crowdsourcing Platforms}
+The following is a list of crowdsourcing studies that propose a new platform 
+to create crowdsourcing services. Each of these studies is discussed in detail 
+and compared to each other in Table~\ref{tab:relatedcomparison}. The comparison of related 
+works is performed over the building blocks of a crowdsourcing platform: 
+concept, existence of human components, existence of software components, 
+requirement for programming, heterogeneity, user interface and progress.
+
 \subsubsection{Jabberwocky}
 Jabberwocky~\cite{Ahmad2011} is a social computing stack consists of three 
 main components: Dormouse, ManReduce, and Dog. Dormouse is created to 
@@ -424,13 +435,12 @@ but not enabling users make changes on it directly.
 
 
 \begin{sidewaystable}
-\label{tab:comparison}
 %\bigskip
 %\centering
   \begin{tabular}{| l | c | c | c | c | c | c | c | c | }
   \hline
   Feature & Jabberwocky & WeFlow & TurKit & CrowdLang & AutoMan & Turkomatic & CrowdForge & CrowdWeaver \\ \hline
-  Concept & MapReduce & Workflow & Iterative & N/A & N/A & Divide-and-Conquer & MapReduce & Data Flow \\ \hline
+  Concept & MapReduce & Workflow & Iterative & N/A & N/A & Divide\&Conquer & MapReduce & Data Flow \\ \hline
   Human components & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE \\ \hline
   Software components & \CIRCLE & \CIRCLE & \Circle & \CIRCLE & \CIRCLE & \Circle & \Circle & \CIRCLE \\ \hline
   Requires programming & \CIRCLE & \Circle & \CIRCLE & \CIRCLE & \CIRCLE & \Circle & \Circle & \Circle \\ \hline
@@ -448,7 +458,8 @@ but not enabling users make changes on it directly.
 		\Circle: & No \\
 	\end{tabular*}
   }
-  \caption{Comparison of related works}
+  \caption{Comparison of existing crowdsourcing platforms.}
+  \label{tab:relatedcomparison}
 \end{sidewaystable}
 
 \newpage
