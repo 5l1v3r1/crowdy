@@ -318,7 +318,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     super.initialize();
     this.addElement('iteration', 'number', 'Number of copies', this.elements, features: {'value': '1', 'min': '1', 'max': '1000'});
     this.addElement('expiry', 'number', 'Max alloted time (sec)', this.elements, features: {'value': '60', 'min': '10', 'max': '300'});
-    this.addElement('payment', 'number', 'Payment (¢)', this.elements, features: {'value': '10', 'min': '5', 'max': '300'});
+    this.addElement('payment', 'number', 'Payment (¢)', this.elements, features: {'value': '10', 'min': '5', 'max': '100'});
 
     this.addElement('segment-list', 'list', 'Available Segments', this.elements, features: {'class': 'list-inline segments'});
     ElementUI instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', this.elements);

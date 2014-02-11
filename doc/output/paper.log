@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  10 FEB 2014 00:51
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  11 FEB 2014 00:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -475,7 +475,7 @@ Chapter 1.
 
 ] [2] [3] [4]) (text/background.tex [5]
 Chapter 2.
-<figures/keyword_statistics.png, id=322, 727.518pt x 511.6716pt>
+<figures/keyword_statistics.png, id=330, 727.518pt x 511.6716pt>
 File: figures/keyword_statistics.png Graphic file (type png)
 <use figures/keyword_statistics.png>
 Package pdftex.def Info: figures/keyword_statistics.png used on input line 18.
@@ -507,11 +507,31 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 18.
 [23
 
-] [24]) (output/paper.bbl [25] [26
+] <figures/helloworld.png, id=459, 610.28pt x 87.82813pt>
+File: figures/helloworld.png Graphic file (type png)
+<use figures/helloworld.png>
+Package pdftex.def Info: figures/helloworld.png used on input line 53.
+(pdftex.def)             Requested size: 350.68272pt x 50.46994pt.
+[24] <figures/basicoperator.pdf, id=465, 239.89626pt x 90.3375pt>
+File: figures/basicoperator.pdf Graphic file (type pdf)
+<use figures/basicoperator.pdf>
+Package pdftex.def Info: figures/basicoperator.pdf used on input line 76.
+(pdftex.def)             Requested size: 206.28247pt x 77.68045pt.
+[25 <./figures/helloworld.png> <./figures/basicoperator.pdf>] <figures/SourceOperator.pdf, id=476, 104.39pt x 68.255pt>
+File: figures/SourceOperator.pdf Graphic file (type pdf)
+<use figures/SourceOperator.pdf>
+Package pdftex.def Info: figures/SourceOperator.pdf used on input line 93.
+(pdftex.def)             Requested size: 103.14124pt x 67.44246pt.
+[26 <./figures/SourceOperator.pdf>] <figures/SinkOperator.pdf, id=490, 104.39pt x 68.255pt>
+File: figures/SinkOperator.pdf Graphic file (type pdf)
+<use figures/SinkOperator.pdf>
+Package pdftex.def Info: figures/SinkOperator.pdf used on input line 162.
+(pdftex.def)             Requested size: 103.14124pt x 67.44246pt.
+[27]) (output/paper.bbl [28 <./figures/SinkOperator.pdf>] [29
 
-] [27] [28])
+] [30] [31])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 19.
-[29]
+[32]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 19.
 (output/paper.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 19.
@@ -521,18 +541,19 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 19.
  ) 
 Here is how much of TeX's memory you used:
- 9389 strings out of 493315
- 137225 string characters out of 6137904
- 249716 words of memory out of 5000000
- 12562 multiletter control sequences out of 15000+600000
- 16151 words of font info for 63 fonts, out of 8000000 for 9000
+ 9422 strings out of 493315
+ 137924 string characters out of 6137904
+ 249980 words of memory out of 5000000
+ 12583 multiletter control sequences out of 15000+600000
+ 16320 words of font info for 64 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,14n,75p,244b,511s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/wasy/wasy10.pfb>
-Output written on output/paper.pdf (38 pages, 333819 bytes).
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mtt12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/wasy/wasy10.pfb>
+Output written on output/paper.pdf (41 pages, 376971 bytes).
 PDF statistics:
- 545 PDF objects out of 1000 (max. 8388607)
- 485 compressed objects within 5 object streams
- 116 named destinations out of 1000 (max. 500000)
- 318 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 601 PDF objects out of 1000 (max. 8388607)
+ 526 compressed objects within 6 object streams
+ 123 named destinations out of 1000 (max. 500000)
+ 338 words of extra memory for PDF output out of 10000 (max. 10000000)
 
