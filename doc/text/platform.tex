@@ -34,12 +34,12 @@ that require both human intelligence and computing power. A typical application 
 three main high-level components: data ingest, processing and data egress.
 
 Let's consider a minimal "Hello World" application that has these three components 
-in total, connected in a simple pipeline topology. Figure~\ref{fig:helloworld} demonstrates 
+in total, connected in a simple pipeline topology. Figure~\ref{fig:hello world} demonstrates 
 the application in the form of a flow graph. On the ingest side, there is a 
 \textit{source operator}, which, acts like a data generator. Source operator produces 
 data tuples that are processed down the flow by the 
-\textit{processing operator}. Finally, the \textit{sink operator} simply converts the tuples i
-n such a form (text file, email etc) that can be easily interpreted by requesters.
+\textit{processing operator}. Finally, the \textit{sink operator} simply converts the tuples 
+in such a form (text file, email etc) that can be easily interpreted by requesters.
 
 The application flow graph is specified as a series of operator instances and connections 
 (data flows) that link them. A data flow basically transfers data tuples 
@@ -52,7 +52,7 @@ rules, which is studied in the rest of this chapter.
 	\centering
 	\includegraphics[width=0.85\textwidth]{figures/helloworld.png}
 	\caption{A sample, minimal $Crowdy$ application.}
-	\label{fig:helloworld}
+	\label{fig:hello world}
 \end{figure}
 
 In a more realistic application, one or more source operators can be employed to produce 
@@ -67,15 +67,15 @@ creation, and type determines configuration respectively. In addition, operator 
 name and description fields that can be used for bookkeeping purposes.
 
 Operator may have an input port or output port or both corresponding to it's type 
-definition. Figure~\ref{fig:basicoperator} demonstrates a base operator, which 
+definition. Figure~\ref{fig:basic operator} demonstrates a base operator, which 
 consists of a body and ports. Although it is not shown here, each operator presentation 
 has a specific icon on their body associated to it's type.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figures/basicoperator.pdf}
+	\includegraphics[height=100px]{figures/basicoperator.pdf}
 	\caption{Base operator representation.}
-	\label{fig:basicoperator}
+	\label{fig:basic operator}
 \end{figure}
 
 $Crowdy$ provides a set of built-in operators that can be used to build applications. 
@@ -85,14 +85,14 @@ grouped into six main categories: \textit{source, sink, processing, relational, 
 
 \subsection{Source operators}
 The set of source operators generates data tuples. These operators do not have 
-an input port, but have an output port, which outputs data tuples. Figure~\ref{fig:sourceoperator} 
+an input port, but have an output port, which outputs data tuples. Figure~\ref{fig:source operator} 
 represents a source operator.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.25\textwidth]{figures/SourceOperator.pdf}
+	\includegraphics[height=60px]{figures/SourceOperator.pdf}
 	\caption{Source operator representation.}
-	\label{fig:sourceoperator}
+	\label{fig:source operator}
 \end{figure}
 
 Source operators together with processing operators are the ones that can be 
@@ -138,7 +138,7 @@ respectively.
 % customize collaboration by specifying audience
 
 \textbf{manual.}
-The \textit{manual source operator} is another stateless operator to produce new data 
+The \textit{manual source operator} is a stateless operator to produce new data 
 tuples. However, this operator uses manually entered text to create new tuples. Operator 
 retrieves the manual text, parses it line by line and then applies delimiter if selected. 
 Therefore, each line constitutes a data tuple, and delimiter is used to create segments 
@@ -153,25 +153,127 @@ Manual source operator has the following parameters:
 \end{itemize}
 
 \subsection{Sink operators}
-The set of sink operators generates data tuples. These operators do not have 
-an input port, but have an output port, which outputs data tuples. Figure~\ref{fig:sinkoperator} 
-represents a source operator.
+The set of sink operators is where data tuples are serialized and converted into formats 
+that can be used by requesters with ease. These operators has one input port, but no 
+output port. Figure \ref{fig:sink operator} demonstrates a sink operator.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.25\textwidth]{figures/SinkOperator.pdf}
+	\includegraphics[height=60px]{figures/SinkOperator.pdf}
 	\caption{Sink operator representation.}
-	\label{fig:sinkoperator}
+	\label{fig:sink operator}
 \end{figure}
 
+\textbf{email.}
+The \textit{email sink operator} is a stateless operator to convert data tuples into a 
+text format and email them to requesters. \texttt{email} parameter specifies the 
+requester's email address. 
+
+\textbf{file.}
+The \textit{file sink operator} is a stateless operator to serialize the data tuples into 
+a file. Operator has one parameter \texttt{filename} that is used to specify the name 
+of file in which tuples will be written.
+
 \subsection{Processing operators}
-TODO
+The set of processing operators provides data tuple processing via human workers. 
+These operators have both input and output ports. Figure \ref{fig:processing operator} shows 
+a processing operator.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[height=60px]{figures/ProcessingOperator.pdf}
+	\caption{Processing operator representation.}
+	\label{fig:processing operator}
+\end{figure}
+
+As mentioned before, processing operators can manipulate the data flow specification 
+in addition to source operators. These operators can change the existing flow specification 
+by adding, deleting or editing data segments.
+
+\textbf{human.}
+The \texttt{human processing operator} is almost same as human source operator. 
+The difference is that human processing operator has an input port. So there is a 
+flow of data tuples coming to the operator. These incoming tuples are made available 
+to requesters via their specification. Therefore, requesters can create an information 
+flow from one operator to another.
+
+The parameters of human processing operator is no different than the parameters of 
+human source operator. However, requesters can use incoming data in 
+\texttt{instructions}, \texttt{question} and \texttt{input list} (applicable to single choice 
+and multiple choice inputs). Available data segments of incoming flow can be placed 
+in these parameters to create human tasks that are handled dynamically.
 
 \subsection{Relational operators}
-TODO
+The set of relational operators enables fundamental manipulation operations on 
+the flow of data tuples. These operators have both input and output port. Each of 
+these operators implements a specific functionality providing continuous and 
+non-blocking processing on tuples.
+
+\textbf{selection.}
+The \textit{selection operator} is a stateless operator used to filter tuples. A typical 
+selection operator is shown in Figure~\ref{fig:selection operator}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[height=60px]{figures/SelectionOperator.pdf}
+	\caption{Selection operator representation.}
+	\label{fig:selection operator}
+\end{figure}
+
+On a per-tuple basis a boolean predicate is evaluated and a decision is made as 
+to whether to filter the corresponding tuple or not. Boolean predicates are specified 
+by requesters as part of operator parametrization. These predicates share the 
+predefined format explained in the following:
+
+[Explanation]
+
+[Code format]
+
+\textbf{sort.}
+The \textit{sort operator} is a stateful and windowed operator used to first group 
+tuples and then sort them based on the specified data segment and order. Figure
+~\ref{fig:sort operator} illustrates the operator.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[height=60px]{figures/SortOperator.pdf}
+	\caption{Sort operator representation.}
+	\label{fig:sort operator}
+\end{figure}
+
+Sorting is performed and results are produced (outputted one by one) every time 
+window trigger policy fires. The policy is triggered when the number of data tuples 
+reaches \texttt{window size}, which is a parameter. 
 
 \subsection{Utility operators}
 TODO
+
+\textbf{enrich.}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[height=60px]{figures/EnrichOperator.pdf}
+	\caption{Enrich operator representation.}
+	\label{fig:enrichoperator}
+\end{figure}
+
+\textbf{split.}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[height=60px]{figures/SplitOperator.pdf}
+	\caption{Split operator representation.}
+	\label{fig:splitoperator}
+\end{figure}
+
+\textbf{union.}
+The \textit{union operator} is a stateless operator used to join two or more data flow 
+into one.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[height=60px]{figures/UnionOperator.pdf}
+	\caption{Union operator representation.}
+	\label{fig:unionoperator}
+\end{figure}
 
 \section{Flow compositon}
 TODO

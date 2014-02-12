@@ -4322,7 +4322,7 @@ var $$ = {};
       D.BaseDetailsUI.prototype.initialize$0.call(this, this);
       this.addElement$5$features("iteration", "number", "Number of copies", this.elements, H.fillLiteralMap(["value", "1", "min", "1", "max", "1000"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$features("expiry", "number", "Max alloted time (sec)", this.elements, H.fillLiteralMap(["value", "60", "min", "10", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      this.addElement$5$features("payment", "number", "Payment (\u00a2)", this.elements, H.fillLiteralMap(["value", "10", "min", "5", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$5$features("payment", "number", "Payment (\u00a2)", this.elements, H.fillLiteralMap(["value", "10", "min", "5", "max", "100"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$features("segment-list", "list", "Available Segments", this.elements, H.fillLiteralMap(["class", "list-inline segments"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       instructions = this.addElement$4("instructions", "editable", "Instructions for human workers", this.elements);
       question = this.addElement$4("question", "editable", "Question", this.elements);
