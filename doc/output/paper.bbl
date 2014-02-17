@@ -155,4 +155,8 @@ J.~Dean and S.~Ghemawat, ``Mapreduce: simplified data processing on large
 N.~Kokciyan, ``Weflow: We follow the flow,'' Master's thesis, Galatasaray
   University, 2009.
 
+\bibitem{Richardson2008}
+L.~Richardson and S.~Ruby, {\em RESTful web services}.
+\newblock O'Reilly Media, Inc., 2008.
+
 \end{thebibliography}
