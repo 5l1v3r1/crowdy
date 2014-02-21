@@ -13,3 +13,5 @@ svg.LineElement tempLine;
 
 html.Element _dragSource;
 int opNumber = 1;
+
+bool isFirefox = html.window.navigator.userAgent.contains("Firefox");
