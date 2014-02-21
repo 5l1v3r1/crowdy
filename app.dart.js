@@ -2481,6 +2481,26 @@ var $$ = {};
   stringContainsUnchecked: function(receiver, other, startIndex) {
     return C.JSString_methods.indexOf$2(receiver, other, startIndex) !== -1;
   },
+  stringReplaceAllUnchecked: function(receiver, from, to) {
+    var result, $length, i, t1;
+    if (from === "")
+      if (receiver === "")
+        return to;
+      else {
+        result = P.StringBuffer$("");
+        $length = receiver.length;
+        result.write$1(to);
+        for (i = 0; i < $length; ++i) {
+          t1 = receiver[i];
+          t1 = result._contents + t1;
+          result._contents = t1;
+          result._contents = t1 + to;
+        }
+        return result._contents;
+      }
+    else
+      return receiver.replace(new RegExp(from.replace(new RegExp("[[\\]{}()*+?.\\\\^$|]", 'g'), "\\$&"), 'g'), to.replace("$", "$$$$"));
+  },
   ReflectionInfo: {
     "": "Object;jsFunction,data,isAccessor,requiredParameterCount,optionalParameterCount,areOptionalParametersNamed,functionType",
     static: {"": "ReflectionInfo_REQUIRED_PARAMETERS_INFO,ReflectionInfo_OPTIONAL_PARAMETERS_INFO,ReflectionInfo_FUNCTION_TYPE_INDEX,ReflectionInfo_FIRST_DEFAULT_ARGUMENT", ReflectionInfo_ReflectionInfo: function(jsFunction) {
@@ -4275,7 +4295,7 @@ var $$ = {};
       t2.forEach$1(t2, new D.SourceHumanDetailsUI__onHumanClick_closure(this));
     }, "call$1", "get$_onHumanClick", 2, 0, 2],
     _appendInputToPreview$1: function(e) {
-      var t1, type, $name, t2, t3, options, t4;
+      var t1, type, $name, t2, t3, options, t4, sourceElement, inputType;
       t1 = J.getInterceptor$x(e);
       type = t1.querySelector$1(e, "label").textContent;
       t1 = t1.get$dataset(e);
@@ -4300,12 +4320,23 @@ var $$ = {};
         t3.setAttribute("max", J.get$value$x(C.NodeList_methods.get$last(t4)));
         t2.appendChild(t3);
         t1.appendChild(t2);
-      } else if (type === "single choice") {
-        options = J.get$children$x(e.querySelector("div.options"));
-        options.forEach$1(options, new D.SourceHumanDetailsUI__appendInputToPreview_closure($name));
-      } else if (type === "multiple choice") {
-        options = J.get$children$x(e.querySelector("div.options"));
-        options.forEach$1(options, new D.SourceHumanDetailsUI__appendInputToPreview_closure0($name));
+      } else {
+        t1 = type === "single choice";
+        if (t1 || type === "multiple choice") {
+          sourceElement = e.querySelector("div.options");
+          inputType = t1 ? "radio" : "checkbox";
+          t1 = J.getInterceptor$x(sourceElement);
+          if (J.contains$1$asx(window.navigator.userAgent, "Firefox")) {
+            t1 = t1.get$innerHtml(sourceElement);
+            t1.toString;
+            t1 = H.stringReplaceAllUnchecked(t1, "<div>", "");
+            t1 = H.stringReplaceAllUnchecked(t1, "</div>", "");
+            H.IterableMixinWorkaround_forEach(H.stringReplaceAllUnchecked(t1, "</br>", "").split("<br>"), new D.SourceHumanDetailsUI__appendInputToPreview_closure($name, inputType));
+          } else {
+            options = t1.get$children(sourceElement);
+            options.forEach$1(options, new D.SourceHumanDetailsUI__appendInputToPreview_closure0($name, inputType));
+          }
+        }
       }
     },
     _onHumanClose$1: [function(e) {
@@ -4552,31 +4583,31 @@ var $$ = {};
     }
   },
   SourceHumanDetailsUI__appendInputToPreview_closure: {
-    "": "Closure:14;name_0",
+    "": "Closure:14;name_0,inputType_1",
     call$1: function(e) {
       var t1, t2, t3, t4;
       t1 = $.get$humanModalBody();
       t2 = document.createElement("div", null);
       t2.className = "radio";
       t3 = document.createElement("label", null);
-      t4 = W.InputElement_InputElement("radio");
+      t4 = W.InputElement_InputElement(this.inputType_1);
       J.set$name$x(t4, this.name_0);
       t3.appendChild(t4);
-      J.insertAdjacentText$2$x(t3, "beforeend", J.get$text$x(e));
+      J.insertAdjacentText$2$x(t3, "beforeend", e);
       t2.appendChild(t3);
       return t1.appendChild(t2);
     }
   },
   SourceHumanDetailsUI__appendInputToPreview_closure0: {
-    "": "Closure:14;name_1",
+    "": "Closure:14;name_2,inputType_3",
     call$1: function(e) {
       var t1, t2, t3, t4;
       t1 = $.get$humanModalBody();
       t2 = document.createElement("div", null);
-      t2.className = "checkbox";
+      t2.className = "radio";
       t3 = document.createElement("label", null);
-      t4 = W.InputElement_InputElement("checkbox");
-      J.set$name$x(t4, this.name_1);
+      t4 = W.InputElement_InputElement(this.inputType_3);
+      J.set$name$x(t4, this.name_2);
       t3.appendChild(t4);
       J.insertAdjacentText$2$x(t3, "beforeend", J.get$text$x(e));
       t2.appendChild(t3);

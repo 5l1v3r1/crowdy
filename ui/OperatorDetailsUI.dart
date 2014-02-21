@@ -290,21 +290,26 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
       ..attributes['min'] = options.first.value
       ..attributes['max'] = options.last.value));
     }
-    else if (type == 'single choice') {
-      List<html.Element> options = e.querySelector('div.options').children;
-      options.forEach((e) => humanModalBody.append(new html.DivElement()
-      ..className = 'radio'
-      ..append(new html.LabelElement()
-      ..append(new html.InputElement(type: 'radio')..name = name)
-      ..appendText(e.text))));
-    }
-    else if (type == 'multiple choice') {
-      List<html.Element> options = e.querySelector('div.options').children;
-      options.forEach((e) => humanModalBody.append(new html.DivElement()
-      ..className = 'checkbox'
-      ..append(new html.LabelElement()
-      ..append(new html.InputElement(type: 'checkbox')..name = name)
-      ..appendText(e.text))));
+    else if (type == 'single choice' || type == 'multiple choice') {
+      html.Element sourceElement = e.querySelector('div.options');
+      String inputType = type == 'single choice' ? 'radio' : 'checkbox';
+      if (html.window.navigator.userAgent.contains("Firefox")) {
+        List<String> options = sourceElement.innerHtml
+            .replaceAll('<div>', '').replaceAll('</div>', '').replaceAll('</br>', '').split('<br>');
+          options.forEach((e) => humanModalBody.append(new html.DivElement()
+          ..className = 'radio'
+          ..append(new html.LabelElement()
+          ..append(new html.InputElement(type: inputType)..name = name)
+            ..appendText(e))));
+      }
+      else {
+        List<html.Element> options = sourceElement.children;
+        options.forEach((e) => humanModalBody.append(new html.DivElement()
+        ..className = 'radio'
+        ..append(new html.LabelElement()
+        ..append(new html.InputElement(type: inputType)..name = name)
+          ..appendText(e.text))));
+      }
     }
   }
 
