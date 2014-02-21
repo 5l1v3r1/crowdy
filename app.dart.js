@@ -3003,7 +3003,8 @@ var $$ = {};
       t2 = new W._ElementCssClassSet(t2);
       t2.add$1(t2, "moving");
       t1.get$dataTransfer(e).effectAllowed = "move";
-      e.dataTransfer.setData("text/plain", "God damn Firefox!");
+      if (J.contains$1$asx(window.navigator.userAgent, "Firefox"))
+        e.dataTransfer.setData("text/plain", "God damn Firefox!");
     }, "call$1", "get$_onDragStart", 2, 0, 2],
     _onDragEnd$1: [function(e) {
       var t1 = $._dragSource;
@@ -4602,7 +4603,8 @@ var $$ = {};
       t1 = J.get$classes$x(t1.get$segment());
       t1.add$1(t1, "moving");
       J.get$dataTransfer$x(e).effectAllowed = "move";
-      e.dataTransfer.setData("text/plain", "God damn Firefox!");
+      if (J.contains$1$asx(window.navigator.userAgent, "Firefox"))
+        e.dataTransfer.setData("text/plain", "God damn Firefox!");
       return;
     }
   },

@@ -381,7 +381,10 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     _dragSegment = segment;
     _dragSegment.segment.classes.add('moving');
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', 'God damn Firefox!');
+
+    if (html.window.navigator.userAgent.contains("Firefox")) {
+      e.dataTransfer.setData('text/plain', 'God damn Firefox!');
+    }
   }
 
   void _onSegmentDrop(html.MouseEvent e) {
