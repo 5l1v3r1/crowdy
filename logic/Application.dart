@@ -60,7 +60,7 @@ class Application {
     _dragSource.classes.add('moving');
     e.dataTransfer.effectAllowed = 'move';
 
-    if (html.window.navigator.userAgent.contains("Firefox")) {
+    if (isFirefox) {
       e.dataTransfer.setData('text/plain', 'God damn Firefox!');
     }
   }

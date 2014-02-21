@@ -293,7 +293,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     else if (type == 'single choice' || type == 'multiple choice') {
       html.Element sourceElement = e.querySelector('div.options');
       String inputType = type == 'single choice' ? 'radio' : 'checkbox';
-      if (html.window.navigator.userAgent.contains("Firefox")) {
+      if (isFirefox) {
         List<String> options = sourceElement.innerHtml
             .replaceAll('<div>', '').replaceAll('</div>', '').replaceAll('</br>', '').split('<br>');
           options.forEach((e) => humanModalBody.append(new html.DivElement()
@@ -387,7 +387,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     _dragSegment.segment.classes.add('moving');
     e.dataTransfer.effectAllowed = 'move';
 
-    if (html.window.navigator.userAgent.contains("Firefox")) {
+    if (isFirefox) {
       e.dataTransfer.setData('text/plain', 'God damn Firefox!');
     }
   }
