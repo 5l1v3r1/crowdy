@@ -231,6 +231,7 @@ class UnionDetailsUI extends OutputDetailsUI {
   }
 
   void initialize() {
+    this.parametersViewOuter.hidden = true;
     super.initialize();
   }
 }
@@ -363,7 +364,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
         ..attributes['data-segment'] = segment.name.id
         ..className = 'segment-name'
         ..draggable = true
-        ..onDrag.listen((e) => _dragSegment = segment)));
+        ..onDrag.listen((e) => _onSegmentDragStart(e, segment))));
     this.refreshableDivs.forEach((e) => e.querySelectorAll('span[data-segment="$id"]').forEach((e) => e.querySelector('span.segment-name').text = segment.name.text));
   }
 
@@ -376,7 +377,15 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     }
   }
 
+  void _onSegmentDragStart(html.MouseEvent e, OutputSegmentUI segment) {
+    _dragSegment = segment;
+    _dragSegment.segment.classes.add('moving');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', 'God damn Firefox!');
+  }
+
   void _onSegmentDrop(html.MouseEvent e) {
+    e.preventDefault();
     String segmentId = _dragSegment.name.id;
     String segmentValue = _dragSegment.name.text;
     (e.target as html.HtmlElement).append(
