@@ -1,6 +1,6 @@
 part of crowdy;
 
-class Application {
+class Application extends Object {
 
   final Logger log = new Logger('Application');
 
@@ -26,8 +26,17 @@ class Application {
     units.onDragEnd.listen(_onDragEnd);
 
     // Refresh down stream when output specification changes
+    modal.onClick.listen(_closeModal);
     closeButton.onClick.listen(_modalClosed);
     modalAlert.querySelector('.close').onClick.listen((e) => modalAlert.style.display = 'none');
+
+    log.info("Application is created.");
+  }
+
+  void _closeModal(html.MouseEvent e) {
+    if(e.target == modal) {
+      this._modalClosed(e);
+    }
   }
 
   void _modalClosed(html.MouseEvent e) {
@@ -35,12 +44,16 @@ class Application {
     modalAlert.style.display = 'none';
     modal.style.display = 'none';
     canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId));
+
+    log.info("Operator modal for ${currentOperatorId} is closed.");
   }
 
   void deselect(html.MouseEvent e) {
     if (e.target is svg.SvgSvgElement && selectedOperator != null) {
       selectedOperator.group.setAttribute('class', '');
       selectedOperator = null;
+
+      log.info("Operator ${selectedOperator.id} deselected.");
     }
   }
 
@@ -63,10 +76,14 @@ class Application {
     if (isFirefox) {
       e.dataTransfer.setData('text/plain', 'God damn Firefox!');
     }
+
+    log.info("Dragging ${_dragSource.text} is started.");
   }
 
   void _onDragEnd(html.MouseEvent e) {
     _dragSource.classes.remove('moving');
+
+    log.info("Dragging ${_dragSource.text} is ended.");
   }
 
   void _onDragOver(html.MouseEvent e) {
@@ -76,12 +93,14 @@ class Application {
   void _onDrop(html.MouseEvent e) {
     e.preventDefault();
     html.Element dropTarget = e.target;
-    if (dropTarget == canvas) {
+    if (dropTarget == canvas && _dragSource != null && _dragSource.classes.contains('moving')) {
       String operatorId = 'operator_$opNumber';
       var mouseCoordinates = getRelativeMouseCoordinates(e);
       operators[operatorId] = addOperator(operatorId, _dragSource.dataset['unit-type'], mouseCoordinates['x'], mouseCoordinates['y']);
       operators[operatorId].initialize();
       opNumber += 1;
+
+      log.info("${_dragSource.text} is dropped.");
     }
   }
 
@@ -128,6 +147,8 @@ class Application {
         newOperator = new Operator(id, type, x, y);
         break;
     }
+
+    log.info("An operator with type ${type} and id ${id} is added.");
 
     return newOperator;
   }

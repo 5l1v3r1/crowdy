@@ -3,7 +3,7 @@ part of crowdy;
 class ElementUI {
   String id, type;
   html.LabelElement label;
-  html.HtmlElement input;
+  html.Element input;
 
   ElementUI(String this.id, String this.type, String description,
       {Map<String, String> attributes: null, List<String> options: null}) {
@@ -17,8 +17,17 @@ class ElementUI {
         this.input = new html.DivElement()
         ..contentEditable = 'true';
         break;
+      case 'email':
+        this.input = new html.EmailInputElement();
+        break;
+      case 'file':
+        this.input = new html.FileUploadInputElement();
+        break;
       case 'list':
         this.input = new html.UListElement();
+        break;
+      case 'number':
+        this.input = new html.NumberInputElement();
         break;
       case 'select':
         this.input = new html.SelectElement();

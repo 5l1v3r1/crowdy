@@ -25,13 +25,15 @@ void main() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((LogRecord rec) {
     print('${rec.level.name}: ${rec.time}: ${rec.message}');
-    var newMessage = new html.LIElement();
-    newMessage.text = rec.message;
-    messageList.children.insert(0, newMessage);
-    html.document.querySelector('ul#bottom-tabs li a span#count').text = '${messageList.children.length}';
-    if (rec.loggerName == 'OperatorDetails') {
-      modalAlert.style.display = 'block';
-      modalAlert.querySelector('span.message').text = rec.message;
+    if (rec.level.value > 800) {
+      var newMessage = new html.LIElement();
+      newMessage.text = rec.message;
+      messageList.children.insert(0, newMessage);
+      html.document.querySelector('ul#bottom-tabs li a span#count').text = '${messageList.children.length}';
+      if (rec.loggerName == 'OperatorDetails') {
+        modalAlert.style.display = 'block';
+        modalAlert.querySelector('span.message').text = rec.message;
+      }
     }
   });
 

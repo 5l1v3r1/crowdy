@@ -2,6 +2,8 @@ part of crowdy;
 
 class BaseOperatorUI {
 
+  final Logger log = new Logger('OperatorUI');
+
   svg.GElement group;
   svg.RectElement body;
   String id;
@@ -101,6 +103,7 @@ class BaseOperatorUI {
   void remove() {
     this.group.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE));
     canvas.children.remove(this.group);
+    log.info("${selectedOperator.id} is removed.");
   }
 
   void addBackgroundImage(String image) {

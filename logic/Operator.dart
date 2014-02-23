@@ -50,6 +50,7 @@ class Operator {
   void connectFrom(String previousOperatorId) {
     this.prev[previousOperatorId] = true;
     this.updateDownFlow(previousOperatorId);
+    log.info("${previousOperatorId} connected to ${this.id}.");
   }
 
   void removeNext(String nextOperatorId) {
@@ -59,6 +60,7 @@ class Operator {
   void removePrevious(String previousOperatorId) {
     this.prev.remove(previousOperatorId);
     this.clearDownFlow();
+    log.info("Connection from ${previousOperatorId} to ${this.id} is removed.");
   }
 
   void _onDoubleClick(html.MouseEvent e) {
@@ -67,6 +69,8 @@ class Operator {
     modalBody.children.add(this.uiDetails.view);
     modal.classes.add('in');
     modal.style.display = 'block';
+
+    log.info("Operator modal for ${currentOperatorId} is opened.");
   }
 
   void _refresh(html.CustomEvent e) {
