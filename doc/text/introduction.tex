@@ -14,7 +14,7 @@ and number of lines of code. Such systems are called
 Ultra-Large-Scale (ULS) systems and perceived as socio-technical 
 ecosystems~\cite{ULSReport}.
 
-The socio-technical aspect of an ULS system is a result of decentralized and dynamic 
+The socio-technical aspect of a system is a result of decentralized and dynamic 
 structure formed by people and software components interacting in complex ways. 
 People become not only users, but also an integral part of the system providing 
 content and computation, and the overall behavior~\cite{ULSReport}. 
@@ -36,7 +36,7 @@ in~\cite{Quinn2009, Quinn2011} collected under distributed human computation ter
 The term $crowdsourcing$, which is the main consideration in this body of work, 
 is first coined by Jeff Howe in the June 2006 issue of Wired magazine~\cite{Howe2006b} 
 as an alternative to the traditional, in-house approaches focusing on assigning tasks 
-to employees in the company for solving problems. Crowdsourcing describes a new 
+to employees in the company for solving problems. Crowdsourcing describes a new, 
 mainly web-based business model that exploits collaboration of individuals in a 
 distributed network through an open call for proposals. The term is described by Howe as:
 
@@ -53,7 +53,7 @@ Crowdsourcing as the new and powerful mechanism of computation has become
 powerful to accomplish work online~\cite{Kittur2011}. Over the past decade, numerous 
 crowdsourcing systems have appeared on the Web (Threadless, iStockphoto, 
 InnoCentive etc). Such systems enabling excessive collaboration of people have 
-provided the solutions to the problems and tasks that are trivial for humans, but 
+provided solutions to the problems and tasks that are trivial for humans, but 
 cannot be easily completed by computers or computerized. Hundreds of thousands 
 of people have worked on various tasks including deciphering scanned text (recaptcha.net), 
 discovering new galaxies (galaxyzoo.org), seeking missing people (helpfindjim.com), 
@@ -69,7 +69,7 @@ range from labeling images with keywords, transcribing an audio snippet, finding
 piece of information on the Web. Requesters submit jobs, which are called Human 
 Intelligent Tasks or HITs in MTurk parlance, as HTML forms. Respectively workers, 
 who are the crowd of users, (called Turkers on MTurk) perform or complete these 
-jobs by inputting their answers receiving a small payment in return. This actual 
+jobs by inputting their answers and receiving a small payment in return. This actual 
 platform and other example systems listed above present the potential to accomplish 
 work in different areas within less time and money required by traditional 
 methods~\cite{Minder2012, Marcus2011}.
@@ -105,18 +105,18 @@ with ability to tackle advanced problems. Kittur et al.~\cite{Kittur2013}
 suggest researchers to form new concepts of crowd work beyond 
 the simple, independent and deskilled tasks. Based on the fact that complex 
 work cannot be accomplished via existing simple and parallel approaches,
-the authors state requirement for a platform to design multi-stage workflows 
+the authors state the requirement for a platform to design multi-stage workflows 
 to complete complex tasks, which can be decomposed into smaller subtasks, 
 by appropriate groups of workers selected through a set of constraints.
 
 In another piece of work, Bernstein et al.~\cite{Bernstein2012} regard all the 
-people and computers as constituting a $global$ $brain$, and they indicate the 
-need for powerful new programming metaphors that can more accurately 
+people and computers as constituting a $global$ $brain$. Authors indicate the 
+need for new powerful programming metaphors that can more accurately 
 demonstrate the way people and computer work in collaboration. These 
 metaphors are expected to solve dependent sections of more complex problems by 
 decompositions and management of interdependencies. Further, the specification 
-of task sequence and information flow are expected with deliberate collaboration 
-over solutions.
+of task sequence and information flow are expected to enabled deliberate 
+collaboration over solutions.
 
 However, recent research only partially addresses these challenges by 
 providing programming frameworks and models
@@ -163,15 +163,22 @@ by the research community~\cite{Doan2011}.
 
 \section{Purpose}
 
-To address the issues, a new extensible general-purpose platform for crowdsourcing 
-is proposed in this work. The new platform, $Crowdy$, is a computing stack that 
-consists of a model-based framework, and on top of that there is the runtime environment 
-supporting design and development of effective and efficient collaboration of
-human and software components. This platform is concentrated on providing 
-mechanisms that can be used to decompose the implementation of an application 
-into a set of components as a close representation of the real-world problem. 
-The main characteristic of this work is to show how sophisticated problems can be 
-accomplished cleanly and easily relying on component-based model.
+To address these issues, a new general-purpose and extensible platform for crowdsourcing 
+is proposed in this work. The new platform, $Crowdy$, is a computing stack to design 
+and develop crowdsourcing applications for effective and efficient collaboration of
+human and software components. The platform consists of an application editor, a runtime 
+environment and computation resources. Users design applications by simply 
+creating and connecting operators together. These applications are submitted to runtime 
+environment. The runtime environment executes applications by creating processes. 
+A process is performed via corresponding computation resources, which can be either 
+people or software. In the case of human computation existing crowdsourcing services 
+are used. Otherwise, computers are utilized.
+
+This platform is concentrated on providing mechanisms that can be used to decompose 
+the implementation of an application into a set of components as a close representation 
+of the real-world problem. The main characteristic of this work is to show how 
+sophisticated problems can be accomplished cleanly and easily relying on 
+component-based model.
 
 %% Thesis Plan
 
@@ -180,5 +187,6 @@ accomplished cleanly and easily relying on component-based model.
 The remainder of the work continues as follows. In Chapter \ref{chap:background}, 
 background information related to this study is given and previous works are examined. 
 Chapter \ref{chap:platform} provides the details of the proposed platform. Motivating 
-examples are described and developed using the proposed platform in Chapter 4. 
-In Chapter 5, a brief discussion of future work is given. A final chapter concludes this study.
+examples are described and developed using the proposed platform in Chapter 
+\ref{chap:examples}. In Chapter \ref{chap:discussion}, a brief discussion of future work 
+is given. A final chapter concludes this study.
