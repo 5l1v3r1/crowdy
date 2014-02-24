@@ -3,7 +3,8 @@
 
 In the following, first the preliminary information about crowdsourcing concepts 
 is summarized, since crowdsourcing is a relatively area of computation. Later,
-the related studies and works are examined thoroughly.
+the building blocks of a crowdsourcing platform is described, and related works 
+are examined thoroughly over this description.
 
 \section{Preliminaries}
 Crowdsourcing term is first proposed by Jeff Howe~\cite{Howe2006b} in 2006. 
@@ -20,15 +21,20 @@ increasing.
 	\label{fig:keywordstats}
 \end{figure}
 
-\footnotetext{The statistics are gathered through ACM Digital Library.}
-
-Amazon's Mechanical Turk (MTurk) is the main consideration for the recent 
-academic studies on crowdsourcing. Similar approach is 
-taken in this work to discuss the common terms and form a preliminary list of concepts. 
-MTurk is an intermediary platform between employers (known as requesters) 
+Researchers have been exploring different approaches to employ crowd of people 
+in solving various problems. From task creation to quality control there has been a 
+lot of research in crowdsourcing.  Amazon's Mechanical Turk (MTurk) is the main 
+consideration for the recent academic studies on crowdsourcing. MTurk is an 
+intermediary platform between employers (known as requesters) 
 and employees (workers or turkers) for various-sized and difficulty assignments. 
 The platform has become successful for tackling the problems that cannot be 
 solved by computers and subject to numerous research studies.
+
+Similar to other academic studies, MTurk is considered in this work to discuss 
+the common terms and form a preliminary list of concepts. In the following, 
+the fundamental concepts of crowdsourcing is explained.
+
+\footnotetext{The statistics are gathered through ACM Digital Library.}
 
 \subsection{Tasks}
 Task is a piece of work to be done by the crowd. Terms task, micro-task and job 
@@ -42,7 +48,7 @@ or number(s).
 
 In addition to the labels attached to input forms, task has a short description 
 that provides the instructions and keywords, which will help workers search for 
-specific tasks. Further, number of assignments (copies) that requester want completed 
+specific tasks. Further, number of assignments (copies) that requester wants completed 
 per task can be set. Additional copies of the same task allows parallel processing. 
 In that case, the system is supposed to ensure that the parallel workers are unique 
 (i.e., no single worker complete the same task more than once).
@@ -152,14 +158,47 @@ to accept assignments.
 
 
 
+\section{Building Blocks of a Platform}
+Kittur et al. provides a detailed description for crowdsourcing platform~\cite{Kittur2013}. 
+Based on this description building blocks of a crowdsourcing platform is defined in 
+the following section. Related studies are examined using that definition and the 
+proposed platform is developed over these blocks.
+
+A crowdsourcing platform is a platform to manage tasks and workers in the 
+process of solving problems through multi-stage workflows. Platform should enable 
+decomposition of complex tasks into subtasks and assign them appropriate group of 
+workers. Workers are formed by people with different skills and expertise. The motivation 
+of workers must be guaranteed through various approaches 
+such as reputation or payment. Quality assurance is required to ensure the output 
+of a task is high quality and contributes to solution.
+
+Regarding this definition, a crowdsourcing platform consists of three basic elements:
+
+\textbf{Workflow design.} Today's simple parallel approach is not enough to solve 
+complex problems. Complex tasks have dependencies, changing requirements and 
+require multiple types of problem solving skills. Solving problems not only requires 
+people but also computers. Therefore, platform should enable human-computer 
+collaboration in solving complex tasks.
+
+\textbf{Task assignment.} Complex problems has various types of tasks that require 
+different computation resources. Some problems may require human intelligence, some 
+others may not. If a problem needs people to be solved, it should be assigned to the ones 
+that has the right set of skills.
+
+\textbf{Quality control} Crowdsourcing is susceptible to quality control issues. Low quality 
+work is common among human computation. Thus, platform should enable requesters 
+to control quality of the work done and if possible improve it.
+
+
+
+
 \section{Related Work}
 In response to the challenges of crowdsourcing a number of attempts have been made 
 by the researchers. In the following, the studies related to this work are listed, 
-described and examined in detail. The studies that try to address the challenges of 
-crowdsourcing and proposing new way of creating crowdsourcing workflows are
+described and examined in detail. The studies, which try to address the challenges of 
+crowdsourcing and proposing new way of creating crowdsourcing workflows, are
 considered as related only. Otherwise, the related work list would be too long, 
 since many views Wikipedia and Linux as crowdsourcing systems.
-
 
 
 \subsection{Crowdsourcing Platforms}
@@ -167,9 +206,10 @@ The following is a list of crowdsourcing studies that propose a new platform
 to create crowdsourcing services. Each study is discussed extensively 
 and compared to other studies in Table~\ref{tab:relatedcomparison}. 
 The comparison of related works is performed over the building blocks of 
-crowdsourcing platform: 
-concept, existence of human components, existence of software components, 
-requirement for programming, heterogeneity, user interface and progress.
+crowdsourcing platform that is given in the previous section.
+
+%concept, existence of human components, existence of software components, 
+%requirement for programming, heterogeneity, user interface and progress.
 
 \subsubsection{Jabberwocky}
 Jabberwocky~\cite{Ahmad2011} is a social computing stack consists of three 
