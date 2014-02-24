@@ -434,6 +434,19 @@ Figure~\ref{fig:union operator} demonstrates the operator.
 Union operator requires incoming flows to have the same specification. Otherwise, 
 union operation will basically fail.
 
-\section{Flow compositon}
+\subsection{Flow}
+Flow is the connection between operators used to move information from one operator 
+to another. A flow is formed by one or more data segments. A segment has an identifier 
+and corresponding value. In that sense, flow is like a hash table where segment identifiers 
+are keys, and values stored in segments are values.
+
+Flow specification is immutable for all the operators except for source and processing ones. 
+These operators cannot change the specification, but rather they can drop or add data tuples 
+having that specification. As opposed to that, source operators are useful to create flow 
+specification in the early stages of workflow design. Requesters can add data segments and 
+give names to these segments to be utilized down the flow. In processing operators, flow 
+specification can be redefined similar to source operators.
+
+\section{Application Development}
 \label{sec:flow comp}
 TODO

@@ -111,8 +111,77 @@ and kept in a database. This information can be later utilized by requesters whi
 associating specific constraints to the assignments such as limiting age to some 
 range for a specific task. 
 
+
+
+\section{Building Blocks of a Platform}
+Kittur et al. provides a detailed description for the future crowdsourcing platform 
+in~\cite{Kittur2013}. Based on this description building blocks of a crowdsourcing 
+platform is defined in the following.
+
+A crowdsourcing platform is a platform to manage tasks and workers in the 
+process of solving problems through multi-stage workflows. Platform should enable 
+decomposition of complex tasks into subtasks and assign them appropriate group of 
+workers. Workers are formed by people with different skills and expertise. The motivation 
+of workers is guaranteed through various approaches 
+such as reputation or payment. Quality assurance is required to ensure the output 
+of a task is high quality and contributes to solution.
+
+Regarding this definition, a crowdsourcing platform consists of three basic elements:
+
+\subsection{Workflow Design}
+Complex and sophisticated problems cannot be solved by current simple parallel 
+approach. The reason is that these problems have interdependent portions with 
+changing space, time and skill-set requirements. On the other hand, current 
+approaches undertake problems through bulk processing of independent 
+and simple tasks that require no specific expertise. Therefore, a more appropriate 
+problem solving approach is required.
+
+The need for a more advanced approach is mentioned in \cite{Kittur2013}. Authors 
+indicate $workflows$ in the sense of decomposing problems into smaller chunks, 
+coordinating dependencies among these chunks and combining results from them. 
+In that sense, workflow design refers to the development of applications to solve 
+complex problems. It considers design and management of computation resources 
+to solve the problem.
+
+Researchers often apply existing programming paradigms to problem specification 
+and workflow design. MapReduce~\cite{Kittur2011, Ahmad2011}, 
+Divide-and-Conquer~\cite{Kulkarni2012}, 
+Iterative~\cite{Little2009}, 
+Workflow ~\cite{Kokciyan2012} are some of these approaches taken for 
+organizing and managing complex workflows. Although these paradigms 
+perfectly fit to some problems, there are other problems not suited well to those. 
+
+In terms of crowdsourcing, workflow could involve different scale of operations that 
+can only be solved by diverse set of actors. A workflow may tackle highly dependent 
+tasks (e.g., translating a poem and assuring its quality) or massively parallel 
+tasks (e.g., finding some piece of information on the Web). Therefore, the workflow 
+design has diverse space requirements.
+
+\subsection{Task Assignment}
+In the context of crowd work, coordination of limited resources is prominent, 
+because problems has various types of tasks that require coordination and 
+collaboration of different computation resources. Crowdsourcing problems  
+have pieces that cannot be computerized, but require human intelligence. In 
+addition, there may be other problems that require both human and software 
+resources.
+
+Although availability and assignment of software resources can be managed 
+by certain algorithms, the case for human resources is rather unpredictable and 
+hard to solve. Human resources are formed by workers and the availability of a 
+worker cannot be predicted or known at any time. In fact, human resources 
+are not homogenous like computers. They are rather heterogeneous and each 
+worker in the crowd has a specific set of skills. Therefore, there may be a situation 
+in which a task couldn't be assigned to any available workers due to mismatch 
+between task's requirements and skill-set of available workers. Ideally workers 
+are employed with tasks that fit their area of expertise. In practice, requesters 
+may disregard this constraint, but results would not be useful at all.
+
+One important point is that existing systems are misleading by assuming 
+human crowd homogeneous. Task assignment needs to be redefined 
+by demonstrating aspects of human resources.
+
 \subsection{Quality Control}
-Quality control is challenge for crowdsourcing platforms, since low quality work 
+Quality control is a big challenge for crowdsourcing platforms, since low quality work 
 is common. It is shown that low quality submissions can compromise up to one third 
 of all submissions~\cite{Bernstein2010}. As a result, researchers have started to 
 investigate several ways of detecting and correcting for low quality work.
@@ -121,15 +190,7 @@ Visualization of workflow is one of the methods employed for which directed grap
 are used to show the organization of crowdsourcing tasks, allowing endusers 
 to better understand the problem and proposed solution design~\cite{Kulkarni2012, Kittur2012}.
 
-Application of programming paradigms is another approach taken by 
-researchers. MapReduce~\cite{Kittur2011, Ahmad2011}, 
-Divide-and-Conquer~\cite{Kulkarni2012}, 
-Iterative~\cite{Little2009}, 
-Workflow ~\cite{Kokciyan2012} are some of these approaches taken for 
-organizing and managing complex workflows. Although these paradigms 
-fit perfectly some problems, there are other problems not suited well to those.
-
-Inserting 'gold standard' questions into an assignment with which workers 
+Inserting 'gold standard' questions into an assignment by which workers 
 who answer them incorrectly can be filtered out or given feedback~\cite{Burch2009}. 
 However, writing validation questions create extra burden to requesters and 
 may not be applied to all types of tasks.
@@ -158,40 +219,6 @@ to accept assignments.
 
 
 
-\section{Building Blocks of a Platform}
-Kittur et al. provides a detailed description for crowdsourcing platform~\cite{Kittur2013}. 
-Based on this description building blocks of a crowdsourcing platform is defined in 
-the following section. Related studies are examined using that definition and the 
-proposed platform is developed over these blocks.
-
-A crowdsourcing platform is a platform to manage tasks and workers in the 
-process of solving problems through multi-stage workflows. Platform should enable 
-decomposition of complex tasks into subtasks and assign them appropriate group of 
-workers. Workers are formed by people with different skills and expertise. The motivation 
-of workers must be guaranteed through various approaches 
-such as reputation or payment. Quality assurance is required to ensure the output 
-of a task is high quality and contributes to solution.
-
-Regarding this definition, a crowdsourcing platform consists of three basic elements:
-
-\textbf{Workflow design.} Today's simple parallel approach is not enough to solve 
-complex problems. Complex tasks have dependencies, changing requirements and 
-require multiple types of problem solving skills. Solving problems not only requires 
-people but also computers. Therefore, platform should enable human-computer 
-collaboration in solving complex tasks.
-
-\textbf{Task assignment.} Complex problems has various types of tasks that require 
-different computation resources. Some problems may require human intelligence, some 
-others may not. If a problem needs people to be solved, it should be assigned to the ones 
-that has the right set of skills.
-
-\textbf{Quality control} Crowdsourcing is susceptible to quality control issues. Low quality 
-work is common among human computation. Thus, platform should enable requesters 
-to control quality of the work done and if possible improve it.
-
-
-
-
 \section{Related Work}
 In response to the challenges of crowdsourcing a number of attempts have been made 
 by the researchers. In the following, the studies related to this work are listed, 
@@ -206,10 +233,21 @@ The following is a list of crowdsourcing studies that propose a new platform
 to create crowdsourcing services. Each study is discussed extensively 
 and compared to other studies in Table~\ref{tab:relatedcomparison}. 
 The comparison of related works is performed over the building blocks of 
-crowdsourcing platform that is given in the previous section.
-
-%concept, existence of human components, existence of software components, 
-%requirement for programming, heterogeneity, user interface and progress.
+a crowdsourcing platform that is given in the previous section. The following 
+set of features are chosen to assess related works:
+\begin{itemize}
+	\item concept: The concept or paradigm that platform is based on. This 
+	basically defines the process of workflow design.
+	\item programming: Requirement of programming for requester to design a workflow.
+	\item user interface: Availability of a user interface to requester to design a workflow. 
+	\item human resources: Availability of human resources in task assignment.
+	\item software resources: Availability of software resources in task assignment.
+	\item heterogeneity: Whether heterogeneity of crowd is available to requester or not
+	in task assignments.
+	\item quality control: Existence of a quality control mechanism.
+	\item progress: Availability of a view that displays the progress of a workflow (useful
+	for quality control).
+\end{itemize}
 
 \subsubsection{Jabberwocky}
 Jabberwocky~\cite{Ahmad2011} is a social computing stack consists of three 
@@ -482,11 +520,12 @@ but not enabling users make changes on it directly.
   \hline
   Feature & Jabberwocky & WeFlow & TurKit & CrowdLang & AutoMan & Turkomatic & CrowdForge & CrowdWeaver \\ \hline
   Concept & MapReduce & Workflow & Iterative & N/A & N/A & Divide\&Conquer & MapReduce & Data Flow \\ \hline
-  Human components & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE \\ \hline
-  Software components & \CIRCLE & \CIRCLE & \Circle & \CIRCLE & \CIRCLE & \Circle & \Circle & \CIRCLE \\ \hline
-  Requires programming & \CIRCLE & \Circle & \CIRCLE & \CIRCLE & \CIRCLE & \Circle & \Circle & \Circle \\ \hline
-  Heterogeneity & \CIRCLE & \LEFTcircle & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle \\ \hline
+  Programming & \CIRCLE & \Circle & \CIRCLE & \CIRCLE & \CIRCLE & \Circle & \Circle & \Circle \\ \hline
   User Interface & \Circle & \Circle & \Circle & \Circle & \Circle & \CIRCLE & \CIRCLE & \CIRCLE \\ \hline
+  Human Resources & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE & \CIRCLE \\ \hline
+  Software Resources & \CIRCLE & \CIRCLE & \Circle & \CIRCLE & \CIRCLE & \Circle & \Circle & \CIRCLE \\ \hline
+  Heterogeneity & \CIRCLE & \LEFTcircle & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle \\ \hline
+  Quality Control & \Circle & \Circle & \LEFTcircle & \Circle & \LEFTcircle & \Circle & \Circle & \LEFTcircle \\ \hline
   Progress & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle & \Circle & \CIRCLE \\ \hline
   %\\ \\ \\
   %\multicolumn{9}{l}{\CIRCLE: Yes, \LEFTcircle: Partially, \Circle: No} \\
