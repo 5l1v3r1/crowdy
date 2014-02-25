@@ -8,6 +8,7 @@ import 'package:logging/logging.dart';
 part 'utils/globals.dart';
 part 'utils/constants.dart';
 part 'utils/utilities.dart';
+part 'utils/validation.dart';
 
 part 'ui/PortUI.dart';
 part 'ui/FlowLineUI.dart';
@@ -42,60 +43,7 @@ void main() {
 }
 
 void validate(html.MouseEvent e) {
-  bool valid = validateApplication();
-  if (valid){
-    log.info("Validation is succeeded.");
-  }
-  else {
-    log.warning("Validation failed.");
-  }
-
-  validationModal.classes.add('in');
-  validationModal.style.display = 'block';
-  validationModalBody.children.clear();
-  closeValidationButton.onClick.listen((e) => validationModal.style.display = 'none');
-
-  html.UListElement messageList = new html.UListElement();
-  for (String message in validationMessages) {
-    messageList.append(new html.LIElement()..text = message);
-  }
-  validationModalBody.append(messageList);
-}
-
-bool validateApplication() {
-  bool valid = true;
-  validationMessages.clear();
-
-  // Check if there are any operator
-  if (operators.length == 0) {
-    validationMessages.add("WARNING: No operator added. Nothing to validate.");
-    valid = false;
-    return valid;
-  }
-
-  // Overall check
-  int sourceCount = 0;
-  int sinkCount = 0;
-  bool operatorWithNoConnection = false;
-  for (String operatorId in operators.keys) {
-    sourceCount += (operators[operatorId].type.contains('source')) ? 1 : 0;
-    sinkCount += (operators[operatorId].type.contains('sink')) ? 1 : 0;
-    operatorWithNoConnection = operatorWithNoConnection || (operators[operatorId].next.length + operators[operatorId].prev.length == 0);
-  }
-
-  if (sourceCount == 0) {
-    validationMessages.add("ERROR: No source operator found.");
-  }
-
-  if (sinkCount == 0) {
-    validationMessages.add("ERROR: No sink operator found.");
-  }
-
-  if (operatorWithNoConnection) {
-    validationMessages.add("WARNING: There are operators with no connection.");
-  }
-
-  return valid;
+  validation.start();
 }
 
 void clear(html.MouseEvent e) {

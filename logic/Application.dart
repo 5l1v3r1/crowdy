@@ -52,8 +52,6 @@ class Application extends Object {
     if (e.target is svg.SvgSvgElement && selectedOperator != null) {
       selectedOperator.group.setAttribute('class', '');
       selectedOperator = null;
-
-      log.info("Operator ${selectedOperator.id} deselected.");
     }
   }
 
@@ -76,14 +74,10 @@ class Application extends Object {
     if (isFirefox) {
       e.dataTransfer.setData('text/plain', 'God damn Firefox!');
     }
-
-    log.info("Dragging ${_dragSource.text} is started.");
   }
 
   void _onDragEnd(html.MouseEvent e) {
     _dragSource.classes.remove('moving');
-
-    log.info("Dragging ${_dragSource.text} is ended.");
   }
 
   void _onDragOver(html.MouseEvent e) {
@@ -99,8 +93,6 @@ class Application extends Object {
       operators[operatorId] = addOperator(operatorId, _dragSource.dataset['unit-type'], mouseCoordinates['x'], mouseCoordinates['y']);
       operators[operatorId].initialize();
       opNumber += 1;
-
-      log.info("${_dragSource.text} is dropped.");
     }
   }
 

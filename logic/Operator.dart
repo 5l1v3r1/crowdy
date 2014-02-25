@@ -119,6 +119,10 @@ class Operator {
     this.uiDetails.clear();
     this.next.forEach((nextId, connected) => operators[nextId].clearDownFlow());
   }
+
+  void validate() {
+    this.uiDetails.validate();
+  }
 }
 
 class EnrichOperator extends Operator {
@@ -261,5 +265,13 @@ class UnionOperator extends Operator {
       newOutputSpec.forEach((id, segment) => isConsistent = isConsistent && existingOutputSpec.containsKey(id));
     }
     return isConsistent;
+  }
+
+  void validate() {
+    super.validate();
+
+    if (this.prev.length < 2) {
+      validation.error("${this.id} of ${this.type} type has less than 2 flow coming to itself.");
+    }
   }
 }

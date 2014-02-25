@@ -36,6 +36,9 @@ class ElementUI {
           this.input.append(newOption);
         }
         break;
+      case 'text':
+        this.input = new html.TextInputElement();
+        break;
       case 'textarea':
         this.input = new html.TextAreaElement();
         this.input.onKeyDown.listen(_tabbableTextAreaKeyPressed);
@@ -69,6 +72,68 @@ class ElementUI {
     return outerDiv;
   }
 
+  int validateInput() {
+    int result = 1;
+    switch (this.type) {
+      case 'file':
+      case 'list':
+      case 'select':
+        break;
+      case 'editable':
+        if ((this.input as html.DivElement).innerHtml.isEmpty) {
+          result = 0;
+        }
+        break;
+      case 'email':
+        if ((this.input as html.EmailInputElement).value.isEmpty) {
+          result = 0;
+        }
+        else {
+          result = (this.input as html.EmailInputElement).checkValidity() ? 1 : -1;
+        }
+        break;
+      case 'number':
+        if ((this.input as html.NumberInputElement).value.isEmpty) {
+          result = 0;
+        }
+        else {
+          result = (this.input as html.NumberInputElement).checkValidity() ? 1 : -1;
+        }
+        break;
+      case 'textarea':
+        if ((this.input as html.TextAreaElement).value.isEmpty) {
+          result = 0;
+        }
+        else {
+          result = (this.input as html.TextAreaElement).checkValidity() ? 1 : -1;
+        }
+        break;
+      case 'text':
+        if ((this.input as html.TextInputElement).value.isEmpty) {
+          result = 0;
+        }
+        else {
+          result = (this.input as html.TextInputElement).checkValidity() ? 1 : -1;
+        }
+        break;
+      default:
+        break;
+    }
+
+    return result;
+  }
+
+  void addErrorClass() {
+    this.input.classes.add('has-error');
+  }
+
+  void addWarningClass() {
+    this.input.classes.add('has-warning');
+  }
+
+  void resetClass() {
+    this.input.className = 'form-control';
+  }
 }
 
 class BaseDetailsUI {
@@ -163,6 +228,25 @@ class BaseDetailsUI {
   void updateOperatorDetails() {
     this.base.forEach((id, element) => operators[this.id].updateDetail(id, element.input));
     this.elements.forEach((id, element) => operators[this.id].updateDetail(id, element.input));
+  }
+
+  void validate() {
+    this.base.forEach((String identifier, ElementUI element) => this._isElementValid(identifier, element));
+    this.elements.forEach((String identifier, ElementUI element) => this._isElementValid(identifier, element));
+  }
+
+  void _isElementValid(String identifier, ElementUI element) {
+    element.resetClass();
+
+    int validityResult = element.validateInput();
+    if (validityResult< 0) {
+      element.addErrorClass();
+      validation.error("${identifier} of ${this.id} has error(s).");
+    }
+    else if (validityResult == 0) {
+      element.addWarningClass();
+      validation.warning("${identifier} of ${this.id} is empty.");
+    }
   }
 }
 

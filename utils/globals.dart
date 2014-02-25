@@ -16,5 +16,3 @@ html.Element _dragSource;
 int opNumber = 1;
 
 bool isFirefox = html.window.navigator.userAgent.contains("Firefox");
-
-List<String> validationMessages = new List<String>();

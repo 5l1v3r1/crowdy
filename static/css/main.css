@@ -11,6 +11,14 @@ body {
   box-shadow: none;
 }
 
+.form-control.has-error {
+  border-color: #a94442;
+}
+
+.form-control.has-warning {
+  border-color: #8a6d3b;
+}
+
 select.form-control.input-xs {
   display: inline;
   max-width: 125px;
