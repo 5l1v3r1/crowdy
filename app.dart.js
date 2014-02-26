@@ -3251,6 +3251,19 @@ var $$ = {};
       this.updateDownFlow$1(previousOperatorId);
       this.log.info$1(previousOperatorId + " connected to " + this.id + ".");
     },
+    remove$0: function(_) {
+      var t1 = $.operators;
+      t1.forEach$1(t1, new D.Operator_remove_closure(this));
+    },
+    removeConnections$1: function(operatorId) {
+      var t1;
+      if (this.next.containsKey$1(operatorId) === true)
+        J.remove$1$ax(this.next, operatorId);
+      if (this.prev.containsKey$1(operatorId)) {
+        t1 = this.prev;
+        t1.remove$1(t1, operatorId);
+      }
+    },
     removeNext$1: function(nextOperatorId) {
       J.remove$1$ax(this.next, nextOperatorId);
     },
@@ -3338,6 +3351,12 @@ var $$ = {};
         t1.Operator$4(id, type, mouseX, mouseY);
         return t1;
       }}
+  },
+  Operator_remove_closure: {
+    "": "Closure:18;this_0",
+    call$2: function(id, operator) {
+      return operator.removeConnections$1(this.this_0.id);
+    }
   },
   Operator_updateDownFlow_closure: {
     "": "Closure:13;prevId_0",
@@ -3891,7 +3910,7 @@ var $$ = {};
     }
   },
   RuleOutputSpecification_refresh_closure: {
-    "": "Closure:18;this_0",
+    "": "Closure:19;this_0",
     call$1: function(e) {
       var t1, t2, selectedSegment;
       t1 = this.this_0;
@@ -3924,7 +3943,7 @@ var $$ = {};
     $isSplitOutputSpecification: true
   },
   SplitOutputSpecification_refreshOutput_closure: {
-    "": "Closure:18;this_0",
+    "": "Closure:19;this_0",
     call$1: function(e) {
       var t1, selectedSegment;
       t1 = J.getInterceptor$x(e);
@@ -4359,13 +4378,13 @@ var $$ = {};
     }
   },
   BaseDetailsUI_validate_closure: {
-    "": "Closure:19;this_0",
+    "": "Closure:20;this_0",
     call$2: function(identifier, element) {
       return this.this_0._isElementValid$2(identifier, element);
     }
   },
   BaseDetailsUI_validate_closure0: {
-    "": "Closure:19;this_1",
+    "": "Closure:20;this_1",
     call$2: function(identifier, element) {
       return this.this_1._isElementValid$2(identifier, element);
     }
@@ -5331,6 +5350,10 @@ var $$ = {};
       this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
       t1 = J.get$children$x($.canvas);
       t1.remove$1(t1, this.group);
+      t1 = $.operators;
+      J.remove$0$ax(t1.$index(t1, this.id));
+      t1 = $.operators;
+      t1.remove$1(t1, this.id);
       this.log.info$1($.selectedOperator.id + " is removed.");
     },
     addBackgroundImage$1: function(image) {
@@ -5712,7 +5735,7 @@ var $$ = {};
     error$1: [function(_, message) {
       var t1 = $.get$validationMessages();
       J.add$1$ax(t1.$index(t1, "ERROR"), message);
-    }, "call$1", "get$error", 2, 0, 20],
+    }, "call$1", "get$error", 2, 0, 21],
     Validation$0: function() {
       var t1 = $.get$validationMessages();
       t1.$indexSet(t1, "ERROR", H.setRuntimeTypeInfo([], [J.JSString]));
@@ -5728,7 +5751,7 @@ var $$ = {};
     }
   },
   Validation_start_closure0: {
-    "": "Closure:21;messageList_0",
+    "": "Closure:22;messageList_0",
     call$2: function(key, messages) {
       return J.forEach$1$ax(messages, new D.Validation_start__closure(this.messageList_0, key));
     }
@@ -6318,7 +6341,7 @@ var $$ = {};
       this._sendError$2(error, stackTrace);
     }, function(error) {
       return this.addError$2(error, null);
-    }, "addError$1", "call$2", "call$1", "get$addError", 2, 2, 22, 6],
+    }, "addError$1", "call$2", "call$1", "get$addError", 2, 2, 23, 6],
     close$0: function(_) {
       var t1, doneFuture;
       t1 = this._state;
@@ -6705,7 +6728,7 @@ var $$ = {};
     }
   },
   _Future__chainFutures_closure0: {
-    "": "Closure:23;target_1",
+    "": "Closure:24;target_1",
     call$2: function(error, stackTrace) {
       this.target_1._completeError$2(error, stackTrace);
     },
@@ -6805,7 +6828,7 @@ var $$ = {};
     }
   },
   _Future__propagateToListeners__closure0: {
-    "": "Closure:23;box_0,listener_7",
+    "": "Closure:24;box_0,listener_7",
     call$2: function(error, stackTrace) {
       var t1, t2, t3, completeResult;
       t1 = this.box_0;
@@ -7469,7 +7492,7 @@ var $$ = {};
     }
   },
   _cancelAndErrorClosure_closure: {
-    "": "Closure:24;subscription_0,future_1",
+    "": "Closure:25;subscription_0,future_1",
     call$2: function(error, stackTrace) {
       return P._cancelAndError(this.subscription_0, this.future_1, error, stackTrace);
     }
@@ -9333,7 +9356,7 @@ var $$ = {};
     H.printString(line);
   },
   NoSuchMethodError_toString_closure: {
-    "": "Closure:25;box_0",
+    "": "Closure:26;box_0",
     call$2: function(key, value) {
       var t1 = this.box_0;
       if (t1.i_1 > 0)
@@ -9391,7 +9414,7 @@ var $$ = {};
       }}
   },
   DateTime_toString_fourDigits: {
-    "": "Closure:26;",
+    "": "Closure:27;",
     call$1: function(n) {
       var absN, sign;
       absN = Math.abs(n);
@@ -9406,7 +9429,7 @@ var $$ = {};
     }
   },
   DateTime_toString_threeDigits: {
-    "": "Closure:26;",
+    "": "Closure:27;",
     call$1: function(n) {
       if (n >= 100)
         return "" + n;
@@ -9416,7 +9439,7 @@ var $$ = {};
     }
   },
   DateTime_toString_twoDigits: {
-    "": "Closure:26;",
+    "": "Closure:27;",
     call$1: function(n) {
       if (n >= 10)
         return "" + n;
@@ -9469,7 +9492,7 @@ var $$ = {};
       }}
   },
   Duration_toString_sixDigits: {
-    "": "Closure:26;",
+    "": "Closure:27;",
     call$1: function(n) {
       if (n >= 100000)
         return "" + n;
@@ -9485,7 +9508,7 @@ var $$ = {};
     }
   },
   Duration_toString_twoDigits: {
-    "": "Closure:26;",
+    "": "Closure:27;",
     call$1: function(n) {
       if (n >= 10)
         return "" + n;
@@ -10598,10 +10621,10 @@ var $$ = {};
     "": "Object;",
     error$1: [function(_, arg) {
       return typeof console != "undefined" ? console.error(arg) : null;
-    }, "call$1", "get$error", 2, 0, 27],
+    }, "call$1", "get$error", 2, 0, 28],
     group$1: [function(arg) {
       return typeof console != "undefined" ? console.group(arg) : null;
-    }, "call$1", "get$group", 2, 0, 27],
+    }, "call$1", "get$group", 2, 0, 28],
     info$1: function(arg) {
       return typeof console != "undefined" ? console.info(arg) : null;
     },
@@ -11055,21 +11078,21 @@ var $$ = {};
     }
   },
   _DataAttributeMap_forEach_closure: {
-    "": "Closure:28;this_0,f_1",
+    "": "Closure:29;this_0,f_1",
     call$2: function(key, value) {
       if (J.getInterceptor$s(key).startsWith$1(key, "data-"))
         this.f_1.call$2(this.this_0._toCamelCase$1(C.JSString_methods.substring$1(key, 5)), value);
     }
   },
   _DataAttributeMap_keys_closure: {
-    "": "Closure:28;this_0,keys_1",
+    "": "Closure:29;this_0,keys_1",
     call$2: function(key, value) {
       if (J.getInterceptor$s(key).startsWith$1(key, "data-"))
         this.keys_1.push(this.this_0._toCamelCase$1(C.JSString_methods.substring$1(key, 5)));
     }
   },
   _DataAttributeMap_values_closure: {
-    "": "Closure:28;this_0,values_1",
+    "": "Closure:29;this_0,values_1",
     call$2: function(key, value) {
       if (J.startsWith$1$s(key, "data-"))
         this.values_1.push(value);
@@ -11505,7 +11528,7 @@ var $$ = {};
     }
   },
   _ValidatingTreeSanitizer_sanitizeTree_walk: {
-    "": "Closure:29;this_0",
+    "": "Closure:30;this_0",
     call$1: function(node) {
       var child, nextChild;
       this.this_0.sanitizeNode$1(node);
@@ -12042,7 +12065,7 @@ var $$ = {};
     }
   },
   _convertDartToNative_PrepareForStructuredClone_readSlot: {
-    "": "Closure:30;copies_3",
+    "": "Closure:31;copies_3",
     call$1: function(i) {
       var t1 = this.copies_3;
       if (i >= t1.length)
@@ -12051,7 +12074,7 @@ var $$ = {};
     }
   },
   _convertDartToNative_PrepareForStructuredClone_writeSlot: {
-    "": "Closure:31;copies_4",
+    "": "Closure:32;copies_4",
     call$2: function(i, x) {
       var t1 = this.copies_4;
       if (i >= t1.length)
@@ -12144,7 +12167,7 @@ var $$ = {};
     }
   },
   convertNativeToDart_AcceptStructuredClone_readSlot: {
-    "": "Closure:30;copies_2",
+    "": "Closure:31;copies_2",
     call$1: function(i) {
       var t1 = this.copies_2;
       if (i >= t1.length)
@@ -12153,7 +12176,7 @@ var $$ = {};
     }
   },
   convertNativeToDart_AcceptStructuredClone_writeSlot: {
-    "": "Closure:31;copies_3",
+    "": "Closure:32;copies_3",
     call$2: function(i, x) {
       var t1 = this.copies_3;
       if (i >= t1.length)
@@ -12559,6 +12582,7 @@ W.NodeValidator.$isObject = true;
 N.Logger.$isObject = true;
 N.LogRecord.$isLogRecord = true;
 N.LogRecord.$isObject = true;
+D.Operator.$isOperator = true;
 D.Operator.$isObject = true;
 P.Stream.$isStream = true;
 P.Stream.$isObject = true;
@@ -13347,6 +13371,7 @@ init.metadata = [{func: "dynamic__String", args: [J.JSString]},
 {func: "dynamic__dynamic_String", args: [null, J.JSString]},
 {func: "dynamic__LogRecord", args: [N.LogRecord]},
 {func: "void__CustomEvent", void: true, args: [W.CustomEvent]},
+{func: "dynamic__String_Operator", args: [J.JSString, D.Operator]},
 {func: "dynamic__SelectElement", args: [W.SelectElement]},
 {func: "dynamic__String_ElementUI", args: [J.JSString, D.ElementUI]},
 {func: "void__String", void: true, args: [J.JSString]},
