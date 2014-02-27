@@ -2985,7 +2985,7 @@ var $$ = {};
         t4 = document.querySelector("ul#bottom-tabs li a span#count");
         t1 = t3.get$children(t1);
         t4.textContent = "" + t1.get$length(t1);
-        if (rec.loggerName === "OperatorDetails") {
+        if (J.get$display$x($.get$modal().style) === "block") {
           t1 = $.get$modalAlert();
           J.set$display$x(t1.style, "block");
           t1.querySelector("span.message").textContent = t2;
@@ -2996,25 +2996,12 @@ var $$ = {};
   clear_closure: {
     "": "Closure:13;",
     call$2: function(id, operator) {
-      var t1 = operator.get$ui();
-      return t1.remove$0(t1);
+      return J.remove$0$ax(J.get$body$x(operator));
     }
   },
   Application: {
-    "": "Object;log",
-    _closeModal$1: [function(e) {
-      if (J.$eq(J.get$target$x(e), $.get$modal()))
-        this._modalClosed$1(e);
-    }, "call$1", "get$_closeModal", 2, 0, 2],
-    _modalClosed$1: [function(e) {
-      var t1 = J.get$children$x($.get$modalBody());
-      t1.clear$0(t1);
-      J.set$display$x($.get$modalAlert().style, "none");
-      J.set$display$x($.get$modal().style, "none");
-      $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("operator_output_refresh", true, true, $.currentOperatorId));
-      this.log.info$1("Operator modal for " + $.currentOperatorId + " is closed.");
-    }, "call$1", "get$_modalClosed", 2, 0, 2],
-    deselect$1: [function(e) {
+    "": "Object;",
+    _deselect$1: [function(e) {
       var t1, t2;
       t1 = J.get$target$x(e);
       t2 = J.getInterceptor(t1);
@@ -3022,8 +3009,8 @@ var $$ = {};
         $.selectedOperator.group.setAttribute("class", "");
         $.selectedOperator = null;
       }
-    }, "call$1", "get$deselect", 2, 0, 2],
-    drawLine$1: [function(e) {
+    }, "call$1", "get$_deselect", 2, 0, 2],
+    _drawLine$1: [function(e) {
       var t1, fromId, toId, t2;
       t1 = J.getInterceptor$x(e);
       fromId = J.get$attributes$x(J.$index$asx(t1.get$detail(e), 0).get$group())._element.getAttribute("id");
@@ -3041,9 +3028,9 @@ var $$ = {};
         t2.$index(t2, toId).connectFrom$1(fromId);
         t2 = J.$index$asx(t1.get$detail(e), 0);
         t1 = J.$index$asx(t1.get$detail(e), 1);
-        new D.FlowLineUI(null, t2, t1, null).FlowLineUI$2(t2, t1);
+        new D.FlowLine(null, t2, t1, null).FlowLine$2(t2, t1);
       }
-    }, "call$1", "get$drawLine", 2, 0, 17],
+    }, "call$1", "get$_drawLine", 2, 0, 17],
     _onDragStart$1: [function(e) {
       var t1, t2;
       t1 = J.getInterceptor$x(e);
@@ -3090,62 +3077,62 @@ var $$ = {};
         t4 = mouseCoordinates.$index(mouseCoordinates, "y");
         switch (t2) {
           case "enrich":
-            newOperator = new D.EnrichOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.EnrichOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.EnrichOperator$4(operatorId, t2, t3, t4);
             break;
           case "source.file":
-            newOperator = new D.SourceFileOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SourceFileOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SourceFileOperator$4(operatorId, t2, t3, t4);
             break;
           case "source.human":
-            newOperator = new D.SourceHumanOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SourceHumanOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SourceHumanOperator$4(operatorId, t2, t3, t4);
             break;
           case "source.manual":
-            newOperator = new D.SourceManualOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SourceManualOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SourceManualOperator$4(operatorId, t2, t3, t4);
             break;
           case "source.rss":
-            newOperator = new D.SourceRSSOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SourceRSSOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SourceRSSOperator$4(operatorId, t2, t3, t4);
             break;
           case "sink.file":
-            newOperator = new D.SinkFileOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SinkFileOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SinkFileOperator$4(operatorId, t2, t3, t4);
             break;
           case "sink.email":
-            newOperator = new D.SinkEmailOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SinkEmailOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SinkEmailOperator$4(operatorId, t2, t3, t4);
             break;
           case "processing.human":
-            newOperator = new D.HumanProcessingOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.HumanProcessingOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.HumanProcessingOperator$4(operatorId, t2, t3, t4);
             break;
           case "selection":
-            newOperator = new D.SelectionOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SelectionOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SelectionOperator$4(operatorId, t2, t3, t4);
             break;
           case "sort":
-            newOperator = new D.SortOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SortOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SortOperator$4(operatorId, t2, t3, t4);
             break;
           case "split":
-            newOperator = new D.SplitOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.SplitOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.SplitOperator$4(operatorId, t2, t3, t4);
             break;
           case "union":
-            newOperator = new D.UnionOperator(N.Logger_Logger("Operator"), operatorId, t2, null, null, null, null, null);
+            newOperator = new D.UnionOperator(operatorId, t2, null, null, null, null, null);
             newOperator.Operator$4(operatorId, t2, t3, t4);
             newOperator.UnionOperator$4(operatorId, t2, t3, t4);
             break;
@@ -3153,13 +3140,34 @@ var $$ = {};
             newOperator = D.Operator$(operatorId, t2, t3, t4);
             break;
         }
-        this.log.info$1("An operator with type " + t2 + " and id " + operatorId + " is added.");
+        t3 = newOperator.body;
+        $.canvas.appendChild(t3.group);
+        t3 = newOperator.body.group;
+        t3.toString;
+        t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, C.EventStreamProvider_dblclick._eventType, false), [null]);
+        H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(newOperator.get$_onDoubleClick()), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+        t3 = newOperator.uiDetails;
+        t3.initialize$0(t3);
+        t3 = J.get$on$x($.canvas);
+        t3 = t3.$index(t3, "operator_output_refresh");
+        H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(newOperator.get$_refresh()), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+        $.get$log().info$1("An operator with type " + t2 + " and id " + operatorId + " is added.");
         t1.$indexSet(t1, operatorId, newOperator);
-        t1 = $.operators;
-        J.initialize$0$x(t1.$index(t1, operatorId));
         $.opNumber = $.opNumber + 1;
       }
     }, "call$1", "get$_onDrop", 2, 0, 2],
+    _closeModalConditional$1: [function(e) {
+      if (J.$eq(J.get$target$x(e), $.get$modal()))
+        this._closeModal$0();
+    }, "call$1", "get$_closeModalConditional", 2, 0, 2],
+    _closeModal$0: function() {
+      var t1 = J.get$children$x($.get$modalBody());
+      t1.clear$0(t1);
+      J.set$display$x($.get$modalAlert().style, "none");
+      J.set$display$x($.get$modal().style, "none");
+      $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("operator_output_refresh", true, true, $.currentOperatorId));
+      $.get$log().info$1("Operator modal for " + $.currentOperatorId + " is closed.");
+    },
     Application$1: function(canvas_id) {
       var temp, t1, t2, units;
       $.canvas = document.querySelector(canvas_id);
@@ -3173,10 +3181,10 @@ var $$ = {};
       t1.toString;
       t2 = C.EventStreamProvider_click._eventType;
       t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$deselect()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_deselect()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       t1 = J.get$on$x($.canvas);
       t1 = t1.$index(t1, "stream_draw_line");
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$drawLine()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_drawLine()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       t1 = $.canvas;
       t1.toString;
       t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_dragover._eventType, false), [null]);
@@ -3191,49 +3199,164 @@ var $$ = {};
       t1 = $.get$modal();
       t1.toString;
       t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_closeModal()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_closeModalConditional()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       t1 = $.get$closeButton();
       t1.toString;
       t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_modalClosed()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new D.Application_closure(this)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       t1 = $.get$modalAlert().querySelector(".close");
       t1.toString;
       t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.Application_closure()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
-      this.log.info$1("Application is created.");
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.Application_closure0()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      $.get$log().info$1("Application is created.");
     },
     static: {Application$: function(canvas_id) {
-        var t1 = new D.Application(N.Logger_Logger("Application"));
+        var t1 = new D.Application();
         t1.Application$1(canvas_id);
         return t1;
       }}
   },
   Application_closure: {
+    "": "Closure:14;this_0",
+    call$1: function(e) {
+      return this.this_0._closeModal$0();
+    }
+  },
+  Application_closure0: {
     "": "Closure:14;",
     call$1: function(e) {
       J.set$display$x($.get$modalAlert().style, "none");
       return "none";
     }
   },
-  Operator: {
-    "": "Object;log,id,type*,ui<,uiDetails<,next@,prev<,details",
-    initialize$0: function(_) {
-      var t1 = this.ui;
-      $.canvas.appendChild(t1.group);
-      t1 = this.ui.group;
-      t1.toString;
-      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_dblclick._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_onDoubleClick()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-      t1 = this.uiDetails;
-      t1.initialize$0(t1);
-      t1 = J.get$on$x($.canvas);
-      t1 = t1.$index(t1, "operator_output_refresh");
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_refresh()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+  FlowLine: {
+    "": "Object;path,from,to,selected",
+    remove$0: function(_) {
+      var from, t1, to, t2;
+      from = J.get$attributes$x(this.from.get$group())._element.getAttribute("id");
+      t1 = this.to;
+      to = J.get$attributes$x(t1.get$group())._element.getAttribute("id");
+      t2 = $.operators;
+      t2.$index(t2, from).removeNext$1(to);
+      t2 = $.operators;
+      t2.$index(t2, to).removePrevious$1(from);
+      t2 = J.get$children$x($.canvas);
+      t2.remove$1(t2, this.path);
+      t2 = $.operators;
+      t2.$index(t2, J.get$id$x(t1.get$group())).clearDownFlow$0();
     },
+    _select$1: [function(e) {
+      var t1, t2;
+      t1 = !this.selected;
+      this.selected = t1;
+      t2 = this.path;
+      if (t1) {
+        t2.parentNode.appendChild(t2);
+        this.path.setAttribute("class", "selected");
+      } else
+        t2.setAttribute("class", "");
+    }, "call$1", "get$_select", 2, 0, 2],
+    _keyPressed$1: [function(e) {
+      if (this.selected && J.get$keyCode$x(e) === 8) {
+        J.preventDefault$0$x(e);
+        this.remove$0(this);
+      }
+    }, "call$1", "get$_keyPressed", 2, 0, 3],
+    _move$1: [function(e) {
+      var t1, t2, t3, t4, t5, t6, t7;
+      J.get$pathSegList$x(this.path).clear();
+      t1 = this.path;
+      t2 = J.get$pathSegList$x(t1);
+      t3 = this.from;
+      t4 = t3.get$point();
+      t2.appendItem(t1.createSVGPathSegMovetoAbs(t4.x, t4.y));
+      t4 = this.path;
+      t1 = J.get$pathSegList$x(t4);
+      t3 = t3.point;
+      t2 = t3.x;
+      t5 = this.to;
+      t6 = t5.get$point();
+      t7 = t6.x;
+      if (typeof t2 !== "number")
+        return t2.$add();
+      if (typeof t7 !== "number")
+        return H.iae(t7);
+      t3 = t3.y;
+      t6 = t6.y;
+      if (typeof t3 !== "number")
+        return t3.$add();
+      if (typeof t6 !== "number")
+        return H.iae(t6);
+      t1.appendItem(t4.createSVGPathSegLinetoAbs((t2 + t7) / 2, (t3 + t6) / 2));
+      t6 = this.path;
+      t3 = J.get$pathSegList$x(t6);
+      t5 = t5.point;
+      t3.appendItem(t6.createSVGPathSegLinetoAbs(t5.x, t5.y));
+    }, "call$1", "get$_move", 2, 0, 17],
+    _remove$1: [function(e) {
+      this.remove$0(this);
+    }, "call$1", "get$_remove", 2, 0, 17],
+    FlowLine$2: function(from, to) {
+      var temp, t1, t2, t3, t4, t5, t6, t7, t8;
+      this.selected = false;
+      temp = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      this.path = temp;
+      t1 = J.get$pathSegList$x(temp);
+      t2 = this.from;
+      t3 = t2.get$point();
+      t1.appendItem(temp.createSVGPathSegMovetoAbs(t3.x, t3.y));
+      t3 = this.path;
+      t1 = J.get$pathSegList$x(t3);
+      t4 = t2.point;
+      t5 = t4.x;
+      t6 = this.to;
+      t7 = t6.get$point();
+      t8 = t7.x;
+      if (typeof t5 !== "number")
+        return t5.$add();
+      if (typeof t8 !== "number")
+        return H.iae(t8);
+      t4 = t4.y;
+      t7 = t7.y;
+      if (typeof t4 !== "number")
+        return t4.$add();
+      if (typeof t7 !== "number")
+        return H.iae(t7);
+      t1.appendItem(t3.createSVGPathSegLinetoAbs((t5 + t8) / 2, (t4 + t7) / 2));
+      t7 = this.path;
+      t4 = J.get$pathSegList$x(t7);
+      t8 = t6.point;
+      t4.appendItem(t7.createSVGPathSegLinetoAbs(t8.x, t8.y));
+      this.path.setAttribute("from", "" + t2.get$hashCode(t2));
+      this.path.setAttribute("to", "" + t6.get$hashCode(t6));
+      this.path.setAttribute("stroke-width", "1.5");
+      t8 = this.path;
+      t8.toString;
+      t8 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t8, C.EventStreamProvider_mousedown._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$_select()), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
+      $.canvas.appendChild(this.path);
+      t8 = H.setRuntimeTypeInfo(new W._EventStream(window, C.EventStreamProvider_keydown._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$_keyPressed()), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
+      t8 = J.get$on$x(t2.body);
+      t8 = t8.$index(t8, "stream_port_moving");
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$_move()), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
+      t8 = J.get$on$x(t6.body);
+      t8 = t8.$index(t8, "stream_port_moving");
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$_move()), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
+      t2 = J.get$on$x(t2.body);
+      t2 = t2.$index(t2, "stream_port_removed");
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_remove()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      t6 = J.get$on$x(t6.body);
+      t6 = t6.$index(t6, "stream_port_removed");
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t6._target, t6._eventType, W._wrapZone(this.get$_remove()), t6._useCapture), [H.getTypeArgumentByIndex(t6, 0)])._tryResume$0();
+    }
+  },
+  Operator: {
+    "": "Object;id,type*,body>,uiDetails<,next@,prev<,details",
     canConnectTo$1: function(nextOperatorId) {
       var t1 = this.next.containsKey$1(nextOperatorId) === true;
       if (t1)
-        this.log.warning$1("You already have a flow line between those units.");
+        $.get$log().warning$1("You already have a flow line between those units.");
       return !t1;
     },
     connectTo$1: function(nextOperatorId) {
@@ -3242,14 +3365,14 @@ var $$ = {};
     canConnectFrom$1: function(previousOperatorId) {
       var canConnect = this.prev._collection$_length === 0;
       if (!canConnect)
-        this.log.warning$1("You can connect only one flow to an operator unless it's type is union.");
+        $.get$log().warning$1("You can connect only one flow to an operator unless it's type is union.");
       return canConnect;
     },
     connectFrom$1: function(previousOperatorId) {
       var t1 = this.prev;
       t1.$indexSet(t1, previousOperatorId, true);
       this.updateDownFlow$1(previousOperatorId);
-      this.log.info$1(previousOperatorId + " connected to " + this.id + ".");
+      $.get$log().info$1(previousOperatorId + " connected to " + this.id + ".");
     },
     remove$0: function(_) {
       var t1 = $.operators;
@@ -3257,12 +3380,9 @@ var $$ = {};
     },
     removeConnections$1: function(operatorId) {
       var t1;
-      if (this.next.containsKey$1(operatorId) === true)
-        J.remove$1$ax(this.next, operatorId);
-      if (this.prev.containsKey$1(operatorId)) {
-        t1 = this.prev;
-        t1.remove$1(t1, operatorId);
-      }
+      J.remove$1$ax(this.next, operatorId);
+      t1 = this.prev;
+      t1.remove$1(t1, operatorId);
     },
     removeNext$1: function(nextOperatorId) {
       J.remove$1$ax(this.next, nextOperatorId);
@@ -3271,7 +3391,7 @@ var $$ = {};
       var t1 = this.prev;
       t1.remove$1(t1, previousOperatorId);
       this.clearDownFlow$0();
-      this.log.info$1("Connection from " + previousOperatorId + " to " + this.id + " is removed.");
+      $.get$log().info$1("Connection from " + previousOperatorId + " to " + this.id + " is removed.");
     },
     _onDoubleClick$1: [function(e) {
       var t1, t2;
@@ -3282,7 +3402,7 @@ var $$ = {};
       t2 = J.get$classes$x(t1);
       t2.add$1(t2, "in");
       J.set$display$x(t1.style, "block");
-      this.log.info$1("Operator modal for " + $.currentOperatorId + " is opened.");
+      $.get$log().info$1("Operator modal for " + $.currentOperatorId + " is opened.");
     }, "call$1", "get$_onDoubleClick", 2, 0, 2],
     _refresh$1: [function(e) {
       var operatorId = H.stringTypeCast(J.get$detail$x(e));
@@ -3347,7 +3467,7 @@ var $$ = {};
       t1.$indexSet(t1, "rules", H.setRuntimeTypeInfo([], [J.JSString]));
     },
     static: {Operator$: function(id, type, mouseX, mouseY) {
-        var t1 = new D.Operator(N.Logger_Logger("Operator"), id, type, null, null, null, null, null);
+        var t1 = new D.Operator(id, type, null, null, null, null, null);
         t1.Operator$4(id, type, mouseX, mouseY);
         return t1;
       }}
@@ -3378,20 +3498,21 @@ var $$ = {};
     }
   },
   EnrichOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     EnrichOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5;
       t1 = this.id;
-      t2 = new D.EnrichOperatorUI(null, null, N.Logger_Logger("OperatorUI"), null, null, t1, null, null, null, null, null, 40, 60);
-      t2.BaseOperatorUI$5(t1, mouseX, mouseY, 40, 60);
-      t2.EnrichOperatorUI$5(t1, mouseX, mouseY, 40, 60);
-      this.ui = t2;
+      t2 = new D.EnrichOperatorBody(null, null, null, null, t1, null, null, null, null, null, 40, 60);
+      t2.BaseOperatorBody$5(t1, mouseX, mouseY, 40, 60);
+      t2.ProcessingBaseOperatorBody$5(t1, mouseX, mouseY, 40, 60);
+      t2.addBackgroundImage$1("enrich.png");
+      this.body = t2;
       t2 = this.id;
       t1 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.EnrichDetailsUI(N.Logger_Logger("OperatorDetails"), t2, t1, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t2, t1, t3, t4);
+      t5 = new D.EnrichDetails(t2, t1, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t2, t1, t3, t4);
       t4 = t5.id;
       t3 = new D.OutputSpecification(t4, null, null, null, null, null);
       t3.BaseSpecification$1(t4);
@@ -3401,135 +3522,138 @@ var $$ = {};
     }
   },
   SourceFileOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     SourceFileOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5;
-      this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+      this.body = D.SourceOperatorBody$(this.id, mouseX, mouseY, 80, 60);
       t1 = this.id;
       t2 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.SourceFileDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t1, t2, t3, t4);
+      t5 = new D.SourceFileDetails(t1, t2, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t1, t2, t3, t4);
       this.uiDetails = t5;
     }
   },
   SourceHumanOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     SourceHumanOperator$4: function(id, type, mouseX, mouseY) {
-      this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
-      this.uiDetails = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
+      this.body = D.SourceOperatorBody$(this.id, mouseX, mouseY, 80, 60);
+      this.uiDetails = D.HumanDetails$(this.id, this.type, this.prev, this.next);
     }
   },
   SourceManualOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     SourceManualOperator$4: function(id, type, mouseX, mouseY) {
-      this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
-      this.uiDetails = D.SourceManualDetailsUI$(this.id, this.type, this.prev, this.next);
+      this.body = D.SourceOperatorBody$(this.id, mouseX, mouseY, 80, 60);
+      this.uiDetails = D.SourceManualDetails$(this.id, this.type, this.prev, this.next);
     }
   },
   SourceRSSOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     SourceRSSOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5;
-      this.ui = D.SourceOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+      this.body = D.SourceOperatorBody$(this.id, mouseX, mouseY, 80, 60);
       t1 = this.id;
       t2 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.SourceRSSDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t1, t2, t3, t4);
+      t5 = new D.SourceRSSDetails(t1, t2, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t1, t2, t3, t4);
       this.uiDetails = t5;
     }
   },
   SinkFileOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     SinkFileOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5;
-      this.ui = D.SinkOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+      this.body = D.SinkOperatorBody$(this.id, mouseX, mouseY, 80, 60);
       t1 = this.id;
       t2 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.SinkFileDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t1, t2, t3, t4);
+      t5 = new D.SinkFileDetails(t1, t2, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t1, t2, t3, t4);
       this.uiDetails = t5;
     }
   },
   SinkEmailOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     SinkEmailOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5;
-      this.ui = D.SinkOperatorUI$(this.id, mouseX, mouseY, 80, 60);
+      this.body = D.SinkOperatorBody$(this.id, mouseX, mouseY, 80, 60);
       t1 = this.id;
       t2 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.SinkEmailDetailsUI(N.Logger_Logger("OperatorDetails"), t1, t2, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t1, t2, t3, t4);
+      t5 = new D.SinkEmailDetails(t1, t2, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t1, t2, t3, t4);
       this.uiDetails = t5;
     }
   },
   HumanProcessingOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     HumanProcessingOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2;
       t1 = this.id;
-      t2 = new D.ProcessingOperatorUI(null, null, N.Logger_Logger("OperatorUI"), null, null, t1, null, null, null, null, null, 80, 60);
-      t2.BaseOperatorUI$5(t1, mouseX, mouseY, 80, 60);
-      t2.ProcessingOperatorUI$5(t1, mouseX, mouseY, 80, 60);
-      this.ui = t2;
-      this.uiDetails = D.SourceHumanDetailsUI$(this.id, this.type, this.prev, this.next);
+      t2 = new D.ProcessingOperatorBody(null, null, null, null, t1, null, null, null, null, null, 80, 60);
+      t2.BaseOperatorBody$5(t1, mouseX, mouseY, 80, 60);
+      t2.ProcessingBaseOperatorBody$5(t1, mouseX, mouseY, 80, 60);
+      t2.addBackgroundImage$1("processing.png");
+      this.body = t2;
+      this.uiDetails = D.HumanDetails$(this.id, this.type, this.prev, this.next);
     }
   },
   SelectionOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     SelectionOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5, t6, t7;
       t1 = this.id;
-      t2 = new D.SelectionOperatorUI(null, null, N.Logger_Logger("OperatorUI"), null, null, t1, null, null, null, null, null, 26.666666666666668, 60);
-      t2.BaseOperatorUI$5(t1, mouseX, mouseY, 26.666666666666668, 60);
-      t2.SelectionOperatorUI$5(t1, mouseX, mouseY, 26.666666666666668, 60);
-      this.ui = t2;
+      t2 = new D.SelectionOperatorBody(null, null, null, null, t1, null, null, null, null, null, 26.666666666666668, 60);
+      t2.BaseOperatorBody$5(t1, mouseX, mouseY, 26.666666666666668, 60);
+      t2.ProcessingBaseOperatorBody$5(t1, mouseX, mouseY, 26.666666666666668, 60);
+      t2.addBackgroundImage$1("selection.png");
+      this.body = t2;
       t2 = this.id;
       t1 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.SelectionDetailsUI(null, null, N.Logger_Logger("OperatorDetails"), t2, t1, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t2, t1, t3, t4);
+      t5 = new D.SelectionDetails(null, null, t2, t1, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t2, t1, t3, t4);
       t6 = t5.id;
       t7 = new D.OutputSpecification(t6, null, null, null, null, null);
       t7.BaseSpecification$1(t6);
       t5.output = t7;
-      t5.SelectionDetailsUI$4(t2, t1, t3, t4);
+      t5.SelectionDetails$4(t2, t1, t3, t4);
       this.uiDetails = t5;
     }
   },
   SortOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     SortOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5, t6, t7;
       t1 = this.id;
-      t2 = new D.SortOperatorUI(null, null, N.Logger_Logger("OperatorUI"), null, null, t1, null, null, null, null, null, 40, 60);
-      t2.BaseOperatorUI$5(t1, mouseX, mouseY, 40, 60);
-      t2.SortOperatorUI$5(t1, mouseX, mouseY, 40, 60);
-      this.ui = t2;
+      t2 = new D.SortOperatorBody(null, null, null, null, t1, null, null, null, null, null, 40, 60);
+      t2.BaseOperatorBody$5(t1, mouseX, mouseY, 40, 60);
+      t2.ProcessingBaseOperatorBody$5(t1, mouseX, mouseY, 40, 60);
+      t2.addBackgroundImage$1("sort.png");
+      this.body = t2;
       t2 = this.id;
       t1 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.SortDetailsUI(null, null, N.Logger_Logger("OperatorDetails"), t2, t1, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t2, t1, t3, t4);
+      t5 = new D.SortDetails(null, null, t2, t1, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t2, t1, t3, t4);
       t6 = t5.id;
       t7 = new D.OutputSpecification(t6, null, null, null, null, null);
       t7.BaseSpecification$1(t6);
       t5.output = t7;
-      t5.SortDetailsUI$4(t2, t1, t3, t4);
+      t5.SortDetails$4(t2, t1, t3, t4);
       this.uiDetails = t5;
     }
   },
   SplitOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     connectTo$1: function(nextOperatorId) {
       D.Operator.prototype.connectTo$1.call(this, nextOperatorId);
       H.interceptedTypeCast(this.uiDetails.output, "$isSplitOutputSpecification").refreshOutput$0();
@@ -3541,26 +3665,27 @@ var $$ = {};
     SplitOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5, t6, t7;
       t1 = this.id;
-      t2 = new D.SplitOperatorUI(null, null, N.Logger_Logger("OperatorUI"), null, null, t1, null, null, null, null, null, 40, 60);
-      t2.BaseOperatorUI$5(t1, mouseX, mouseY, 40, 60);
-      t2.SplitOperatorUI$5(t1, mouseX, mouseY, 40, 60);
-      this.ui = t2;
+      t2 = new D.SplitOperatorBody(null, null, null, null, t1, null, null, null, null, null, 40, 60);
+      t2.BaseOperatorBody$5(t1, mouseX, mouseY, 40, 60);
+      t2.ProcessingBaseOperatorBody$5(t1, mouseX, mouseY, 40, 60);
+      t2.addBackgroundImage$1("split.png");
+      this.body = t2;
       t2 = this.id;
       t1 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.SplitDetailsUI(null, null, N.Logger_Logger("OperatorDetails"), t2, t1, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t2, t1, t3, t4);
+      t5 = new D.SplitDetails(null, null, t2, t1, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t2, t1, t3, t4);
       t6 = t5.id;
       t7 = new D.OutputSpecification(t6, null, null, null, null, null);
       t7.BaseSpecification$1(t6);
       t5.output = t7;
-      t5.SplitDetailsUI$4(t2, t1, t3, t4);
+      t5.SplitDetails$4(t2, t1, t3, t4);
       this.uiDetails = t5;
     }
   },
   UnionOperator: {
-    "": "Operator;log,id,type,ui,uiDetails,next,prev,details",
+    "": "Operator;id,type,body,uiDetails,next,prev,details",
     canConnectFrom$1: function(previousOperatorId) {
       var isConsistent;
       if (this.prev._collection$_length > 0) {
@@ -3587,7 +3712,7 @@ var $$ = {};
           J.forEach$1$ax(this.next, new D.UnionOperator_updateDownFlow_closure(prevId));
       } else {
         $.get$log().warning$1("Inconsistency in output speficication of union operator. Clearing aggregation.");
-        H.interceptedTypeCast(this.ui, "$isUnionOperatorUI").inputPort.body.dispatchEvent(W.CustomEvent_CustomEvent("stream_port_removed", true, true, null));
+        H.interceptedTypeCast(this.body, "$isUnionOperatorBody").inputPort.body.dispatchEvent(W.CustomEvent_CustomEvent("stream_port_removed", true, true, null));
         t1 = J.get$length$asx(this.next);
         if (typeof t1 !== "number")
           return t1.$gt();
@@ -3626,16 +3751,17 @@ var $$ = {};
     UnionOperator$4: function(id, type, mouseX, mouseY) {
       var t1, t2, t3, t4, t5;
       t1 = this.id;
-      t2 = new D.UnionOperatorUI(null, null, N.Logger_Logger("OperatorUI"), null, null, t1, null, null, null, null, null, 40, 60);
-      t2.BaseOperatorUI$5(t1, mouseX, mouseY, 40, 60);
-      t2.UnionOperatorUI$5(t1, mouseX, mouseY, 40, 60);
-      this.ui = t2;
+      t2 = new D.UnionOperatorBody(null, null, null, null, t1, null, null, null, null, null, 40, 60);
+      t2.BaseOperatorBody$5(t1, mouseX, mouseY, 40, 60);
+      t2.ProcessingBaseOperatorBody$5(t1, mouseX, mouseY, 40, 60);
+      t2.addBackgroundImage$1("union.png");
+      this.body = t2;
       t2 = this.id;
       t1 = this.type;
       t3 = this.prev;
       t4 = this.next;
-      t5 = new D.UnionDetailsUI(N.Logger_Logger("OperatorDetails"), t2, t1, t3, t4, null, null, null, null, null, null, null, null);
-      t5.BaseDetailsUI$4(t2, t1, t3, t4);
+      t5 = new D.UnionDetails(t2, t1, t3, t4, null, null, null, null, null, null, null, null);
+      t5.BaseDetails$4(t2, t1, t3, t4);
       t4 = t5.id;
       t3 = new D.OutputSpecification(t4, null, null, null, null, null);
       t3.BaseSpecification$1(t4);
@@ -3671,410 +3797,176 @@ var $$ = {};
       return isConsistent;
     }
   },
-  OutputSegmentUI: {
-    "": "Object;removable,segment<,name>,value>,deleteButton",
-    getFormElement$1: function(exampleValue) {
-      var buttonDiv;
-      J.insertAdjacentHtml$2$x(this.segment, "beforeend", "<span>\"</span>");
-      this.segment.appendChild(this.name);
-      J.insertAdjacentHtml$2$x(this.segment, "beforeend", "<span>\"</span>");
-      if (J.get$isNotEmpty$asx(exampleValue)) {
-        this.value.textContent = "e.g. " + H.S(exampleValue);
-        this.segment.appendChild(this.value);
-      }
-      if (this.removable) {
-        buttonDiv = document.createElement("div", null);
-        buttonDiv.className = "col-sm-2";
-        buttonDiv.appendChild(this.deleteButton);
-        this.segment.appendChild(buttonDiv);
-      }
-      return this.segment;
-    },
-    _remove$0: function() {
-      J.remove$0$ax(this.segment);
-    },
-    OutputSegmentUI$3: function(defaultName, removable, editable) {
-      var t1, t2;
-      if (this.removable) {
-        t1 = document.createElement("button", null);
-        t1.textContent = "Delete";
-        t1.className = "btn btn-danger";
-        t1.toString;
-        t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false), [null]);
-        H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.OutputSegmentUI_closure(this)), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
-        this.deleteButton = t1;
-      }
-      this.segment = document.createElement("li", null);
-      t1 = document.createElement("span", null);
-      t1.textContent = defaultName.length !== 0 ? defaultName : "segment-name";
-      t1.contentEditable = String(editable);
+  BaseOperatorBody: {
+    "": "Object;group<,body>",
+    _onMouseDown$1: [function(e) {
+      var t1, mouseCoordinates;
+      J.preventDefault$0$x(e);
+      t1 = $.selectedOperator;
+      if (t1 != null)
+        t1.group.setAttribute("class", "");
+      if (this !== t1) {
+        $.selectedOperator = this;
+        this.group.setAttribute("class", "selected");
+      } else
+        $.selectedOperator = null;
+      this.dragging = true;
+      t1 = this.group;
+      t1.parentNode.appendChild(t1);
+      mouseCoordinates = D.getMouseCoordinatesProportinalToCanvas(e);
+      this.dragOffsetX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), J.getCtm$0$x(this.group).e);
+      this.dragOffsetY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), J.getCtm$0$x(this.group).f);
+      t1 = $.canvas;
       t1.toString;
-      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_keypress._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.OutputSegmentUI_closure0(editable)), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
-      this.name = t1;
-      t1 = document.createElement("span", null);
-      this.value = t1;
-      t1.className = "example";
+      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mousemove._eventType, false), [null]);
+      t1 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_moveStarted()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)]);
+      t1._tryResume$0();
+      t1.resume$0();
+      t1 = $.canvas;
+      t1.toString;
+      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mouseup._eventType, false), [null]);
+      t1 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_moveCompleted()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)]);
+      t1._tryResume$0();
+      t1.resume$0();
+    }, "call$1", "get$_onMouseDown", 2, 0, 2],
+    _onMouseEnter$1: [function(e) {
+      J.set$cursor$x(this.body.style, "move");
+    }, "call$1", "get$_onMouseEnter", 2, 0, 2],
+    _moveStarted$1: [function(e) {
+      var mouseCoordinates, newX, newY;
+      if (this.dragging === true) {
+        mouseCoordinates = D.getMouseCoordinatesProportinalToCanvas(e);
+        newX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), this.dragOffsetX);
+        newY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), this.dragOffsetY);
+        this.group.setAttribute("transform", "translate(" + H.S(newX) + ", " + H.S(newY) + ")");
+        this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_moving", true, true, [newX, newY]));
+      }
+    }, "call$1", "get$_moveStarted", 2, 0, 2],
+    _moveCompleted$1: [function(e) {
+      var t1;
+      this.dragging = false;
+      t1 = $.canvas;
+      t1.toString;
+      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mousemove._eventType, false), [null]);
+      t1 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_moveStarted()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)]);
+      t1._tryResume$0();
+      t1.cancel$0();
+      t1 = $.canvas;
+      t1.toString;
+      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mouseup._eventType, false), [null]);
+      t1 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_moveCompleted()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)]);
+      t1._tryResume$0();
+      t1.cancel$0();
+    }, "call$1", "get$_moveCompleted", 2, 0, 2],
+    _onKeyDown$1: [function(e) {
+      if (J.get$keyCode$x(e) === 8 && J.get$display$x($.get$modal().style) !== "block") {
+        e.preventDefault();
+        if ($.selectedOperator === this)
+          this.remove$0(this);
+      }
+    }, "call$1", "get$_onKeyDown", 2, 0, 3],
+    remove$0: function(_) {
+      var t1;
+      this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
+      t1 = J.get$children$x($.canvas);
+      t1.remove$1(t1, this.group);
+      t1 = $.operators;
+      J.remove$0$ax(t1.$index(t1, this.id));
+      t1 = $.operators;
+      t1.remove$1(t1, this.id);
+      $.get$log().info$1($.selectedOperator.id + " is removed.");
     },
-    static: {OutputSegmentUI$: function(defaultName, removable, editable) {
-        var t1 = new D.OutputSegmentUI(removable, null, null, null, null);
-        t1.OutputSegmentUI$3(defaultName, removable, editable);
+    addBackgroundImage$1: function(image) {
+      var t1, temp, t2;
+      t1 = this.group;
+      temp = document.createElementNS("http://www.w3.org/2000/svg", "image");
+      temp.setAttribute("x", H.S(J.$sub$n(J.$sub$n(J.$add$ns(this.x, this.width), 20), 3)));
+      temp.setAttribute("y", H.S(J.$sub$n(J.$sub$n(J.$add$ns(this.y, this.height), 14), 3)));
+      temp.setAttribute("width", "20");
+      temp.setAttribute("height", "14");
+      temp.setAttributeNS("http://www.w3.org/1999/xlink", "href", "static/img/" + image);
+      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mousedown._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onMouseDown()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      t1.appendChild(temp);
+    },
+    BaseOperatorBody$5: function(id, mouseX, mouseY, width, height) {
+      var t1, t2, temp;
+      t1 = this.width;
+      this.x = J.$sub$n(mouseX, t1 / 2);
+      t2 = this.height;
+      this.y = J.$sub$n(mouseY, t2 / 2);
+      temp = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      temp.setAttribute("x", H.S(this.x));
+      temp.setAttribute("y", H.S(this.y));
+      temp.setAttribute("width", H.S(t1));
+      temp.setAttribute("height", "" + t2);
+      t2 = J.get$classes$x(temp);
+      t2.add$1(t2, "processing_body");
+      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mousedown._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onMouseDown()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mouseenter._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onMouseEnter()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      this.body = temp;
+      temp = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      temp.setAttribute("id", this.id);
+      temp.appendChild(this.body);
+      this.group = temp;
+      this.dragging = false;
+      t2 = H.setRuntimeTypeInfo(new W._EventStream(document, C.EventStreamProvider_keydown._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onKeyDown()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+    }
+  },
+  SourceOperatorBody: {
+    "": "BaseOperatorBody;outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+    SourceOperatorBody$5: function(id, x, y, width, height) {
+      this.outputPort = D.Port$(this.group, x, y, width, height, 6, false);
+      this.addBackgroundImage$1("input.png");
+    },
+    static: {SourceOperatorBody$: function(id, x, y, width, height) {
+        var t1 = new D.SourceOperatorBody(null, null, null, id, null, null, null, null, null, width, height);
+        t1.BaseOperatorBody$5(id, x, y, width, height);
+        t1.SourceOperatorBody$5(id, x, y, width, height);
         return t1;
       }}
   },
-  OutputSegmentUI_closure: {
-    "": "Closure:14;this_0",
-    call$1: function(e) {
-      J.remove$0$ax(this.this_0.segment);
-      return;
+  SinkOperatorBody: {
+    "": "BaseOperatorBody;inputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+    SinkOperatorBody$5: function(id, x, y, width, height) {
+      this.inputPort = D.Port$(this.group, x, y, width, height, 6, true);
+      this.addBackgroundImage$1("output.png");
+    },
+    static: {SinkOperatorBody$: function(id, x, y, width, height) {
+        var t1 = new D.SinkOperatorBody(null, null, null, id, null, null, null, null, null, width, height);
+        t1.BaseOperatorBody$5(id, x, y, width, height);
+        t1.SinkOperatorBody$5(id, x, y, width, height);
+        return t1;
+      }}
+  },
+  ProcessingBaseOperatorBody: {
+    "": "BaseOperatorBody;",
+    ProcessingBaseOperatorBody$5: function(id, x, y, width, height) {
+      this.inputPort = D.Port$(this.group, x, y, width, height, 6, true);
+      this.outputPort = D.Port$(this.group, x, y, width, height, 6, false);
     }
   },
-  OutputSegmentUI_closure0: {
-    "": "Closure:14;editable_1",
-    call$1: function(e) {
-      var t1, target;
-      t1 = J.getInterceptor$x(e);
-      target = t1.get$target(e);
-      if (t1.get$keyCode(e) === 13 || J.get$text$x(target).length > 32)
-        e.preventDefault();
-      return;
-    }
+  ProcessingOperatorBody: {
+    "": "ProcessingBaseOperatorBody;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height"
   },
-  BaseSpecification: {
-    "": "Object;",
-    initialize$0: function(_) {
-      var t1, t2, t3;
-      t1 = this.view;
-      t1.id = this.id + "-specification";
-      t1.className = "output-specification";
-      this.elementList.className = "segment-list";
-      t1 = document.createElement("h4", null);
-      t1.className = "details-title";
-      t2 = document.createElement("span", null);
-      t2.textContent = "Output Specification";
-      t2.toString;
-      t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.BaseSpecification_initialize_closure(this)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
-      t1.appendChild(t2);
-      this.title = t1;
-      this.view.appendChild(t1);
-      this.view.appendChild(document.createElement("hr", null));
-      t1 = this.innerView;
-      t2 = document.createElement("p", null);
-      t2.textContent = "{";
-      t1.appendChild(t2);
-      this.innerView.appendChild(this.elementList);
-      t2 = this.innerView;
-      t1 = document.createElement("p", null);
-      t1.textContent = "}";
-      t2.appendChild(t1);
-      this.view.appendChild(this.innerView);
-    },
-    addElement$6$additional$defaultName$editable$example$removable: function(identifier, additional, defaultName, editable, example, removable) {
-      var newElement, t1;
-      newElement = D.OutputSegmentUI$(defaultName, removable, editable);
-      newElement.name.id = identifier;
-      t1 = this.elements;
-      t1.$indexSet(t1, identifier, newElement);
-      this.elementList.appendChild(newElement.getFormElement$1(example));
-    },
-    addElement$2$example: function(identifier, example) {
-      return this.addElement$6$additional$defaultName$editable$example$removable(identifier, null, "", true, example, false);
-    },
-    removeElement$1: function(identifier) {
-      var t1 = this.elements;
-      t1.$index(t1, identifier)._remove$0();
-      t1 = this.elements;
-      t1.remove$1(t1, identifier);
-    },
-    clear$0: function(_) {
-      var t1;
-      J.set$innerHtml$x(this.elementList, "");
-      t1 = this.elements;
-      t1.clear$0(t1);
-    },
-    select$1: function(_, previousConnections) {
-      var selectElement, t1, t2, segmentList;
-      selectElement = document.createElement("select", null);
-      selectElement.className = "output-segments form-control input-sm";
-      if (previousConnections._collection$_length > 0) {
-        t1 = $.operators;
-        t2 = H.setRuntimeTypeInfo(new P.LinkedHashMapKeyIterable(previousConnections), [H.getTypeArgumentByIndex(previousConnections, 0)]);
-        segmentList = t1.$index(t1, t2.get$first(t2)).get$uiDetails().output.elements;
-        segmentList.forEach$1(segmentList, new D.BaseSpecification_select_closure(selectElement));
-      }
-      return selectElement;
-    },
-    BaseSpecification$1: function(id) {
-      var t1;
-      this.elements = P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, D.OutputSegmentUI);
-      this.view = document.createElement("div", null);
-      t1 = document.createElement("div", null);
-      t1.className = "inner";
-      this.innerView = t1;
-      this.elementList = document.createElement("ul", null);
-      this.initialize$0(this);
-    }
+  SelectionOperatorBody: {
+    "": "ProcessingBaseOperatorBody;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height"
   },
-  BaseSpecification_initialize_closure: {
-    "": "Closure:14;this_0",
-    call$1: function(e) {
-      return D._triggerDetails(this.this_0.innerView);
-    }
+  SplitOperatorBody: {
+    "": "ProcessingBaseOperatorBody;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height"
   },
-  BaseSpecification_select_closure: {
-    "": "Closure:13;selectElement_0",
-    call$2: function(identifier, segment) {
-      var t1 = J.getInterceptor$x(segment);
-      return this.selectElement_0.appendChild(W.OptionElement_OptionElement$_(J.get$text$x(t1.get$name(segment)), J.get$id$x(t1.get$name(segment)), null, false));
-    }
+  UnionOperatorBody: {
+    "": "ProcessingBaseOperatorBody;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+    $isUnionOperatorBody: true
   },
-  OutputSpecification: {
-    "": "BaseSpecification;id,elements,title,view,innerView,elementList",
-    refresh$1: function(previousElements) {
-      var changed, i, t1, t2, t3;
-      for (changed = false, i = 0; i < previousElements._collection$_length; ++i) {
-        t1 = new P.LinkedHashMapKeyIterable(previousElements);
-        t1.$builtinTypeInfo = [H.getTypeArgumentByIndex(previousElements, 0)];
-        t1 = t1.elementAt$1(t1, i);
-        t2 = previousElements.get$values(previousElements);
-        t3 = t2._iterable;
-        changed = this.updateSegment$2(t1, t2._f$1(t3.elementAt$1(t3, i))) || changed;
-      }
-      for (i = this.elements._collection$_length - 1; i >= 0; --i) {
-        t1 = this.elements;
-        t2 = new P.LinkedHashMapKeyIterable(t1);
-        t2.$builtinTypeInfo = [H.getTypeArgumentByIndex(t1, 0)];
-        t1 = t2.elementAt$1(t2, i);
-        t2 = this.elements;
-        t2 = t2.get$values(t2);
-        t3 = t2._iterable;
-        changed = this.assureSegment$3(t1, t2._f$1(t3.elementAt$1(t3, i)), previousElements) || changed;
-      }
-      return changed;
-    },
-    updateSegment$2: function(id, segment) {
-      var t1, t2, newElement, t3;
-      if (!this.elements.containsKey$1(id)) {
-        t1 = J.getInterceptor$x(segment);
-        t2 = J.get$id$x(t1.get$name(segment));
-        newElement = D.OutputSegmentUI$(J.get$text$x(t1.get$name(segment)), false, false);
-        newElement.name.id = t2;
-        t1 = this.elements;
-        t1.$indexSet(t1, t2, newElement);
-        this.elementList.appendChild(newElement.getFormElement$1(""));
-        return true;
-      }
-      t1 = this.elements;
-      t1 = J.get$text$x(J.get$name$x(t1.$index(t1, id)));
-      t2 = J.getInterceptor$x(segment);
-      t3 = J.get$text$x(t2.get$name(segment));
-      t1.toString;
-      if (typeof t3 !== "string")
-        H.throwExpression(new P.ArgumentError(t3));
-      if (t1 == null ? t3 == null : t1 === t3)
-        t1 = 0;
-      else
-        t1 = t1 < t3 ? -1 : 1;
-      if (t1 !== 0) {
-        t1 = J.get$text$x(t2.get$name(segment));
-        t2 = this.elements;
-        J.set$text$x(J.get$name$x(t2.$index(t2, id)), t1);
-        return true;
-      }
-      return false;
-    },
-    assureSegment$3: function(id, segment, previousElements) {
-      var t1, t2;
-      if (!previousElements.containsKey$1(id)) {
-        t1 = J.get$id$x(J.get$name$x(segment));
-        t2 = this.elements;
-        t2.$index(t2, t1)._remove$0();
-        t2 = this.elements;
-        t2.remove$1(t2, t1);
-        return true;
-      }
-      return false;
-    }
+  SortOperatorBody: {
+    "": "ProcessingBaseOperatorBody;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height"
   },
-  RuleOutputSpecification: {
-    "": "OutputSpecification;",
-    refresh$1: function(previousElements) {
-      var updated, t1;
-      updated = D.OutputSpecification.prototype.refresh$1.call(this, previousElements);
-      if (updated) {
-        t1 = W._FrozenElementList$_wrap(this.details.rulesDiv.querySelectorAll(".rule select.output-segments"), null);
-        t1.forEach$1(t1, new D.RuleOutputSpecification_refresh_closure(this));
-      }
-      return updated;
-    }
-  },
-  RuleOutputSpecification_refresh_closure: {
-    "": "Closure:19;this_0",
-    call$1: function(e) {
-      var t1, t2, selectedSegment;
-      t1 = this.this_0;
-      t2 = J.getInterceptor$x(e);
-      selectedSegment = t2.get$value(e);
-      J.clear$0$ax(t2.get$children(e));
-      J.addAll$1$ax(t2.get$children(e), J.get$options$x(t1.select$1(t1, t1.details.prevConn)));
-      t2.set$value(e, selectedSegment);
-      return;
-    }
-  },
-  InputHumanOutputSpecification: {
-    "": "OutputSpecification;id,elements,title,view,innerView,elementList"
-  },
-  InputManualOutputSpecification: {
-    "": "OutputSpecification;id,elements,title,view,innerView,elementList"
-  },
-  SelectionOutputSpecification: {
-    "": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList"
-  },
-  SortOutputSpecification: {
-    "": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList"
-  },
-  SplitOutputSpecification: {
-    "": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList",
-    refreshOutput$0: function() {
-      var t1 = W._FrozenElementList$_wrap(this.details.rulesDiv.querySelectorAll(".rule select.output-flows"), null);
-      t1.forEach$1(t1, new D.SplitOutputSpecification_refreshOutput_closure(this));
-    },
-    $isSplitOutputSpecification: true
-  },
-  SplitOutputSpecification_refreshOutput_closure: {
-    "": "Closure:19;this_0",
-    call$1: function(e) {
-      var t1, selectedSegment;
-      t1 = J.getInterceptor$x(e);
-      selectedSegment = t1.get$value(e);
-      J.clear$0$ax(t1.get$children(e));
-      J.addAll$1$ax(t1.get$children(e), J.get$options$x(H.interceptedTypeCast(this.this_0.details, "$isSplitDetailsUI").outputSelectElement$0()));
-      t1.set$value(e, selectedSegment);
-      return;
-    }
-  },
-  FlowLineUI: {
-    "": "Object;path,from,to,selected",
-    select$1: [function(_, e) {
-      var t1, t2;
-      t1 = !this.selected;
-      this.selected = t1;
-      t2 = this.path;
-      if (t1) {
-        t2.parentNode.appendChild(t2);
-        this.path.setAttribute("class", "selected");
-      } else
-        t2.setAttribute("class", "");
-    }, "call$1", "get$select", 2, 0, 2],
-    remove$0: function(_) {
-      var from, t1, to, t2;
-      from = J.get$attributes$x(this.from.get$group())._element.getAttribute("id");
-      t1 = this.to;
-      to = J.get$attributes$x(t1.get$group())._element.getAttribute("id");
-      t2 = $.operators;
-      t2.$index(t2, from).removeNext$1(to);
-      t2 = $.operators;
-      t2.$index(t2, to).removePrevious$1(from);
-      t2 = J.get$children$x($.canvas);
-      t2.remove$1(t2, this.path);
-      t2 = $.operators;
-      t2.$index(t2, J.get$id$x(t1.get$group())).clearDownFlow$0();
-    },
-    _keyPressed$1: [function(e) {
-      if (this.selected && J.get$keyCode$x(e) === 8) {
-        J.preventDefault$0$x(e);
-        this.remove$0(this);
-      }
-    }, "call$1", "get$_keyPressed", 2, 0, 3],
-    _move$1: [function(e) {
-      var t1, t2, t3, t4, t5, t6, t7;
-      J.get$pathSegList$x(this.path).clear();
-      t1 = this.path;
-      t2 = J.get$pathSegList$x(t1);
-      t3 = this.from;
-      t4 = t3.get$point();
-      t2.appendItem(t1.createSVGPathSegMovetoAbs(t4.x, t4.y));
-      t4 = this.path;
-      t1 = J.get$pathSegList$x(t4);
-      t3 = t3.point;
-      t2 = t3.x;
-      t5 = this.to;
-      t6 = t5.get$point();
-      t7 = t6.x;
-      if (typeof t2 !== "number")
-        return t2.$add();
-      if (typeof t7 !== "number")
-        return H.iae(t7);
-      t3 = t3.y;
-      t6 = t6.y;
-      if (typeof t3 !== "number")
-        return t3.$add();
-      if (typeof t6 !== "number")
-        return H.iae(t6);
-      t1.appendItem(t4.createSVGPathSegLinetoAbs((t2 + t7) / 2, (t3 + t6) / 2));
-      t6 = this.path;
-      t3 = J.get$pathSegList$x(t6);
-      t5 = t5.point;
-      t3.appendItem(t6.createSVGPathSegLinetoAbs(t5.x, t5.y));
-    }, "call$1", "get$_move", 2, 0, 17],
-    _remove$1: [function(e) {
-      this.remove$0(this);
-    }, "call$1", "get$_remove", 2, 0, 17],
-    FlowLineUI$2: function(from, to) {
-      var temp, t1, t2, t3, t4, t5, t6, t7, t8;
-      this.selected = false;
-      temp = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      this.path = temp;
-      t1 = J.get$pathSegList$x(temp);
-      t2 = this.from;
-      t3 = t2.get$point();
-      t1.appendItem(temp.createSVGPathSegMovetoAbs(t3.x, t3.y));
-      t3 = this.path;
-      t1 = J.get$pathSegList$x(t3);
-      t4 = t2.point;
-      t5 = t4.x;
-      t6 = this.to;
-      t7 = t6.get$point();
-      t8 = t7.x;
-      if (typeof t5 !== "number")
-        return t5.$add();
-      if (typeof t8 !== "number")
-        return H.iae(t8);
-      t4 = t4.y;
-      t7 = t7.y;
-      if (typeof t4 !== "number")
-        return t4.$add();
-      if (typeof t7 !== "number")
-        return H.iae(t7);
-      t1.appendItem(t3.createSVGPathSegLinetoAbs((t5 + t8) / 2, (t4 + t7) / 2));
-      t7 = this.path;
-      t4 = J.get$pathSegList$x(t7);
-      t8 = t6.point;
-      t4.appendItem(t7.createSVGPathSegLinetoAbs(t8.x, t8.y));
-      this.path.setAttribute("from", "" + t2.get$hashCode(t2));
-      this.path.setAttribute("to", "" + t6.get$hashCode(t6));
-      this.path.setAttribute("stroke-width", "1.5");
-      t8 = this.path;
-      t8.toString;
-      t8 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t8, C.EventStreamProvider_mousedown._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$select(this)), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
-      $.canvas.appendChild(this.path);
-      t8 = H.setRuntimeTypeInfo(new W._EventStream(window, C.EventStreamProvider_keydown._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$_keyPressed()), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
-      t8 = J.get$on$x(t2.body);
-      t8 = t8.$index(t8, "stream_port_moving");
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$_move()), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
-      t8 = J.get$on$x(t6.body);
-      t8 = t8.$index(t8, "stream_port_moving");
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$_move()), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
-      t2 = J.get$on$x(t2.body);
-      t2 = t2.$index(t2, "stream_port_removed");
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_remove()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
-      t6 = J.get$on$x(t6.body);
-      t6 = t6.$index(t6, "stream_port_removed");
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t6._target, t6._eventType, W._wrapZone(this.get$_remove()), t6._useCapture), [H.getTypeArgumentByIndex(t6, 0)])._tryResume$0();
-    }
+  EnrichOperatorBody: {
+    "": "ProcessingBaseOperatorBody;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height"
   },
   ElementUI: {
     "": "Object;id,type*,label,input<",
@@ -4160,7 +4052,7 @@ var $$ = {};
       return value;
     }
   },
-  BaseDetailsUI: {
+  BaseDetails: {
     "": "Object;type*",
     initialize$0: function(_) {
       this.addTitles$0();
@@ -4170,9 +4062,9 @@ var $$ = {};
       this.addElement$5$features("description", "textarea", "Description", this.base, H.fillLiteralMap(["rows", "3"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
     },
     addElement$6$features$options: function(identifier, type, description, list, features, options) {
-      var newElement = D.ElementUI$(this.id + "_" + $.BaseDetailsUI_count, type, description, features, options);
+      var newElement = D.ElementUI$(this.id + "_" + $.BaseDetails_count, type, description, features, options);
       list.$indexSet(list, identifier, newElement);
-      $.BaseDetailsUI_count = $.BaseDetailsUI_count + 1;
+      $.BaseDetails_count = $.BaseDetails_count + 1;
       if (list === this.base)
         this.detailsView.appendChild(newElement.getFormElement$0());
       else
@@ -4199,12 +4091,12 @@ var $$ = {};
       t3.toString;
       t4 = C.EventStreamProvider_click._eventType;
       t5 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, t4, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetails_addTitles_closure(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
       t2.appendChild(t3);
       t3 = document.createElement("span", null);
       J.insertAdjacentHtml$2$x(t3, "beforeend", "<small>for bookkeeping purposes</small>");
       t5 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, t4, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure0(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetails_addTitles_closure0(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
       t2.appendChild(t3);
       t1.appendChild(t2);
       this.detailsViewOuter.appendChild(document.createElement("hr", null));
@@ -4217,12 +4109,12 @@ var $$ = {};
       t3.textContent = "Parameters";
       t3.toString;
       t5 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, t4, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure1(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.BaseDetails_addTitles_closure1(this)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
       t1.appendChild(t3);
       t3 = document.createElement("span", null);
       J.insertAdjacentHtml$2$x(t3, "beforeend", "<small>specific to this operator</small>");
       t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, t4, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.BaseDetailsUI_addTitles_closure2(this)), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.BaseDetails_addTitles_closure2(this)), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
       t1.appendChild(t3);
       t2.appendChild(t1);
       this.parametersViewOuter.appendChild(document.createElement("hr", null));
@@ -4239,15 +4131,15 @@ var $$ = {};
     },
     updateOperatorDetails$0: function() {
       var t1 = this.base;
-      t1.forEach$1(t1, new D.BaseDetailsUI_updateOperatorDetails_closure(this));
+      t1.forEach$1(t1, new D.BaseDetails_updateOperatorDetails_closure(this));
       t1 = this.elements;
-      t1.forEach$1(t1, new D.BaseDetailsUI_updateOperatorDetails_closure0(this));
+      t1.forEach$1(t1, new D.BaseDetails_updateOperatorDetails_closure0(this));
     },
     validate$0: function() {
       var t1 = this.base;
-      t1.forEach$1(t1, new D.BaseDetailsUI_validate_closure(this));
+      t1.forEach$1(t1, new D.BaseDetails_validate_closure(this));
       t1 = this.elements;
-      t1.forEach$1(t1, new D.BaseDetailsUI_validate_closure0(this));
+      t1.forEach$1(t1, new D.BaseDetails_validate_closure0(this));
     },
     _isElementValid$2: function(identifier, element) {
       var result, t1, t2;
@@ -4311,7 +4203,7 @@ var $$ = {};
         J.add$1$ax(t1.$index(t1, "WARNING"), t2);
       }
     },
-    BaseDetailsUI$4: function(id, type, prevConn, nextConn) {
+    BaseDetails$4: function(id, type, prevConn, nextConn) {
       var t1, t2;
       t1 = this.id;
       t2 = new D.OutputSpecification(t1, null, null, null, null, null);
@@ -4339,67 +4231,67 @@ var $$ = {};
       this.view = t2;
     }
   },
-  BaseDetailsUI_addTitles_closure: {
+  BaseDetails_addTitles_closure: {
     "": "Closure:14;this_0",
     call$1: function(e) {
       return D._triggerDetails(this.this_0.detailsView);
     }
   },
-  BaseDetailsUI_addTitles_closure0: {
+  BaseDetails_addTitles_closure0: {
     "": "Closure:14;this_1",
     call$1: function(e) {
       return D._triggerDetails(this.this_1.detailsView);
     }
   },
-  BaseDetailsUI_addTitles_closure1: {
+  BaseDetails_addTitles_closure1: {
     "": "Closure:14;this_2",
     call$1: function(e) {
       return D._triggerDetails(this.this_2.parametersView);
     }
   },
-  BaseDetailsUI_addTitles_closure2: {
+  BaseDetails_addTitles_closure2: {
     "": "Closure:14;this_3",
     call$1: function(e) {
       return D._triggerDetails(this.this_3.parametersView);
     }
   },
-  BaseDetailsUI_updateOperatorDetails_closure: {
+  BaseDetails_updateOperatorDetails_closure: {
     "": "Closure:13;this_0",
     call$2: function(id, element) {
       var t1 = $.operators;
       return t1.$index(t1, this.this_0.id).updateDetail$2(id, element.get$input());
     }
   },
-  BaseDetailsUI_updateOperatorDetails_closure0: {
+  BaseDetails_updateOperatorDetails_closure0: {
     "": "Closure:13;this_1",
     call$2: function(id, element) {
       var t1 = $.operators;
       return t1.$index(t1, this.this_1.id).updateDetail$2(id, element.get$input());
     }
   },
-  BaseDetailsUI_validate_closure: {
-    "": "Closure:20;this_0",
+  BaseDetails_validate_closure: {
+    "": "Closure:19;this_0",
     call$2: function(identifier, element) {
       return this.this_0._isElementValid$2(identifier, element);
     }
   },
-  BaseDetailsUI_validate_closure0: {
-    "": "Closure:20;this_1",
+  BaseDetails_validate_closure0: {
+    "": "Closure:19;this_1",
     call$2: function(identifier, element) {
       return this.this_1._isElementValid$2(identifier, element);
     }
   },
-  OutputDetailsUI: {
-    "": "BaseDetailsUI;",
+  OutputDetails: {
+    "": "BaseDetails;",
     refresh$1: function(specification) {
       return this.output.refresh$1(specification.elements);
     }
   },
-  RuleDetailsUI: {
-    "": "OutputDetailsUI;",
+  RuleDetails: {
+    "": "OutputDetails;",
     initialize$0: function(_) {
       var t1, t2;
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
       t1 = document.createElement("div", null);
       t1.className = "rules";
       this.rulesDiv = t1;
@@ -4415,15 +4307,15 @@ var $$ = {};
     },
     clear$0: function(_) {
       var t1;
-      D.BaseDetailsUI.prototype.clear$0.call(this, this);
+      D.BaseDetails.prototype.clear$0.call(this, this);
       t1 = J.get$children$x(this.rulesDiv);
       t1.clear$0(t1);
     },
     refresh$1: function(specification) {
       var updated, t1;
-      updated = D.OutputDetailsUI.prototype.refresh$1.call(this, specification);
+      updated = D.OutputDetails.prototype.refresh$1.call(this, specification);
       if (specification.elements._collection$_length === 0) {
-        D.BaseDetailsUI.prototype.clear$0.call(this, this);
+        D.BaseDetails.prototype.clear$0.call(this, this);
         t1 = J.get$children$x(this.rulesDiv);
         t1.clear$0(t1);
         return true;
@@ -4433,30 +4325,30 @@ var $$ = {};
     _addRule$1: [function(e) {
     }, "call$1", "get$_addRule", 2, 0, 2]
   },
-  EnrichDetailsUI: {
-    "": "OutputDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  EnrichDetails: {
+    "": "OutputDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
       this.addElement$5$features("copy", "number", "Number of copies", this.elements, H.fillLiteralMap(["min", "1", "max", "10", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
     }
   },
-  UnionDetailsUI: {
-    "": "OutputDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  UnionDetails: {
+    "": "OutputDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
       this.parametersViewOuter.hidden = true;
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
     }
   },
-  SourceFileDetailsUI: {
-    "": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  SourceFileDetails: {
+    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
       this.addElement$4("input", "file", "File", this.elements);
       this.addElement$4("delimiter", "text", "Delimiter", this.elements);
     }
   },
-  SourceHumanDetailsUI: {
-    "": "BaseDetailsUI;availableInputs,elementsDiv,segmentList,refreshableDivs,_dragSegment,log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  HumanDetails: {
+    "": "BaseDetails;availableInputs,elementsDiv,segmentList,refreshableDivs,_dragSegment,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     _onHumanClick$1: [function(e) {
       var t1, t2, t3;
       J.set$display$x($.get$modal().style, "none");
@@ -4479,7 +4371,7 @@ var $$ = {};
       J.insertAdjacentHtml$2$x(t2, "beforeend", J.get$innerHtml$x(t3[1]));
       t1.appendChild(t2);
       t2 = W._FrozenElementList$_wrap(this.parametersView.querySelectorAll(".rule"), null);
-      t2.forEach$1(t2, new D.SourceHumanDetailsUI__onHumanClick_closure(this));
+      t2.forEach$1(t2, new D.HumanDetails__onHumanClick_closure(this));
     }, "call$1", "get$_onHumanClick", 2, 0, 2],
     _appendInputToPreview$1: function(e) {
       var t1, type, $name, t2, t3, options, t4, sourceElement, inputType;
@@ -4518,10 +4410,10 @@ var $$ = {};
             t1.toString;
             t1 = H.stringReplaceAllUnchecked(t1, "<div>", "");
             t1 = H.stringReplaceAllUnchecked(t1, "</div>", "");
-            H.IterableMixinWorkaround_forEach(H.stringReplaceAllUnchecked(t1, "</br>", "").split("<br>"), new D.SourceHumanDetailsUI__appendInputToPreview_closure($name, inputType));
+            H.IterableMixinWorkaround_forEach(H.stringReplaceAllUnchecked(t1, "</br>", "").split("<br>"), new D.HumanDetails__appendInputToPreview_closure($name, inputType));
           } else {
             options = t1.get$children(sourceElement);
-            options.forEach$1(options, new D.SourceHumanDetailsUI__appendInputToPreview_closure0($name, inputType));
+            options.forEach$1(options, new D.HumanDetails__appendInputToPreview_closure0($name, inputType));
           }
         }
       }
@@ -4539,7 +4431,7 @@ var $$ = {};
     }, "call$1", "get$_onHumanClose", 2, 0, 2],
     initialize$0: function(_) {
       var instructions, question, t1, t2, t3, t4;
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
       this.addElement$5$features("iteration", "number", "Number of copies", this.elements, H.fillLiteralMap(["value", "1", "min", "1", "max", "1000"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$features("expiry", "number", "Max alloted time (sec)", this.elements, H.fillLiteralMap(["value", "60", "min", "10", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$features("payment", "number", "Payment (\u00a2)", this.elements, H.fillLiteralMap(["value", "10", "min", "5", "max", "100"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
@@ -4589,9 +4481,9 @@ var $$ = {};
       prevSegments = specification.elements;
       t1 = this.refreshableDivs;
       t1.toString;
-      H.IterableMixinWorkaround_forEach(t1, new D.SourceHumanDetailsUI_refresh_closure(this, prevSegments));
+      H.IterableMixinWorkaround_forEach(t1, new D.HumanDetails_refresh_closure(this, prevSegments));
       if (prevSegments._collection$_length > 0) {
-        prevSegments.forEach$1(prevSegments, new D.SourceHumanDetailsUI_refresh_closure0(this));
+        prevSegments.forEach$1(prevSegments, new D.HumanDetails_refresh_closure0(this));
         this.segmentList.parentElement.parentElement.hidden = false;
       } else
         this.segmentList.parentElement.parentElement.hidden = true;
@@ -4609,12 +4501,12 @@ var $$ = {};
       t3.className = "segment-name";
       t3.draggable = true;
       t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, C.EventStreamProvider_drag._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.SourceHumanDetailsUI_refreshSegmentFromPrevious_closure(this, segment)), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.HumanDetails_refreshSegmentFromPrevious_closure(this, segment)), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
       t2.appendChild(t3);
       t1.appendChild(t2);
       t2 = this.refreshableDivs;
       t2.toString;
-      H.IterableMixinWorkaround_forEach(t2, new D.SourceHumanDetailsUI_refreshSegmentFromPrevious_closure0(id, segment));
+      H.IterableMixinWorkaround_forEach(t2, new D.HumanDetails_refreshSegmentFromPrevious_closure0(id, segment));
     },
     refreshSegmentFromCurrent$2: function(segments, prevSegments) {
       var t1, i, t2, t3;
@@ -4650,7 +4542,7 @@ var $$ = {};
       t3.className = "segment-remove";
       t3.toString;
       t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t3, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.SourceHumanDetailsUI__onSegmentDrop_closure()), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(new D.HumanDetails__onSegmentDrop_closure()), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
       t2.appendChild(t3);
       t1.appendChild(t2);
     }, "call$1", "get$_onSegmentDrop", 2, 0, 2],
@@ -4670,7 +4562,7 @@ var $$ = {};
       t1.className = "form-control input-sm";
       this.availableInputs = t1;
       t1 = $.get$SOURCE_OPTIONS_HUMAN_INPUTS();
-      t1.forEach$1(t1, new D.SourceHumanDetailsUI_configureHumanTasks_closure(this));
+      t1.forEach$1(t1, new D.HumanDetails_configureHumanTasks_closure(this));
       buttonDiv = document.createElement("div", null);
       buttonDiv.className = "col-sm-3";
       buttonDiv.appendChild(askInputFromUserButton);
@@ -4701,7 +4593,7 @@ var $$ = {};
       t1.className = "btn btn-danger btn-xs";
       t1.toString;
       t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.SourceHumanDetailsUI__addNewInput_closure(this, ruleRow)), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.HumanDetails__addNewInput_closure(this, ruleRow)), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
       elementRowDefinition.appendChild(t1);
       t1 = document.createElement("label", null);
       t1.textContent = inputDef;
@@ -4745,10 +4637,10 @@ var $$ = {};
         default:
       }
       ruleRow.appendChild(elementRowConfig);
-      $.SourceHumanDetailsUI_count = $.SourceHumanDetailsUI_count + 1;
+      $.HumanDetails_count = $.HumanDetails_count + 1;
       this.parametersView.appendChild(ruleRow);
     }, "call$1", "get$_addNewInput", 2, 0, 2],
-    SourceHumanDetailsUI$4: function(id, type, prevConn, nextConn) {
+    HumanDetails$4: function(id, type, prevConn, nextConn) {
       var t1, t2;
       t1 = this.id;
       t2 = new D.InputHumanOutputSpecification(t1, null, null, null, null, null);
@@ -4756,20 +4648,20 @@ var $$ = {};
       this.output = t2;
       this.view.appendChild(t2.view);
     },
-    static: {"": "SourceHumanDetailsUI_count", SourceHumanDetailsUI$: function(id, type, prevConn, nextConn) {
-        var t1 = new D.SourceHumanDetailsUI(null, null, null, null, null, N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null, null, null);
-        t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
-        t1.SourceHumanDetailsUI$4(id, type, prevConn, nextConn);
+    static: {"": "HumanDetails_count", HumanDetails$: function(id, type, prevConn, nextConn) {
+        var t1 = new D.HumanDetails(null, null, null, null, null, id, type, prevConn, nextConn, null, null, null, null, null, null, null, null);
+        t1.BaseDetails$4(id, type, prevConn, nextConn);
+        t1.HumanDetails$4(id, type, prevConn, nextConn);
         return t1;
       }}
   },
-  SourceHumanDetailsUI__onHumanClick_closure: {
+  HumanDetails__onHumanClick_closure: {
     "": "Closure:14;this_0",
     call$1: function(e) {
       return this.this_0._appendInputToPreview$1(e);
     }
   },
-  SourceHumanDetailsUI__appendInputToPreview_closure: {
+  HumanDetails__appendInputToPreview_closure: {
     "": "Closure:14;name_0,inputType_1",
     call$1: function(e) {
       var t1, t2, t3, t4;
@@ -4785,7 +4677,7 @@ var $$ = {};
       return t1.appendChild(t2);
     }
   },
-  SourceHumanDetailsUI__appendInputToPreview_closure0: {
+  HumanDetails__appendInputToPreview_closure0: {
     "": "Closure:14;name_2,inputType_3",
     call$1: function(e) {
       var t1, t2, t3, t4;
@@ -4801,19 +4693,19 @@ var $$ = {};
       return t1.appendChild(t2);
     }
   },
-  SourceHumanDetailsUI_refresh_closure: {
+  HumanDetails_refresh_closure: {
     "": "Closure:14;this_0,prevSegments_1",
     call$1: function(e) {
       return this.this_0.refreshSegmentFromCurrent$2(J.querySelectorAll$1$x(e, "span.segment-tag"), this.prevSegments_1);
     }
   },
-  SourceHumanDetailsUI_refresh_closure0: {
+  HumanDetails_refresh_closure0: {
     "": "Closure:13;this_2",
     call$2: function(id, segment) {
       return this.this_2.refreshSegmentFromPrevious$2(id, segment);
     }
   },
-  SourceHumanDetailsUI_refreshSegmentFromPrevious_closure: {
+  HumanDetails_refreshSegmentFromPrevious_closure: {
     "": "Closure:14;this_0,segment_1",
     call$1: function(e) {
       var t1 = this.segment_1;
@@ -4826,14 +4718,14 @@ var $$ = {};
       return;
     }
   },
-  SourceHumanDetailsUI_refreshSegmentFromPrevious_closure0: {
+  HumanDetails_refreshSegmentFromPrevious_closure0: {
     "": "Closure:14;id_2,segment_3",
     call$1: function(e) {
       var t1 = J.querySelectorAll$1$x(e, "span[data-segment=\"" + H.S(this.id_2) + "\"]");
-      return t1.forEach$1(t1, new D.SourceHumanDetailsUI_refreshSegmentFromPrevious__closure(this.segment_3));
+      return t1.forEach$1(t1, new D.HumanDetails_refreshSegmentFromPrevious__closure(this.segment_3));
     }
   },
-  SourceHumanDetailsUI_refreshSegmentFromPrevious__closure: {
+  HumanDetails_refreshSegmentFromPrevious__closure: {
     "": "Closure:14;segment_4",
     call$1: function(e) {
       var t1, t2;
@@ -4843,19 +4735,19 @@ var $$ = {};
       return t2;
     }
   },
-  SourceHumanDetailsUI__onSegmentDrop_closure: {
+  HumanDetails__onSegmentDrop_closure: {
     "": "Closure:14;",
     call$1: function(e) {
       return J.remove$0$ax(H.interceptedTypeCast(J.get$target$x(e), "$isSpanElement").parentElement);
     }
   },
-  SourceHumanDetailsUI_configureHumanTasks_closure: {
+  HumanDetails_configureHumanTasks_closure: {
     "": "Closure:13;this_0",
     call$2: function($name, value) {
       return this.this_0.availableInputs.appendChild(W.OptionElement_OptionElement$_($name, value, null, false));
     }
   },
-  SourceHumanDetailsUI__addNewInput_closure: {
+  HumanDetails__addNewInput_closure: {
     "": "Closure:14;this_0,ruleRow_1",
     call$1: function(e) {
       var t1, t2;
@@ -4866,10 +4758,10 @@ var $$ = {};
       return;
     }
   },
-  SourceManualDetailsUI: {
-    "": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  SourceManualDetails: {
+    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
       this.addElement$5$features("input", "textarea", "Manual entry", this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.addElement$5$options("delimiter", "select", "Delimiter", this.elements, $.get$SOURCE_OPTIONS_NAMES());
     },
@@ -4900,7 +4792,7 @@ var $$ = {};
         dumpSpan = document.createElement("span", null);
         t2 = this.output;
         t3 = "segment-" + J.get$hashCode$(dumpSpan);
-        newElement = D.OutputSegmentUI$("", false, true);
+        newElement = D.OutputSegment$("", false, true);
         newElement.name.id = t3;
         t4 = t2.elements;
         t4.$indexSet(t4, t3, newElement);
@@ -4910,7 +4802,7 @@ var $$ = {};
           t2.removeChild(dumpSpan);
       }
     },
-    SourceManualDetailsUI$4: function(id, type, prevConn, nextConn) {
+    SourceManualDetails$4: function(id, type, prevConn, nextConn) {
       var t1, t2, t3;
       t1 = this.id;
       t2 = new D.InputManualOutputSpecification(t1, null, null, null, null, null);
@@ -4922,52 +4814,52 @@ var $$ = {};
       t1.className = "btn btn-default btn-xs";
       t1.toString;
       t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SourceManualDetailsUI_closure(this)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SourceManualDetails_closure(this)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
       t2.appendChild(t1);
       this.view.appendChild(this.output.view);
     },
-    static: {SourceManualDetailsUI$: function(id, type, prevConn, nextConn) {
-        var t1 = new D.SourceManualDetailsUI(N.Logger_Logger("OperatorDetails"), id, type, prevConn, nextConn, null, null, null, null, null, null, null, null);
-        t1.BaseDetailsUI$4(id, type, prevConn, nextConn);
-        t1.SourceManualDetailsUI$4(id, type, prevConn, nextConn);
+    static: {SourceManualDetails$: function(id, type, prevConn, nextConn) {
+        var t1 = new D.SourceManualDetails(id, type, prevConn, nextConn, null, null, null, null, null, null, null, null);
+        t1.BaseDetails$4(id, type, prevConn, nextConn);
+        t1.SourceManualDetails$4(id, type, prevConn, nextConn);
         return t1;
       }}
   },
-  SourceManualDetailsUI_closure: {
+  SourceManualDetails_closure: {
     "": "Closure:14;this_0",
     call$1: function(e) {
       return this.this_0._onRefresh$0();
     }
   },
-  SourceRSSDetailsUI: {
-    "": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  SourceRSSDetails: {
+    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
       this.addElement$4("webpage", "url", "Feed URL", this.elements);
     }
   },
-  SinkFileDetailsUI: {
-    "": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  SinkFileDetails: {
+    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
       this.addElement$4("output", "text", "File name", this.elements);
     }
   },
-  SinkEmailDetailsUI: {
-    "": "BaseDetailsUI;log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  SinkEmailDetails: {
+    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
-      D.BaseDetailsUI.prototype.initialize$0.call(this, this);
+      D.BaseDetails.prototype.initialize$0.call(this, this);
       this.addElement$4("email", "email", "email address", this.elements);
     }
   },
-  SelectionDetailsUI: {
-    "": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  SelectionDetails: {
+    "": "RuleDetails;rulesDiv,addRuleButton,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
-      D.RuleDetailsUI.prototype.initialize$0.call(this, this);
+      D.RuleDetails.prototype.initialize$0.call(this, this);
     },
     updateOperatorDetails$0: function() {
       var t1, e, t2, segment, action, condition, conditionInput;
-      D.BaseDetailsUI.prototype.updateOperatorDetails$0.call(this);
+      D.BaseDetails.prototype.updateOperatorDetails$0.call(this);
       t1 = $.operators;
       t1.$index(t1, this.id).cleanRules$0();
       for (t1 = J.get$children$x(this.rulesDiv), t1 = t1.get$iterator(t1); t1.moveNext$0();) {
@@ -4990,7 +4882,7 @@ var $$ = {};
       }
       parameter = document.createElement("div", null);
       parameter.className = "row rule";
-      parameter.id = this.id + "-rule-" + $.SelectionDetailsUI_count;
+      parameter.id = this.id + "-rule-" + $.SelectionDetails_count;
       conditionDiv = document.createElement("div", null);
       conditionDiv.className = "col-sm-3";
       t2 = document.createElement("button", null);
@@ -4998,7 +4890,7 @@ var $$ = {};
       t2.className = "btn btn-danger btn-xs";
       t2.toString;
       t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SelectionDetailsUI__addRule_closure(this, parameter)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SelectionDetails__addRule_closure(this, parameter)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
       conditionDiv.appendChild(t2);
       t2 = document.createElement("label", null);
       t2.textContent = "Filter";
@@ -5038,12 +4930,12 @@ var $$ = {};
       t3.appendChild(t1);
       t2.appendChild(t3);
       configDiv.appendChild(t2);
-      $.SelectionDetailsUI_count = $.SelectionDetailsUI_count + 1;
+      $.SelectionDetails_count = $.SelectionDetails_count + 1;
       parameter.appendChild(conditionDiv);
       parameter.appendChild(configDiv);
       this.rulesDiv.appendChild(parameter);
     }, "call$1", "get$_addRule", 2, 0, 2],
-    SelectionDetailsUI$4: function(id, type, prevConn, nextConn) {
+    SelectionDetails$4: function(id, type, prevConn, nextConn) {
       var t1, t2;
       t1 = this.id;
       t2 = new D.SelectionOutputSpecification(this, t1, null, null, null, null, null);
@@ -5051,9 +4943,9 @@ var $$ = {};
       this.output = t2;
       this.view.appendChild(t2.view);
     },
-    static: {"": "SelectionDetailsUI_count"}
+    static: {"": "SelectionDetails_count"}
   },
-  SelectionDetailsUI__addRule_closure: {
+  SelectionDetails__addRule_closure: {
     "": "Closure:14;this_0,parameter_1",
     call$1: function(e) {
       var t1 = this.parameter_1.id;
@@ -5061,16 +4953,16 @@ var $$ = {};
       return;
     }
   },
-  SortDetailsUI: {
-    "": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  SortDetails: {
+    "": "RuleDetails;rulesDiv,addRuleButton,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
-      D.RuleDetailsUI.prototype.initialize$0.call(this, this);
+      D.RuleDetails.prototype.initialize$0.call(this, this);
       this.addElement$5$features("size", "number", "Window size", this.elements, H.fillLiteralMap(["min", "1", "max", "100", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.parametersView.appendChild(this.rulesDiv);
     },
     updateOperatorDetails$0: function() {
       var t1, e, t2, segment, order;
-      D.BaseDetailsUI.prototype.updateOperatorDetails$0.call(this);
+      D.BaseDetails.prototype.updateOperatorDetails$0.call(this);
       t1 = $.operators;
       t1.$index(t1, this.id).cleanRules$0();
       for (t1 = J.get$children$x(this.rulesDiv), t1 = t1.get$iterator(t1); t1.moveNext$0();) {
@@ -5091,7 +4983,7 @@ var $$ = {};
       }
       parameter = document.createElement("div", null);
       parameter.className = "row rule";
-      parameter.id = this.id + "-rule-" + $.SortDetailsUI_count;
+      parameter.id = this.id + "-rule-" + $.SortDetails_count;
       conditionDiv = document.createElement("div", null);
       conditionDiv.className = "col-sm-3";
       t2 = document.createElement("button", null);
@@ -5099,7 +4991,7 @@ var $$ = {};
       t2.className = "btn btn-danger btn-xs";
       t2.toString;
       t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SortDetailsUI__addRule_closure(this, parameter)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.SortDetails__addRule_closure(this, parameter)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
       conditionDiv.appendChild(t2);
       t2 = document.createElement("label", null);
       t2.textContent = "Sort using";
@@ -5131,12 +5023,12 @@ var $$ = {};
       t3.appendChild(t1);
       t2.appendChild(t3);
       configDiv.appendChild(t2);
-      $.SortDetailsUI_count = $.SortDetailsUI_count + 1;
+      $.SortDetails_count = $.SortDetails_count + 1;
       parameter.appendChild(conditionDiv);
       parameter.appendChild(configDiv);
       this.rulesDiv.appendChild(parameter);
     }, "call$1", "get$_addRule", 2, 0, 2],
-    SortDetailsUI$4: function(id, type, prevConn, nextConn) {
+    SortDetails$4: function(id, type, prevConn, nextConn) {
       var t1, t2;
       t1 = this.id;
       t2 = new D.SortOutputSpecification(this, t1, null, null, null, null, null);
@@ -5144,9 +5036,9 @@ var $$ = {};
       this.output = t2;
       this.view.appendChild(t2.view);
     },
-    static: {"": "SortDetailsUI_count"}
+    static: {"": "SortDetails_count"}
   },
-  SortDetailsUI__addRule_closure: {
+  SortDetails__addRule_closure: {
     "": "Closure:14;this_0,parameter_1",
     call$1: function(e) {
       var t1 = this.parameter_1.id;
@@ -5154,17 +5046,17 @@ var $$ = {};
       return;
     }
   },
-  SplitDetailsUI: {
-    "": "RuleDetailsUI;rulesDiv,addRuleButton,log,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+  SplitDetails: {
+    "": "RuleDetails;rulesDiv,addRuleButton,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     outputSelectElement$0: function() {
       var selectElement = document.createElement("select", null);
       selectElement.className = "output-flows form-control input-sm";
-      J.forEach$1$ax(this.nextConn, new D.SplitDetailsUI_outputSelectElement_closure(selectElement));
+      J.forEach$1$ax(this.nextConn, new D.SplitDetails_outputSelectElement_closure(selectElement));
       return selectElement;
     },
     updateOperatorDetails$0: function() {
       var t1, e, t2, operator, segment, condition, conditionInput;
-      D.BaseDetailsUI.prototype.updateOperatorDetails$0.call(this);
+      D.BaseDetails.prototype.updateOperatorDetails$0.call(this);
       t1 = $.operators;
       t1.$index(t1, this.id).cleanRules$0();
       for (t1 = J.get$children$x(this.rulesDiv), t1 = t1.get$iterator(t1); t1.moveNext$0();) {
@@ -5194,7 +5086,7 @@ var $$ = {};
       }
       parameter = document.createElement("div", null);
       parameter.className = "row rule";
-      parameter.id = this.id + "-rule-" + $.SplitDetailsUI_count;
+      parameter.id = this.id + "-rule-" + $.SplitDetails_count;
       conditionDiv = document.createElement("div", null);
       conditionDiv.className = "col-sm-3";
       t2 = document.createElement("ul", null);
@@ -5205,7 +5097,7 @@ var $$ = {};
       t4.className = "btn btn-danger btn-xs";
       t4.toString;
       t5 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t4, C.EventStreamProvider_click._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.SplitDetailsUI__addRule_closure(this, parameter)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t5._target, t5._eventType, W._wrapZone(new D.SplitDetails__addRule_closure(this, parameter)), t5._useCapture), [H.getTypeArgumentByIndex(t5, 0)])._tryResume$0();
       t3.appendChild(t4);
       t2.appendChild(t3);
       t3 = document.createElement("li", null);
@@ -5244,12 +5136,12 @@ var $$ = {};
       t3.appendChild(t1);
       t2.appendChild(t3);
       configDiv.appendChild(t2);
-      $.SplitDetailsUI_count = $.SplitDetailsUI_count + 1;
+      $.SplitDetails_count = $.SplitDetails_count + 1;
       parameter.appendChild(conditionDiv);
       parameter.appendChild(configDiv);
       this.rulesDiv.appendChild(parameter);
     }, "call$1", "get$_addRule", 2, 0, 2],
-    SplitDetailsUI$4: function(id, type, prevConn, nextConn) {
+    SplitDetails$4: function(id, type, prevConn, nextConn) {
       var t1, t2;
       t1 = this.id;
       t2 = new D.SplitOutputSpecification(this, t1, null, null, null, null, null);
@@ -5257,16 +5149,16 @@ var $$ = {};
       this.output = t2;
       this.view.appendChild(t2.view);
     },
-    $isSplitDetailsUI: true,
-    static: {"": "SplitDetailsUI_count"}
+    $isSplitDetails: true,
+    static: {"": "SplitDetails_count"}
   },
-  SplitDetailsUI_outputSelectElement_closure: {
+  SplitDetails_outputSelectElement_closure: {
     "": "Closure:13;selectElement_0",
     call$2: function(identifier, connected) {
       return this.selectElement_0.appendChild(W.OptionElement_OptionElement$_(identifier, identifier, null, false));
     }
   },
-  SplitDetailsUI__addRule_closure: {
+  SplitDetails__addRule_closure: {
     "": "Closure:14;this_0,parameter_1",
     call$1: function(e) {
       var t1 = this.parameter_1.id;
@@ -5274,205 +5166,291 @@ var $$ = {};
       return;
     }
   },
-  BaseOperatorUI: {
-    "": "Object;group<",
-    initialize$0: function(_) {
-      $.canvas.appendChild(this.group);
-    },
-    _onMouseDown$1: [function(e) {
-      var t1, mouseCoordinates;
-      J.preventDefault$0$x(e);
-      t1 = $.selectedOperator;
-      if (t1 != null)
-        t1.group.setAttribute("class", "");
-      if (this !== t1) {
-        $.selectedOperator = this;
-        this.group.setAttribute("class", "selected");
-      } else
-        $.selectedOperator = null;
-      this.dragging = true;
-      t1 = this.group;
-      t1.parentNode.appendChild(t1);
-      mouseCoordinates = D.getMouseCoordinatesProportinalToCanvas(e);
-      this.dragOffsetX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), J.getCtm$0$x(this.group).e);
-      this.dragOffsetY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), J.getCtm$0$x(this.group).f);
-      t1 = $.canvas;
-      t1.toString;
-      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mousemove._eventType, false), [null]);
-      t1 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_moveStarted()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)]);
-      t1._tryResume$0();
-      t1.resume$0();
-      t1 = $.canvas;
-      t1.toString;
-      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mouseup._eventType, false), [null]);
-      t1 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_moveCompleted()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)]);
-      t1._tryResume$0();
-      t1.resume$0();
-    }, "call$1", "get$_onMouseDown", 2, 0, 2],
-    _onMouseEnter$1: [function(e) {
-      J.set$cursor$x(this.body.style, "move");
-    }, "call$1", "get$_onMouseEnter", 2, 0, 2],
-    _moveStarted$1: [function(e) {
-      var mouseCoordinates, newX, newY;
-      if (this.dragging === true) {
-        mouseCoordinates = D.getMouseCoordinatesProportinalToCanvas(e);
-        newX = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "x"), this.dragOffsetX);
-        newY = J.$sub$n(mouseCoordinates.$index(mouseCoordinates, "y"), this.dragOffsetY);
-        this.group.setAttribute("transform", "translate(" + H.S(newX) + ", " + H.S(newY) + ")");
-        this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_moving", true, true, [newX, newY]));
+  OutputSegment: {
+    "": "Object;removable,segment<,name>,value>,deleteButton",
+    getFormElement$1: function(exampleValue) {
+      var buttonDiv;
+      J.insertAdjacentHtml$2$x(this.segment, "beforeend", "<span>\"</span>");
+      this.segment.appendChild(this.name);
+      J.insertAdjacentHtml$2$x(this.segment, "beforeend", "<span>\"</span>");
+      if (J.get$isNotEmpty$asx(exampleValue)) {
+        this.value.textContent = "e.g. " + H.S(exampleValue);
+        this.segment.appendChild(this.value);
       }
-    }, "call$1", "get$_moveStarted", 2, 0, 2],
-    _moveCompleted$1: [function(e) {
-      var t1;
-      this.dragging = false;
-      t1 = $.canvas;
+      if (this.removable) {
+        buttonDiv = document.createElement("div", null);
+        buttonDiv.className = "col-sm-2";
+        buttonDiv.appendChild(this.deleteButton);
+        this.segment.appendChild(buttonDiv);
+      }
+      return this.segment;
+    },
+    _remove$0: function() {
+      J.remove$0$ax(this.segment);
+    },
+    OutputSegment$3: function(defaultName, removable, editable) {
+      var t1, t2;
+      if (this.removable) {
+        t1 = document.createElement("button", null);
+        t1.textContent = "Delete";
+        t1.className = "btn btn-danger";
+        t1.toString;
+        t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_click._eventType, false), [null]);
+        H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.OutputSegment_closure(this)), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+        this.deleteButton = t1;
+      }
+      this.segment = document.createElement("li", null);
+      t1 = document.createElement("span", null);
+      t1.textContent = defaultName.length !== 0 ? defaultName : "segment-name";
+      t1.contentEditable = String(editable);
       t1.toString;
-      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mousemove._eventType, false), [null]);
-      t1 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_moveStarted()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)]);
-      t1._tryResume$0();
-      t1.cancel$0();
-      t1 = $.canvas;
-      t1.toString;
-      t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_mouseup._eventType, false), [null]);
-      t1 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$_moveCompleted()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)]);
-      t1._tryResume$0();
-      t1.cancel$0();
-    }, "call$1", "get$_moveCompleted", 2, 0, 2],
-    _onKeyDown$1: [function(e) {
-      if (J.get$keyCode$x(e) === 8 && J.get$display$x($.get$modal().style) !== "block") {
+      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_keypress._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.OutputSegment_closure0(editable)), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+      this.name = t1;
+      t1 = document.createElement("span", null);
+      this.value = t1;
+      t1.className = "example";
+    },
+    static: {OutputSegment$: function(defaultName, removable, editable) {
+        var t1 = new D.OutputSegment(removable, null, null, null, null);
+        t1.OutputSegment$3(defaultName, removable, editable);
+        return t1;
+      }}
+  },
+  OutputSegment_closure: {
+    "": "Closure:14;this_0",
+    call$1: function(e) {
+      J.remove$0$ax(this.this_0.segment);
+      return;
+    }
+  },
+  OutputSegment_closure0: {
+    "": "Closure:14;editable_1",
+    call$1: function(e) {
+      var t1, target;
+      t1 = J.getInterceptor$x(e);
+      target = t1.get$target(e);
+      if (t1.get$keyCode(e) === 13 || J.get$text$x(target).length > 32)
         e.preventDefault();
-        if ($.selectedOperator === this)
-          this.remove$0(this);
-      }
-    }, "call$1", "get$_onKeyDown", 2, 0, 3],
-    remove$0: function(_) {
+      return;
+    }
+  },
+  BaseSpecification: {
+    "": "Object;",
+    initialize$0: function(_) {
+      var t1, t2, t3;
+      t1 = this.view;
+      t1.id = this.id + "-specification";
+      t1.className = "output-specification";
+      this.elementList.className = "segment-list";
+      t1 = document.createElement("h4", null);
+      t1.className = "details-title";
+      t2 = document.createElement("span", null);
+      t2.textContent = "Output Specification";
+      t2.toString;
+      t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t2, C.EventStreamProvider_click._eventType, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(new D.BaseSpecification_initialize_closure(this)), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+      t1.appendChild(t2);
+      this.title = t1;
+      this.view.appendChild(t1);
+      this.view.appendChild(document.createElement("hr", null));
+      t1 = this.innerView;
+      t2 = document.createElement("p", null);
+      t2.textContent = "{";
+      t1.appendChild(t2);
+      this.innerView.appendChild(this.elementList);
+      t2 = this.innerView;
+      t1 = document.createElement("p", null);
+      t1.textContent = "}";
+      t2.appendChild(t1);
+      this.view.appendChild(this.innerView);
+    },
+    addElement$6$additional$defaultName$editable$example$removable: function(identifier, additional, defaultName, editable, example, removable) {
+      var newElement, t1;
+      newElement = D.OutputSegment$(defaultName, removable, editable);
+      newElement.name.id = identifier;
+      t1 = this.elements;
+      t1.$indexSet(t1, identifier, newElement);
+      this.elementList.appendChild(newElement.getFormElement$1(example));
+    },
+    addElement$2$example: function(identifier, example) {
+      return this.addElement$6$additional$defaultName$editable$example$removable(identifier, null, "", true, example, false);
+    },
+    removeElement$1: function(identifier) {
+      var t1 = this.elements;
+      t1.$index(t1, identifier)._remove$0();
+      t1 = this.elements;
+      t1.remove$1(t1, identifier);
+    },
+    clear$0: function(_) {
       var t1;
-      this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
-      t1 = J.get$children$x($.canvas);
-      t1.remove$1(t1, this.group);
-      t1 = $.operators;
-      J.remove$0$ax(t1.$index(t1, this.id));
-      t1 = $.operators;
-      t1.remove$1(t1, this.id);
-      this.log.info$1($.selectedOperator.id + " is removed.");
+      J.set$innerHtml$x(this.elementList, "");
+      t1 = this.elements;
+      t1.clear$0(t1);
     },
-    addBackgroundImage$1: function(image) {
-      var t1, temp, t2;
-      t1 = this.group;
-      temp = document.createElementNS("http://www.w3.org/2000/svg", "image");
-      temp.setAttribute("x", H.S(J.$sub$n(J.$sub$n(J.$add$ns(this.x, this.width), 20), 3)));
-      temp.setAttribute("y", H.S(J.$sub$n(J.$sub$n(J.$add$ns(this.y, this.height), 14), 3)));
-      temp.setAttribute("width", "20");
-      temp.setAttribute("height", "14");
-      temp.setAttributeNS("http://www.w3.org/1999/xlink", "href", "static/img/" + image);
-      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mousedown._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onMouseDown()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
-      t1.appendChild(temp);
+    select$1: function(_, previousConnections) {
+      var selectElement, t1, t2, segmentList;
+      selectElement = document.createElement("select", null);
+      selectElement.className = "output-segments form-control input-sm";
+      if (previousConnections._collection$_length > 0) {
+        t1 = $.operators;
+        t2 = H.setRuntimeTypeInfo(new P.LinkedHashMapKeyIterable(previousConnections), [H.getTypeArgumentByIndex(previousConnections, 0)]);
+        segmentList = t1.$index(t1, t2.get$first(t2)).get$uiDetails().output.elements;
+        segmentList.forEach$1(segmentList, new D.BaseSpecification_select_closure(selectElement));
+      }
+      return selectElement;
     },
-    BaseOperatorUI$5: function(id, mouseX, mouseY, width, height) {
-      var t1, t2, temp;
-      t1 = this.width;
-      this.x = J.$sub$n(mouseX, t1 / 2);
-      t2 = this.height;
-      this.y = J.$sub$n(mouseY, t2 / 2);
-      temp = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-      temp.setAttribute("x", H.S(this.x));
-      temp.setAttribute("y", H.S(this.y));
-      temp.setAttribute("width", H.S(t1));
-      temp.setAttribute("height", "" + t2);
-      t2 = J.get$classes$x(temp);
-      t2.add$1(t2, "processing_body");
-      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mousedown._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onMouseDown()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
-      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mouseenter._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onMouseEnter()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
-      this.body = temp;
-      temp = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      temp.setAttribute("id", this.id);
-      temp.appendChild(this.body);
-      this.group = temp;
-      this.dragging = false;
-      t2 = H.setRuntimeTypeInfo(new W._EventStream(document, C.EventStreamProvider_keydown._eventType, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(this.get$_onKeyDown()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+    BaseSpecification$1: function(id) {
+      var t1;
+      this.elements = P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, D.OutputSegment);
+      this.view = document.createElement("div", null);
+      t1 = document.createElement("div", null);
+      t1.className = "inner";
+      this.innerView = t1;
+      this.elementList = document.createElement("ul", null);
+      this.initialize$0(this);
     }
   },
-  SourceOperatorUI: {
-    "": "BaseOperatorUI;outputPort,log,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-    SourceOperatorUI$5: function(id, x, y, width, height) {
-      this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
-      this.addBackgroundImage$1("input.png");
+  BaseSpecification_initialize_closure: {
+    "": "Closure:14;this_0",
+    call$1: function(e) {
+      return D._triggerDetails(this.this_0.innerView);
+    }
+  },
+  BaseSpecification_select_closure: {
+    "": "Closure:13;selectElement_0",
+    call$2: function(identifier, segment) {
+      var t1 = J.getInterceptor$x(segment);
+      return this.selectElement_0.appendChild(W.OptionElement_OptionElement$_(J.get$text$x(t1.get$name(segment)), J.get$id$x(t1.get$name(segment)), null, false));
+    }
+  },
+  OutputSpecification: {
+    "": "BaseSpecification;id,elements,title,view,innerView,elementList",
+    refresh$1: function(previousElements) {
+      var changed, i, t1, t2, t3;
+      for (changed = false, i = 0; i < previousElements._collection$_length; ++i) {
+        t1 = new P.LinkedHashMapKeyIterable(previousElements);
+        t1.$builtinTypeInfo = [H.getTypeArgumentByIndex(previousElements, 0)];
+        t1 = t1.elementAt$1(t1, i);
+        t2 = previousElements.get$values(previousElements);
+        t3 = t2._iterable;
+        changed = this.updateSegment$2(t1, t2._f$1(t3.elementAt$1(t3, i))) || changed;
+      }
+      for (i = this.elements._collection$_length - 1; i >= 0; --i) {
+        t1 = this.elements;
+        t2 = new P.LinkedHashMapKeyIterable(t1);
+        t2.$builtinTypeInfo = [H.getTypeArgumentByIndex(t1, 0)];
+        t1 = t2.elementAt$1(t2, i);
+        t2 = this.elements;
+        t2 = t2.get$values(t2);
+        t3 = t2._iterable;
+        changed = this.assureSegment$3(t1, t2._f$1(t3.elementAt$1(t3, i)), previousElements) || changed;
+      }
+      return changed;
     },
-    static: {SourceOperatorUI$: function(id, x, y, width, height) {
-        var t1 = new D.SourceOperatorUI(null, N.Logger_Logger("OperatorUI"), null, null, id, null, null, null, null, null, width, height);
-        t1.BaseOperatorUI$5(id, x, y, width, height);
-        t1.SourceOperatorUI$5(id, x, y, width, height);
-        return t1;
-      }}
-  },
-  SinkOperatorUI: {
-    "": "BaseOperatorUI;inputPort,log,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-    SinkOperatorUI$5: function(id, x, y, width, height) {
-      this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
-      this.addBackgroundImage$1("output.png");
+    updateSegment$2: function(id, segment) {
+      var t1, t2, newElement, t3;
+      if (!this.elements.containsKey$1(id)) {
+        t1 = J.getInterceptor$x(segment);
+        t2 = J.get$id$x(t1.get$name(segment));
+        newElement = D.OutputSegment$(J.get$text$x(t1.get$name(segment)), false, false);
+        newElement.name.id = t2;
+        t1 = this.elements;
+        t1.$indexSet(t1, t2, newElement);
+        this.elementList.appendChild(newElement.getFormElement$1(""));
+        return true;
+      }
+      t1 = this.elements;
+      t1 = J.get$text$x(J.get$name$x(t1.$index(t1, id)));
+      t2 = J.getInterceptor$x(segment);
+      t3 = J.get$text$x(t2.get$name(segment));
+      t1.toString;
+      if (typeof t3 !== "string")
+        H.throwExpression(new P.ArgumentError(t3));
+      if (t1 == null ? t3 == null : t1 === t3)
+        t1 = 0;
+      else
+        t1 = t1 < t3 ? -1 : 1;
+      if (t1 !== 0) {
+        t1 = J.get$text$x(t2.get$name(segment));
+        t2 = this.elements;
+        J.set$text$x(J.get$name$x(t2.$index(t2, id)), t1);
+        return true;
+      }
+      return false;
     },
-    static: {SinkOperatorUI$: function(id, x, y, width, height) {
-        var t1 = new D.SinkOperatorUI(null, N.Logger_Logger("OperatorUI"), null, null, id, null, null, null, null, null, width, height);
-        t1.BaseOperatorUI$5(id, x, y, width, height);
-        t1.SinkOperatorUI$5(id, x, y, width, height);
-        return t1;
-      }}
-  },
-  ProcessingOperatorUI: {
-    "": "BaseOperatorUI;inputPort,outputPort,log,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-    ProcessingOperatorUI$5: function(id, x, y, width, height) {
-      this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
-      this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
-      this.addBackgroundImage$1("processing.png");
+    assureSegment$3: function(id, segment, previousElements) {
+      var t1, t2;
+      if (!previousElements.containsKey$1(id)) {
+        t1 = J.get$id$x(J.get$name$x(segment));
+        t2 = this.elements;
+        t2.$index(t2, t1)._remove$0();
+        t2 = this.elements;
+        t2.remove$1(t2, t1);
+        return true;
+      }
+      return false;
     }
   },
-  SelectionOperatorUI: {
-    "": "BaseOperatorUI;inputPort,outputPort,log,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-    SelectionOperatorUI$5: function(id, x, y, width, height) {
-      this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
-      this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
-      this.addBackgroundImage$1("selection.png");
+  RuleOutputSpecification: {
+    "": "OutputSpecification;",
+    refresh$1: function(previousElements) {
+      var updated, t1;
+      updated = D.OutputSpecification.prototype.refresh$1.call(this, previousElements);
+      if (updated) {
+        t1 = W._FrozenElementList$_wrap(this.details.rulesDiv.querySelectorAll(".rule select.output-segments"), null);
+        t1.forEach$1(t1, new D.RuleOutputSpecification_refresh_closure(this));
+      }
+      return updated;
     }
   },
-  SplitOperatorUI: {
-    "": "BaseOperatorUI;inputPort,outputPort,log,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-    SplitOperatorUI$5: function(id, x, y, width, height) {
-      this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
-      this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
-      this.addBackgroundImage$1("split.png");
+  RuleOutputSpecification_refresh_closure: {
+    "": "Closure:20;this_0",
+    call$1: function(e) {
+      var t1, t2, selectedSegment;
+      t1 = this.this_0;
+      t2 = J.getInterceptor$x(e);
+      selectedSegment = t2.get$value(e);
+      J.clear$0$ax(t2.get$children(e));
+      J.addAll$1$ax(t2.get$children(e), J.get$options$x(t1.select$1(t1, t1.details.prevConn)));
+      t2.set$value(e, selectedSegment);
+      return;
     }
   },
-  UnionOperatorUI: {
-    "": "BaseOperatorUI;inputPort,outputPort,log,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-    UnionOperatorUI$5: function(id, x, y, width, height) {
-      this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
-      this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
-      this.addBackgroundImage$1("union.png");
+  InputHumanOutputSpecification: {
+    "": "OutputSpecification;id,elements,title,view,innerView,elementList"
+  },
+  InputManualOutputSpecification: {
+    "": "OutputSpecification;id,elements,title,view,innerView,elementList"
+  },
+  SelectionOutputSpecification: {
+    "": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList"
+  },
+  SortOutputSpecification: {
+    "": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList"
+  },
+  SplitOutputSpecification: {
+    "": "RuleOutputSpecification;details,id,elements,title,view,innerView,elementList",
+    refreshOutput$0: function() {
+      var t1 = W._FrozenElementList$_wrap(this.details.rulesDiv.querySelectorAll(".rule select.output-flows"), null);
+      t1.forEach$1(t1, new D.SplitOutputSpecification_refreshOutput_closure(this));
     },
-    $isUnionOperatorUI: true
+    $isSplitOutputSpecification: true
   },
-  SortOperatorUI: {
-    "": "BaseOperatorUI;inputPort,outputPort,log,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-    SortOperatorUI$5: function(id, x, y, width, height) {
-      this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
-      this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
-      this.addBackgroundImage$1("sort.png");
+  SplitOutputSpecification_refreshOutput_closure: {
+    "": "Closure:20;this_0",
+    call$1: function(e) {
+      var t1, selectedSegment;
+      t1 = J.getInterceptor$x(e);
+      selectedSegment = t1.get$value(e);
+      J.clear$0$ax(t1.get$children(e));
+      J.addAll$1$ax(t1.get$children(e), J.get$options$x(H.interceptedTypeCast(this.this_0.details, "$isSplitDetails").outputSelectElement$0()));
+      t1.set$value(e, selectedSegment);
+      return;
     }
   },
-  EnrichOperatorUI: {
-    "": "BaseOperatorUI;inputPort,outputPort,log,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
-    EnrichOperatorUI$5: function(id, x, y, width, height) {
-      this.inputPort = D.PortUI$(this.group, x, y, width, height, 6, true);
-      this.outputPort = D.PortUI$(this.group, x, y, width, height, 6, false);
-      this.addBackgroundImage$1("enrich.png");
-    }
-  },
-  PortUI: {
-    "": "Object;log,group<,body,point<,size,width,height,initX,initY,input<",
+  Port: {
+    "": "Object;group<,body>,point<,size,width,height,initX,initY,input<",
     _onMouseDown$1: [function(e) {
       var t1;
       J.preventDefault$0$x(e);
@@ -5547,13 +5525,13 @@ var $$ = {};
       var t1 = $.selectedPort;
       if (t1 != null && this !== t1) {
         if (J.get$hashCode$(t1.group) === J.get$hashCode$(this.group))
-          this.log.warning$1("You cannot add a flow within the same unit.");
+          $.get$log().warning$1("You cannot add a flow within the same unit.");
         else {
           t1 = $.selectedPort;
           if (!t1.input && this.input)
             $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("stream_draw_line", true, true, [t1, this]));
           else
-            this.log.warning$1("You can only direct flow from an input port to outpot port.");
+            $.get$log().warning$1("You can only direct flow from an input port to outpot port.");
         }
         $.selectedPort.body.setAttribute("class", "port");
         $.selectedPort = null;
@@ -5585,7 +5563,7 @@ var $$ = {};
       if ($.selectedPort === this)
         $.selectedPort = null;
     }, "call$1", "get$remove", 2, 0, 17],
-    PortUI$7$input: function(group, x, y, width, height, size, input) {
+    Port$7$input: function(group, x, y, width, height, size, input) {
       var t1, t2, t3, t4, xCoor, yCoor;
       this.body = document.createElementNS("http://www.w3.org/2000/svg", "rect");
       t1 = this.size;
@@ -5643,9 +5621,9 @@ var $$ = {};
       t1 = t1.$index(t1, "stream_unit_removed");
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$remove(this)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     },
-    static: {PortUI$: function(group, x, y, width, height, size, input) {
-        var t1 = new D.PortUI(N.Logger_Logger("Port"), group, null, null, size, width, height, null, null, input);
-        t1.PortUI$7$input(group, x, y, width, height, size, input);
+    static: {Port$: function(group, x, y, width, height, size, input) {
+        var t1 = new D.Port(group, null, null, size, width, height, null, null, input);
+        t1.Port$7$input(group, x, y, width, height, size, input);
         return t1;
       }}
   },
@@ -9231,7 +9209,7 @@ var $$ = {};
     static: {"": "ListQueue__INITIAL_CAPACITY"}
   },
   _ListQueueIterator: {
-    "": "Object;_queue,_end,_modificationCount,_collection$_position,_collection$_current",
+    "": "Object;_queue,_end,_modificationCount,_position,_collection$_current",
     get$current: function() {
       return this._collection$_current;
     },
@@ -9240,7 +9218,7 @@ var $$ = {};
       t1 = this._queue;
       if (this._modificationCount !== t1._modificationCount)
         H.throwExpression(P.ConcurrentModificationError$(t1));
-      t2 = this._collection$_position;
+      t2 = this._position;
       if (t2 === this._end) {
         this._collection$_current = null;
         return false;
@@ -9250,7 +9228,7 @@ var $$ = {};
       if (t2 >= t3)
         return H.ioore(t1, t2);
       this._collection$_current = t1[t2];
-      this._collection$_position = (t2 + 1 & t3 - 1) >>> 0;
+      this._position = (t2 + 1 & t3 - 1) >>> 0;
       return true;
     }
   }
@@ -9662,10 +9640,6 @@ var $$ = {};
   Iterator: {
     "": "Object;"
   },
-  Map: {
-    "": "Object;",
-    $isMap: true
-  },
   Null: {
     "": "Object;",
     toString$0: function(_) {
@@ -9920,7 +9894,7 @@ var $$ = {};
     querySelectorAll$1: function(receiver, selectors) {
       return W._FrozenElementList$_wrap(receiver.querySelectorAll(selectors), null);
     },
-    "%": "Document|HTMLDocument|SVGDocument"
+    "%": "SVGDocument;Document"
   },
   DocumentFragment: {
     "": "Node;",
@@ -10175,6 +10149,10 @@ var $$ = {};
     $isEfficientLength: true,
     $isJavaScriptIndexingBehavior: true,
     "%": "HTMLCollection|HTMLFormControlsCollection|HTMLOptionsCollection"
+  },
+  HtmlDocument: {
+    "": "Document;body=",
+    "%": "HTMLDocument"
   },
   IFrameElement: {
     "": "HtmlElement;name%",
@@ -11409,10 +11387,10 @@ var $$ = {};
     }
   },
   FixedSizeListIterator: {
-    "": "Object;_array,_html$_length,_position,_html$_current",
+    "": "Object;_array,_html$_length,_html$_position,_html$_current",
     moveNext$0: function() {
       var t1, nextPosition;
-      t1 = this._position;
+      t1 = this._html$_position;
       if (typeof t1 !== "number")
         return t1.$add();
       nextPosition = t1 + 1;
@@ -11421,11 +11399,11 @@ var $$ = {};
         return H.iae(t1);
       if (nextPosition < t1) {
         this._html$_current = J.$index$asx(this._array, nextPosition);
-        this._position = nextPosition;
+        this._html$_position = nextPosition;
         return true;
       }
       this._html$_current = null;
-      this._position = t1;
+      this._html$_position = t1;
       return false;
     },
     get$current: function() {
@@ -12565,7 +12543,6 @@ W.Node.$isObject = true;
 P.PathSeg.$isObject = true;
 J.JSString.$isString = true;
 J.JSString.$isObject = true;
-N.Level.$isLevel = true;
 N.Level.$isObject = true;
 J.JSNumber.$isObject = true;
 P.Duration.$isDuration = true;
@@ -12591,7 +12568,7 @@ P.StreamSubscription.$isObject = true;
 W.Event.$isObject = true;
 J.JSBool.$isbool = true;
 J.JSBool.$isObject = true;
-D.OutputSegmentUI.$isObject = true;
+D.OutputSegment.$isObject = true;
 D.ElementUI.$isElementUI = true;
 D.ElementUI.$isObject = true;
 W.KeyboardEvent.$isKeyboardEvent = true;
@@ -12633,8 +12610,6 @@ P.DateTime.$isDateTime = true;
 P.DateTime.$isObject = true;
 W.CustomEvent.$isCustomEvent = true;
 W.CustomEvent.$isObject = true;
-P.Map.$isMap = true;
-P.Map.$isObject = true;
 $.$signature_args2 = {func: "args2", args: [null, null]};
 $.$signature_args1 = {func: "args1", args: [null]};
 // getInterceptor methods
@@ -12798,6 +12773,9 @@ J.get$_children$x = function(receiver) {
 J.get$attributes$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$attributes(receiver);
 };
+J.get$body$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$body(receiver);
+};
 J.get$children$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$children(receiver);
 };
@@ -12890,9 +12868,6 @@ J.getCtm$0$x = function(receiver) {
 };
 J.getScreenCtm$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).getScreenCtm$0(receiver);
-};
-J.initialize$0$x = function(receiver) {
-  return J.getInterceptor$x(receiver).initialize$0(receiver);
 };
 J.insertAdjacentHtml$2$x = function(receiver, a0, a1) {
   return J.getInterceptor$x(receiver).insertAdjacentHtml$2(receiver, a0, a1);
@@ -13159,20 +13134,20 @@ $.prototypeForTagFunction = null;
 $.dispatchRecordsForInstanceTags = null;
 $.interceptorsForUncacheableTags = null;
 $.initNativeDispatchFlag = null;
-$.BaseDetailsUI_count = 1;
-$.SourceHumanDetailsUI_count = 1;
-$.SelectionDetailsUI_count = 1;
-$.SortDetailsUI_count = 1;
-$.SplitDetailsUI_count = 1;
 $.app = null;
 $.canvas = null;
-$.operators = null;
-$.currentOperatorId = null;
-$.selectedOperator = null;
-$.selectedPort = null;
 $.tempLine = null;
 $._dragSource = null;
 $.opNumber = 1;
+$.currentOperatorId = null;
+$.operators = null;
+$.selectedOperator = null;
+$.BaseDetails_count = 1;
+$.HumanDetails_count = 1;
+$.SelectionDetails_count = 1;
+$.SortDetails_count = 1;
+$.SplitDetails_count = 1;
+$.selectedPort = null;
 $.printToZone = null;
 $._callbacksAreEnqueued = false;
 $.Zone__current = C.C__RootZone;
@@ -13260,6 +13235,17 @@ Isolate.$lazy($, "undefinedLiteralPropertyPattern", "TypeErrorDecoder_undefinedL
   }
 }());
 });
+Isolate.$lazy($, "log", "log", "get$log", function() {
+  return N.Logger_Logger("crowdy");
+});
+Isolate.$lazy($, "validationMessages", "validationMessages", "get$validationMessages", function() {
+  return P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, [J.JSArray, J.JSString]);
+});
+Isolate.$lazy($, "validation", "validation", "get$validation", function() {
+  var t1 = new D.Validation();
+  t1.Validation$0();
+  return t1;
+});
 Isolate.$lazy($, "SOURCE_OPTIONS_VALUES", "SOURCE_OPTIONS_VALUES", "get$SOURCE_OPTIONS_VALUES", function() {
   return ["", " ", "\t", ",", ":"];
 });
@@ -13302,19 +13288,8 @@ Isolate.$lazy($, "validationModalBody", "validationModalBody", "get$validationMo
 Isolate.$lazy($, "closeValidationButton", "closeValidationButton", "get$closeValidationButton", function() {
   return $.get$validationModal().querySelector(".modal-footer #close_validation_modal");
 });
-Isolate.$lazy($, "log", "log", "get$log", function() {
-  return N.Logger_Logger("crowdy");
-});
 Isolate.$lazy($, "isFirefox", "isFirefox", "get$isFirefox", function() {
   return J.contains$1$asx(window.navigator.userAgent, "Firefox");
-});
-Isolate.$lazy($, "validationMessages", "validationMessages", "get$validationMessages", function() {
-  return P.LinkedHashMap_LinkedHashMap(null, null, null, J.JSString, [J.JSArray, J.JSString]);
-});
-Isolate.$lazy($, "validation", "validation", "get$validation", function() {
-  var t1 = new D.Validation();
-  t1.Validation$0();
-  return t1;
 });
 Isolate.$lazy($, "_toStringList", "IterableMixinWorkaround__toStringList", "get$IterableMixinWorkaround__toStringList", function() {
   return [];
@@ -13372,8 +13347,8 @@ init.metadata = [{func: "dynamic__String", args: [J.JSString]},
 {func: "dynamic__LogRecord", args: [N.LogRecord]},
 {func: "void__CustomEvent", void: true, args: [W.CustomEvent]},
 {func: "dynamic__String_Operator", args: [J.JSString, D.Operator]},
-{func: "dynamic__SelectElement", args: [W.SelectElement]},
 {func: "dynamic__String_ElementUI", args: [J.JSString, D.ElementUI]},
+{func: "dynamic__SelectElement", args: [W.SelectElement]},
 {func: "void__String", void: true, args: [J.JSString]},
 {func: "dynamic__String_List", args: [J.JSString, [J.JSArray, J.JSString]]},
 {func: "void__Object__StackTrace", void: true, args: [P.Object], opt: [P.StackTrace]},

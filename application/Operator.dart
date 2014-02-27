@@ -2,11 +2,9 @@ part of crowdy;
 
 class Operator {
 
-  final Logger log = new Logger('Operator');
-
   String id, type;
-  BaseOperatorUI ui;
-  BaseDetailsUI uiDetails;
+  BaseOperatorBody body;
+  BaseDetails uiDetails;
   Map<String, bool> next, prev;
   Map details;
 
@@ -18,8 +16,8 @@ class Operator {
   }
 
   void initialize() {
-    this.ui.initialize();
-    this.ui.group.onDoubleClick.listen(_onDoubleClick);
+    this.body.initialize();
+    this.body.group.onDoubleClick.listen(_onDoubleClick);
 
     this.uiDetails.initialize();
 
@@ -58,13 +56,8 @@ class Operator {
   }
 
   void removeConnections(String operatorId) {
-    if (this.next.containsKey(operatorId)) {
-      this.next.remove(operatorId);
-    }
-
-    if (this.prev.containsKey(operatorId)) {
-      this.prev.remove(operatorId);
-    }
+    this.next.remove(operatorId);
+    this.prev.remove(operatorId);
   }
 
   void removeNext(String nextOperatorId) {
@@ -141,79 +134,79 @@ class Operator {
 
 class EnrichOperator extends Operator {
   EnrichOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new EnrichOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-    this.uiDetails = new EnrichDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new EnrichOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+    this.uiDetails = new EnrichDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SourceFileOperator extends Operator {
   SourceFileOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-    this.uiDetails = new SourceFileDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SourceOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.uiDetails = new SourceFileDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SourceHumanOperator extends Operator {
   SourceHumanOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-    this.uiDetails = new SourceHumanDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SourceOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.uiDetails = new HumanDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SourceManualOperator extends Operator {
   SourceManualOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-    this.uiDetails = new SourceManualDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SourceOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.uiDetails = new SourceManualDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SourceRSSOperator extends Operator {
   SourceRSSOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SourceOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-    this.uiDetails = new SourceRSSDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SourceOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.uiDetails = new SourceRSSDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SinkFileOperator extends Operator {
   SinkFileOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SinkOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-    this.uiDetails = new SinkFileDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SinkOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.uiDetails = new SinkFileDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SinkEmailOperator extends Operator {
   SinkEmailOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SinkOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-    this.uiDetails = new SinkEmailDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SinkOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.uiDetails = new SinkEmailDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class HumanProcessingOperator extends Operator {
   HumanProcessingOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new ProcessingOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
-    this.uiDetails = new SourceHumanDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new ProcessingOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH, OPERATOR_HEIGHT);
+    this.uiDetails = new HumanDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SelectionOperator extends Operator {
   SelectionOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SelectionOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/3, OPERATOR_HEIGHT);
-    this.uiDetails = new SelectionDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SelectionOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH/3, OPERATOR_HEIGHT);
+    this.uiDetails = new SelectionDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SortOperator extends Operator {
   SortOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SortOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-    this.uiDetails = new SortDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SortOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+    this.uiDetails = new SortDetails(this.id, this.type, this.prev, this.next);
   }
 }
 
 class SplitOperator extends Operator {
 
   SplitOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new SplitOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-    this.uiDetails = new SplitDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new SplitOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+    this.uiDetails = new SplitDetails(this.id, this.type, this.prev, this.next);
   }
 
   void connectTo(String nextOperatorId) {
@@ -230,8 +223,8 @@ class SplitOperator extends Operator {
 class UnionOperator extends Operator {
 
   UnionOperator(String id, String type, num mouseX, num mouseY) : super(id, type, mouseX, mouseY) {
-    this.ui = new UnionOperatorUI(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
-    this.uiDetails = new UnionDetailsUI(this.id, this.type, this.prev, this.next);
+    this.body = new UnionOperatorBody(this.id, mouseX, mouseY, OPERATOR_WIDTH/2, OPERATOR_HEIGHT);
+    this.uiDetails = new UnionDetails(this.id, this.type, this.prev, this.next);
   }
 
   bool alreadyConnected() {
@@ -262,7 +255,7 @@ class UnionOperator extends Operator {
     }
     else {
       log.warning(WARNING_LINE_INCONSISTENT_SPECIFICATION);
-      (this.ui as UnionOperatorUI).inputPort.body.dispatchEvent(new html.CustomEvent(OPERATOR_PORT_REMOVED));
+      (this.body as UnionOperatorBody).inputPort.body.dispatchEvent(new html.CustomEvent(OPERATOR_PORT_REMOVED));
       if (this.next.length > 0) {
         this.clearDownFlow();
       }
@@ -273,8 +266,8 @@ class UnionOperator extends Operator {
   bool isConsistent(String previousOperatorId, [int updating = 0]) {
     bool isConsistent = true;
     if (this.prev.length > (0 + updating)) {
-      Map<String, OutputSegmentUI> existingOutputSpec = this.uiDetails.output.elements;
-      Map<String, OutputSegmentUI> newOutputSpec = operators[previousOperatorId].uiDetails.output.elements;
+      Map<String, OutputSegment> existingOutputSpec = this.uiDetails.output.elements;
+      Map<String, OutputSegment> newOutputSpec = operators[previousOperatorId].uiDetails.output.elements;
       existingOutputSpec.forEach((id, segment) => isConsistent = isConsistent && newOutputSpec.containsKey(id));
       newOutputSpec.forEach((id, segment) => isConsistent = isConsistent && existingOutputSpec.containsKey(id));
     }

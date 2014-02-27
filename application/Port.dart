@@ -1,8 +1,8 @@
 part of crowdy;
 
-class PortUI {
+Port selectedPort;
 
-  final Logger log = new Logger('Port');
+class Port {
 
   svg.GElement group;
   svg.RectElement body;
@@ -11,7 +11,7 @@ class PortUI {
   num size, width, height, initX, initY;
   bool input;
 
-  PortUI(svg.GElement this.group, num x, num y, num this.width, num this.height, num this.size, {bool this.input : true}) {
+  Port(svg.GElement this.group, num x, num y, num this.width, num this.height, num this.size, {bool this.input : true}) {
     this.body = new svg.RectElement();
 
     num xCoor = x - this.size/2 + (this.input ? (-1) * this.width/2 : this.width/2);

@@ -1,8 +1,8 @@
 part of crowdy;
 
-class BaseOperatorUI {
+BaseOperatorBody selectedOperator;
 
-  final Logger log = new Logger('OperatorUI');
+class BaseOperatorBody {
 
   svg.GElement group;
   svg.RectElement body;
@@ -10,7 +10,7 @@ class BaseOperatorUI {
   bool dragging;
   num x, y, dragOffsetX, dragOffsetY, width, height;
 
-  BaseOperatorUI(String this.id, num mouseX, num mouseY, num this.width, num this.height) {
+  BaseOperatorBody(String this.id, num mouseX, num mouseY, num this.width, num this.height) {
     this.x = mouseX - this.width/2;
     this.y = mouseY - this.height/2;
 
@@ -119,94 +119,75 @@ class BaseOperatorUI {
   }
 }
 
-class SourceOperatorUI extends BaseOperatorUI {
+class SourceOperatorBody extends BaseOperatorBody {
 
-  PortUI outputPort;
+  Port outputPort;
 
-  SourceOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+  SourceOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+    this.outputPort = new Port(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_INPUT);
   }
 }
 
-class SinkOperatorUI extends BaseOperatorUI {
+class SinkOperatorBody extends BaseOperatorBody {
 
-  PortUI inputPort;
+  Port inputPort;
 
-  SinkOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
+  SinkOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+    this.inputPort = new Port(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.addBackgroundImage(OPERATOR_ICON_OUTPUT);
   }
 }
 
-class ProcessingOperatorUI extends BaseOperatorUI {
+class ProcessingBaseOperatorBody extends BaseOperatorBody {
 
-  PortUI inputPort;
-  PortUI outputPort;
+  Port inputPort;
+  Port outputPort;
 
-  ProcessingOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
-    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+  ProcessingBaseOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
+    this.inputPort = new Port(this.group, x, y, width, height, PORT_SIZE, input: true);
+    this.outputPort = new Port(this.group, x, y, width, height, PORT_SIZE, input: false);
+  }
+}
+
+class ProcessingOperatorBody extends ProcessingBaseOperatorBody {
+
+  ProcessingOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.addBackgroundImage(OPERATOR_ICON_PROCESSING);
   }
 }
 
-class SelectionOperatorUI extends BaseOperatorUI {
+class SelectionOperatorBody extends ProcessingBaseOperatorBody {
 
-  PortUI inputPort;
-  PortUI outputPort;
-
-  SelectionOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
-    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+  SelectionOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.addBackgroundImage(OPERATOR_ICON_SELECTION);
   }
 }
 
-class SplitOperatorUI extends BaseOperatorUI {
+class SplitOperatorBody extends ProcessingBaseOperatorBody {
 
-  PortUI inputPort;
-  PortUI outputPort;
-
-  SplitOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
-    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+  SplitOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.addBackgroundImage(OPERATOR_ICON_SPLIT);
   }
 }
 
-class UnionOperatorUI extends BaseOperatorUI {
+class UnionOperatorBody extends ProcessingBaseOperatorBody {
 
-  PortUI inputPort;
-  PortUI outputPort;
-
-  UnionOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
-    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+  UnionOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.addBackgroundImage(OPERATOR_ICON_UNION);
   }
 }
 
-class SortOperatorUI extends BaseOperatorUI {
+class SortOperatorBody extends ProcessingBaseOperatorBody {
 
-  PortUI inputPort;
-  PortUI outputPort;
-
-  SortOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
-    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+  SortOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.addBackgroundImage(OPERATOR_ICON_SORT);
   }
 }
 
-class EnrichOperatorUI extends BaseOperatorUI {
+class EnrichOperatorBody extends ProcessingBaseOperatorBody {
 
-  PortUI inputPort;
-  PortUI outputPort;
-
-  EnrichOperatorUI(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
-    this.inputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: true);
-    this.outputPort = new PortUI(this.group, x, y, width, height, PORT_SIZE, input: false);
+  EnrichOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.addBackgroundImage(OPERATOR_ICON_ENRICH);
   }
 }

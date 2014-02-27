@@ -136,9 +136,7 @@ class ElementUI {
   }
 }
 
-class BaseDetailsUI {
-
-  final Logger log = new Logger('OperatorDetails');
+class BaseDetails {
 
   static int count = 1;
 
@@ -154,7 +152,7 @@ class BaseDetailsUI {
   html.DivElement detailsView;
   html.DivElement parametersView;
 
-  BaseDetailsUI(String this.id, String this.type, Map<String, bool> this.prevConn, Map<String, bool> this.nextConn) {
+  BaseDetails(String this.id, String this.type, Map<String, bool> this.prevConn, Map<String, bool> this.nextConn) {
     this.output = new OutputSpecification(this.id);
 
     this.base = new Map<String, ElementUI>();
@@ -250,9 +248,9 @@ class BaseDetailsUI {
   }
 }
 
-class OutputDetailsUI extends BaseDetailsUI {
+class OutputDetails extends BaseDetails {
 
-  OutputDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  OutputDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new OutputSpecification(this.id);
   }
 
@@ -261,12 +259,12 @@ class OutputDetailsUI extends BaseDetailsUI {
   }
 }
 
-class RuleDetailsUI extends OutputDetailsUI {
+class RuleDetails extends OutputDetails {
 
   html.DivElement rulesDiv;
   html.ButtonElement addRuleButton;
 
-  RuleDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  RuleDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
   }
 
   void initialize() {
@@ -305,9 +303,9 @@ class RuleDetailsUI extends OutputDetailsUI {
   }
 }
 
-class EnrichDetailsUI extends OutputDetailsUI {
+class EnrichDetails extends OutputDetails {
 
-  EnrichDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  EnrichDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.view.append(this.output.view);
   }
 
@@ -317,9 +315,9 @@ class EnrichDetailsUI extends OutputDetailsUI {
   }
 }
 
-class UnionDetailsUI extends OutputDetailsUI {
+class UnionDetails extends OutputDetails {
 
-  UnionDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  UnionDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.view.append(this.output.view);
   }
 
@@ -329,9 +327,9 @@ class UnionDetailsUI extends OutputDetailsUI {
   }
 }
 
-class SourceFileDetailsUI extends BaseDetailsUI {
+class SourceFileDetails extends BaseDetails {
 
-  SourceFileDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  SourceFileDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
 
   }
 
@@ -342,7 +340,7 @@ class SourceFileDetailsUI extends BaseDetailsUI {
   }
 }
 
-class SourceHumanDetailsUI extends BaseDetailsUI {
+class HumanDetails extends BaseDetails {
 
   static int count = 1;
   html.SelectElement availableInputs;
@@ -350,9 +348,9 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   html.UListElement segmentList;
 
   List<html.DivElement> refreshableDivs;
-  OutputSegmentUI _dragSegment;
+  OutputSegment _dragSegment;
 
-  SourceHumanDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  HumanDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new InputHumanOutputSpecification(this.id);
     this.view.append(this.output.view);
   }
@@ -442,7 +440,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
 
   bool refresh(OutputSpecification specification) {
     this.segmentList.children.clear();
-    Map<String, OutputSegmentUI> prevSegments = specification.elements;
+    Map<String, OutputSegment> prevSegments = specification.elements;
     this.refreshableDivs.forEach((e) => this.refreshSegmentFromCurrent(e.querySelectorAll('span.segment-tag'), prevSegments));
     if (prevSegments.length > 0) {
       prevSegments.forEach((id, segment) => this.refreshSegmentFromPrevious(id, segment));
@@ -454,7 +452,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     return true;
   }
 
-  void refreshSegmentFromPrevious(String id, OutputSegmentUI segment) {
+  void refreshSegmentFromPrevious(String id, OutputSegment segment) {
     this.segmentList.append(
         new html.LIElement()
         ..append(new html.SpanElement()
@@ -466,7 +464,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     this.refreshableDivs.forEach((e) => e.querySelectorAll('span[data-segment="$id"]').forEach((e) => e.querySelector('span.segment-name').text = segment.name.text));
   }
 
-  void refreshSegmentFromCurrent(List<html.HtmlElement> segments, Map<String, OutputSegmentUI> prevSegments) {
+  void refreshSegmentFromCurrent(List<html.HtmlElement> segments, Map<String, OutputSegment> prevSegments) {
     for (int i = segments.length-1; i >= 0; i--) {
       String segmentId = segments[i].attributes['data-segment'];
       if (!prevSegments.containsKey(segmentId)) {
@@ -475,7 +473,7 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
     }
   }
 
-  void _onSegmentDragStart(html.MouseEvent e, OutputSegmentUI segment) {
+  void _onSegmentDragStart(html.MouseEvent e, OutputSegment segment) {
     _dragSegment = segment;
     _dragSegment.segment.classes.add('moving');
     e.dataTransfer.effectAllowed = 'move';
@@ -604,9 +602,9 @@ class SourceHumanDetailsUI extends BaseDetailsUI {
   }
 }
 
-class SourceManualDetailsUI extends BaseDetailsUI {
+class SourceManualDetails extends BaseDetails {
 
-  SourceManualDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  SourceManualDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new InputManualOutputSpecification(this.id);
     this.output.title.append(new html.ButtonElement()
     ..text = '(re)generate'
@@ -647,9 +645,9 @@ class SourceManualDetailsUI extends BaseDetailsUI {
   }
 }
 
-class SourceRSSDetailsUI extends BaseDetailsUI {
+class SourceRSSDetails extends BaseDetails {
 
-  SourceRSSDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  SourceRSSDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
 
   }
 
@@ -659,9 +657,9 @@ class SourceRSSDetailsUI extends BaseDetailsUI {
   }
 }
 
-class SinkFileDetailsUI extends BaseDetailsUI {
+class SinkFileDetails extends BaseDetails {
 
-  SinkFileDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  SinkFileDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
 
   }
 
@@ -671,9 +669,9 @@ class SinkFileDetailsUI extends BaseDetailsUI {
   }
 }
 
-class SinkEmailDetailsUI extends BaseDetailsUI {
+class SinkEmailDetails extends BaseDetails {
 
-  SinkEmailDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  SinkEmailDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
 
   }
 
@@ -683,23 +681,11 @@ class SinkEmailDetailsUI extends BaseDetailsUI {
   }
 }
 
-class ProcessingDetailsUI extends OutputDetailsUI {
-
-  ProcessingDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
-    this.view.append(this.output.view);
-  }
-
-  void initialize() {
-    super.initialize();
-    this.addElement('input', 'textarea', 'Instructions', this.elements, features: {'rows': '5'});
-  }
-}
-
-class SelectionDetailsUI extends RuleDetailsUI {
+class SelectionDetails extends RuleDetails {
 
   static int count = 1;
 
-  SelectionDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  SelectionDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new SelectionOutputSpecification(this, this.id);
     this.view.append(this.output.view);
   }
@@ -722,7 +708,7 @@ class SelectionDetailsUI extends RuleDetailsUI {
 
   void _addRule(html.MouseEvent e) {
     if (this.prevConn.length < 1) {
-      log.warning('Please first make sure there is an input flow to this operator.');
+      log .warning('Please first make sure there is an input flow to this operator.');
       return;
     }
 
@@ -770,11 +756,11 @@ class SelectionDetailsUI extends RuleDetailsUI {
   }
 }
 
-class SortDetailsUI extends RuleDetailsUI {
+class SortDetails extends RuleDetails {
 
   static int count = 1;
 
-  SortDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  SortDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new SortOutputSpecification(this, this.id);
     this.view.append(this.output.view);
   }
@@ -841,11 +827,11 @@ class SortDetailsUI extends RuleDetailsUI {
   }
 }
 
-class SplitDetailsUI extends RuleDetailsUI {
+class SplitDetails extends RuleDetails {
 
   static int count = 1;
 
-  SplitDetailsUI(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  SplitDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new SplitOutputSpecification(this, this.id);
     this.view.append(this.output.view);
   }

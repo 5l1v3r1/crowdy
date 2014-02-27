@@ -1,21 +1,33 @@
 part of crowdy;
 
+svg.SvgSvgElement canvas;
+svg.LineElement tempLine;
+
+html.Element _dragSource;
+int opNumber = 1;
+
+String currentOperatorId;
+
+Map<String, Operator> operators;
+
 class Application extends Object {
 
-  final Logger log = new Logger('Application');
-
   Application(String canvas_id) {
+    // Create canvas
     canvas = html.document.querySelector(canvas_id);
 
+    // Create temporary line for line animation while adding
     tempLine = new svg.LineElement()
     ..attributes['stroke'] = '#ddd'
     ..attributes['strokeLength'] = '1';
     canvas.append(tempLine);
 
+    // Create operator map
     operators = new Map<String, Operator>();
 
-    canvas.onClick.listen(deselect);
-    canvas.on[STREAM_LINE_DRAW].listen(drawLine);
+    // Operator functions
+    canvas.onClick.listen(_deselect);
+    canvas.on[STREAM_LINE_DRAW].listen(_drawLine);
     canvas.onDragOver.listen(_onDragOver);
     canvas.onDrop.listen(_onDrop);
 
@@ -26,43 +38,28 @@ class Application extends Object {
     units.onDragEnd.listen(_onDragEnd);
 
     // Refresh down stream when output specification changes
-    modal.onClick.listen(_closeModal);
-    closeButton.onClick.listen(_modalClosed);
+    modal.onClick.listen(_closeModalConditional);
+    closeButton.onClick.listen((e) => _closeModal());
     modalAlert.querySelector('.close').onClick.listen((e) => modalAlert.style.display = 'none');
 
     log.info("Application is created.");
   }
 
-  void _closeModal(html.MouseEvent e) {
-    if(e.target == modal) {
-      this._modalClosed(e);
-    }
-  }
-
-  void _modalClosed(html.MouseEvent e) {
-    modalBody.children.clear();
-    modalAlert.style.display = 'none';
-    modal.style.display = 'none';
-    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId));
-
-    log.info("Operator modal for ${currentOperatorId} is closed.");
-  }
-
-  void deselect(html.MouseEvent e) {
+  void _deselect(html.MouseEvent e) {
     if (e.target is svg.SvgSvgElement && selectedOperator != null) {
       selectedOperator.group.setAttribute('class', '');
       selectedOperator = null;
     }
   }
 
-  void drawLine(html.CustomEvent e) {
+  void _drawLine(html.CustomEvent e) {
     String fromId = e.detail[0].group.attributes['id'];
     String toId = e.detail[1].group.attributes['id'];
 
     if (operators[fromId].canConnectTo(toId) && operators[toId].canConnectFrom(fromId)) {
       operators[fromId].connectTo(toId);
       operators[toId].connectFrom(fromId);
-      FlowLineUI newLine = new FlowLineUI(e.detail[0], e.detail[1]);
+      FlowLine newLine = new FlowLine(e.detail[0], e.detail[1]);
     }
   }
 
@@ -88,12 +85,26 @@ class Application extends Object {
     e.preventDefault();
     html.Element dropTarget = e.target;
     if (dropTarget == canvas && _dragSource != null && _dragSource.classes.contains('moving')) {
-      String operatorId = 'operator_$opNumber';
+      String operatorId = 'operator_${opNumber}';
       var mouseCoordinates = getRelativeMouseCoordinates(e);
       operators[operatorId] = addOperator(operatorId, _dragSource.dataset['unit-type'], mouseCoordinates['x'], mouseCoordinates['y']);
-      operators[operatorId].initialize();
       opNumber += 1;
     }
+  }
+
+  void _closeModalConditional(html.MouseEvent e) {
+    if(e.target == modal) {
+      this._closeModal();
+    }
+  }
+
+  void _closeModal() {
+    modalBody.children.clear();
+    modalAlert.style.display = 'none';
+    modal.style.display = 'none';
+    canvas.dispatchEvent(new html.CustomEvent(OPERATOR_OUTPUT_REFRESH, detail: currentOperatorId));
+
+    log.info("Operator modal for ${currentOperatorId} is closed.");
   }
 
   Operator addOperator(String id, String type, num x, num y) {
@@ -139,6 +150,8 @@ class Application extends Object {
         newOperator = new Operator(id, type, x, y);
         break;
     }
+
+    newOperator.initialize();
 
     log.info("An operator with type ${type} and id ${id} is added.");
 

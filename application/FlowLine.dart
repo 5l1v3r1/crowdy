@@ -1,12 +1,12 @@
 part of crowdy;
 
-class FlowLineUI {
+class FlowLine {
 
   svg.PathElement path;
-  PortUI from, to;
+  Port from, to;
   bool selected;
 
-  FlowLineUI(PortUI this.from, PortUI this.to) {
+  FlowLine(Port this.from, Port this.to) {
     this.selected = false;
 
     this.path = new svg.PathElement();
@@ -16,7 +16,7 @@ class FlowLineUI {
     this.path.setAttribute('from', '${this.from.hashCode}');
     this.path.setAttribute('to', '${this.to.hashCode}');
     this.path.setAttribute('stroke-width', '1.5');
-    this.path.onMouseDown.listen(select);
+    this.path.onMouseDown.listen(_select);
 
     canvas.append(this.path);
 
@@ -28,7 +28,16 @@ class FlowLineUI {
     this.to.body.on[OPERATOR_PORT_REMOVED].listen(_remove);
   }
 
-  void select(html.MouseEvent e) {
+  void remove() {
+    String from = this.from.group.attributes['id'];
+    String to = this.to.group.attributes['id'];
+    operators[from].removeNext(to);
+    operators[to].removePrevious(from);
+    canvas.children.remove(this.path);
+    operators[this.to.group.id].clearDownFlow();
+  }
+
+  void _select(html.MouseEvent e) {
     this.selected = !this.selected;
     if (this.selected) {
       this.path.parentNode.append(this.path);
@@ -37,15 +46,6 @@ class FlowLineUI {
     else {
       this.path.setAttribute('class', '');
     }
-  }
-
-  void remove() {
-    String from = this.from.group.attributes['id'];
-    String to = this.to.group.attributes['id'];
-    operators[from].removeNext(to);
-    operators[to].removePrevious(from);
-    canvas.children.remove(this.path);
-    operators[this.to.group.id].clearDownFlow();
   }
 
   void _keyPressed(html.KeyboardEvent e) {

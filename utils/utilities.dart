@@ -49,3 +49,5 @@ void _triggerDetails(html.DivElement div) {
     div.className = 'inner hide';
   }
 }
+
+bool isFirefox = html.window.navigator.userAgent.contains("Firefox");

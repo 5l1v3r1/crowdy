@@ -5,19 +5,21 @@ import 'dart:html' as html;
 import 'dart:svg' as svg;
 import 'package:logging/logging.dart';
 
-part 'utils/globals.dart';
 part 'utils/constants.dart';
 part 'utils/utilities.dart';
-part 'utils/validation.dart';
+part 'utils/Validation.dart';
 
-part 'ui/PortUI.dart';
-part 'ui/FlowLineUI.dart';
-part 'ui/OperatorUI.dart';
-part 'ui/OperatorDetailsUI.dart';
+part 'application/Application.dart';
+part 'application/FlowLine.dart';
+part 'application/Operator.dart';
+part 'application/OperatorBody.dart';
+part 'application/OperatorDetails.dart';
+part 'application/OutputSpecification.dart';
+part 'application/Port.dart';
 
-part 'logic/Operator.dart';
-part 'logic/OutputSpecification.dart';
-part 'logic/Application.dart';
+final Logger log = new Logger('crowdy');
+
+Application app;
 
 void main() {
   app = new Application("#app_container");
@@ -31,7 +33,7 @@ void main() {
       newMessage.text = rec.message;
       messageList.children.insert(0, newMessage);
       html.document.querySelector('ul#bottom-tabs li a span#count').text = '${messageList.children.length}';
-      if (rec.loggerName == 'OperatorDetails') {
+      if (modal.style.display == 'block') {
         modalAlert.style.display = 'block';
         modalAlert.querySelector('span.message').text = rec.message;
       }
@@ -47,7 +49,7 @@ void validate(html.MouseEvent e) {
 }
 
 void clear(html.MouseEvent e) {
-  operators.forEach((id, operator) => operator.ui.remove());
+  operators.forEach((id, operator) => operator.body.remove());
 
   /*String operatorId = 'operator_1';
   operators[operatorId] = app.addOperator(operatorId, 'source.manual', 100, 100);

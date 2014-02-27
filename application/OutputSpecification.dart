@@ -1,6 +1,6 @@
 part of crowdy;
 
-class OutputSegmentUI {
+class OutputSegment {
 
   bool removable;
   html.LIElement segment;
@@ -8,7 +8,7 @@ class OutputSegmentUI {
   html.SpanElement value;
   html.ButtonElement deleteButton;
 
-  OutputSegmentUI(String defaultName, bool this.removable, bool editable) {
+  OutputSegment(String defaultName, bool this.removable, bool editable) {
     if (this.removable) {
       this.deleteButton = new html.ButtonElement()
       ..text = 'Delete'
@@ -56,14 +56,14 @@ class OutputSegmentUI {
 class BaseSpecification {
 
   String id;
-  Map<String, OutputSegmentUI> elements;
+  Map<String, OutputSegment> elements;
   html.HeadingElement title;
   html.DivElement view;
   html.DivElement innerView;
   html.UListElement elementList;
 
   BaseSpecification(String this.id) {
-    this.elements = new Map<String, OutputSegmentUI>();
+    this.elements = new Map<String, OutputSegment>();
     this.view = new html.DivElement();
     this.innerView = new html.DivElement()..className = 'inner';
     this.elementList = new html.UListElement();
@@ -92,7 +92,7 @@ class BaseSpecification {
   void addElement(String identifier,
                   {String defaultName: '', String example: '', bool editable: true,
                     bool removable: false, Map<String, String> additional: null}) {
-    OutputSegmentUI newElement = new OutputSegmentUI(defaultName, removable, editable);
+    OutputSegment newElement = new OutputSegment(defaultName, removable, editable);
     newElement.name.id = identifier;
     this.elements[identifier] = newElement;
     this.elementList.append(newElement.getFormElement(example));
@@ -116,7 +116,7 @@ class BaseSpecification {
     html.SelectElement selectElement = new html.SelectElement();
     selectElement.className = 'output-segments form-control input-sm';
     if (previousConnections.length > 0) {
-      Map<String, OutputSegmentUI> segmentList = operators[previousConnections.keys.first].uiDetails.output.elements;
+      Map<String, OutputSegment> segmentList = operators[previousConnections.keys.first].uiDetails.output.elements;
       segmentList.forEach((identifier, segment) => selectElement.append(new html.OptionElement(data: segment.name.text, value: segment.name.id)));
     }
     return selectElement;
@@ -129,7 +129,7 @@ class OutputSpecification extends BaseSpecification {
 
   }
 
-  bool refresh (Map<String, OutputSegmentUI> previousElements) {
+  bool refresh (Map<String, OutputSegment> previousElements) {
     bool changed = false;
 
     // Compare elements from previously connected one to this one
@@ -145,7 +145,7 @@ class OutputSpecification extends BaseSpecification {
     return changed;
   }
 
-  bool updateSegment(String id, OutputSegmentUI segment) {
+  bool updateSegment(String id, OutputSegment segment) {
     if (!this.elements.containsKey(id)) {
       this.addElement(segment.name.id, defaultName: segment.name.text, editable: false);
       return true;
@@ -159,7 +159,7 @@ class OutputSpecification extends BaseSpecification {
     return false;
   }
 
-  bool assureSegment(String id, OutputSegmentUI segment, Map<String, OutputSegmentUI> previousElements) {
+  bool assureSegment(String id, OutputSegment segment, Map<String, OutputSegment> previousElements) {
     if (!previousElements.containsKey(id)) {
       this.removeElement(segment.name.id);
       return true;
@@ -170,13 +170,13 @@ class OutputSpecification extends BaseSpecification {
 
 class RuleOutputSpecification extends OutputSpecification {
 
-  RuleDetailsUI details;
+  RuleDetails details;
 
-  RuleOutputSpecification(RuleDetailsUI this.details, String id) : super(id) {
+  RuleOutputSpecification(RuleDetails this.details, String id) : super(id) {
 
   }
 
-  bool refresh(Map<String, OutputSegmentUI> previousElements) {
+  bool refresh(Map<String, OutputSegment> previousElements) {
     bool updated = super.refresh(previousElements);
     if (updated) {
       this.details.rulesDiv.querySelectorAll('.rule select.output-segments').forEach((html.SelectElement e) => _updateRuleSegments(e));
@@ -209,21 +209,22 @@ class InputManualOutputSpecification extends OutputSpecification {
 
 class SelectionOutputSpecification extends RuleOutputSpecification {
 
-  SelectionOutputSpecification(SelectionDetailsUI details, String id) : super(details, id) {
+  SelectionOutputSpecification(SelectionDetails details, String id) : super(details, id) {
 
   }
 }
 
 class SortOutputSpecification extends RuleOutputSpecification {
 
-  SortOutputSpecification(SortDetailsUI details, String id) : super(details, id) {
+  SortOutputSpecification(SortDetails details, String id) : super(details, id) {
 
   }
+
 }
 
 class SplitOutputSpecification extends RuleOutputSpecification {
 
-  SplitOutputSpecification(SplitDetailsUI details, String id) : super(details, id) {
+  SplitOutputSpecification(SplitDetails details, String id) : super(details, id) {
 
   }
 
@@ -234,7 +235,7 @@ class SplitOutputSpecification extends RuleOutputSpecification {
   void _updateRuleFlows(html.SelectElement e) {
     String selectedSegment = e.value;
     e.children.clear();
-    e.children.addAll((this.details as SplitDetailsUI).outputSelectElement().options);
+    e.children.addAll((this.details as SplitDetails).outputSelectElement().options);
     e.value = selectedSegment;
   }
 }
