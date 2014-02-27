@@ -103,9 +103,8 @@ class BaseOperatorBody {
   void remove() {
     this.group.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE));
     canvas.children.remove(this.group);
-    operators[this.id].remove();
-    operators.remove(this.id);
-    log.info("${selectedOperator.id} is removed.");
+
+    log.info("${this.id} is removed.");
   }
 
   void addBackgroundImage(String image) {

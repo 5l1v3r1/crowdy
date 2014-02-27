@@ -50,6 +50,7 @@ void validate(html.MouseEvent e) {
 
 void clear(html.MouseEvent e) {
   operators.forEach((id, operator) => operator.body.remove());
+  operators.clear();
 
   /*String operatorId = 'operator_1';
   operators[operatorId] = app.addOperator(operatorId, 'source.manual', 100, 100);

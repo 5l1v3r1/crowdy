@@ -51,15 +51,6 @@ class Operator {
     log.info("${previousOperatorId} connected to ${this.id}.");
   }
 
-  void remove() {
-    operators.forEach((String id, Operator operator) => operator.removeConnections(this.id));
-  }
-
-  void removeConnections(String operatorId) {
-    this.next.remove(operatorId);
-    this.prev.remove(operatorId);
-  }
-
   void removeNext(String nextOperatorId) {
     this.next.remove(nextOperatorId);
   }

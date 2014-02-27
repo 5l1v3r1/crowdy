@@ -77,7 +77,11 @@ class ElementUI {
     switch (this.type) {
       case 'file':
       case 'list':
+        break;
       case 'select':
+        if ((this.input as html.SelectElement).selectedIndex == 0) {
+          result = 0;
+        }
         break;
       case 'editable':
         if ((this.input as html.DivElement).innerHtml.isEmpty) {
