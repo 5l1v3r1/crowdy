@@ -96,15 +96,17 @@ class BaseOperatorBody {
 
       if (selectedOperator == this) {
         this.remove();
+        canvas.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE, detail: this.id));
       }
     }
   }
 
   void remove() {
-    this.group.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE));
     canvas.children.remove(this.group);
 
-    log.info("${this.id} is removed.");
+    if (selectedOperator == this) {
+      selectedOperator = null;
+    }
   }
 
   void addBackgroundImage(String image) {
@@ -126,6 +128,11 @@ class SourceOperatorBody extends BaseOperatorBody {
     this.outputPort = new Port(this.group, x, y, width, height, PORT_SIZE, input: false);
     this.addBackgroundImage(OPERATOR_ICON_INPUT);
   }
+
+  void remove() {
+    super.remove();
+    this.outputPort.remove();
+  }
 }
 
 class SinkOperatorBody extends BaseOperatorBody {
@@ -135,6 +142,11 @@ class SinkOperatorBody extends BaseOperatorBody {
   SinkOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.inputPort = new Port(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.addBackgroundImage(OPERATOR_ICON_OUTPUT);
+  }
+
+  void remove() {
+    super.remove();
+    this.inputPort.remove();
   }
 }
 
@@ -146,6 +158,12 @@ class ProcessingBaseOperatorBody extends BaseOperatorBody {
   ProcessingBaseOperatorBody(String id, num x, num y, num width, num height) : super(id, x, y, width, height) {
     this.inputPort = new Port(this.group, x, y, width, height, PORT_SIZE, input: true);
     this.outputPort = new Port(this.group, x, y, width, height, PORT_SIZE, input: false);
+  }
+
+  void remove() {
+    super.remove();
+    this.inputPort.remove();
+    this.outputPort.remove();
   }
 }
 

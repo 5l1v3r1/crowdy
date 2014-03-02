@@ -12,31 +12,32 @@ class Port {
   bool input;
 
   Port(svg.GElement this.group, num x, num y, num this.width, num this.height, num this.size, {bool this.input : true}) {
-    this.body = new svg.RectElement();
-
     num xCoor = x - this.size/2 + (this.input ? (-1) * this.width/2 : this.width/2);
     num yCoor = y - this.size/2;
-    this.body.setAttribute('x', '$xCoor');
-    this.body.setAttribute('y', '$yCoor');
-    this.body.setAttribute('width', '$size');
-    this.body.setAttribute('height', '$size');
-    this.body.classes.add('port');
 
-    this.body.onMouseDown.listen(_onMouseDown);
-    this.body.onMouseEnter.listen(_onMouseEnter);
-    this.body.onMouseUp.listen(_onMouseUpPort);
+    this.body = new svg.RectElement()
+    ..setAttribute('x', '$xCoor')
+    ..setAttribute('y', '$yCoor')
+    ..setAttribute('width', '$size')
+    ..setAttribute('height', '$size')
+    ..classes.add('port')
+    ..onMouseDown.listen(_onMouseDown)
+    ..onMouseEnter.listen(_onMouseEnter)
+    ..onMouseUp.listen(_onMouseUpPort);
+
     html.document.onMouseUp.listen(_onMouseUp);
     html.document.onMouseMove.listen(_onMouseMove).cancel();
 
-    this.point = canvas.createSvgPoint();
-    this.point.x = xCoor + (this.input ? 0 : size);
-    this.point.y = yCoor + size/2;
+    this.point = canvas.createSvgPoint()
+    ..x = xCoor + (this.input ? 0 : size)
+    ..y = yCoor + size/2;
+
     this.initX = this.point.x;
     this.initY = this.point.y;
 
     this.group.append(this.body);
     this.body.parent.on[STREAM_UNIT_MOVING].listen(move);
-    this.body.parent.on[OPERATOR_UNIT_REMOVE].listen(remove);
+    //this.body.parent.on[OPERATOR_UNIT_REMOVE].listen(remove);
   }
 
   void _onMouseDown(html.MouseEvent e) {
@@ -81,10 +82,10 @@ class Port {
   }
 
   void _onMouseUpPort(html.MouseEvent e) {
-    this.draw(e);
+    this._draw(e);
   }
 
-  void draw(html.MouseEvent e) {
+  void _draw(html.MouseEvent e) {
     if (selectedPort != null && this != selectedPort) {
       if (selectedPort.group.hashCode == this.group.hashCode) {
         log.warning(WARNING_LINE_SAME_UNIT);
@@ -107,7 +108,7 @@ class Port {
     this.body.dispatchEvent(new html.CustomEvent(OPERATOR_PORT_MOVING));
   }
 
-  void remove(html.CustomEvent e) {
+  void remove() {
     this.body.dispatchEvent(new html.CustomEvent(OPERATOR_PORT_REMOVED));
 
     if (selectedPort == this) {

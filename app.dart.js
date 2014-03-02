@@ -3170,6 +3170,13 @@ var $$ = {};
       $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("operator_output_refresh", true, true, $.currentOperatorId));
       $.get$log().info$1("Operator modal for " + $.currentOperatorId + " is closed.");
     },
+    removeOperator$1: [function(e) {
+      var operatorId, t1;
+      operatorId = J.get$detail$x(e);
+      t1 = $.operators;
+      t1.remove$1(t1, operatorId);
+      $.get$log().info$1(H.S(operatorId) + " is removed.");
+    }, "call$1", "get$removeOperator", 2, 0, 17],
     Application$1: function(canvas_id) {
       var temp, t1, t2, units;
       $.canvas = document.querySelector(canvas_id);
@@ -3198,6 +3205,9 @@ var $$ = {};
       units = W._FrozenElementList$_wrap(document.querySelectorAll("ul.units li"), null);
       H.setRuntimeTypeInfo(new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragstart._eventType), [null]).listen$1(this.get$_onDragStart());
       H.setRuntimeTypeInfo(new W._ElementListEventStreamImpl(units, false, C.EventStreamProvider_dragend._eventType), [null]).listen$1(this.get$_onDragEnd());
+      t1 = J.get$on$x($.canvas);
+      t1 = t1.$index(t1, "stream_unit_removed");
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$removeOperator()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
       t1 = $.get$modal();
       t1.toString;
       t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
@@ -3307,8 +3317,8 @@ var $$ = {};
       t2 = this.from;
       t3 = t2.get$point();
       t1.appendItem(temp.createSVGPathSegMovetoAbs(t3.x, t3.y));
-      t3 = this.path;
-      t1 = J.get$pathSegList$x(t3);
+      t3 = temp.pathSegList;
+      t1 = this.path;
       t4 = t2.point;
       t5 = t4.x;
       t6 = this.to;
@@ -3324,17 +3334,15 @@ var $$ = {};
         return t4.$add();
       if (typeof t7 !== "number")
         return H.iae(t7);
-      t1.appendItem(t3.createSVGPathSegLinetoAbs((t5 + t8) / 2, (t4 + t7) / 2));
-      t7 = this.path;
-      t4 = J.get$pathSegList$x(t7);
+      t3.appendItem(J.createSvgPathSegLinetoAbs$2$x(t1, (t5 + t8) / 2, (t4 + t7) / 2));
+      t7 = temp.pathSegList;
+      t4 = this.path;
       t8 = t6.point;
-      t4.appendItem(t7.createSVGPathSegLinetoAbs(t8.x, t8.y));
-      this.path.setAttribute("from", "" + t2.get$hashCode(t2));
-      this.path.setAttribute("to", "" + t6.get$hashCode(t6));
-      this.path.setAttribute("stroke-width", "1.5");
-      t8 = this.path;
-      t8.toString;
-      t8 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t8, C.EventStreamProvider_mousedown._eventType, false), [null]);
+      t7.appendItem(J.createSvgPathSegLinetoAbs$2$x(t4, t8.x, t8.y));
+      temp.setAttribute("from", "" + t2.get$hashCode(t2));
+      temp.setAttribute("to", "" + t6.get$hashCode(t6));
+      temp.setAttribute("stroke-width", "1.5");
+      t8 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mousedown._eventType, false), [null]);
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t8._target, t8._eventType, W._wrapZone(this.get$_select()), t8._useCapture), [H.getTypeArgumentByIndex(t8, 0)])._tryResume$0();
       $.canvas.appendChild(this.path);
       t8 = H.setRuntimeTypeInfo(new W._EventStream(window, C.EventStreamProvider_keydown._eventType, false), [null]);
@@ -3354,7 +3362,7 @@ var $$ = {};
     }
   },
   Operator: {
-    "": "Object;id,type*,body>,uiDetails<,next@,prev<,details",
+    "": "Object;id,type*,body>,uiDetails<,next@,prev<,details<",
     canConnectTo$1: function(nextOperatorId) {
       var t1 = this.next.containsKey$1(nextOperatorId) === true;
       if (t1)
@@ -3847,16 +3855,17 @@ var $$ = {};
     _onKeyDown$1: [function(e) {
       if (J.get$keyCode$x(e) === 8 && J.get$display$x($.get$modal().style) !== "block") {
         e.preventDefault();
-        if ($.selectedOperator === this)
+        if ($.selectedOperator === this) {
           this.remove$0(this);
+          $.canvas.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, this.id));
+        }
       }
     }, "call$1", "get$_onKeyDown", 2, 0, 3],
     remove$0: function(_) {
-      var t1;
-      this.group.dispatchEvent(W.CustomEvent_CustomEvent("stream_unit_removed", true, true, null));
-      t1 = J.get$children$x($.canvas);
+      var t1 = J.get$children$x($.canvas);
       t1.remove$1(t1, this.group);
-      $.get$log().info$1(this.id + " is removed.");
+      if ($.selectedOperator === this)
+        $.selectedOperator = null;
     },
     addBackgroundImage$1: function(image) {
       var t1, temp, t2;
@@ -3900,6 +3909,12 @@ var $$ = {};
   },
   SourceOperatorBody: {
     "": "BaseOperatorBody;outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+    remove$0: function(_) {
+      var t1;
+      D.BaseOperatorBody.prototype.remove$0.call(this, this);
+      t1 = this.outputPort;
+      t1.remove$0(t1);
+    },
     SourceOperatorBody$5: function(id, x, y, width, height) {
       this.outputPort = D.Port$(this.group, x, y, width, height, 6, false);
       this.addBackgroundImage$1("input.png");
@@ -3913,6 +3928,12 @@ var $$ = {};
   },
   SinkOperatorBody: {
     "": "BaseOperatorBody;inputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height",
+    remove$0: function(_) {
+      var t1;
+      D.BaseOperatorBody.prototype.remove$0.call(this, this);
+      t1 = this.inputPort;
+      t1.remove$0(t1);
+    },
     SinkOperatorBody$5: function(id, x, y, width, height) {
       this.inputPort = D.Port$(this.group, x, y, width, height, 6, true);
       this.addBackgroundImage$1("output.png");
@@ -3926,6 +3947,14 @@ var $$ = {};
   },
   ProcessingBaseOperatorBody: {
     "": "BaseOperatorBody;",
+    remove$0: function(_) {
+      var t1;
+      D.BaseOperatorBody.prototype.remove$0.call(this, this);
+      t1 = this.inputPort;
+      t1.remove$0(t1);
+      t1 = this.outputPort;
+      t1.remove$0(t1);
+    },
     ProcessingBaseOperatorBody$5: function(id, x, y, width, height) {
       this.inputPort = D.Port$(this.group, x, y, width, height, 6, true);
       this.outputPort = D.Port$(this.group, x, y, width, height, 6, false);
@@ -3951,7 +3980,7 @@ var $$ = {};
     "": "ProcessingBaseOperatorBody;inputPort,outputPort,group,body,id,dragging,x,y,dragOffsetX,dragOffsetY,width,height"
   },
   ElementUI: {
-    "": "Object;id,type*,label,input<",
+    "": "Object;id,type*,required,label,input<",
     getFormElement$0: function() {
       var inputDiv, outerDiv;
       inputDiv = document.createElement("div", null);
@@ -3967,7 +3996,7 @@ var $$ = {};
     resetClass$0: function() {
       this.input.className = "form-control";
     },
-    ElementUI$5$attributes$options: function(id, type, description, attributes, options) {
+    ElementUI$6$attributes$options: function(id, type, description, required, attributes, options) {
       var t1, i, newOption;
       t1 = document.createElement("label", null);
       t1.textContent = description;
@@ -4021,9 +4050,9 @@ var $$ = {};
       if (t1.className.length === 0)
         t1.className = "form-control";
     },
-    static: {ElementUI$: function(id, type, description, attributes, options) {
-        var t1 = new D.ElementUI(id, type, null, null);
-        t1.ElementUI$5$attributes$options(id, type, description, attributes, options);
+    static: {ElementUI$: function(id, type, description, required, attributes, options) {
+        var t1 = new D.ElementUI(id, type, required, null, null);
+        t1.ElementUI$6$attributes$options(id, type, description, required, attributes, options);
         return t1;
       }}
   },
@@ -4038,13 +4067,13 @@ var $$ = {};
     "": "Object;type*",
     initialize$0: function(_) {
       this.addTitles$0();
-      this.addElement$5$features("id", "text", "ID", this.base, H.fillLiteralMap(["disabled", "true", "value", this.id], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      this.addElement$5$features("type", "text", "Type", this.base, H.fillLiteralMap(["disabled", "true", "value", this.type], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      this.addElement$4("name", "text", "Name", this.base);
-      this.addElement$5$features("description", "textarea", "Description", this.base, H.fillLiteralMap(["rows", "3"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$6$features("id", "text", "ID", false, this.base, H.fillLiteralMap(["disabled", "true", "value", this.id], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$6$features("type", "text", "Type", false, this.base, H.fillLiteralMap(["disabled", "true", "value", this.type], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$5("name", "text", "Name", false, this.base);
+      this.addElement$6$features("description", "textarea", "Description", false, this.base, H.fillLiteralMap(["rows", "3"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
     },
-    addElement$6$features$options: function(identifier, type, description, list, features, options) {
-      var newElement = D.ElementUI$(this.id + "_" + $.BaseDetails_count, type, description, features, options);
+    addElement$7$features$options: function(identifier, type, description, required, list, features, options) {
+      var newElement = D.ElementUI$(this.id + "_" + $.BaseDetails_count, type, description, required, features, options);
       list.$indexSet(list, identifier, newElement);
       $.BaseDetails_count = $.BaseDetails_count + 1;
       if (list === this.base)
@@ -4053,14 +4082,14 @@ var $$ = {};
         this.parametersView.appendChild(newElement.getFormElement$0());
       return newElement;
     },
-    addElement$5$features: function(identifier, type, description, list, features) {
-      return this.addElement$6$features$options(identifier, type, description, list, features, null);
+    addElement$6$features: function(identifier, type, description, required, list, features) {
+      return this.addElement$7$features$options(identifier, type, description, required, list, features, null);
     },
-    addElement$4: function(identifier, type, description, list) {
-      return this.addElement$6$features$options(identifier, type, description, list, null, null);
+    addElement$5: function(identifier, type, description, required, list) {
+      return this.addElement$7$features$options(identifier, type, description, required, list, null, null);
     },
-    addElement$5$options: function(identifier, type, description, list, options) {
-      return this.addElement$6$features$options(identifier, type, description, list, null, options);
+    addElement$6$options: function(identifier, type, description, required, list, options) {
+      return this.addElement$7$features$options(identifier, type, description, required, list, null, options);
     },
     addTitles$0: function() {
       var t1, t2, t3, t4, t5;
@@ -4132,36 +4161,42 @@ var $$ = {};
           result = 1;
           break;
         case "select":
-          result = H.interceptedTypeCast(element.input, "$isSelectElement").selectedIndex === 0 ? 0 : 1;
+          if (H.interceptedTypeCast(element.input, "$isSelectElement").selectedIndex === 0)
+            result = element.required ? -1 : 0;
+          else
+            result = 1;
           break;
         case "editable":
-          result = H.interceptedTypeCast(element.input, "$isDivElement").innerHTML.length === 0 ? 0 : 1;
+          if (H.interceptedTypeCast(element.input, "$isDivElement").innerHTML.length === 0)
+            result = element.required ? -1 : 0;
+          else
+            result = 1;
           break;
         case "email":
           t1 = H.interceptedTypeCast(element.input, "$isEmailInputElement");
           if (J.get$value$x(t1).length === 0)
-            result = 0;
+            result = element.required ? -1 : 0;
           else
             result = t1.checkValidity() === true ? 1 : -1;
           break;
         case "number":
           t1 = H.interceptedTypeCast(element.input, "$isNumberInputElement");
           if (J.get$value$x(t1).length === 0)
-            result = 0;
+            result = element.required ? -1 : 0;
           else
             result = t1.checkValidity() === true ? 1 : -1;
           break;
         case "textarea":
           t1 = H.interceptedTypeCast(element.input, "$isTextAreaElement");
           if (t1.value.length === 0)
-            result = 0;
+            result = element.required ? -1 : 0;
           else
             result = t1.checkValidity() === true ? 1 : -1;
           break;
         case "text":
           t1 = H.interceptedTypeCast(element.input, "$isTextInputElement");
           if (J.get$value$x(t1).length === 0)
-            result = 0;
+            result = element.required ? -1 : 0;
           else
             result = t1.checkValidity() === true ? 1 : -1;
           break;
@@ -4265,6 +4300,46 @@ var $$ = {};
       return this.this_1._isElementValid$2(identifier, element);
     }
   },
+  SourceDetails: {
+    "": "BaseDetails;",
+    validate$0: function() {
+      var t1, t2;
+      D.BaseDetails.prototype.validate$0.call(this);
+      if (this.output.elements._collection$_length < 1) {
+        t1 = $.get$validation();
+        t2 = this.id + " of type " + this.type + " has no output specified.";
+        t1.toString;
+        t1 = $.get$validationMessages();
+        J.add$1$ax(t1.$index(t1, "ERROR"), t2);
+      }
+      t1 = $.operators;
+      t1 = J.get$length$asx(t1.$index(t1, this.id).get$next());
+      if (typeof t1 !== "number")
+        return t1.$lt();
+      if (t1 < 1) {
+        t1 = $.get$validation();
+        t2 = this.id + " of type " + this.type + " has no outgoing flow.";
+        t1.toString;
+        t1 = $.get$validationMessages();
+        J.add$1$ax(t1.$index(t1, "ERROR"), t2);
+      }
+    }
+  },
+  SinkDetails: {
+    "": "BaseDetails;",
+    validate$0: function() {
+      var t1, t2;
+      D.BaseDetails.prototype.validate$0.call(this);
+      t1 = $.operators;
+      if (t1.$index(t1, this.id).get$prev()._collection$_length < 1) {
+        t1 = $.get$validation();
+        t2 = this.id + " of type " + this.type + " has no incoming flow.";
+        t1.toString;
+        t1 = $.get$validationMessages();
+        J.add$1$ax(t1.$index(t1, "ERROR"), t2);
+      }
+    }
+  },
   OutputDetails: {
     "": "BaseDetails;",
     refresh$1: function(specification) {
@@ -4307,13 +4382,26 @@ var $$ = {};
       return updated;
     },
     _addRule$1: [function(e) {
-    }, "call$1", "get$_addRule", 2, 0, 2]
+    }, "call$1", "get$_addRule", 2, 0, 2],
+    validate$0: function() {
+      var t1, t2;
+      D.BaseDetails.prototype.validate$0.call(this);
+      t1 = $.operators;
+      t1 = t1.$index(t1, this.id).get$details();
+      if (J.get$length$asx(H.subtypeCast(t1.$index(t1, "rules"), "$isList", [J.JSString], "$asList")) === 0) {
+        t1 = $.get$validation();
+        t2 = this.id + " of type " + this.type + " has no rules.";
+        t1.toString;
+        t1 = $.get$validationMessages();
+        J.add$1$ax(t1.$index(t1, "WARNING"), t2);
+      }
+    }
   },
   EnrichDetails: {
     "": "OutputDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
       D.BaseDetails.prototype.initialize$0.call(this, this);
-      this.addElement$5$features("copy", "number", "Number of copies", this.elements, H.fillLiteralMap(["min", "1", "max", "10", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$6$features("copy", "number", "Number of copies", true, this.elements, H.fillLiteralMap(["min", "1", "max", "10", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
     }
   },
   UnionDetails: {
@@ -4324,15 +4412,15 @@ var $$ = {};
     }
   },
   SourceFileDetails: {
-    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+    "": "SourceDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
       D.BaseDetails.prototype.initialize$0.call(this, this);
-      this.addElement$4("input", "file", "File", this.elements);
-      this.addElement$4("delimiter", "text", "Delimiter", this.elements);
+      this.addElement$5("input", "file", "File", true, this.elements);
+      this.addElement$5("delimiter", "text", "Delimiter", true, this.elements);
     }
   },
   HumanDetails: {
-    "": "BaseDetails;availableInputs,elementsDiv,segmentList,refreshableDivs,_dragSegment,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+    "": "SourceDetails;availableInputs,elementsDiv,segmentList,refreshableDivs,_dragSegment,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     _onHumanClick$1: [function(e) {
       var t1, t2, t3;
       J.set$display$x($.get$modal().style, "none");
@@ -4416,12 +4504,12 @@ var $$ = {};
     initialize$0: function(_) {
       var instructions, question, t1, t2, t3, t4;
       D.BaseDetails.prototype.initialize$0.call(this, this);
-      this.addElement$5$features("iteration", "number", "Number of copies", this.elements, H.fillLiteralMap(["value", "1", "min", "1", "max", "1000"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      this.addElement$5$features("expiry", "number", "Max alloted time (sec)", this.elements, H.fillLiteralMap(["value", "60", "min", "10", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      this.addElement$5$features("payment", "number", "Payment (\u00a2)", this.elements, H.fillLiteralMap(["value", "10", "min", "5", "max", "100"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      this.addElement$5$features("segment-list", "list", "Available Segments", this.elements, H.fillLiteralMap(["class", "list-inline segments"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      instructions = this.addElement$4("instructions", "editable", "Instructions for human workers", this.elements);
-      question = this.addElement$4("question", "editable", "Question", this.elements);
+      this.addElement$6$features("iteration", "number", "Number of copies", true, this.elements, H.fillLiteralMap(["value", "1", "min", "1", "max", "1000"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$6$features("expiry", "number", "Max alloted time (sec)", true, this.elements, H.fillLiteralMap(["value", "60", "min", "10", "max", "300"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$6$features("payment", "number", "Payment (\u00a2)", true, this.elements, H.fillLiteralMap(["value", "10", "min", "5", "max", "100"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$6$features("segment-list", "list", "Available Segments", false, this.elements, H.fillLiteralMap(["class", "list-inline segments"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      instructions = this.addElement$5("instructions", "editable", "Instructions for human workers", false, this.elements);
+      question = this.addElement$5("question", "editable", "Question", true, this.elements);
       this.configureHumanTasks$0();
       this.refreshableDivs = H.setRuntimeTypeInfo([], [W.DivElement]);
       t1 = instructions.input;
@@ -4743,11 +4831,11 @@ var $$ = {};
     }
   },
   SourceManualDetails: {
-    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+    "": "SourceDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
       D.BaseDetails.prototype.initialize$0.call(this, this);
-      this.addElement$5$features("input", "textarea", "Manual entry", this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
-      this.addElement$5$options("delimiter", "select", "Delimiter", this.elements, $.get$SOURCE_OPTIONS_NAMES());
+      this.addElement$6$features("input", "textarea", "Manual entry", true, this.elements, H.fillLiteralMap(["rows", "5"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$6$options("delimiter", "select", "Delimiter", true, this.elements, $.get$SOURCE_OPTIONS_NAMES());
     },
     _onRefresh$0: function() {
       var t1, text, t2, delimiter, delimitedString, segment, dumpSpan, t3, newElement, t4;
@@ -4819,21 +4907,21 @@ var $$ = {};
     "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
       D.BaseDetails.prototype.initialize$0.call(this, this);
-      this.addElement$4("webpage", "url", "Feed URL", this.elements);
+      this.addElement$5("webpage", "url", "Feed URL", true, this.elements);
     }
   },
   SinkFileDetails: {
-    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+    "": "SinkDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
       D.BaseDetails.prototype.initialize$0.call(this, this);
-      this.addElement$4("output", "text", "File name", this.elements);
+      this.addElement$5("output", "text", "File name", true, this.elements);
     }
   },
   SinkEmailDetails: {
-    "": "BaseDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
+    "": "SinkDetails;id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
       D.BaseDetails.prototype.initialize$0.call(this, this);
-      this.addElement$4("email", "email", "email address", this.elements);
+      this.addElement$5("email", "email", "email address", true, this.elements);
     }
   },
   SelectionDetails: {
@@ -4941,7 +5029,7 @@ var $$ = {};
     "": "RuleDetails;rulesDiv,addRuleButton,id,type,prevConn,nextConn,output,base,elements,view,detailsViewOuter,parametersViewOuter,detailsView,parametersView",
     initialize$0: function(_) {
       D.RuleDetails.prototype.initialize$0.call(this, this);
-      this.addElement$5$features("size", "number", "Window size", this.elements, H.fillLiteralMap(["min", "1", "max", "100", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
+      this.addElement$6$features("size", "number", "Window size", true, this.elements, H.fillLiteralMap(["min", "1", "max", "100", "value", "1"], P.LinkedHashMap_LinkedHashMap(null, null, null, null, null)));
       this.parametersView.appendChild(this.rulesDiv);
     },
     updateOperatorDetails$0: function() {
@@ -5211,10 +5299,46 @@ var $$ = {};
   OutputSegment_closure0: {
     "": "Closure:14;editable_1",
     call$1: function(e) {
-      var t1, target;
+      var t1, target, charCode, isAlphaNumeric, isMinus;
       t1 = J.getInterceptor$x(e);
       target = t1.get$target(e);
-      if (t1.get$keyCode(e) === 13 || J.get$text$x(target).length > 32)
+      t1 = t1.get$charCode(e);
+      if (typeof t1 !== "number")
+        return t1.$gt();
+      if (t1 > 0)
+        charCode = e.charCode;
+      else {
+        t1 = e.keyCode;
+        if (typeof t1 !== "number")
+          return t1.$gt();
+        if (t1 > 0)
+          charCode = t1;
+        else {
+          t1 = e.which;
+          if (typeof t1 !== "number")
+            return t1.$gt();
+          if (t1 > 0)
+            ;
+          else
+            t1 = 0;
+          charCode = t1;
+        }
+      }
+      if (typeof charCode !== "number")
+        return charCode.$gt();
+      if (charCode > 31)
+        if (!(charCode >= 48 && charCode <= 57)) {
+          if (!(charCode >= 65 && charCode <= 90))
+            t1 = charCode >= 97 && charCode <= 122;
+          else
+            t1 = true;
+          isAlphaNumeric = t1;
+        } else
+          isAlphaNumeric = true;
+      else
+        isAlphaNumeric = false;
+      isMinus = charCode === 45;
+      if (!(isAlphaNumeric || isMinus) || J.get$text$x(target).length > 31)
         e.preventDefault();
       return;
     }
@@ -5377,7 +5501,7 @@ var $$ = {};
     }
   },
   RuleOutputSpecification: {
-    "": "OutputSpecification;",
+    "": "OutputSpecification;details<",
     refresh$1: function(previousElements) {
       var updated, t1;
       updated = D.OutputSpecification.prototype.refresh$1.call(this, previousElements);
@@ -5542,14 +5666,13 @@ var $$ = {};
       t4.y = t2 + t3;
       this.body.dispatchEvent(W.CustomEvent_CustomEvent("stream_port_moving", true, true, null));
     }, "call$1", "get$move", 2, 0, 17],
-    remove$1: [function(_, e) {
+    remove$0: function(_) {
       this.body.dispatchEvent(W.CustomEvent_CustomEvent("stream_port_removed", true, true, null));
       if ($.selectedPort === this)
         $.selectedPort = null;
-    }, "call$1", "get$remove", 2, 0, 17],
+    },
     Port$7$input: function(group, x, y, width, height, size, input) {
-      var t1, t2, t3, t4, xCoor, yCoor;
-      this.body = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      var t1, t2, t3, t4, xCoor, yCoor, temp;
       t1 = this.size;
       t2 = t1 / 2;
       t3 = J.$sub$n(x, t2);
@@ -5565,45 +5688,37 @@ var $$ = {};
       }
       xCoor = J.$add$ns(t3, t4);
       yCoor = J.$sub$n(y, t2);
-      this.body.setAttribute("x", H.S(xCoor));
-      this.body.setAttribute("y", H.S(yCoor));
-      this.body.setAttribute("width", "" + t1);
-      this.body.setAttribute("height", "" + t1);
-      t4 = J.get$classes$x(this.body);
+      temp = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      temp.setAttribute("x", H.S(xCoor));
+      temp.setAttribute("y", H.S(yCoor));
+      temp.setAttribute("width", "" + t1);
+      temp.setAttribute("height", "" + t1);
+      t4 = J.get$classes$x(temp);
       t4.add$1(t4, "port");
-      t4 = this.body;
-      t4.toString;
-      t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t4, C.EventStreamProvider_mousedown._eventType, false), [null]);
+      t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mousedown._eventType, false), [null]);
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(this.get$_onMouseDown()), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
-      t4 = this.body;
-      t4.toString;
-      t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t4, C.EventStreamProvider_mouseenter._eventType, false), [null]);
+      t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, C.EventStreamProvider_mouseenter._eventType, false), [null]);
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(this.get$_onMouseEnter()), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
-      t4 = this.body;
-      t4.toString;
-      t3 = C.EventStreamProvider_mouseup._eventType;
-      t4 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t4, t3, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(this.get$_onMouseUpPort()), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
-      t3 = H.setRuntimeTypeInfo(new W._EventStream(document, t3, false), [null]);
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(this.get$_onMouseUp()), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
-      t3 = H.setRuntimeTypeInfo(new W._EventStream(document, C.EventStreamProvider_mousemove._eventType, false), [null]);
-      t3 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(this.get$_onMouseMove()), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)]);
-      t3._tryResume$0();
-      t3.cancel$0();
-      t3 = J.createSvgPoint$0$x($.canvas);
-      this.point = t3;
-      t3.x = J.$add$ns(xCoor, this.input ? 0 : t1);
-      this.point.y = J.$add$ns(yCoor, t2);
-      t1 = this.point;
-      this.initX = t1.x;
-      this.initY = t1.y;
+      t4 = C.EventStreamProvider_mouseup._eventType;
+      t3 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(temp, t4, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t3._target, t3._eventType, W._wrapZone(this.get$_onMouseUpPort()), t3._useCapture), [H.getTypeArgumentByIndex(t3, 0)])._tryResume$0();
+      this.body = temp;
+      t4 = H.setRuntimeTypeInfo(new W._EventStream(document, t4, false), [null]);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(this.get$_onMouseUp()), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)])._tryResume$0();
+      t4 = H.setRuntimeTypeInfo(new W._EventStream(document, C.EventStreamProvider_mousemove._eventType, false), [null]);
+      t4 = H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t4._target, t4._eventType, W._wrapZone(this.get$_onMouseMove()), t4._useCapture), [H.getTypeArgumentByIndex(t4, 0)]);
+      t4._tryResume$0();
+      t4.cancel$0();
+      t4 = J.createSvgPoint$0$x($.canvas);
+      t4.x = J.$add$ns(xCoor, this.input ? 0 : t1);
+      t4.y = J.$add$ns(yCoor, t2);
+      this.point = t4;
+      this.initX = t4.x;
+      this.initY = t4.y;
       this.group.appendChild(this.body);
       t1 = J.get$on$x(this.body.parentElement);
       t1 = t1.$index(t1, "stream_unit_moving");
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$move()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-      t1 = J.get$on$x(this.body.parentElement);
-      t1 = t1.$index(t1, "stream_unit_removed");
-      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(this.get$remove(this)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     },
     static: {Port$: function(group, x, y, width, height, size, input) {
         var t1 = new D.Port(group, null, null, size, width, height, null, null, input);
@@ -10157,6 +10272,9 @@ var $$ = {};
     get$keyCode: function(receiver) {
       return receiver.keyCode;
     },
+    get$charCode: function(receiver) {
+      return receiver.charCode;
+    },
     "%": "KeyboardEvent"
   },
   KeygenElement: {
@@ -11528,6 +11646,9 @@ var $$ = {};
   },
   PathElement: {
     "": "GraphicsElement;pathSegList=",
+    createSvgPathSegLinetoAbs$2: function(receiver, x, y) {
+      return receiver.createSVGPathSegLinetoAbs(x, y);
+    },
     "%": "SVGPathElement"
   },
   PathSeg: {
@@ -12740,6 +12861,9 @@ J.createFragment$2$treeSanitizer$x = function(receiver, a0, a1) {
 };
 J.createFragment$3$treeSanitizer$validator$x = function(receiver, a0, a1, a2) {
   return J.getInterceptor$x(receiver).createFragment$3$treeSanitizer$validator(receiver, a0, a1, a2);
+};
+J.createSvgPathSegLinetoAbs$2$x = function(receiver, a0, a1) {
+  return J.getInterceptor$x(receiver).createSvgPathSegLinetoAbs$2(receiver, a0, a1);
 };
 J.createSvgPoint$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).createSvgPoint$0(receiver);

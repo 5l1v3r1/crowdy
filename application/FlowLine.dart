@@ -10,13 +10,14 @@ class FlowLine {
     this.selected = false;
 
     this.path = new svg.PathElement();
-    this.path.pathSegList.appendItem(this.path.createSvgPathSegMovetoAbs(from.point.x, from.point.y));
-    this.path.pathSegList.appendItem(this.path.createSvgPathSegLinetoAbs((from.point.x + to.point.x)/2, (from.point.y + to.point.y)/2));
-    this.path.pathSegList.appendItem(this.path.createSvgPathSegLinetoAbs(to.point.x, to.point.y));
-    this.path.setAttribute('from', '${this.from.hashCode}');
-    this.path.setAttribute('to', '${this.to.hashCode}');
-    this.path.setAttribute('stroke-width', '1.5');
-    this.path.onMouseDown.listen(_select);
+    this.path
+    ..pathSegList.appendItem(this.path.createSvgPathSegMovetoAbs(from.point.x, from.point.y))
+    ..pathSegList.appendItem(this.path.createSvgPathSegLinetoAbs((from.point.x + to.point.x)/2, (from.point.y + to.point.y)/2))
+    ..pathSegList.appendItem(this.path.createSvgPathSegLinetoAbs(to.point.x, to.point.y))
+    ..setAttribute('from', '${this.from.hashCode}')
+    ..setAttribute('to', '${this.to.hashCode}')
+    ..setAttribute('stroke-width', '1.5')
+    ..onMouseDown.listen(_select);
 
     canvas.append(this.path);
 
@@ -33,6 +34,7 @@ class FlowLine {
     String to = this.to.group.attributes['id'];
     operators[from].removeNext(to);
     operators[to].removePrevious(from);
+
     canvas.children.remove(this.path);
     operators[this.to.group.id].clearDownFlow();
   }

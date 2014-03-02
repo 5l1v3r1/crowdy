@@ -2,10 +2,11 @@ part of crowdy;
 
 class ElementUI {
   String id, type;
+  bool required;
   html.LabelElement label;
   html.Element input;
 
-  ElementUI(String this.id, String this.type, String description,
+  ElementUI(String this.id, String this.type, String description, bool this.required,
       {Map<String, String> attributes: null, List<String> options: null}) {
     this.label = new html.LabelElement()
     ..text = description
@@ -80,17 +81,17 @@ class ElementUI {
         break;
       case 'select':
         if ((this.input as html.SelectElement).selectedIndex == 0) {
-          result = 0;
+          result = this.required ? -1 : 0;
         }
         break;
       case 'editable':
         if ((this.input as html.DivElement).innerHtml.isEmpty) {
-          result = 0;
+          result = this.required ? -1 : 0;
         }
         break;
       case 'email':
         if ((this.input as html.EmailInputElement).value.isEmpty) {
-          result = 0;
+          result = this.required ? -1 : 0;
         }
         else {
           result = (this.input as html.EmailInputElement).checkValidity() ? 1 : -1;
@@ -98,7 +99,7 @@ class ElementUI {
         break;
       case 'number':
         if ((this.input as html.NumberInputElement).value.isEmpty) {
-          result = 0;
+          result = this.required ? -1 : 0;
         }
         else {
           result = (this.input as html.NumberInputElement).checkValidity() ? 1 : -1;
@@ -106,7 +107,7 @@ class ElementUI {
         break;
       case 'textarea':
         if ((this.input as html.TextAreaElement).value.isEmpty) {
-          result = 0;
+          result = this.required ? -1 : 0;
         }
         else {
           result = (this.input as html.TextAreaElement).checkValidity() ? 1 : -1;
@@ -114,7 +115,7 @@ class ElementUI {
         break;
       case 'text':
         if ((this.input as html.TextInputElement).value.isEmpty) {
-          result = 0;
+          result = this.required ? -1 : 0;
         }
         else {
           result = (this.input as html.TextInputElement).checkValidity() ? 1 : -1;
@@ -171,15 +172,15 @@ class BaseDetails {
 
   void initialize() {
     this.addTitles();
-    this.addElement('id', 'text', 'ID', this.base, features: {'disabled': 'true', 'value': this.id});
-    this.addElement('type', 'text', 'Type', this.base, features: {'disabled': 'true', 'value': this.type});
-    this.addElement('name', 'text', 'Name', this.base);
-    this.addElement('description', 'textarea', 'Description', this.base, features: {'rows': '3'});
+    this.addElement('id', 'text', 'ID', false, this.base, features: {'disabled': 'true', 'value': this.id});
+    this.addElement('type', 'text', 'Type', false, this.base, features: {'disabled': 'true', 'value': this.type});
+    this.addElement('name', 'text', 'Name', false, this.base);
+    this.addElement('description', 'textarea', 'Description', false, this.base, features: {'rows': '3'});
   }
 
-  ElementUI addElement(String identifier, String type, String description, Map<String, ElementUI> list,
+  ElementUI addElement(String identifier, String type, String description, bool required, Map<String, ElementUI> list,
                   { Map<String, String> features: null, List<String> options: null }) {
-    ElementUI newElement = new ElementUI('${this.id}_${count}', type, description, options: options, attributes: features);
+    ElementUI newElement = new ElementUI('${this.id}_${count}', type, description, required, options: options, attributes: features);
     list[identifier] = newElement;
     count += 1;
 
@@ -252,6 +253,39 @@ class BaseDetails {
   }
 }
 
+class SourceDetails extends BaseDetails {
+
+  SourceDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+  }
+
+  void validate() {
+    super.validate();
+
+    if (this.output.elements.length < 1) {
+      validation.error("${this.id} of type ${this.type} has no output specified.");
+    }
+
+    if (operators[this.id].next.length < 1) {
+      validation.error("${this.id} of type ${this.type} has no outgoing flow.");
+    }
+  }
+}
+
+class SinkDetails extends BaseDetails {
+
+  SinkDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
+
+  }
+
+  void validate() {
+    super.validate();
+
+    if (operators[this.id].prev.length < 1) {
+      validation.error("${this.id} of type ${this.type} has no incoming flow.");
+    }
+  }
+}
+
 class OutputDetails extends BaseDetails {
 
   OutputDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
@@ -305,6 +339,13 @@ class RuleDetails extends OutputDetails {
   void _deleteRule(html.MouseEvent e, String ruleId) {
     this.rulesDiv.querySelector('#${ruleId}').remove();
   }
+
+  void validate() {
+    super.validate();
+    if ((operators[this.id].details['rules'] as List<String>).length == 0) {
+      validation.warning("${this.id} of type ${this.type} has no rules.");
+    }
+  }
 }
 
 class EnrichDetails extends OutputDetails {
@@ -315,7 +356,7 @@ class EnrichDetails extends OutputDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('copy', 'number', 'Number of copies', this.elements, features: {'min': '1', 'max': '10', 'value': '1'});
+    this.addElement('copy', 'number', 'Number of copies', true, this.elements, features: {'min': '1', 'max': '10', 'value': '1'});
   }
 }
 
@@ -331,7 +372,7 @@ class UnionDetails extends OutputDetails {
   }
 }
 
-class SourceFileDetails extends BaseDetails {
+class SourceFileDetails extends SourceDetails {
 
   SourceFileDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
 
@@ -339,12 +380,12 @@ class SourceFileDetails extends BaseDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('input', 'file', 'File', this.elements);
-    this.addElement('delimiter', 'text', 'Delimiter', this.elements);
+    this.addElement('input', 'file', 'File', true, this.elements);
+    this.addElement('delimiter', 'text', 'Delimiter', true, this.elements);
   }
 }
 
-class HumanDetails extends BaseDetails {
+class HumanDetails extends SourceDetails {
 
   static int count = 1;
   html.SelectElement availableInputs;
@@ -417,13 +458,13 @@ class HumanDetails extends BaseDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('iteration', 'number', 'Number of copies', this.elements, features: {'value': '1', 'min': '1', 'max': '1000'});
-    this.addElement('expiry', 'number', 'Max alloted time (sec)', this.elements, features: {'value': '60', 'min': '10', 'max': '300'});
-    this.addElement('payment', 'number', 'Payment (¢)', this.elements, features: {'value': '10', 'min': '5', 'max': '100'});
+    this.addElement('iteration', 'number', 'Number of copies', true, this.elements, features: {'value': '1', 'min': '1', 'max': '1000'});
+    this.addElement('expiry', 'number', 'Max alloted time (sec)', true, this.elements, features: {'value': '60', 'min': '10', 'max': '300'});
+    this.addElement('payment', 'number', 'Payment (¢)', true, this.elements, features: {'value': '10', 'min': '5', 'max': '100'});
 
-    this.addElement('segment-list', 'list', 'Available Segments', this.elements, features: {'class': 'list-inline segments'});
-    ElementUI instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', this.elements);
-    ElementUI question = this.addElement('question', 'editable', 'Question', this.elements);
+    this.addElement('segment-list', 'list', 'Available Segments', false, this.elements, features: {'class': 'list-inline segments'});
+    ElementUI instructions = this.addElement('instructions', 'editable', 'Instructions for human workers', false, this.elements);
+    ElementUI question = this.addElement('question', 'editable', 'Question', true, this.elements);
     this.configureHumanTasks();
 
     this.refreshableDivs = new List<html.DivElement>();
@@ -606,7 +647,7 @@ class HumanDetails extends BaseDetails {
   }
 }
 
-class SourceManualDetails extends BaseDetails {
+class SourceManualDetails extends SourceDetails {
 
   SourceManualDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
     this.output = new InputManualOutputSpecification(this.id);
@@ -619,8 +660,8 @@ class SourceManualDetails extends BaseDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('input', 'textarea', 'Manual entry', this.elements, features: {'rows': '5'});
-    this.addElement('delimiter', 'select', 'Delimiter', this.elements, options: SOURCE_OPTIONS_NAMES);
+    this.addElement('input', 'textarea', 'Manual entry', true, this.elements, features: {'rows': '5'});
+    this.addElement('delimiter', 'select', 'Delimiter', true, this.elements, options: SOURCE_OPTIONS_NAMES);
   }
 
   void _onRefresh() {
@@ -657,11 +698,11 @@ class SourceRSSDetails extends BaseDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('webpage', 'url', 'Feed URL', this.elements);
+    this.addElement('webpage', 'url', 'Feed URL', true, this.elements);
   }
 }
 
-class SinkFileDetails extends BaseDetails {
+class SinkFileDetails extends SinkDetails {
 
   SinkFileDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
 
@@ -669,11 +710,11 @@ class SinkFileDetails extends BaseDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('output', 'text', 'File name', this.elements);
+    this.addElement('output', 'text', 'File name', true, this.elements);
   }
 }
 
-class SinkEmailDetails extends BaseDetails {
+class SinkEmailDetails extends SinkDetails {
 
   SinkEmailDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
 
@@ -681,7 +722,7 @@ class SinkEmailDetails extends BaseDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('email', 'email', 'email address', this.elements);
+    this.addElement('email', 'email', 'email address', true, this.elements);
   }
 }
 
@@ -771,7 +812,7 @@ class SortDetails extends RuleDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('size', 'number', 'Window size', this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
+    this.addElement('size', 'number', 'Window size', true, this.elements, features: {'min': '1', 'max': '100', 'value': '1'});
 
     // Ugly Hack to move rules after size parameter
     this.parametersView.append(this.rulesDiv);

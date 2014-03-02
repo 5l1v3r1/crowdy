@@ -37,6 +37,9 @@ class Application extends Object {
     units.onDragStart.listen(_onDragStart);
     units.onDragEnd.listen(_onDragEnd);
 
+    // Handle operator removal
+    canvas.on[OPERATOR_UNIT_REMOVE].listen(removeOperator);
+
     // Refresh down stream when output specification changes
     modal.onClick.listen(_closeModalConditional);
     closeButton.onClick.listen((e) => _closeModal());
@@ -156,5 +159,12 @@ class Application extends Object {
     log.info("An operator with type ${type} and id ${id} is added.");
 
     return newOperator;
+  }
+
+  void removeOperator(html.CustomEvent e) {
+    String operatorId = e.detail;
+    operators.remove(operatorId);
+
+    log.info("${operatorId} is removed.");
   }
 }

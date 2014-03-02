@@ -23,7 +23,13 @@ dynamic getMouseCoordinatesProportinalToCanvas(html.MouseEvent e) {
 
 void _editableKeyPressed(html.KeyboardEvent e, bool editable) {
   html.SpanElement target = e.target;
-  if (e.keyCode == 13 || target.text.length > 32) {
+  int charCode = e.charCode > 0 ? e.charCode : e.keyCode > 0 ? e.keyCode : e.which > 0 ? e.which : 0;
+  bool isAlphaNumeric = charCode > 31 &&
+      ((charCode >= 48 && charCode <= 57) ||
+          (charCode >= 65 && charCode <= 90) ||
+          (charCode >= 97 && charCode <= 122));
+  bool isMinus = charCode == 45;
+  if(!(isAlphaNumeric || isMinus) || target.text.length > 31) {
     e.preventDefault();
   }
 }
