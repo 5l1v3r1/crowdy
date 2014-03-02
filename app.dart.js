@@ -5276,7 +5276,7 @@ var $$ = {};
       t1.textContent = defaultName.length !== 0 ? defaultName : "segment-name";
       t1.contentEditable = String(editable);
       t1.toString;
-      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_keypress._eventType, false), [null]);
+      t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, C.EventStreamProvider_keydown._eventType, false), [null]);
       H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.OutputSegment_closure0(editable)), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
       this.name = t1;
       t1 = document.createElement("span", null);
@@ -5337,8 +5337,13 @@ var $$ = {};
           isAlphaNumeric = true;
       else
         isAlphaNumeric = false;
-      isMinus = charCode === 45;
-      if (!(isAlphaNumeric || isMinus) || J.get$text$x(target).length > 31)
+      t1 = e.keyCode;
+      isMinus = t1 === 109 || t1 === 189;
+      if (t1 !== 8)
+        t1 = !(isAlphaNumeric || isMinus) || J.get$text$x(target).length > 31;
+      else
+        t1 = false;
+      if (t1)
         e.preventDefault();
       return;
     }
@@ -13072,7 +13077,6 @@ C.EventStreamProvider_dragover = new W.EventStreamProvider("dragover");
 C.EventStreamProvider_dragstart = new W.EventStreamProvider("dragstart");
 C.EventStreamProvider_drop = new W.EventStreamProvider("drop");
 C.EventStreamProvider_keydown = new W.EventStreamProvider("keydown");
-C.EventStreamProvider_keypress = new W.EventStreamProvider("keypress");
 C.EventStreamProvider_mousedown = new W.EventStreamProvider("mousedown");
 C.EventStreamProvider_mouseenter = new W.EventStreamProvider("mouseenter");
 C.EventStreamProvider_mousemove = new W.EventStreamProvider("mousemove");

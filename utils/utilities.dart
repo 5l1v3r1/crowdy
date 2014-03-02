@@ -28,8 +28,9 @@ void _editableKeyPressed(html.KeyboardEvent e, bool editable) {
       ((charCode >= 48 && charCode <= 57) ||
           (charCode >= 65 && charCode <= 90) ||
           (charCode >= 97 && charCode <= 122));
-  bool isMinus = charCode == 45;
-  if(!(isAlphaNumeric || isMinus) || target.text.length > 31) {
+  bool isMinus = e.keyCode == 109 || e.keyCode == 189;
+  bool isBackspace = e.keyCode == 8;
+  if(!isBackspace && (!(isAlphaNumeric || isMinus) || (target.text.length > 31))) {
     e.preventDefault();
   }
 }

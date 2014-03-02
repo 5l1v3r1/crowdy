@@ -22,7 +22,7 @@ class OutputSegment {
     ..text = defaultName.isNotEmpty ? defaultName : 'segment-name'
     ..contentEditable = editable.toString()
     //..attributes['onKeyPress'] = editable ? 'return (this.innerText.length <= 32)' : 'return';
-    ..onKeyPress.listen((e) => _editableKeyPressed(e, editable));
+    ..onKeyDown.listen((e) => _editableKeyPressed(e, editable));
 
     this.value = new html.SpanElement();
     this.value.className = 'example';
