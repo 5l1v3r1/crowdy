@@ -58,3 +58,35 @@ void _triggerDetails(html.DivElement div) {
 }
 
 bool isFirefox = html.window.navigator.userAgent.contains("Firefox");
+
+
+/*
+ * Report a bug
+ */
+String logMessages = "";
+void report(html.MouseEvent e) {
+  reportModal.classes.add('in');
+  reportModal.style.display = 'block';
+
+  reportModalBody.querySelector('#report_2').text = logMessages;
+
+  closeReportButton.onClick.listen((e) => reportModal.style.display = 'none');
+  sendReportButton.onClick.listen((e) => reportBug());
+}
+
+void reportBug() {
+  reportModalBody.querySelector('#report_3').text = "Sending bug report";
+
+  var url = "https://api.sendgrid.com/api/mail.send.json";
+  html.HttpRequest request = new html.HttpRequest();
+  request.open("POST", url, async: false);
+
+  String data = "api_user=your_sendgrid_username&api_key=your_sendgrid_password&to=destination@example.com&toname=Destination&subject=Example_Subject&text=testingtextbody&from=info@domain.com";
+
+  try {
+    request.send(data);
+  }
+  catch(e) {
+    reportModalBody.querySelector('#report_3').text = e.toString();
+  }
+}

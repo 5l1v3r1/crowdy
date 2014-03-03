@@ -2918,8 +2918,12 @@ var $$ = {};
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(D.validate$closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     t1 = document.querySelector("#clear");
     t1.toString;
+    t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(D.clear$closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    t1 = document.querySelector("#report");
+    t1.toString;
     t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
-    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(D.clear$closure()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(D.report$closure()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
   }, "call$0", "main$closure", 0, 0, 1],
   validate: [function(e) {
     var t1 = $.get$validation();
@@ -2930,6 +2934,7 @@ var $$ = {};
     t1.forEach$1(t1, new D.clear_closure());
     t1 = $.operators;
     t1.clear$0(t1);
+    $.logMessages = "";
   }, "call$1", "clear$closure", 2, 0, 2],
   getMouseCoordinatesProportinalToCanvas: function(e) {
     var t1, t2, t3, t4, t5;
@@ -2970,13 +2975,48 @@ var $$ = {};
     else
       div.className = "inner hide";
   },
+  report: [function(e) {
+    var t1, t2;
+    t1 = $.get$reportModal();
+    t2 = J.get$classes$x(t1);
+    t2.add$1(t2, "in");
+    J.set$display$x(t1.style, "block");
+    $.get$reportModalBody().querySelector("#report_2").textContent = $.logMessages;
+    t1 = $.get$closeReportButton();
+    t1.toString;
+    t2 = C.EventStreamProvider_click._eventType;
+    t1 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new D.report_closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    t1 = $.get$sendReportButton();
+    t1.toString;
+    t2 = H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(t1, t2, false), [null]);
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t2._target, t2._eventType, W._wrapZone(new D.report_closure0()), t2._useCapture), [H.getTypeArgumentByIndex(t2, 0)])._tryResume$0();
+  }, "call$1", "report$closure", 2, 0, 2],
+  reportBug: function() {
+    var request, data, e, t1, exception, t2;
+    t1 = $.get$reportModalBody();
+    t1.querySelector("#report_3").textContent = "Sending bug report";
+    request = new XMLHttpRequest();
+    J.open$3$async$x(request, "POST", "https://api.sendgrid.com/api/mail.send.json", false);
+    data = "api_user=your_sendgrid_username&api_key=your_sendgrid_password&to=destination@example.com&toname=Destination&subject=Example_Subject&text=testingtextbody&from=info@domain.com";
+    try {
+      J.send$1$x(request, data);
+    } catch (exception) {
+      t2 = H.unwrapException(exception);
+      e = t2;
+      t1.querySelector("#report_3").textContent = J.toString$0(e);
+    }
+
+  },
   main_closure: {
     "": "Closure:16;messageList_0",
     call$1: function(rec) {
-      var t1, t2, newMessage, t3, t4;
+      var t1, t2, message, newMessage, t3, t4;
       t1 = rec.get$level().name + ": " + H.S(rec.get$time()) + ": ";
       t2 = rec.message;
-      P.print(t1 + t2);
+      message = t1 + t2;
+      P.print(message);
+      $.logMessages = $.logMessages + (message + "\n");
       if (rec.level.value > 800) {
         newMessage = document.createElement("li", null);
         newMessage.textContent = t2;
@@ -5843,6 +5883,19 @@ var $$ = {};
     call$1: function(message) {
       J.insertAdjacentHtml$2$x(this.messageList_1, "beforeend", "<dt>" + H.S(this.key_2) + "</dt><dd>" + H.S(message) + "</dd>");
       return;
+    }
+  },
+  report_closure: {
+    "": "Closure:14;",
+    call$1: function(e) {
+      J.set$display$x($.get$reportModal().style, "none");
+      return "none";
+    }
+  },
+  report_closure0: {
+    "": "Closure:14;",
+    call$1: function(e) {
+      return D.reportBug();
     }
   }
 },
@@ -9313,7 +9366,7 @@ var $$ = {};
     static: {"": "ListQueue__INITIAL_CAPACITY"}
   },
   _ListQueueIterator: {
-    "": "Object;_queue,_end,_modificationCount,_position,_collection$_current",
+    "": "Object;_queue,_end,_modificationCount,_collection$_position,_collection$_current",
     get$current: function() {
       return this._collection$_current;
     },
@@ -9322,7 +9375,7 @@ var $$ = {};
       t1 = this._queue;
       if (this._modificationCount !== t1._modificationCount)
         H.throwExpression(P.ConcurrentModificationError$(t1));
-      t2 = this._position;
+      t2 = this._collection$_position;
       if (t2 === this._end) {
         this._collection$_current = null;
         return false;
@@ -9332,7 +9385,7 @@ var $$ = {};
       if (t2 >= t3)
         return H.ioore(t1, t2);
       this._collection$_current = t1[t2];
-      this._position = (t2 + 1 & t3 - 1) >>> 0;
+      this._collection$_position = (t2 + 1 & t3 - 1) >>> 0;
       return true;
     }
   }
@@ -9917,7 +9970,7 @@ var $$ = {};
   HtmlElement: {
     "": "Element;",
     $isHtmlElement: true,
-    "%": "HTMLAppletElement|HTMLBRElement|HTMLBaseFontElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"
+    "%": "HTMLAppletElement|HTMLBRElement|HTMLBaseFontElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDirectoryElement|HTMLFontElement|HTMLFrameElement|HTMLFrameSetElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"
   },
   AnchorElement: {
     "": "HtmlElement;hostname=,href},port=,protocol=,target=,type%",
@@ -9984,6 +10037,20 @@ var $$ = {};
   DataListElement: {
     "": "HtmlElement;options=",
     "%": "HTMLDataListElement"
+  },
+  DetailsElement: {
+    "": "HtmlElement;",
+    open$3$async: function($receiver, arg0, arg1, arg2) {
+      return this.open.call$3$async(arg0, arg1, arg2);
+    },
+    "%": "HTMLDetailsElement"
+  },
+  DialogElement: {
+    "": "HtmlElement;",
+    open$3$async: function($receiver, arg0, arg1, arg2) {
+      return this.open.call$3$async(arg0, arg1, arg2);
+    },
+    "%": "HTMLDialogElement"
   },
   DivElement: {
     "": "HtmlElement;",
@@ -10257,6 +10324,23 @@ var $$ = {};
   HtmlDocument: {
     "": "Document;body=",
     "%": "HTMLDocument"
+  },
+  HttpRequest: {
+    "": "HttpRequestEventTarget;",
+    open$5$async$password$user: function(receiver, method, url, async, password, user) {
+      return receiver.open(method, url, async, user, password);
+    },
+    open$3$async: function($receiver, method, url, async) {
+      return $receiver.open(method, url, async);
+    },
+    send$1: function(receiver, data) {
+      return receiver.send(data);
+    },
+    "%": "XMLHttpRequest"
+  },
+  HttpRequestEventTarget: {
+    "": "EventTarget;",
+    "%": ";XMLHttpRequestEventTarget"
   },
   IFrameElement: {
     "": "HtmlElement;name%",
@@ -11494,10 +11578,10 @@ var $$ = {};
     }
   },
   FixedSizeListIterator: {
-    "": "Object;_array,_html$_length,_html$_position,_html$_current",
+    "": "Object;_array,_html$_length,_position,_html$_current",
     moveNext$0: function() {
       var t1, nextPosition;
-      t1 = this._html$_position;
+      t1 = this._position;
       if (typeof t1 !== "number")
         return t1.$add();
       nextPosition = t1 + 1;
@@ -11506,11 +11590,11 @@ var $$ = {};
         return H.iae(t1);
       if (nextPosition < t1) {
         this._html$_current = J.$index$asx(this._array, nextPosition);
-        this._html$_position = nextPosition;
+        this._position = nextPosition;
         return true;
       }
       this._html$_current = null;
-      this._html$_position = t1;
+      this._position = t1;
       return false;
     },
     get$current: function() {
@@ -12987,6 +13071,9 @@ J.insertAdjacentHtml$2$x = function(receiver, a0, a1) {
 J.insertAdjacentText$2$x = function(receiver, a0, a1) {
   return J.getInterceptor$x(receiver).insertAdjacentText$2(receiver, a0, a1);
 };
+J.open$3$async$x = function(receiver, a0, a1, a2) {
+  return J.getInterceptor$x(receiver).open$3$async(receiver, a0, a1, a2);
+};
 J.preventDefault$0$x = function(receiver) {
   return J.getInterceptor$x(receiver).preventDefault$0(receiver);
 };
@@ -13259,6 +13346,7 @@ $.SelectionDetails_count = 1;
 $.SortDetails_count = 1;
 $.SplitDetails_count = 1;
 $.selectedPort = null;
+$.logMessages = "";
 $.printToZone = null;
 $._callbacksAreEnqueued = false;
 $.Zone__current = C.C__RootZone;
@@ -13398,6 +13486,18 @@ Isolate.$lazy($, "validationModalBody", "validationModalBody", "get$validationMo
 });
 Isolate.$lazy($, "closeValidationButton", "closeValidationButton", "get$closeValidationButton", function() {
   return $.get$validationModal().querySelector(".modal-footer #close_validation_modal");
+});
+Isolate.$lazy($, "reportModal", "reportModal", "get$reportModal", function() {
+  return document.querySelector("#report_modal");
+});
+Isolate.$lazy($, "reportModalBody", "reportModalBody", "get$reportModalBody", function() {
+  return $.get$reportModal().querySelector(".modal-content .modal-body");
+});
+Isolate.$lazy($, "sendReportButton", "sendReportButton", "get$sendReportButton", function() {
+  return $.get$reportModal().querySelector(".modal-footer #send_report_modal");
+});
+Isolate.$lazy($, "closeReportButton", "closeReportButton", "get$closeReportButton", function() {
+  return $.get$reportModal().querySelector(".modal-footer #close_report_modal");
 });
 Isolate.$lazy($, "isFirefox", "isFirefox", "get$isFirefox", function() {
   return J.contains$1$asx(window.navigator.userAgent, "Firefox");

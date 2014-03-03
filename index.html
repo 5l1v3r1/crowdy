@@ -30,7 +30,7 @@
               <ul class="list-inline">
                 <li><a href="#" id="validate">validate</a></li>
                 <li><a href="#" id="clear">clear</a></li>
-                <li><a href="#" id="clear">report bug</a></li>
+                <li><a href="#" id="report">report bug</a></li>
               </ul></dd>
           </dl>
         </div>
@@ -184,6 +184,31 @@
           <div class="modal-body"></div>
           <div class="modal-footer">
             <button type="button" id="close_validation_modal" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="report_modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header"><h4>Report a Bug</h4></div>
+          <div class="modal-body">
+            <div class="row">
+              <label for="report_1" class="col-sm-3 control-label">Message</label>
+              <div class="col-sm-9"><textarea rows="3" id="report_1" class="form-control"></textarea></div>
+            </div>
+             <div class="row">
+              <label for="report_2" class="col-sm-3 control-label">Log Messages</label>
+              <div class="col-sm-9"><textarea disabled="true" rows="3" id="report_2" class="form-control"></textarea></div>
+            </div>
+            <div class="row">
+              <p id="report_3"></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="send_report_modal" class="btn btn-default" data-dismiss="modal">Send</button>
+            <button type="button" id="close_report_modal" class="btn btn-default" data-dismiss="modal">Close</button>
          </div>
         </div>
       </div>

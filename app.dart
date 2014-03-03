@@ -27,7 +27,12 @@ void main() {
   var messageList = html.document.querySelector('div#bottom-panes div#messages ul');
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((LogRecord rec) {
-    print('${rec.level.name}: ${rec.time}: ${rec.message}');
+    String message = "${rec.level.name}: ${rec.time}: ${rec.message}";
+    print(message);
+
+    // Append log messages for bug reporting
+    logMessages += "${message}\n";
+
     if (rec.level.value > 800) {
       var newMessage = new html.LIElement();
       newMessage.text = rec.message;
@@ -42,6 +47,7 @@ void main() {
 
   html.document.querySelector('#validate').onClick.listen(validate);
   html.document.querySelector('#clear').onClick.listen(clear);
+  html.document.querySelector('#report').onClick.listen(report);
 }
 
 void validate(html.MouseEvent e) {
@@ -51,6 +57,8 @@ void validate(html.MouseEvent e) {
 void clear(html.MouseEvent e) {
   operators.forEach((id, operator) => operator.body.remove());
   operators.clear();
+
+  logMessages = "";
 
   /*String operatorId = 'operator_1';
   operators[operatorId] = app.addOperator(operatorId, 'source.manual', 100, 100);

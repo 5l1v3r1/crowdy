@@ -19,6 +19,7 @@ const OPERATOR_ICON_UNION = 'union.png';
 const OPERATOR_MODAL_ID = 'operator_modal';
 const HUMAN_MODAL_ID = 'human_modal';
 const VALIDATION_MODAL_ID = 'validation_modal';
+const REPORT_MODAL_ID = 'report_modal';
 
 const OPERATOR_OUTPUT_REFRESH = 'operator_output_refresh';
 
@@ -67,3 +68,8 @@ final closeHumanButton = humanModal.querySelector('.modal-footer #close_human_mo
 final html.DivElement validationModal = html.document.querySelector('#$VALIDATION_MODAL_ID');
 final html.DivElement validationModalBody = validationModal.querySelector('.modal-content .modal-body');
 final closeValidationButton = validationModal.querySelector('.modal-footer #close_validation_modal');
+
+final html.DivElement reportModal = html.document.querySelector('#$REPORT_MODAL_ID');
+final html.DivElement reportModalBody = reportModal.querySelector('.modal-content .modal-body');
+final sendReportButton = reportModal.querySelector('.modal-footer #send_report_modal');
+final closeReportButton = reportModal.querySelector('.modal-footer #close_report_modal');

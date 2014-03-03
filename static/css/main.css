@@ -452,6 +452,7 @@ section > svg#app_container > defs > marker#flow_marker:hover {
    user-select: none;
 }
 
+#report_modal > .modal-dialog > .modal-content > .modal-body > div .row,
 #operator_modal > .modal-dialog > .modal-content > .modal-body > div .row {
   margin-bottom: 5px;
 }
