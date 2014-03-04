@@ -81,7 +81,7 @@ void reportBug() {
 
   String data = "message=${Uri.encodeQueryComponent((reportModalBody.querySelector('#report_1') as html.TextAreaElement).value)}";
   data += "&log=${Uri.encodeQueryComponent(reportModalBody.querySelector('#report_2').text)}";
-  reportModalBody.querySelector('#report_3').text = data; //"Sending bug report";
+  reportModalBody.querySelector('#report_3').text = data;
 
   try {
     request.send(data);
