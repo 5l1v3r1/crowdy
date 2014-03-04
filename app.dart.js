@@ -2997,8 +2997,8 @@ var $$ = {};
     t1 = $.get$reportModalBody();
     t1.querySelector("#report_3").textContent = "Sending bug report";
     request = new XMLHttpRequest();
-    J.open$3$async$x(request, "POST", "https://api.sendgrid.com/api/mail.send.json", false);
-    data = "api_user=your_sendgrid_username&api_key=your_sendgrid_password&to=destination@example.com&toname=Destination&subject=Example_Subject&text=testingtextbody&from=info@domain.com";
+    J.open$3$async$x(request, "POST", "/report", false);
+    data = "message=" + t1.querySelector("#report_1").textContent + "&log=" + t1.querySelector("#report_2").textContent;
     try {
       J.send$1$x(request, data);
     } catch (exception) {

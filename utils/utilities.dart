@@ -75,13 +75,13 @@ void report(html.MouseEvent e) {
 }
 
 void reportBug() {
-  reportModalBody.querySelector('#report_3').text = "Sending bug report";
-
-  var url = "https://api.sendgrid.com/api/mail.send.json";
+  var url = "/report";
   html.HttpRequest request = new html.HttpRequest();
   request.open("POST", url, async: false);
 
-  String data = "api_user=your_sendgrid_username&api_key=your_sendgrid_password&to=destination@example.com&toname=Destination&subject=Example_Subject&text=testingtextbody&from=info@domain.com";
+  String data = "message=${Uri.encodeQueryComponent((reportModalBody.querySelector('#report_1') as html.TextAreaElement).value)}";
+  data += "&log=${Uri.encodeQueryComponent(reportModalBody.querySelector('#report_2').text)}";
+  reportModalBody.querySelector('#report_3').text = data; //"Sending bug report";
 
   try {
     request.send(data);
