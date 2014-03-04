@@ -1,0 +1,490 @@
+body {
+	background: #efefef;
+}
+
+.form-control,
+.form-control:focus,
+.btn {
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-control.has-error {
+  border-color: #a94442;
+}
+
+.form-control.has-warning {
+  border-color: #8a6d3b;
+}
+
+select.form-control.input-xs {
+  display: inline;
+  max-width: 125px;
+  height: 20px;
+  line-height: 20px;
+}
+
+input.form-control.input-xs {
+  max-width: 49.5%;
+  float: left;
+  margin-left: 5px;
+}
+
+input.form-control.input-xs:first-child {
+  margin-left: 0;
+}
+
+select {
+  border-radius: 0;
+}
+
+textarea.form-control {
+  max-width: 100%;
+}
+
+div[contenteditable="true"] {
+  width: 100%;
+  min-height: 80px;
+  max-height: 180px;
+  overflow-y: scroll;
+}
+
+div.rule label {
+  font-weight: normal;
+  margin-left: 5px;
+}
+
+div.rule select {
+  max-width: 120px;
+}
+
+h4 > span > small,
+h4 > button {
+  margin-left: 10px;
+}
+
+span.segment-tag,
+span[contenteditable="true"],
+span[contenteditable="false"],
+#operator_modal > .modal-dialog > .modal-content > .modal-body ul.segments > li > span[draggable] {
+  background-color: #E0EAF1;
+  border-bottom: 1px solid #b3cee1;
+  border-right: 1px solid #b3cee1;
+  padding: 3px 4px 3px 4px;
+  margin: 2px 2px 2px 0;
+  text-decoration: none;
+}
+
+span[contenteditable="true"]:hover,
+span[contenteditable="true"]:focus {
+  background: #FAFDFF;
+}
+
+span[contenteditable="false"]:hover,
+span[contenteditable="false"]:focus {
+  background: #B9C4CC;
+}
+
+span.segment-remove {
+  cursor: pointer;
+  margin: 0 2px;
+  background: #eee;
+  color: #aaa;
+}
+
+/*
+ * NAVIGATION
+ */
+
+/*
+ * FLOW COMPOSITION
+ */
+div.container > div.row > div.section {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+div.container > div.row > div.section.main {
+	border-bottom: 1px solid #e9e9e9;
+}
+
+div.container > div.row > div.section.main > section > svg {
+	background: #fff;
+	overflow: scroll;
+}
+
+div.container > div.row > div.section.side {
+	background: #f7f7f7;
+}
+
+div.container > div.row > div.section.side > div.row {
+	margin: 0;
+}
+
+div.container > div.row > div.section > p.section_header,
+div.container > div.row > div.section.side > div.row > p.section_header {
+	margin: 0;
+	padding-top: 5px;
+	padding-left: 5px;
+	background: #eee;
+	color: white;
+	font-weight: 500;
+	font-size: 1em;
+	border-bottom: 2px solid #4c4d4f;
+}
+
+div.container > div.row > div.section > p.section_header > span,
+div.container > div.row > div.section.side > div.row > p.section_header > span {
+  padding: 4px 8px;
+  margin: 0;
+  background: #4c4d4f;
+  -webkit-box-shadow: 1px -1px 0px #999;
+  -moz-box-shadow: 1px -1px 0px #999;
+  box-shadow: 1px -1px 0px #999;
+}
+
+div.container > div.row > div.section.side > div#details {
+	height: 475px;
+}
+
+div.container > div.row > div.section.side > div#messages {
+	height: 165px;
+	overflow-y: scroll;
+}
+
+div.container > div.row > div.section.side > div.row > ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+div.container > div.row > div.section.side > div#details > ul {
+	height: 435px;
+	overflow: scroll;
+}
+
+div.container > div.row > div.section.side > div#details > ul > li {
+	padding: 5px 5px;
+}
+
+div.container > div.row > div.section.side > div#messages > ul {
+	height: 125px;
+	overflow: scroll;
+}
+
+div.container > div.row > div.section.side > div#messages > ul > li {
+	padding: 5px 5px;
+	background: #fefefe;
+	border-bottom: 1px solid #d8d8d8;
+	font-size: 0.8em;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel {
+	margin: 0;
+	padding: 0;
+	-webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+	border: none;
+	border-bottom: 1px solid #e9e9e9;
+	background: #fcfcfc;
+	color: #4c4d4f;
+	font-weight: 300;
+	font-size: 1em;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel:last-child {
+	border-bottom: none;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel:hover {
+	background: #f7f7f7;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-heading {
+	padding: 0;
+	border: none;
+	-moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-heading > h4.panel-title > a {
+	display: block;
+	padding: 10px 10px;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body {
+	border: none;
+	padding: 5px 10px;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body .tooltip-inner {
+	min-width: 150px;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body > ul.units {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body > ul.units > li {
+	padding: 4px 8px;
+	background: #fefefe;
+	border: 1px solid #d8d8d8;
+	color: #4c4d4f;
+	font-weight: 300;
+	margin-bottom: 5px;
+	font-size: 0.9em;
+	-webkit-transition: -webkit-transform 0.2s ease-out;
+  -moz-transition: -moz-transform 0.2s ease-out;
+  -ms-transition: -moz-transform 0.2s ease-out;
+  transition: transform 0.2s ease-out;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body > ul.units > li[draggable]:before {
+  content: "::";  
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body > ul.units > li[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body > ul.units > li.moving {
+  opacity: 0.25;
+  -webkit-transform: scale(0.9);
+  -moz-transform: scale(0.9);
+  -ms-transform: scale(0.9);
+  transform: scale(0.9);
+}
+
+div.container > div.row > div.section.side > div.panel-group > div.panel > div.panel-collapse > div.panel-body > ul.units > li:hover {
+	cursor: move;
+}
+
+div.container > div.row > div.section.side > ul.nav.nav-tabs {
+  border-bottom: 2px solid #4c4d4f;
+  padding-left: 5px
+}
+
+div.container > div.row > div.section.side > ul.nav.nav-tabs > li {
+  margin-bottom: 0;
+  margin-right: 5px;
+}
+
+div.container > div.row > div.section.side > ul.nav.nav-tabs > li > a {
+  padding: 5px;
+  background: #eee;
+  font-weight: 500;
+  font-size: 1em;
+  line-height: 1em;
+  border: none;
+  border-radius: 0;
+  color: #333;
+  -webkit-box-shadow: 1px -1px 0px #999;
+  -moz-box-shadow: 1px -1px 0px #999;
+  box-shadow: 1px -1px 0px #999;
+}
+
+div.container > div.row > div.section.side > ul.nav.nav-tabs > li.active > a {
+  color: white;
+  background: #4c4d4f;
+}
+
+div.container > div.row > div.section.side > ul.nav.nav-tabs > li > a > span {
+  padding: 0 5px;
+}
+
+div.container > div.row > div.section.side > div#bottom-panes > div {
+  height: 150px;
+  overflow: scroll;
+}
+
+div.container > div.row > div.section.side > div#bottom-panes > div#messages > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+div.container > div.row > div.section.side > div#bottom-panes > div#messages > ul > li {
+  padding: 5px 5px;
+  background: #fefefe;
+  border-bottom: 1px solid #d8d8d8;
+  font-size: 0.8em;
+}
+
+/*
+ * SVG RELATED DESIGN
+ */ 
+section > svg#app_container > g {
+  fill-opacity: 0.95;
+}
+
+section > svg#app_container > g > rect.processing_body {
+  fill: #f2f2f2;
+  stroke: #dadada;
+}
+
+section > svg#app_container > g.selected > rect.processing_body {
+  stroke: #4c4d4f;
+}
+
+section > svg#app_container > g:hover > rect.processing_body {
+  fill: #e6e6e6;
+}
+
+section > svg#app_container > g > rect.port {
+  fill: #dadada;
+  stroke: #dadada;
+}
+
+section > svg#app_container > g > rect.port.selected {
+  fill: #ababab;
+}
+
+section > svg#app_container > g > rect.port:hover,
+section > svg#app_container > g > rect.port.selected:hover {
+  cursor: pointer;
+}
+
+section > svg#app_container > g:hover > image:hover,
+section > svg#app_container > g:hover > rect.processing_body:hover {
+  cursor: move;
+}
+
+section > svg#app_container > path {
+  stroke: #dadada;
+  marker-mid: url(#flow_marker);
+}
+
+section > svg#app_container > path:hover {
+  cursor: pointer;
+}
+
+section > svg#app_container > path.selected,
+section > svg#app_container > path:hover {
+  stroke: #ababab;
+}
+
+section > svg#app_container > defs > marker#flow_marker {
+  fill: #dadada;
+}
+
+section > svg#app_container > defs > marker#flow_marker:hover {
+  fill: #ababab;
+}
+
+/*
+ * OPERATOR DETAILS MODAL
+ */
+.modal.fade.in {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal > .modal-dialog {
+  width: 80%;
+  max-width: 800px;
+  /*height: 100%;*/
+  margin: 10px auto;
+  padding: 0;
+}
+
+.modal > .modal-dialog > .modal-content {
+  /*height: 100%;*/
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  /*overflow: hidden;*/
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-header {
+  border-bottom: none;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-header .alert {
+  margin-bottom: 0;
+  display: none;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body {
+  padding-top: 0; 
+  /*overflow: scroll;*/ 
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body div.inner.hide {
+  height: 0px;
+  overflow: hidden;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body hr {
+  margin-top: 0;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body h4.margin-top {
+  margin-top: 40px;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body label {
+  margin-top: 5px;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body h4.details-title {
+  cursor: pointer;
+  
+  -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}
+
+#report_modal > .modal-dialog > .modal-content > .modal-body > .row,
+#operator_modal > .modal-dialog > .modal-content > .modal-body > div .row {
+  margin-bottom: 5px;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body ul.segments > li > span {
+  padding: 2px;
+  background: #ddd;
+  border: 1px solid #d8d8d8;
+  color: #4c4d4f;
+  font-weight: 300;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body ul.segments > li > span[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body .output-specification ul.segment-list > li {
+  margin-bottom: 5px;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-body .output-specification ul.segment-list > li > span.example {
+  margin-left: 25px;
+  font-style: italic;
+  color: #aaa;
+}
+
+#operator_modal > .modal-dialog > .modal-content > .modal-footer {
+  /*position: absolute;
+  bottom: 0;
+  width: 100%;*/
+  background: #fff;
+}
