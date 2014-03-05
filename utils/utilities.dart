@@ -23,14 +23,8 @@ dynamic getMouseCoordinatesProportinalToCanvas(html.MouseEvent e) {
 
 void _editableKeyPressed(html.KeyboardEvent e, bool editable) {
   html.SpanElement target = e.target;
-  int charCode = e.charCode > 0 ? e.charCode : e.keyCode > 0 ? e.keyCode : e.which > 0 ? e.which : 0;
-  bool isAlphaNumeric = charCode > 31 &&
-      ((charCode >= 48 && charCode <= 57) ||
-          (charCode >= 65 && charCode <= 90) ||
-          (charCode >= 97 && charCode <= 122));
-  bool isMinus = e.keyCode == 109 || e.keyCode == 189;
-  bool isBackspace = e.keyCode == 8;
-  if(!isBackspace && (!(isAlphaNumeric || isMinus) || (target.text.length > 31))) {
+
+  if(!isBackspacePressed(e) && (!(isAlphaNumericPressed(e) || isDashPressed(e)) || (target.text.length > 31))) {
     e.preventDefault();
   }
 }
@@ -58,6 +52,29 @@ void _triggerDetails(html.DivElement div) {
 }
 
 bool isFirefox = html.window.navigator.userAgent.contains("Firefox");
+bool isIE = html.window.navigator.userAgent.contains("Microsoft");
+
+bool isModalActive = html.document.querySelector(".modal").style.display == 'block';
+
+int getCharCode(html.KeyboardEvent e) {
+  return e.charCode > 0 ? e.charCode : e.keyCode > 0 ? e.keyCode : e.which > 0 ? e.which : 0;
+}
+
+bool isAlphaNumericPressed(html.KeyboardEvent e) {
+  int charCode = getCharCode(e);
+  return charCode > 31 &&
+      ((charCode >= 48 && charCode <= 57) ||
+          (charCode >= 65 && charCode <= 90) ||
+          (charCode >= 97 && charCode <= 122));
+}
+
+bool isDashPressed(html.KeyboardEvent e) {
+  return e.keyCode == 109 || e.keyCode == 189;
+}
+
+bool isBackspacePressed(html.KeyboardEvent e) {
+  return e.keyCode == 8 || e.keyCode == 45;
+}
 
 
 /*
@@ -76,15 +93,19 @@ void report(html.MouseEvent e) {
 
 void reportBug() {
   var url = "/report";
-  html.HttpRequest request = new html.HttpRequest();
-  request.open("POST", url, async: false);
-
-  String data = "message=${Uri.encodeQueryComponent((reportModalBody.querySelector('#report_1') as html.TextAreaElement).value)}";
-  data += "&log=${Uri.encodeQueryComponent(reportModalBody.querySelector('#report_2').text)}";
-  reportModalBody.querySelector('#report_3').text = data;
+  url += "/${Uri.encodeQueryComponent((reportModalBody.querySelector('#report_1') as html.TextAreaElement).value)}";
+  url += "/${Uri.encodeQueryComponent(reportModalBody.querySelector('#report_2').text)}";
 
   try {
-    request.send(data);
+    html.HttpRequest.getString(url).then((response) {
+      reportModalBody.querySelector('#report_3').text = response;
+      if (response == "success") {
+        html.document.querySelector('#clear').click();
+        reportModalBody.querySelector('#report_1').text = "";
+        reportModalBody.querySelector('#report_2').text = "";
+        reportModalBody.querySelector('#report_3').text = "";
+      }
+    });
   }
   catch(e) {
     reportModalBody.querySelector('#report_3').text = e.toString();

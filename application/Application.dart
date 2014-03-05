@@ -71,7 +71,7 @@ class Application extends Object {
     _dragSource.classes.add('moving');
     e.dataTransfer.effectAllowed = 'move';
 
-    if (isFirefox) {
+    if (isFirefox || isIE) {
       e.dataTransfer.setData('text/plain', 'God damn Firefox!');
     }
   }

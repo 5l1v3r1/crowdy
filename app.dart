@@ -47,6 +47,7 @@ void main() {
   html.document.querySelector('#validate').onClick.listen(validate);
   html.document.querySelector('#clear').onClick.listen(clear);
   html.document.querySelector('#report').onClick.listen(report);
+  html.document.onKeyDown.listen(_onKeyDown);
 }
 
 void validate(html.MouseEvent e) {
@@ -57,6 +58,7 @@ void clear(html.MouseEvent e) {
   operators.forEach((id, operator) => operator.body.remove());
   operators.clear();
 
+  opNumber = 1;
   logMessages = "";
 
   /*String operatorId = 'operator_1';
@@ -88,4 +90,15 @@ void clear(html.MouseEvent e) {
   var op3 = operators['operator_3'] as SinkFileOperator;
   canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op1.ui.outputPort, op2.ui.inputPort]));
   canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op2.ui.outputPort, op3.ui.inputPort]));*/
+}
+
+void _onKeyDown(html.KeyboardEvent e) {
+  if (e.target is html.BodyElement && isBackspacePressed(e) && !isModalActive) {
+    e.preventDefault();
+
+    if (selectedOperator != null) {
+      canvas.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE, detail: selectedOperator.id));
+      selectedOperator.remove();
+    }
+  }
 }

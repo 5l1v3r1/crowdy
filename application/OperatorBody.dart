@@ -28,8 +28,6 @@ class BaseOperatorBody {
     ..append(this.body);
 
     this.dragging = false;
-
-    html.document.onKeyDown.listen(_onKeyDown);
   }
 
   void initialize() {
@@ -88,17 +86,6 @@ class BaseOperatorBody {
 
     canvas.onMouseMove.listen(_moveStarted).cancel();
     canvas.onMouseUp.listen(_moveCompleted).cancel();
-  }
-
-  void _onKeyDown(html.KeyboardEvent e) {
-    if (e.keyCode == 8 && modal.style.display != 'block') {
-      e.preventDefault();
-
-      if (selectedOperator == this) {
-        this.remove();
-        canvas.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE, detail: this.id));
-      }
-    }
   }
 
   void remove() {

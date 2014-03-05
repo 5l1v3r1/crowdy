@@ -9,7 +9,7 @@ class ElementUI {
   ElementUI(String this.id, String this.type, String description, bool this.required,
       {Map<String, String> attributes: null, List<String> options: null}) {
     this.label = new html.LabelElement()
-    ..text = description
+    ..text = this.required ? "${description}*" : description
     ..htmlFor = this.id
     ..className = 'col-sm-3 control-label';
 
@@ -432,19 +432,27 @@ class HumanDetails extends SourceDetails {
       if (isFirefox) {
         List<String> options = sourceElement.innerHtml
             .replaceAll('<div>', '').replaceAll('</div>', '').replaceAll('</br>', '').split('<br>');
-          options.forEach((e) => humanModalBody.append(new html.DivElement()
-          ..className = 'radio'
-          ..append(new html.LabelElement()
-          ..append(new html.InputElement(type: inputType)..name = name)
-            ..appendText(e))));
+        for(String option in options) {
+          if (option.length > 0) {
+            humanModalBody.append(new html.DivElement()
+                      ..className = 'radio'
+                      ..append(new html.LabelElement()
+                      ..append(new html.InputElement(type: inputType)..name = name)
+                        ..appendText(option)));
+          }
+        }
       }
       else {
         List<html.Element> options = sourceElement.children;
-        options.forEach((e) => humanModalBody.append(new html.DivElement()
-        ..className = 'radio'
-        ..append(new html.LabelElement()
-        ..append(new html.InputElement(type: inputType)..name = name)
-          ..appendText(e.text))));
+        for(html.Element element in options) {
+          if (element.text.length > 0) {
+            humanModalBody.append(new html.DivElement()
+                      ..className = 'radio'
+                      ..append(new html.LabelElement()
+                      ..append(new html.InputElement(type: inputType)..name = name)
+                        ..appendText(element.text)));
+          }
+        }
       }
     }
   }
@@ -539,6 +547,7 @@ class HumanDetails extends SourceDetails {
         ..className = 'segment-tag'
         ..append(new html.SpanElement()
           ..text = segmentValue
+          ..contentEditable = 'false'
           ..className = 'segment-name')
         ..append(
           new html.SpanElement()
