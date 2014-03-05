@@ -2243,7 +2243,7 @@ y.setAttributeNS("http://www.w3.org/1999/xlink","href","static/img/"+a)
 x=J.GW(y)
 H.VM(new W.xC(0,x.uv,x.Ph,W.VF(this.gxU()),x.Sg),[H.Kp(x,0)]).Zz()
 z.appendChild(y)},
-F0:function(a,b,c,d,e){var z,y,x
+F0:function(a,b,c,d,e){var z,y,x,w
 z=this.R
 if(typeof b!=="number")return b.W()
 this.x=b-z/2
@@ -2264,6 +2264,9 @@ H.VM(new W.xC(0,y.uv,y.Ph,W.VF(this.gec()),y.Sg),[H.Kp(y,0)]).Zz()
 this.GS=x
 x=document.createElementNS("http://www.w3.org/2000/svg","g")
 x.setAttribute("id",this.jO)
+w=document.createElementNS("http://www.w3.org/2000/svg","desc")
+w.textContent=this.jO
+x.appendChild(w)
 x.appendChild(this.GS)
 this.IU=x
 this.b3=!1}},
@@ -2530,7 +2533,15 @@ z.toString
 J.i4($.dg().t(0,"ERROR"),y)}}},
 DZ:{
 "^":"la;",
-SK:function(a){return this.dv.SK(a.P9)}},
+SK:function(a){return this.dv.SK(a.P9)},
+ln:function(){var z,y
+if(this.dv.P9.hr>0){z=J.q8($.OP.t(0,this.jO).gaw())
+if(typeof z!=="number")return z.C()
+z=z<1}else z=!1
+if(z){z=$.q4()
+y=this.jO+" has no outgoing flow although it has incoming flow."
+z.toString
+J.i4($.dg().t(0,"ERROR"),y)}}},
 rT:{
 "^":"DZ;",
 eQ:function(a){var z,y
@@ -2554,7 +2565,7 @@ J.OG(this.X2).V1(0)
 return!0}return z},
 en:[function(a){},"call$1","gpM",2,0,2],
 ln:function(){var z,y
-D.la.prototype.ln.call(this)
+D.DZ.prototype.ln.call(this)
 if(J.q8(H.HD($.OP.t(0,this.jO).gOg().t(0,"rules"),"$isList",[J.O],"$asWO"))===0){z=$.q4()
 y=this.jO+" of type "+this.t5+" has no rules."
 z.toString
@@ -2912,7 +2923,7 @@ pf:{
 "^":"Tp:14;a",
 call$1:function(a){return this.a.n6()}},
 jc:{
-"^":"la;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"Kz;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.la.prototype.eQ.call(this,this)
 this.qO("webpage","url","Feed URL",!0,this.P9)}},
 Wm:{
@@ -3222,7 +3233,10 @@ if(w>31)if(!(w>=48&&w<=57))if(!(w>=65&&w<=90))x=w>=97&&w<=122
 else x=!0
 else x=!0
 else x=!1
-z=!(x||z===109||a.keyCode===189)||J.nJ(y).length>31}else z=!1
+if(!x)if(z!==189)z=$.k0()===!0&&a.keyCode===173
+else z=!0
+else z=!0
+z=!z||J.nJ(y).length>31}else z=!1
 if(z)a.preventDefault()
 return}},
 kh:{
