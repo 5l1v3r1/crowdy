@@ -2219,7 +2219,8 @@ z=J.AL($.qN)
 z=H.VM(new W.xC(0,z.uv,z.Ph,W.VF(this.gDn()),z.Sg),[H.Kp(z,0)])
 z.Zz()
 z.ed()},"call$1","gDn",2,0,2],
-hv:[function(a){if(J.Kt(a)===8&&J.uz($.aw().style)!=="block"){a.preventDefault()
+hv:[function(a){if((J.Kt(a)===8||a.keyCode===45)&&$.dc()!==!0){P.JS("Prevent default")
+a.preventDefault()
 if($.FJ===this){this.wg(0)
 $.qN.dispatchEvent(W.K1("stream_unit_removed",!0,!0,this.jO))}}},"call$1","gbF",2,0,3],
 wg:function(a){J.OG($.qN).Rz(0,this.IU)
@@ -2316,7 +2317,7 @@ return y},
 pa:function(){this.J9.className="form-control"},
 WP:function(a,b,c,d,e,f){var z,y,x
 z=document.createElement("label",null)
-z.textContent=c
+z.textContent=this.nh?c+"*":c
 J.Yt(z,this.jO)
 z.className="col-sm-3 control-label"
 this.ph=z
@@ -3200,27 +3201,25 @@ call$1:function(a){J.Mp(this.a.F3)
 return}},
 QO:{
 "^":"Tp:14;b",
-call$1:function(a){var z,y,x,w,v
+call$1:function(a){var z,y,x,w
 z=J.RE(a)
 y=z.gN(a)
-z=z.gE9(a)
-if(typeof z!=="number")return z.D()
-if(z>0)x=a.charCode
-else{z=a.keyCode
-if(typeof z!=="number")return z.D()
-if(z>0)x=z
-else{z=a.which
-if(typeof z!=="number")return z.D()
-if(z>0);else z=0
-x=z}}if(typeof x!=="number")return x.D()
-if(x>31)if(!(x>=48&&x<=57)){if(!(x>=65&&x<=90))z=x>=97&&x<=122
-else z=!0
-w=z}else w=!0
-else w=!1
-z=a.keyCode
-v=z===109||z===189
-if(z!==8)z=!(w||v)||J.nJ(y).length>31
-else z=!1
+z=z.gIG(a)
+if(!(z===8||a.keyCode===45)){x=C.G8.gE9(a)
+if(typeof x!=="number")return x.D()
+if(x>0)w=a.charCode
+else{x=a.keyCode
+if(typeof x!=="number")return x.D()
+if(x>0)w=x
+else{x=a.which
+if(typeof x!=="number")return x.D()
+if(x>0);else x=0
+w=x}}if(typeof w!=="number")return w.D()
+if(w>31)if(!(w>=48&&w<=57))if(!(w>=65&&w<=90))x=w>=97&&w<=122
+else x=!0
+else x=!0
+else x=!1
+z=!(x||z===109||a.keyCode===189)||J.nJ(y).length>31}else z=!1
 if(z)a.preventDefault()
 return}},
 kh:{
@@ -7471,6 +7470,7 @@ C.hQ=function(hooks) {
   hooks.getTag = getTagFixed;
   hooks.prototypeForTag = prototypeForTagFixed;
 }
+C.G8=W.HL.prototype
 C.dW=new N.qV("ALL",0)
 C.IF=new N.qV("INFO",800)
 C.nT=new N.qV("WARNING",900)
@@ -7596,6 +7596,7 @@ I.$lazy($,"reportModalBody","b1","H9",function(){return $.Nd().querySelector(".m
 I.$lazy($,"sendReportButton","Dd","n6",function(){return $.Nd().querySelector(".modal-footer #send_report_modal")})
 I.$lazy($,"closeReportButton","ud","AY",function(){return $.Nd().querySelector(".modal-footer #close_report_modal")})
 I.$lazy($,"isFirefox","Hq","k0",function(){return J.kE(window.navigator.userAgent,"Firefox")})
+I.$lazy($,"isModalActive","yV","dc",function(){return J.uz(document.querySelector(".modal").style)==="block"})
 I.$lazy($,"_toStringList","Ml","RM",function(){return[]})
 I.$lazy($,"_toStringVisiting","xg","xb",function(){return P.zM(null)})
 I.$lazy($,"_toStringList","yu","tw",function(){return[]})
