@@ -69,7 +69,7 @@ bool isAlphaNumericPressed(html.KeyboardEvent e) {
 }
 
 bool isDashPressed(html.KeyboardEvent e) {
-  return e.keyCode == 109 || e.keyCode == 189;
+  return e.keyCode == 189 || (isFirefox && e.keyCode == 173);
 }
 
 bool isBackspacePressed(html.KeyboardEvent e) {

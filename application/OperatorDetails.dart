@@ -295,6 +295,12 @@ class OutputDetails extends BaseDetails {
   bool refresh(OutputSpecification specification) {
     return (this.output as OutputSpecification).refresh(specification.elements);
   }
+
+  void validate() {
+    if (this.output.elements.length > 0 && operators[this.id].next.length < 1) {
+      validation.error("${this.id} has no outgoing flow although it has incoming flow.");
+    }
+  }
 }
 
 class RuleDetails extends OutputDetails {
@@ -699,7 +705,7 @@ class SourceManualDetails extends SourceDetails {
   }
 }
 
-class SourceRSSDetails extends BaseDetails {
+class SourceRSSDetails extends SourceDetails {
 
   SourceRSSDetails(String id, String type, Map<String, bool> prevConn, Map<String, bool> nextConn) : super(id, type, prevConn, nextConn) {
 

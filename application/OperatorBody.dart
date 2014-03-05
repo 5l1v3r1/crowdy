@@ -24,7 +24,8 @@ class BaseOperatorBody {
     ..onMouseEnter.listen(_onMouseEnter);
 
     this.group = new svg.GElement()
-    ..setAttribute('id', '${id}')
+    ..setAttribute('id', id)
+    ..append(new svg.DescElement()..text = id)
     ..append(this.body);
 
     this.dragging = false;
