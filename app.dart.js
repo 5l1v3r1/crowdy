@@ -1693,7 +1693,7 @@ $.ua=y
 y.toString
 new W.I4(y).h(0,"moving")
 z.gtv(a).effectAllowed="move"
-if($.k0()===!0)a.dataTransfer.setData("text/plain","God damn Firefox!")},"call$1","gOZ",2,0,2],
+if($.k0()===!0||$.oD()===!0)a.dataTransfer.setData("text/plain","God damn Firefox!")},"call$1","gOZ",2,0,2],
 r9:[function(a){var z=$.ua
 z.toString
 new W.I4(z).Rz(0,"moving")},"call$1","gQl",2,0,2],
@@ -7601,6 +7601,7 @@ I.$lazy($,"reportModalBody","b1","H9",function(){return $.Nd().querySelector(".m
 I.$lazy($,"sendReportButton","Dd","n6",function(){return $.Nd().querySelector(".modal-footer #send_report_modal")})
 I.$lazy($,"closeReportButton","za","Im",function(){return $.Nd().querySelector(".modal-footer #close_report_modal")})
 I.$lazy($,"isFirefox","Hq","k0",function(){return J.kE(window.navigator.userAgent,"Firefox")})
+I.$lazy($,"isIE","hI","oD",function(){return J.kE(window.navigator.userAgent,"Microsoft")})
 I.$lazy($,"isModalActive","yV","dc",function(){return J.uz(document.querySelector(".modal").style)==="block"})
 I.$lazy($,"_toStringList","Ml","RM",function(){return[]})
 I.$lazy($,"_toStringVisiting","xg","xb",function(){return P.zM(null)})
