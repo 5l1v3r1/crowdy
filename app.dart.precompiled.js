@@ -1596,8 +1596,13 @@ fu:[function(a){$.q4().wE(0)},"call$1","ZT",2,0,2],
 yP:[function(a){$.OP.aN(0,new D.zY())
 $.OP.V1(0)
 $.kB=""},"call$1","K4",2,0,2],
-px:[function(a){var z
-if((J.Zm(a)===8||a.keyCode===45)&&$.dc()!==!0){a.preventDefault()
+px:[function(a){var z,y,x
+z=J.RE(a)
+y=z.gN(a)
+x=J.x(y)
+if(typeof y==="object"&&y!==null&&!!x.$isQP)y=(z.gHQ(a)===8||a.keyCode===45)&&$.dc()!==!0
+else y=!1
+if(y){z.e6(a)
 z=$.FJ
 if(z!=null){$.qN.dispatchEvent(W.K1("stream_unit_removed",!0,!0,z.jO))
 $.FJ.wg(0)}}},"call$1","Jo",2,0,3],
