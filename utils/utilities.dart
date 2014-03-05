@@ -87,7 +87,10 @@ void report(html.MouseEvent e) {
 
   reportModalBody.querySelector('#report_2').text = logMessages;
 
-  closeReportButton.onClick.listen((e) => reportModal.style.display = 'none');
+  closeReportButton.onClick.listen((e) {
+    reportModal.style.display = 'none';
+    (reportModalBody.querySelector('#report_3') as html.ParagraphElement).text = "";
+  });
   sendReportButton.onClick.listen((e) => reportBug());
 }
 
@@ -101,9 +104,8 @@ void reportBug() {
       reportModalBody.querySelector('#report_3').text = response;
       if (response == "success") {
         html.document.querySelector('#clear').click();
-        reportModalBody.querySelector('#report_1').text = "";
-        reportModalBody.querySelector('#report_2').text = "";
-        reportModalBody.querySelector('#report_3').text = "";
+        (reportModalBody.querySelector('#report_1') as html.TextAreaElement).value = "";
+        (reportModalBody.querySelector('#report_2') as html.TextAreaElement).value = "";
       }
     });
   }
