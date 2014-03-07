@@ -97,8 +97,10 @@ void _onKeyDown(html.KeyboardEvent e) {
     e.preventDefault();
 
     if (selectedOperator != null) {
-      canvas.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE, detail: selectedOperator.id));
+      String operatorId = selectedOperator.id;
+      canvas.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE, detail: operatorId));
       selectedOperator.remove();
+      operators.remove(operatorId);
     }
   }
 }

@@ -73,7 +73,7 @@ bool isDashPressed(html.KeyboardEvent e) {
 }
 
 bool isBackspacePressed(html.KeyboardEvent e) {
-  return e.keyCode == 8 || e.keyCode == 45;
+  return e.keyCode == 8 || e.keyCode == 46;
 }
 
 

@@ -473,7 +473,7 @@ class HumanDetails extends SourceDetails {
   void initialize() {
     super.initialize();
     this.addElement('iteration', 'number', 'Number of copies', true, this.elements, features: {'value': '1', 'min': '1', 'max': '1000'});
-    this.addElement('expiry', 'number', 'Max alloted time (sec)', true, this.elements, features: {'value': '60', 'min': '10', 'max': '300'});
+    this.addElement('expiry', 'number', 'Max allotted time (sec)', true, this.elements, features: {'value': '60', 'min': '10', 'max': '300'});
     this.addElement('payment', 'number', 'Payment (¢)', true, this.elements, features: {'value': '10', 'min': '5', 'max': '100'});
 
     this.addElement('segment-list', 'list', 'Available Segments', false, this.elements, features: {'class': 'list-inline segments'});
