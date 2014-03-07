@@ -1597,16 +1597,18 @@ yP:[function(a){$.OP.aN(0,new D.zY())
 $.OP.V1(0)
 $.yg=1
 $.kB=""},"call$1","K4",2,0,2],
-px:[function(a){var z,y,x
+px:[function(a){var z,y,x,w
 z=J.RE(a)
 y=z.gN(a)
 x=J.x(y)
-if(typeof y==="object"&&y!==null&&!!x.$isQP)y=(z.gHQ(a)===8||a.keyCode===45)&&$.dc()!==!0
+if(typeof y==="object"&&y!==null&&!!x.$isQP)y=(z.gHQ(a)===8||a.keyCode===46)&&$.dc()!==!0
 else y=!1
 if(y){z.e6(a)
 z=$.FJ
-if(z!=null){$.qN.dispatchEvent(W.K1("stream_unit_removed",!0,!0,z.jO))
-$.FJ.wg(0)}}},"call$1","Jo",2,0,3],
+if(z!=null){w=z.jO
+$.qN.dispatchEvent(W.K1("stream_unit_removed",!0,!0,w))
+$.FJ.wg(0)
+$.OP.Rz(0,w)}}},"call$1","Jo",2,0,3],
 mh:function(a){var z,y,x,w,v
 z=J.Lb(a)
 y=z.gx(z)
@@ -1776,9 +1778,6 @@ J.oH($.vP().style,"none")
 J.oH($.aw().style,"none")
 $.qN.dispatchEvent(W.K1("operator_output_refresh",!0,!0,$.Nj))
 $.IS().To("Operator modal for "+$.Nj+" is closed.")},
-by:[function(a){var z=J.P6(a)
-$.OP.Rz(0,z)
-$.IS().To(H.d(z)+" is removed.")},"call$1","gw9",2,0,17],
 w8:function(a){var z,y,x
 $.qN=document.querySelector(a)
 z=document.createElementNS("http://www.w3.org/2000/svg","line")
@@ -1798,8 +1797,6 @@ H.VM(new W.xC(0,y.uv,y.Ph,W.VF(this.gnG()),y.Sg),[H.Kp(y,0)]).Zz()
 x=W.GN(document.querySelectorAll("ul.units li"),null)
 H.VM(new W.pu(x,!1,C.C8.Ph),[null]).yI(this.gOZ())
 H.VM(new W.pu(x,!1,C.tG.Ph),[null]).yI(this.gQl())
-y=J.c8($.qN).t(0,"stream_unit_removed")
-H.VM(new W.xC(0,y.uv,y.Ph,W.VF(this.gw9()),y.Sg),[H.Kp(y,0)]).Zz()
 y=J.Vg($.aw())
 H.VM(new W.xC(0,y.uv,y.Ph,W.VF(this.gXf()),y.Sg),[H.Kp(y,0)]).Zz()
 y=J.Vg($.Qm())
@@ -2667,7 +2664,7 @@ J.oH(z.style,"block")},"call$1","gzb",2,0,2],
 eQ:function(a){var z,y,x,w,v
 D.la.prototype.eQ.call(this,this)
 this.Vv("iteration","number","Number of copies",!0,this.P9,H.B7(["value","1","min","1","max","1000"],P.L5(null,null,null,null,null)))
-this.Vv("expiry","number","Max alloted time (sec)",!0,this.P9,H.B7(["value","60","min","10","max","300"],P.L5(null,null,null,null,null)))
+this.Vv("expiry","number","Max allotted time (sec)",!0,this.P9,H.B7(["value","60","min","10","max","300"],P.L5(null,null,null,null,null)))
 this.Vv("payment","number","Payment (\u00a2)",!0,this.P9,H.B7(["value","10","min","5","max","100"],P.L5(null,null,null,null,null)))
 this.Vv("segment-list","list","Available Segments",!1,this.P9,H.B7(["class","list-inline segments"],P.L5(null,null,null,null,null)))
 z=this.qO("instructions","editable","Instructions for human workers",!1,this.P9)
@@ -3219,7 +3216,7 @@ call$1:function(a){var z,y,x,w
 z=J.RE(a)
 y=z.gN(a)
 z=z.gHQ(a)
-if(!(z===8||a.keyCode===45)){x=C.G8.gE9(a)
+if(!(z===8||a.keyCode===46)){x=C.G8.gE9(a)
 if(typeof x!=="number")return x.D()
 if(x>0)w=a.charCode
 else{x=a.keyCode
@@ -7662,7 +7659,7 @@ I.$lazy($,"validation","kR","q4",function(){var z=new D.hO()
 z.uP()
 return z})
 I.$lazy($,"SOURCE_OPTIONS_VALUES","TU","Yl",function(){return[""," ","\t",",",":"]})
-I.$lazy($,"SOURCE_OPTIONS_NAMES","mt","tf",function(){return["None","White space","Tab","Comma","Column"]})
+I.$lazy($,"SOURCE_OPTIONS_NAMES","mt","tf",function(){return["None","White space","Tab","Comma","Colon"]})
 I.$lazy($,"SOURCE_OPTIONS_HUMAN_INPUTS","V7","fD",function(){return H.B7(["text input","text","number input","number","single choice","single","multiple choice","multiple"],P.L5(null,null,null,null,null))})
 I.$lazy($,"modal","L1","aw",function(){return document.querySelector("#operator_modal")})
 I.$lazy($,"modalDialog","j7","b5",function(){return $.aw().querySelector(".modal-dialog")})
