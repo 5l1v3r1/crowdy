@@ -406,6 +406,10 @@ section > svg#app_container > defs > marker#flow_marker:hover {
   /*overflow: hidden;*/
 }
 
+.modal > .modal-dialog > .modal-content > .modal-body {
+  overflow: hidden;
+}
+
 #operator_modal > .modal-dialog > .modal-content > .modal-header {
   border-bottom: none;
 }

@@ -1604,7 +1604,9 @@ x=J.x(y)
 if(typeof y==="object"&&y!==null&&!!x.$isQP)y=(z.gHQ(a)===8||a.keyCode===46)&&$.dc()!==!0
 else y=!1
 if(y){z.e6(a)
-z=$.FJ
+z=$.R0
+if(z!=null){z.wg(0)
+$.R0=null}z=$.FJ
 if(z!=null){w=z.jO
 $.qN.dispatchEvent(W.K1("stream_unit_removed",!0,!0,w))
 $.FJ.wg(0)
@@ -1678,15 +1680,13 @@ z=J.l2(a)
 y=J.x(z)
 if(typeof z==="object"&&z!==null&&!!y.$ishy&&$.FJ!=null){$.FJ.IU.setAttribute("class","")
 $.FJ=null}},"call$1","gbx",2,0,2],
-HB:[function(a){var z,y,x,w
+HB:[function(a){var z,y,x
 z=J.RE(a)
 y=J.Vs(J.UQ(z.gey(a),0).gIU()).MW.getAttribute("id")
 x=J.Vs(J.UQ(z.gey(a),1).gIU()).MW.getAttribute("id")
 if($.OP.t(0,y).m2(x)&&$.OP.t(0,x).Zg(y)){$.OP.t(0,y).Va(x)
 $.OP.t(0,x).GY(y)
-w=J.UQ(z.gey(a),0)
-z=J.UQ(z.gey(a),1)
-new D.OT(null,w,z,null).ED(w,z)}},"call$1","gdY",2,0,17],
+D.Xy(J.UQ(z.gey(a),0),J.UQ(z.gey(a),1))}},"call$1","gdY",2,0,17],
 t1:[function(a){var z,y
 z=J.RE(a)
 y=H.Go(z.gN(a),"$iswP")
@@ -1815,7 +1815,7 @@ dX:{
 call$1:function(a){J.oH($.vP().style,"none")
 return"none"}},
 OT:{
-"^":"a;Ii,If,ol,di",
+"^":"a;Ii,If,ol",
 wg:function(a){var z,y,x
 z=J.Vs(this.If.gIU()).MW.getAttribute("id")
 y=this.ol
@@ -1824,14 +1824,10 @@ $.OP.t(0,z).pH(x)
 $.OP.t(0,x).iM(z)
 J.OG($.qN).Rz(0,this.Ii)
 $.OP.t(0,J.F8(y.gIU())).yb()},
-HM:[function(a){var z,y
-z=!this.di
-this.di=z
-y=this.Ii
-if(z){y.parentNode.appendChild(y)
-this.Ii.setAttribute("class","selected")}else y.setAttribute("class","")},"call$1","gVp",2,0,2],
-D4:[function(a){if(this.di&&J.Zm(a)===8){J.Kr(a)
-this.wg(0)}},"call$1","gYB",2,0,3],
+C7:[function(a){var z=$.R0
+if(z!=null)z.Ii.setAttribute("class","")
+if(this!==z){$.R0=this
+this.Ii.setAttribute("class","selected")}else $.R0=null},"call$1","gDB",2,0,2],
 ru:[function(a){var z,y,x,w,v,u,t
 J.ju(this.Ii).clear()
 z=this.Ii
@@ -1857,9 +1853,7 @@ u=this.Ii
 x=J.ju(u)
 v=v.KY
 x.appendItem(u.createSVGPathSegLinetoAbs(v.x,v.y))},"call$1","gqU",2,0,17],
-yG:[function(a){this.wg(0)},"call$1","gp8",2,0,17],
 ED:function(a,b){var z,y,x,w,v,u,t,s,r
-this.di=!1
 z=document.createElementNS("http://www.w3.org/2000/svg","path")
 this.Ii=z
 y=J.RE(z).gdd(z)
@@ -1888,18 +1882,25 @@ z.setAttribute("from",""+x.gEo(x))
 z.setAttribute("to",""+t.gEo(t))
 z.setAttribute("stroke-width","1.5")
 r=C.jV.gVY(z)
-H.VM(new W.xC(0,r.uv,r.Ph,W.VF(this.gVp()),r.Sg),[H.Kp(r,0)]).Zz()
+H.VM(new W.xC(0,r.uv,r.Ph,W.VF(this.gDB()),r.Sg),[H.Kp(r,0)]).Zz()
 $.qN.appendChild(this.Ii)
-r=H.VM(new W.RO(window,C.rl.Ph,!1),[null])
-H.VM(new W.xC(0,r.uv,r.Ph,W.VF(this.gYB()),r.Sg),[H.Kp(r,0)]).Zz()
 r=J.c8(x.GS).t(0,"stream_port_moving")
 H.VM(new W.xC(0,r.uv,r.Ph,W.VF(this.gqU()),r.Sg),[H.Kp(r,0)]).Zz()
 r=J.c8(t.GS).t(0,"stream_port_moving")
 H.VM(new W.xC(0,r.uv,r.Ph,W.VF(this.gqU()),r.Sg),[H.Kp(r,0)]).Zz()
 x=J.c8(x.GS).t(0,"stream_port_removed")
-H.VM(new W.xC(0,x.uv,x.Ph,W.VF(this.gp8()),x.Sg),[H.Kp(x,0)]).Zz()
+H.VM(new W.xC(0,x.uv,x.Ph,W.VF(new D.wa(this)),x.Sg),[H.Kp(x,0)]).Zz()
 t=J.c8(t.GS).t(0,"stream_port_removed")
-H.VM(new W.xC(0,t.uv,t.Ph,W.VF(this.gp8()),t.Sg),[H.Kp(t,0)]).Zz()}},
+H.VM(new W.xC(0,t.uv,t.Ph,W.VF(new D.xq(this)),t.Sg),[H.Kp(t,0)]).Zz()},
+static:{Xy:function(a,b){var z=new D.OT(null,a,b)
+z.ED(a,b)
+return z}}},
+wa:{
+"^":"Tp:14;a",
+call$1:function(a){return this.a.wg(0)}},
+xq:{
+"^":"Tp:14;b",
+call$1:function(a){return this.b.wg(0)}},
 Ya:{
 "^":"a;jO,t5*,GS>,q2<,aw@,qt<,Og<",
 m2:function(a){var z=this.aw.x4(a)===!0
@@ -2532,6 +2533,7 @@ DZ:{
 "^":"la;",
 SK:function(a){return this.dv.SK(a.P9)},
 ln:function(){var z,y
+D.la.prototype.ln.call(this)
 if(this.dv.P9.hr>0){z=J.q8($.OP.t(0,this.jO).gaw())
 if(typeof z!=="number")return z.C()
 z=z<1}else z=!1
@@ -3212,29 +3214,29 @@ call$1:function(a){J.Mp(this.a.F3)
 return}},
 QO:{
 "^":"Tp:14;b",
-call$1:function(a){var z,y,x,w
+call$1:function(a){var z,y,x,w,v
 z=J.RE(a)
 y=z.gN(a)
-z=z.gHQ(a)
-if(!(z===8||a.keyCode===46)){x=C.G8.gE9(a)
-if(typeof x!=="number")return x.D()
-if(x>0)w=a.charCode
-else{x=a.keyCode
-if(typeof x!=="number")return x.D()
-if(x>0)w=x
-else{x=a.which
-if(typeof x!=="number")return x.D()
-if(x>0);else x=0
-w=x}}if(typeof w!=="number")return w.D()
-if(w>31)if(!(w>=48&&w<=57))if(!(w>=65&&w<=90))x=w>=97&&w<=122
+if(J.nJ(y).length>4){x=z.gHQ(a)
+if(!(x===8||a.keyCode===46)){w=C.G8.gE9(a)
+if(typeof w!=="number")return w.D()
+if(w>0)v=a.charCode
+else{w=a.keyCode
+if(typeof w!=="number")return w.D()
+if(w>0)v=w
+else{w=a.which
+if(typeof w!=="number")return w.D()
+if(w>0);else w=0
+v=w}}if(typeof v!=="number")return v.D()
+if(v>31)if(!(v>=48&&v<=57))if(!(v>=65&&v<=90))w=v>=97&&v<=122
+else w=!0
+else w=!0
+else w=!1
+if(!w)if(x!==189)x=$.k0()===!0&&a.keyCode===173
 else x=!0
 else x=!0
-else x=!1
-if(!x)if(z!==189)z=$.k0()===!0&&a.keyCode===173
-else z=!0
-else z=!0
-z=!z||J.nJ(y).length>31}else z=!1
-if(z)a.preventDefault()
+x=!x||y.textContent.length>31}else x=!1}else x=!0
+if(x)z.e6(a)
 return}},
 kh:{
 "^":"a;",
@@ -5829,12 +5831,12 @@ ik:{
 "^":"QF;GS:body=",
 "%":"HTMLDocument"},
 zU:{
-"^":"wa;il:responseText=",
+"^":"Vi;il:responseText=",
 R3:function(a,b,c,d,e,f){return a.open(b,c,d,f,e)},
 eo:function(a,b,c,d){return a.open(b,c,d)},
 wR:function(a,b){return a.send(b)},
 "%":"XMLHttpRequest"},
-wa:{
+Vi:{
 "^":"D0;",
 "%":";XMLHttpRequestEventTarget"},
 tX:{
@@ -7589,6 +7591,7 @@ $.ua=null
 $.yg=1
 $.Nj=null
 $.OP=null
+$.R0=null
 $.FJ=null
 $.dl=1
 $.NG=1
