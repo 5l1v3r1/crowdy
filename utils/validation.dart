@@ -86,4 +86,15 @@ class Validation {
   void error(String message) {
     validationMessages[VALIDATION_ERROR].add(message);
   }
+
+  int validateNumberInputElement(html.NumberInputElement input, int min, int max, bool required) {
+    int result = 0;
+    if (input.value.isEmpty) {
+      result = required ? -1 : 0;
+    }
+    else {
+      result = input.value is num ? 1 : -1;
+    }
+    return 0;
+  }
 }

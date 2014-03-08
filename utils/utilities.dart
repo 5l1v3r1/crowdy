@@ -24,7 +24,8 @@ dynamic getMouseCoordinatesProportinalToCanvas(html.MouseEvent e) {
 void _editableKeyPressed(html.KeyboardEvent e, bool editable) {
   html.SpanElement target = e.target;
 
-  if(!isBackspacePressed(e) && (!(isAlphaNumericPressed(e) || isDashPressed(e)) || (target.text.length > 31))) {
+  if((target.text.length <= 4) ||
+      !isBackspacePressed(e) && (!(isAlphaNumericPressed(e) || isDashPressed(e)) || (target.text.length > 31))) {
     e.preventDefault();
   }
 }

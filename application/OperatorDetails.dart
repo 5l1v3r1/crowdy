@@ -242,7 +242,7 @@ class BaseDetails {
     element.resetClass();
 
     int validityResult = element.validateInput();
-    if (validityResult< 0) {
+    if (validityResult < 0) {
       element.addErrorClass();
       validation.error("${identifier} of ${this.id} has error(s).");
     }
@@ -297,6 +297,8 @@ class OutputDetails extends BaseDetails {
   }
 
   void validate() {
+    super.validate();
+
     if (this.output.elements.length > 0 && operators[this.id].next.length < 1) {
       validation.error("${this.id} has no outgoing flow although it has incoming flow.");
     }

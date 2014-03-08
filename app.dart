@@ -96,6 +96,11 @@ void _onKeyDown(html.KeyboardEvent e) {
   if (e.target is html.BodyElement && isBackspacePressed(e) && !isModalActive) {
     e.preventDefault();
 
+    if (selectedFlow != null) {
+      selectedFlow.remove();
+      selectedFlow = null;
+    }
+
     if (selectedOperator != null) {
       String operatorId = selectedOperator.id;
       canvas.dispatchEvent(new html.CustomEvent(OPERATOR_UNIT_REMOVE, detail: operatorId));
