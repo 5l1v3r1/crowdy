@@ -24,6 +24,9 @@ class ElementUI {
       case 'file':
         this.input = new html.FileUploadInputElement();
         break;
+      case 'filename':
+        this.input = new html.TextInputElement();
+        break;
       case 'list':
         this.input = new html.UListElement();
         break;
@@ -95,6 +98,14 @@ class ElementUI {
         }
         else {
           result = (this.input as html.EmailInputElement).checkValidity() ? 1 : -1;
+        }
+        break;
+      case 'filename':
+        if ((this.input as html.TextInputElement).value.isEmpty) {
+          result = this.required ? -1 : 0;
+        }
+        else {
+          result = invalidFilename.hasMatch((this.input as html.TextInputElement).value) ? -1 : 1;
         }
         break;
       case 'number':
@@ -174,7 +185,7 @@ class BaseDetails {
     this.addTitles();
     this.addElement('id', 'text', 'ID', false, this.base, features: {'disabled': 'true', 'value': this.id});
     this.addElement('type', 'text', 'Type', false, this.base, features: {'disabled': 'true', 'value': this.type});
-    this.addElement('name', 'text', 'Name', false, this.base);
+    this.addElement('name', 'text', 'Name', false, this.base, features: {'maxlength': '255'});
     this.addElement('description', 'textarea', 'Description', false, this.base, features: {'rows': '3'});
   }
 
@@ -437,9 +448,8 @@ class HumanDetails extends SourceDetails {
     else if (type == 'single choice' || type == 'multiple choice') {
       html.Element sourceElement = e.querySelector('div.options');
       String inputType = type == 'single choice' ? 'radio' : 'checkbox';
-      if (isFirefox) {
-        List<String> options = sourceElement.innerHtml
-            .replaceAll('<div>', '').replaceAll('</div>', '').replaceAll('</br>', '').split('<br>');
+      String inputWithoutTags = sourceElement.innerHtml.replaceAll(htmlTag, editableDelimiter).replaceAll('&nbsp;', '');
+      List<String> options = delimit(inputWithoutTags, editableDelimiter);
         for(String option in options) {
           if (option.length > 0) {
             humanModalBody.append(new html.DivElement()
@@ -449,19 +459,6 @@ class HumanDetails extends SourceDetails {
                         ..appendText(option)));
           }
         }
-      }
-      else {
-        List<html.Element> options = sourceElement.children;
-        for(html.Element element in options) {
-          if (element.text.length > 0) {
-            humanModalBody.append(new html.DivElement()
-                      ..className = 'radio'
-                      ..append(new html.LabelElement()
-                      ..append(new html.InputElement(type: inputType)..name = name)
-                        ..appendText(element.text)));
-          }
-        }
-      }
     }
   }
 
@@ -682,6 +679,8 @@ class SourceManualDetails extends SourceDetails {
   }
 
   void _onRefresh() {
+    this.output.clear();
+
     String text = (this.elements['input'].input as html.TextAreaElement).value;
     String delimiter = SOURCE_OPTIONS_VALUES[int.parse((this.elements['delimiter'].input as html.SelectElement).value)];
 
@@ -689,15 +688,7 @@ class SourceManualDetails extends SourceDetails {
       text = text.substring(0, text.indexOf('\n'));
     }
 
-    this.output.clear();
-    List<String> delimitedString;
-    if (text.isNotEmpty && delimiter.isNotEmpty) {
-      delimitedString = text.trim().split(delimiter);
-    }
-    else {
-      delimitedString = new List<String>();
-      delimitedString.add('');
-    }
+    List<String> delimitedString = delimit(text, delimiter);
 
     for (String segment in delimitedString) {
       html.SpanElement dumpSpan = new html.SpanElement();
@@ -727,7 +718,7 @@ class SinkFileDetails extends SinkDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('output', 'text', 'File name', true, this.elements);
+    this.addElement('output', 'filename', 'File name', true, this.elements, features: {'maxlength': '255'});
   }
 }
 
@@ -739,7 +730,7 @@ class SinkEmailDetails extends SinkDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('email', 'email', 'email address', true, this.elements);
+    this.addElement('email', 'email', 'email address', true, this.elements, features: {'maxlength': '255'});
   }
 }
 

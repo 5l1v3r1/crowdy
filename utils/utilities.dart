@@ -1,5 +1,28 @@
 part of crowdy;
 
+/*
+ * String helpers
+ */
+List<String> delimit(String text, String delimiter) {
+  List<String> result = new List<String>();
+
+  if (text.isEmpty || delimiter.isEmpty) {
+    result.add('');
+  }
+  else {
+    for (String portion in text.trim().split(delimiter)) {
+      if (portion.trim().isNotEmpty) {
+        result.add(portion);
+      }
+    }
+  }
+
+  return result;
+}
+
+/*
+ * Event helpers
+ */
 dynamic getMouseCoordinatesRelativeToCanvas(html.MouseEvent e) {
   return {
     'x': (e.client.x - canvas.getScreenCtm().e),

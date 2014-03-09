@@ -23,8 +23,13 @@ const REPORT_MODAL_ID = 'report_modal';
 
 const OPERATOR_OUTPUT_REFRESH = 'operator_output_refresh';
 
+String editableDelimiter ='##';
+
 List<String> SOURCE_OPTIONS_VALUES = ['', ' ', '\t', ',', ':'];
 List<String> SOURCE_OPTIONS_NAMES = ['None', 'White space', 'Tab', 'Comma', 'Colon'];
+
+RegExp htmlTag = new RegExp("<([^>]*)>");
+RegExp invalidFilename = new RegExp("[/?*:;{}\\\\]+");
 
 Map<String, String> SOURCE_OPTIONS_HUMAN_INPUTS = {
     'text input': 'text',
