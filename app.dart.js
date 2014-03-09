@@ -776,7 +776,7 @@ t:function(a,b){return b.__MessageTraverser__attached_info__},
 u:function(a,b,c){this.kw.push(b)
 b.__MessageTraverser__attached_info__=c},
 CH:function(a){this.kw=[]},
-F4:function(){var z,y,x
+Xq:function(){var z,y,x
 for(z=this.kw.length,y=0;y<z;++y){x=this.kw
 if(y>=x.length)return H.e(x,y)
 x[y].__MessageTraverser__attached_info__=null}this.kw=null}},
@@ -785,14 +785,14 @@ X1:{
 t:function(a,b){return},
 u:function(a,b,c){},
 CH:function(a){},
-F4:function(){return}},
+Xq:function(){return}},
 HU:{
 "^":"a;",
 h7:function(a){var z
 if(H.vM(a))return this.Pq(a)
 this.iq.CH(0)
 z=null
-try{z=this.I8(a)}finally{this.iq.F4()}return z},
+try{z=this.I8(a)}finally{this.iq.Xq()}return z},
 I8:function(a){var z
 if(a==null||typeof a==="string"||typeof a==="number"||typeof a==="boolean")return this.Pq(a)
 z=J.x(a)
@@ -1366,15 +1366,20 @@ $.TX=new H.wN(u)
 $.x7=new H.VX(t)},
 ud:function(a,b){return a(b)||b},
 m2:function(a,b,c){return C.xB.XU(a,b,c)!==-1},
-ys:function(a,b,c){var z,y,x,w
-if(b==="")if(a==="")return c
+ys:function(a,b,c){var z,y,x,w,v
+if(typeof b==="string")if(b==="")if(a==="")return c
 else{z=P.p9("")
 y=a.length
 z.KF(c)
 for(x=0;x<y;++x){w=a[x]
 w=z.vM+w
 z.vM=w
-z.vM=w+c}return z.vM}else return a.replace(new RegExp(b.replace(new RegExp("[[\\]{}()*+?.\\\\^$|]",'g'),"\\$&"),'g'),c.replace("$","$$$$"))},
+z.vM=w+c}return z.vM}else return a.replace(new RegExp(b.replace(new RegExp("[[\\]{}()*+?.\\\\^$|]",'g'),"\\$&"),'g'),c.replace("$","$$$$"))
+else{w=J.x(b)
+if(typeof b==="object"&&b!==null&&!!w.$isVR){v=b.gF4()
+v.lastIndex=0
+return a.replace(v,c.replace("$","$$$$"))}else{if(b==null)H.vh(new P.AT(null))
+throw H.b("String.replaceAll(Pattern) UNIMPLEMENTED")}}},
 FD:{
 "^":"a;mr,Rn,XZ,Rv,hG,Mo,AM",
 static:{"^":"t4,Lt,Oc,pv",zh:function(a){var z,y,x,w
@@ -1577,7 +1582,25 @@ wN:{
 call$2:function(a,b){return this.b(a,b)}},
 VX:{
 "^":"Tp:0;c",
-call$1:function(a){return this.c(a)}}}],["crowdy","file:///Users/mert/Public/Projects/dart/crowdy/web/app.dart",,D,{
+call$1:function(a){return this.c(a)}},
+VR:{
+"^":"a;Ej,Ii,Ua",
+gF4:function(){var z=this.Ii
+if(z!=null)return z
+z=this.Ej
+z=H.v4(z.source,z.multiline,!z.ignoreCase,!0)
+this.Ii=z
+return z},
+$isVR:true,
+$iswL:true,
+static:{v4:function(a,b,c,d){var z,y,x,w,v
+z=b?"m":""
+y=c?"":"i"
+x=d?"g":""
+w=(function() {try {return new RegExp(a, z + y + x);} catch (e) {return e;}})()
+if(w instanceof RegExp)return w
+v=String(w)
+throw H.b(P.cD("Illegal RegExp pattern: "+a+", "+v))}}}}],["crowdy","file:///Users/mert/Public/Projects/dart/crowdy/web/app.dart",,D,{
 "^":"",
 Iq:[function(){var z,y
 $.iJ=D.f9("#app_container")
@@ -1611,6 +1634,11 @@ if(z!=null){w=z.jO
 $.qN.dispatchEvent(W.K1("stream_unit_removed",!0,!0,w))
 $.FJ.wg(0)
 $.OP.Rz(0,w)}}},"call$1","Jo",2,0,3],
+m1:function(a,b){var z,y,x
+z=H.VM([],[J.O])
+if(a.length===0||b.length===0)z.push("")
+else for(y=C.xB.bS(a).split(b),y=new H.a7(y,y.length,0,null);y.G();){x=y.lo
+if(J.rr(x).length!==0)z.push(x)}return z},
 mh:function(a){var z,y,x,w,v
 z=J.Lb(a)
 y=z.gx(z)
@@ -1815,27 +1843,27 @@ dX:{
 call$1:function(a){J.oH($.vP().style,"none")
 return"none"}},
 OT:{
-"^":"a;Ii,If,ol",
+"^":"a;ay,If,ol",
 wg:function(a){var z,y,x
 z=J.Vs(this.If.gIU()).MW.getAttribute("id")
 y=this.ol
 x=J.Vs(y.gIU()).MW.getAttribute("id")
 $.OP.t(0,z).pH(x)
 $.OP.t(0,x).iM(z)
-J.OG($.qN).Rz(0,this.Ii)
+J.OG($.qN).Rz(0,this.ay)
 $.OP.t(0,J.F8(y.gIU())).yb()},
 C7:[function(a){var z=$.R0
-if(z!=null)z.Ii.setAttribute("class","")
+if(z!=null)z.ay.setAttribute("class","")
 if(this!==z){$.R0=this
-this.Ii.setAttribute("class","selected")}else $.R0=null},"call$1","gDB",2,0,2],
+this.ay.setAttribute("class","selected")}else $.R0=null},"call$1","gDB",2,0,2],
 ru:[function(a){var z,y,x,w,v,u,t
-J.ju(this.Ii).clear()
-z=this.Ii
+J.ju(this.ay).clear()
+z=this.ay
 y=J.ju(z)
 x=this.If
 w=x.gKY()
 y.appendItem(z.createSVGPathSegMovetoAbs(w.x,w.y))
-w=this.Ii
+w=this.ay
 z=J.ju(w)
 x=x.KY
 y=x.x
@@ -1849,19 +1877,19 @@ u=u.y
 if(typeof x!=="number")return x.g()
 if(typeof u!=="number")return H.s(u)
 z.appendItem(w.createSVGPathSegLinetoAbs((y+t)/2,(x+u)/2))
-u=this.Ii
+u=this.ay
 x=J.ju(u)
 v=v.KY
 x.appendItem(u.createSVGPathSegLinetoAbs(v.x,v.y))},"call$1","gqU",2,0,17],
 ED:function(a,b){var z,y,x,w,v,u,t,s,r
 z=document.createElementNS("http://www.w3.org/2000/svg","path")
-this.Ii=z
+this.ay=z
 y=J.RE(z).gdd(z)
 x=this.If
 w=x.gKY()
 y.appendItem(z.createSVGPathSegMovetoAbs(w.x,w.y))
 w=z.pathSegList
-y=this.Ii
+y=this.ay
 v=x.KY
 u=v.x
 t=this.ol
@@ -1875,7 +1903,7 @@ if(typeof v!=="number")return v.g()
 if(typeof s!=="number")return H.s(s)
 w.appendItem(J.ja(y,(u+r)/2,(v+s)/2))
 s=z.pathSegList
-v=this.Ii
+v=this.ay
 r=t.KY
 s.appendItem(J.ja(v,r.x,r.y))
 z.setAttribute("from",""+x.gEo(x))
@@ -1883,7 +1911,7 @@ z.setAttribute("to",""+t.gEo(t))
 z.setAttribute("stroke-width","1.5")
 r=C.jV.gVY(z)
 H.VM(new W.xC(0,r.uv,r.Ph,W.VF(this.gDB()),r.Sg),[H.Kp(r,0)]).Zz()
-$.qN.appendChild(this.Ii)
+$.qN.appendChild(this.ay)
 r=J.c8(x.GS).t(0,"stream_port_moving")
 H.VM(new W.xC(0,r.uv,r.Ph,W.VF(this.gqU()),r.Sg),[H.Kp(r,0)]).Zz()
 r=J.c8(t.GS).t(0,"stream_port_moving")
@@ -2336,6 +2364,8 @@ case"email":this.J9=W.ED("email")
 break
 case"file":this.J9=W.ED("file")
 break
+case"filename":this.J9=W.ED("text")
+break
 case"list":this.J9=document.createElement("ul",null)
 break
 case"number":this.J9=W.ED("number")
@@ -2367,7 +2397,7 @@ la:{
 eQ:function(a){this.wz()
 this.Vv("id","text","ID",!1,this.zm,H.B7(["disabled","true","value",this.jO],P.L5(null,null,null,null,null)))
 this.Vv("type","text","Type",!1,this.zm,H.B7(["disabled","true","value",this.t5],P.L5(null,null,null,null,null)))
-this.qO("name","text","Name",!1,this.zm)
+this.Vv("name","text","Name",!1,this.zm,H.B7(["maxlength","255"],P.L5(null,null,null,null,null)))
 this.Vv("description","textarea","Description",!1,this.zm,H.B7(["rows","3"],P.L5(null,null,null,null,null)))},
 HU:function(a,b,c,d,e,f,g){var z=D.G2(this.jO+"_"+$.dl,b,c,d,f,g)
 e.u(0,a,z)
@@ -2376,7 +2406,7 @@ if(e===this.zm)this.oU.appendChild(z.fh())
 else this.cP.appendChild(z.fh())
 return z},
 Vv:function(a,b,c,d,e,f){return this.HU(a,b,c,d,e,f,null)},
-qO:function(a,b,c,d,e){return this.HU(a,b,c,d,e,null,null)},
+Nf:function(a,b,c,d,e){return this.HU(a,b,c,d,e,null,null)},
 vR:function(a,b,c,d,e,f){return this.HU(a,b,c,d,e,null,f)},
 wz:function(){var z,y,x,w
 z=this.MS
@@ -2437,6 +2467,13 @@ case"email":y=H.Go(b.J9,"$iszL")
 if(J.Vm(y).length===0)z=b.nh?-1:0
 else z=y.checkValidity()===!0?1:-1
 break
+case"filename":y=H.Go(b.J9,"$isje")
+if(J.Vm(y).length===0)z=b.nh?-1:0
+else{x=$.G4()
+y=y.value
+x=x.Ej
+if(typeof y!=="string")H.vh(new P.AT(y))
+z=x.test(y)?-1:1}break
 case"number":y=H.Go(b.J9,"$iskJ")
 if(J.Vm(y).length===0)z=b.nh?-1:0
 else z=y.checkValidity()===!0?1:-1
@@ -2570,20 +2607,20 @@ y=this.jO+" of type "+this.t5+" has no rules."
 z.toString
 J.i4($.dg().t(0,"WARNING"),y)}}},
 n0:{
-"^":"DZ;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"DZ;jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.la.prototype.eQ.call(this,this)
 this.Vv("copy","number","Number of copies",!0,this.P9,H.B7(["min","1","max","10","value","1"],P.L5(null,null,null,null,null)))}},
 FV:{
-"^":"DZ;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"DZ;jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){this.NK.hidden=!0
 D.la.prototype.eQ.call(this,this)}},
 Af:{
-"^":"Kz;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"Kz;jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.la.prototype.eQ.call(this,this)
-this.qO("input","file","File",!0,this.P9)
-this.qO("delimiter","text","Delimiter",!0,this.P9)}},
+this.Nf("input","file","File",!0,this.P9)
+this.Nf("delimiter","text","Delimiter",!0,this.P9)}},
 nk:{
-"^":"Kz;IZ,Vc,jA,r7,F1,jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"Kz;IZ,Vc,jA,r7,F1,jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 iK:[function(a){var z,y,x
 J.oH($.aw().style,"none")
 z=$.cq()
@@ -2603,7 +2640,7 @@ J.IR(y,"beforeend",J.xR(x[1]))
 z.appendChild(y)
 y=W.GN(this.cP.querySelectorAll(".rule"),null)
 y.aN(y,new D.ql(this))},"call$1","gW8",2,0,2],
-qC:function(a){var z,y,x,w,v,u,t,s,r,q,p,o
+qC:function(a){var z,y,x,w,v,u,t,s,r,q,p
 z=J.RE(a)
 y=z.Wk(a,"label").textContent
 z=z.gEt(a)
@@ -2627,12 +2664,12 @@ w.appendChild(v)
 z.appendChild(w)}else{z=y==="single choice"
 if(z||y==="multiple choice"){s=a.querySelector("div.options")
 r=z?"radio":"checkbox"
-z=J.RE(s)
-if($.k0()===!0){z=z.ghf(s)
+z=J.xR(s)
+w=$.Sg()
+v=$.Z6
 z.toString
-z=H.ys(z,"<div>","")
-z=H.ys(z,"</div>","")
-u=H.ys(z,"</br>","").split("<br>")
+z=H.ys(z,w,v)
+u=D.m1(H.ys(z,"&nbsp;",""),$.Z6)
 for(z=new H.a7(u,u.length,0,null);z.G();){q=z.lo
 w=J.q8(q)
 if(typeof w!=="number")return w.D()
@@ -2645,18 +2682,7 @@ J.z6(p,x)
 t.appendChild(p)
 J.fL(t,"beforeend",q)
 v.appendChild(t)
-w.appendChild(v)}}}else{u=z.gwd(s)
-for(z=u.gA(u);z.G();){o=z.lo
-if(J.nJ(o).length>0){w=$.fa()
-v=document.createElement("div",null)
-v.className="radio"
-t=document.createElement("label",null)
-p=W.ED(r)
-J.z6(p,x)
-t.appendChild(p)
-J.fL(t,"beforeend",o.textContent)
-v.appendChild(t)
-w.appendChild(v)}}}}}},
+w.appendChild(v)}}}}},
 an:[function(a){var z=$.cq()
 J.oH(z.style,"none")
 J.OG(z.querySelector(".modal-content .modal-body")).V1(0)
@@ -2669,8 +2695,8 @@ this.Vv("iteration","number","Number of copies",!0,this.P9,H.B7(["value","1","mi
 this.Vv("expiry","number","Max allotted time (sec)",!0,this.P9,H.B7(["value","60","min","10","max","300"],P.L5(null,null,null,null,null)))
 this.Vv("payment","number","Payment (\u00a2)",!0,this.P9,H.B7(["value","10","min","5","max","100"],P.L5(null,null,null,null,null)))
 this.Vv("segment-list","list","Available Segments",!1,this.P9,H.B7(["class","list-inline segments"],P.L5(null,null,null,null,null)))
-z=this.qO("instructions","editable","Instructions for human workers",!1,this.P9)
-y=this.qO("question","editable","Question",!0,this.P9)
+z=this.Nf("instructions","editable","Instructions for human workers",!1,this.P9)
+y=this.Nf("question","editable","Question",!0,this.P9)
 this.eB()
 this.r7=H.VM([],[W.Wy])
 x=J.Ku(z.J9)
@@ -2875,23 +2901,21 @@ J.Mp(z.cP.querySelector("div[data-segment=\""+y+"\"]"))
 z.dv.E1(y)
 return}},
 mQ:{
-"^":"Kz;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"Kz;jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.la.prototype.eQ.call(this,this)
 this.Vv("input","textarea","Manual entry",!0,this.P9,H.B7(["rows","5"],P.L5(null,null,null,null,null)))
 this.vR("delimiter","select","Delimiter",!0,this.P9,$.tf())},
 n6:function(){var z,y,x,w,v,u,t,s,r
-z=H.Go(this.P9.t(0,"input").gJ9(),"$isFB").value
-y=$.Yl()
+z=this.dv
+J.Qy(z.FX,"")
+z.P9.V1(0)
+y=H.Go(this.P9.t(0,"input").gJ9(),"$isFB").value
+z=$.Yl()
 x=H.Lx(H.Go(this.P9.t(0,"delimiter").gJ9(),"$islp").value,null,null)
-if(x>>>0!==x||x>=5)return H.e(y,x)
-w=y[x]
-if(J.U6(z).tg(z,"\n"))z=C.xB.Nj(z,0,C.xB.u8(z,"\n"))
-y=this.dv
-J.Qy(y.FX,"")
-y.P9.V1(0)
-if(z.length!==0&&w.length!==0)v=C.xB.bS(z).split(w)
-else{v=H.VM([],[J.O])
-v.push("")}for(y=new H.a7(v,v.length,0,null);y.G();){u=y.lo
+if(x>>>0!==x||x>=5)return H.e(z,x)
+w=z[x]
+v=D.m1(J.U6(y).tg(y,"\n")?C.xB.Nj(y,0,C.xB.u8(y,"\n")):y,w)
+for(z=new H.a7(v,v.length,0,null);z.G();){u=z.lo
 t=document.createElement("span",null)
 x=this.dv
 s="segment-"+J.le(t)
@@ -2922,19 +2946,19 @@ pf:{
 "^":"Tp:14;a",
 call$1:function(a){return this.a.n6()}},
 jc:{
-"^":"Kz;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"Kz;jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.la.prototype.eQ.call(this,this)
-this.qO("webpage","url","Feed URL",!0,this.P9)}},
+this.Nf("webpage","url","Feed URL",!0,this.P9)}},
 Wm:{
-"^":"Uf;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"Uf;jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.la.prototype.eQ.call(this,this)
-this.qO("output","text","File name",!0,this.P9)}},
+this.Vv("output","filename","File name",!0,this.P9,H.B7(["maxlength","255"],P.L5(null,null,null,null,null)))}},
 VQ:{
-"^":"Uf;jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"Uf;jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.la.prototype.eQ.call(this,this)
-this.qO("email","email","email address",!0,this.P9)}},
+this.Vv("email","email","email address",!0,this.P9,H.B7(["maxlength","255"],P.L5(null,null,null,null,null)))}},
 iw:{
-"^":"rT;X2,XC,jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"rT;X2,XC,jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.rT.prototype.eQ.call(this,this)},
 xx:function(){var z,y,x,w,v,u,t
 D.la.prototype.xx.call(this)
@@ -3014,7 +3038,7 @@ call$1:function(a){var z=this.b.id
 J.Mp(this.a.X2.querySelector("#"+z))
 return}},
 Uo:{
-"^":"rT;X2,XC,jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"rT;X2,XC,jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 eQ:function(a){D.rT.prototype.eQ.call(this,this)
 this.Vv("size","number","Window size",!0,this.P9,H.B7(["min","1","max","100","value","1"],P.L5(null,null,null,null,null)))
 this.cP.appendChild(this.X2)},
@@ -3086,10 +3110,10 @@ call$1:function(a){var z=this.b.id
 J.Mp(this.a.X2.querySelector("#"+z))
 return}},
 ei:{
-"^":"rT;X2,XC,jO,t5,I9,U6,dv,zm,P9,Wr,MS,NK,oU,cP",
+"^":"rT;X2,XC,jO,t5,I9,qO,dv,zm,P9,Wr,MS,NK,oU,cP",
 OV:function(){var z=document.createElement("select",null)
 z.className="output-flows form-control input-sm"
-J.kH(this.U6,new D.eE(z))
+J.kH(this.qO,new D.eE(z))
 return z},
 xx:function(){var z,y,x,w,v,u,t
 D.la.prototype.xx.call(this)
@@ -3102,7 +3126,7 @@ u=H.Go(x.Wk(y,".f1"),"$islp").value
 t=H.Go(x.Wk(y,".f2"),"$isMi").value
 $.OP.t(0,this.jO).rT(w+"::"+v+"::"+u+"::"+t)}},
 en:[function(a){var z,y,x,w,v,u,t,s
-z=J.q8(this.U6)
+z=J.q8(this.qO)
 if(typeof z!=="number")return z.C()
 if(z<1){$.IS().j2("Please first make sure there is an output flow from this operator.")
 return}z=this.I9
@@ -5963,7 +5987,7 @@ Ql:{
 "^":"qE;P:value%",
 $isQl:true,
 "%":"HTMLOptionElement"},
-wL:{
+GX:{
 "^":"qE;oc:name%,t5:type=,P:value%",
 "%":"HTMLOutputElement"},
 SN:{
@@ -6967,6 +6991,7 @@ if(typeof a==="number")return a
 if(typeof a==="string")return a
 y=J.x(a)
 if(typeof a==="object"&&a!==null&&!!y.$isiP)return new Date(a.y3)
+if(typeof a==="object"&&a!==null&&!!y.$iswL)throw H.b(P.SY("structured clone of RegExp"))
 if(typeof a==="object"&&a!==null&&!!y.$isET)return a
 if(typeof a==="object"&&a!==null&&!!y.$isT8){x=this.f.call$1(a)
 w=this.UI.call$1(x)
@@ -7599,6 +7624,7 @@ $.nL=1
 $.I5=1
 $.H1=1
 $.VI=null
+$.Z6="##"
 $.kB=""
 $.dh=null
 $.S6=null
@@ -7663,6 +7689,8 @@ z.uP()
 return z})
 I.$lazy($,"SOURCE_OPTIONS_VALUES","TU","Yl",function(){return[""," ","\t",",",":"]})
 I.$lazy($,"SOURCE_OPTIONS_NAMES","mt","tf",function(){return["None","White space","Tab","Comma","Colon"]})
+I.$lazy($,"htmlTag","Ct","Sg",function(){return new H.VR(H.v4("<([^>]*)>",!1,!0,!1),null,null)})
+I.$lazy($,"invalidFilename","kr","G4",function(){return new H.VR(H.v4("[/?*:;{}\\\\]+",!1,!0,!1),null,null)})
 I.$lazy($,"SOURCE_OPTIONS_HUMAN_INPUTS","V7","fD",function(){return H.B7(["text input","text","number input","number","single choice","single","multiple choice","multiple"],P.L5(null,null,null,null,null))})
 I.$lazy($,"modal","L1","aw",function(){return document.querySelector("#operator_modal")})
 I.$lazy($,"modalDialog","j7","b5",function(){return $.aw().querySelector(".modal-dialog")})
