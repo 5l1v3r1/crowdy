@@ -7,7 +7,7 @@ processing paradigm for which a series of operations are applied to the continuo
 stream of data elements via operators.
 
 $Crowdy$ is an operator-centric platform. Using this platform, a requester with no 
-requirement of programming background can quickly translate a complex problem into 
+requirement of a programming background can quickly translate a complex problem into 
 a crowdsourcing application by simply selecting operators and connecting these operators 
 together. As a result of $Crowdy$'s focus on operators, requesters can design applications 
 by selecting right set of building blocks that are necessary to solve their problem, 
@@ -26,7 +26,7 @@ $Crowdy$ embodies several features:
 
 $Crowdy$ platform is implemented as a REST~\cite{Richardson2008} architecture 
 shown in Figure~\ref{fig:architecture}. Applications are developed, configured and 
-validatedon the client-side. These applications are submitted to server-side via an 
+validated on the client-side. These applications are submitted to server-side via an 
 application programming interface (API). Applications are executed, and results 
 are saved on the server-side.
 
@@ -75,7 +75,7 @@ The application flow graph is specified as a series of operator instances and co
 produced by an operator to another. One or more data segments can be assembled in a 
 data tuple via output specification of an operator instance (see Section~\ref{sec:flow comp}). 
 In addition, several options can be specified to configure an operator instance. These 
-include parameters, operator-specific rules, which is studied in the rest of this chapter.
+include parameters, operator-specific rules, which are studied in the rest of this chapter.
 
 \begin{figure}[ht]
 	\centering
@@ -109,18 +109,19 @@ has a specific icon on their body associated with it's type.
 
 An operator may output tuples to any number of operators, but it can only receive 
 tuples from one operator unless it is a union operator (see Section~\ref{sec:utility operators}). 
-However, union operator can only receive and aggregate tuples with same specification. 
-Therefore, consistency of incoming flow specification for each operator type is ensured. 
+Union operator can receive tuples from multiple operators and aggregate them,
+if these tuples have the same specification. Therefore, consistency of incoming flow 
+specification for each operator type is ensured. 
 This is a significant feature to guarantee operators functionality, because an operator 
-most probably (excluding source operators) uses and operates on the information from 
-incoming flow.
+(excluding source operators) uses and operates specifically on the 
+information from incoming flow.
 
 $Crowdy$ provides a set of built-in operators that can be used to build applications. 
 In general, these operators perform common tasks associated with data generation, 
 processing and outputting.
 
 Operators are generally cross-domain to allow general-purpose 
-computation possible. It is possible to group operators six main categories: 
+computation possible. They are grouped under six main categories: 
 \textit{source, sink, processing, relational, utility, adapter}.
 
 \subsubsection{Source operators}
@@ -438,14 +439,24 @@ union operation will basically fail.
 Flow is the connection between operators used to move information from one operator 
 to another. A flow is formed by one or more data segments. A segment has an identifier 
 and corresponding value. In that sense, flow is like a hash table where segment identifiers 
-are keys, and values stored in segments are values.
+are keys, and values stored in segments are values as demonstrated in the following:
 
-Flow specification is immutable for all the operators except for source and processing ones. 
-These operators cannot change the specification, but rather they can drop or add data tuples 
-having that specification. As opposed to that, source operators are useful to create flow 
-specification in the early stages of workflow design. Requesters can add data segments and 
-give names to these segments to be utilized down the flow. In processing operators, flow 
-specification can be redefined similar to source operators.
+\begin{lstlisting}
+{
+"segment-1": "value-1",
+"segment-2": "value-2",
+...
+"segment-N": "value-N",
+}
+\end{lstlisting}
+
+The details of a flow can be specified by either source or processing operators. It is 
+immutable in other operators. Specification can be achieved via output specification section 
+in operator configuration. Requesters can create new segments, edit or delete existing ones. 
+Source operators are useful to specify flow specification in the early stages of workflow 
+design and generate tuples using that specification. The flow specification is crucial, since 
+it determines the specifics of the information that is carried over in the application. Still this 
+specification can be redefined in processing operators.
 
 \section{Application Development}
 \label{sec:flow comp}

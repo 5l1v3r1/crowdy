@@ -83,9 +83,9 @@ class ElementUI {
       case 'list':
         break;
       case 'select':
-        if ((this.input as html.SelectElement).selectedIndex == 0) {
-          result = this.required ? -1 : 0;
-        }
+        //if ((this.input as html.SelectElement).selectedIndex == 0) {
+        //  result = this.required ? -1 : 0;
+        //}
         break;
       case 'editable':
         if ((this.input as html.DivElement).innerHtml.isEmpty) {
