@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  9 MAR 2014 23:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  10 MAR 2014 00:06
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -585,12 +585,12 @@ Package pdftex.def Info: figures/SplitOperator.pdf used on input line 399.
 [36 <./figures/EnrichOperator.pdf>] <figures/UnionOperator.pdf, id=699, 60.225pt x 68.255pt>
 File: figures/UnionOperator.pdf Graphic file (type pdf)
 <use figures/UnionOperator.pdf>
-Package pdftex.def Info: figures/UnionOperator.pdf used on input line 430.
+Package pdftex.def Info: figures/UnionOperator.pdf used on input line 434.
 (pdftex.def)             Requested size: 53.14058pt x 60.22522pt.
 [37 <./figures/SplitOperator.pdf> <./figures/UnionOperator.pdf>] [38]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 480.
+(hyperref)                than one, level fixed on input line 484.
 
 [39] [40]) (text/examples.tex [41]
 Chapter 4.
@@ -627,7 +627,7 @@ Here is how much of TeX's memory you used:
  38i,14n,75p,244b,875s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mtt12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/wasy/wasy10.pfb>
-Output written on output/paper.pdf (57 pages, 576973 bytes).
+Output written on output/paper.pdf (57 pages, 577216 bytes).
 PDF statistics:
  872 PDF objects out of 1000 (max. 8388607)
  754 compressed objects within 8 object streams

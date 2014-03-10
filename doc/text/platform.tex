@@ -324,9 +324,9 @@ A selection operator has zero or more rules to filter data tuples. When there is
 no rule specified, then no filtering will be done, and all data tuple will be passed 
 down to data flow. Otherwise, each rule is evaluated on an incoming data tuple. 
 Whenever a rule is evaluated to be true, then corresponding action is carried out 
-that is either filter in or out the tuple. If no rule is evaluated to be true on a data tuple, 
-then tuple is still passed to the next operator. Rules share the following predefined 
-format:
+that is either filter in or out the tuple, and the rest of rules is discarded. If no rule is 
+evaluated to be true on a data tuple, then tuple is still passed to the next operator(s). 
+Rules share the following predefined format:
 
 \textit{Filter} \textit{(in/out)} \textit{when} \texttt{boolean-predicate}
 
@@ -411,6 +411,10 @@ tuples are passed to every operator connected down the flow. Otherwise, each
 and every rule is evaluated on an incoming data tuple. Whenever rule's predicate 
 is evaluated to be true, then tuple is passed to the corresponding operator. If no 
 predicate turns out to be true for a tuple, then it is dropped.
+
+It is possible that more than one rule for the same \texttt{next-operator} can be true 
+for a specific data tuple. This doesn't mean that tuple will be sent to that operator 
+multiple times. Only one tuple will be outputted to \texttt{next-operator}.
 
 Rules share the following predefined format:
 
