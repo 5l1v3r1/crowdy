@@ -460,4 +460,83 @@ specification can be redefined in processing operators.
 
 \section{Application Development}
 \label{sec:flow comp}
-TODO
+The application development using $Crowdy$ can be achieved by simply creating new 
+operators, configuring them and connecting them together. However, there are certain 
+predefined rules that should be satisfied to develop a valid application and execute it.
+
+An application is formed by a workflow. Although it is not suggested, application can have 
+multiple workflows. A workflow is basically a set of operators connected together. An operator 
+can be connected to another operator by attaching a flow from the output port of an operator 
+to the input port of the other operator. Workflow must contain at least one source and one 
+sink operator. There may be operators that are not connected to any 
+other operator within the application. Operators with no connections are discarded and 
+they do not cause validation failures.
+
+
+A valid workflow means that each each operator employed in that workflow is valid. Validity of 
+an operator depends on it's type and therefore it's configuration. In the following each operator 
+group is examined in terms of validation.
+
+\subsubsection{Source operators}
+A source operator has one output port, which outputs the data tuples with given specification. 
+Therefore, source operator is required to have an output specification that has at least one data 
+segment in it.
+
+\textbf{human.} 
+Parameters of a human operator should be valid. That means 
+\texttt{number of copies} is an integer between 1 and 1000, 
+\texttt{max allotted time} is an integer between 10 and 300, 
+\texttt{payment} is an integer between 5 and 500. 
+Although \texttt{instructions} can be left empty by the requester, \texttt{question} cannot be 
+empty. There must be at least one \texttt{input} defined in the \texttt{input list} to satisfy that 
+source operators have an output specification with at least one segment defined.
+
+\textbf{manual.} 
+\texttt{manual entry} and \texttt{delimiter} should not be empty. Nonempty \texttt{manual entry} 
+and \texttt{delimiter} correspond to an output specification with at least one segment in it.
+
+\subsubsection{Sink operators}
+A sink operator has one input port, which receives data tuples.
+
+\textbf{email.} 
+Operator must have a valid email address given in \texttt{email} parameter.
+
+\textbf{file.} 
+Operator must have a valid file name given in \texttt{filename} parameter.
+
+\subsubsection{Processing operators}
+A processing operator has one input and one output port. It receives data tuples, processes 
+them and outputs them to next operator down to flow. Similar to source operators, processing 
+operators must have an output specification that has at least one data segment in it. Since 
+human operator is the only processing operator, the validity rules for this operator is same as 
+human operator of type source operator.
+
+\subsubsection{Relational operators}
+A relational operator has one input and one output port. It is useful to manipulate flow. 
+Operators of this type has rules to determine manipulation.
+
+\textbf{selection.}
+Each rule in the rule list must be valid, which means a rule with valid \texttt{segment-name}.
+
+\textbf{sort.}
+Operator must have a valid \texttt{window size}. This value can be an integer between 
+1 and 100. Additionally each rule in the rule list must be valid by being formed by a valid 
+\texttt{segment-name}.
+
+\subsubsection{Utility operators}
+A relational operator has one input and one output port. This type of operators is useful for 
+flow management.
+
+\textbf{enrich.}
+Operator must have a valid \texttt{number of copies}. This value can be an integer between 
+1 and 10.
+
+\textbf{split.}
+Split operator must have an incoming flow to-be-splitted and at least one outgoing flow. 
+Split operation is defined by rules. Each rule in the rule list must be valid by specifying 
+a valid \texttt{next-operator}.
+
+\textbf{union.}
+Union operator must have at least one incoming flow to-be-merged and one outgoing flow. 
+Each incoming flow must have the same specification, which is ensured by application editor 
+by preventing connecting flows with different specification to the same union operator.

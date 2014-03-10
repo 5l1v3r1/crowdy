@@ -42,6 +42,11 @@
 \BOOKMARK [3][-]{subsubsection.3.2.1.5}{Utility operators}{subsection.3.2.1}% 42
 \BOOKMARK [2][-]{subsection.3.2.2}{Flow}{section.3.2}% 43
 \BOOKMARK [1][-]{section.3.3}{Application Development}{chapter.3}% 44
-\BOOKMARK [0][-]{chapter.4}{Motivating Examples}{}% 45
-\BOOKMARK [0][-]{chapter.5}{Discussion}{}% 46
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 47
+\BOOKMARK [2][-]{subsubsection.3.3.0.1}{Source operators}{section.3.3}% 45
+\BOOKMARK [3][-]{subsubsection.3.3.0.2}{Sink operators}{subsubsection.3.3.0.1}% 46
+\BOOKMARK [3][-]{subsubsection.3.3.0.3}{Processing operators}{subsubsection.3.3.0.1}% 47
+\BOOKMARK [3][-]{subsubsection.3.3.0.4}{Relational operators}{subsubsection.3.3.0.1}% 48
+\BOOKMARK [3][-]{subsubsection.3.3.0.5}{Utility operators}{subsubsection.3.3.0.1}% 49
+\BOOKMARK [0][-]{chapter.4}{Motivating Examples}{}% 50
+\BOOKMARK [0][-]{chapter.5}{Discussion}{}% 51
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 52

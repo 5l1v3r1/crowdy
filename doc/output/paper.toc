@@ -42,6 +42,11 @@
 \contentsline {subsubsection}{\numberline {3.2.1.5}Utility operators}{36}{subsubsection.3.2.1.5}
 \contentsline {subsection}{\numberline {3.2.2}Flow}{38}{subsection.3.2.2}
 \contentsline {section}{\numberline {3.3}Application Development}{38}{section.3.3}
-\contentsline {chapter}{\numberline {4}Motivating Examples}{39}{chapter.4}
-\contentsline {chapter}{\numberline {5}Discussion}{40}{chapter.5}
-\contentsline {chapter}{\numberline {6}Conclusion}{41}{chapter.6}
+\contentsline {subsubsection}{\numberline {3.3.0.1}Source operators}{39}{subsubsection.3.3.0.1}
+\contentsline {subsubsection}{\numberline {3.3.0.2}Sink operators}{39}{subsubsection.3.3.0.2}
+\contentsline {subsubsection}{\numberline {3.3.0.3}Processing operators}{40}{subsubsection.3.3.0.3}
+\contentsline {subsubsection}{\numberline {3.3.0.4}Relational operators}{40}{subsubsection.3.3.0.4}
+\contentsline {subsubsection}{\numberline {3.3.0.5}Utility operators}{40}{subsubsection.3.3.0.5}
+\contentsline {chapter}{\numberline {4}Motivating Examples}{42}{chapter.4}
+\contentsline {chapter}{\numberline {5}Discussion}{43}{chapter.5}
+\contentsline {chapter}{\numberline {6}Conclusion}{44}{chapter.6}
