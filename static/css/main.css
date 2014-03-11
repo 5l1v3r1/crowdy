@@ -414,7 +414,8 @@ section > svg#app_container > defs > marker#flow_marker:hover {
   border-bottom: none;
 }
 
-#operator_modal > .modal-dialog > .modal-content > .modal-header .alert {
+#operator_modal > .modal-dialog > .modal-content > .modal-header .alert,
+#utility_modal > .modal-dialog > .modal-content > .modal-header .alert {
   margin-bottom: 0;
   display: none;
 }
