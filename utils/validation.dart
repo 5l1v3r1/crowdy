@@ -34,18 +34,16 @@ class Validation {
       log.warning("Validation failed.");
     }
 
-    validationModal.classes.add('in');
-    validationModal.style.display = 'block';
-    validationModalBody.children.clear();
-    closeValidationButton.onClick.listen((e) => validationModal.style.display = 'none');
-
     html.DListElement messageList = new html.DListElement()..className = "dl-horizontal";
     validationMessages.forEach(
         (String key, List<String> messages) => messages.forEach(
             (String message) => messageList.appendHtml("<dt>${key}</dt><dd>${message}</dd>")));
-    validationModalBody.append(messageList);
-    validationModalBody.append(new html.DListElement()..className = "dl-horizontal"
+    appendToUtilityModalBody(messageList);
+
+    appendToUtilityModalBody(new html.DListElement()..className = "dl-horizontal"
         ..appendHtml("<dt>${VALIDATION_RESULT}</dt><dd>${valid ? VALIDATION_SUCCESS : VALIDATION_FAILURE}</dd>"));
+
+    showUtilityModal('Validation Result');
   }
 
   void validate() {

@@ -17,8 +17,7 @@ const OPERATOR_ICON_OUTPUT = 'output.png';
 const OPERATOR_ICON_UNION = 'union.png';
 
 const OPERATOR_MODAL_ID = 'operator_modal';
-const HUMAN_MODAL_ID = 'human_modal';
-const VALIDATION_MODAL_ID = 'validation_modal';
+const UTILITY_MODAL_ID = 'utility_modal';
 const REPORT_MODAL_ID = 'report_modal';
 
 const OPERATOR_OUTPUT_REFRESH = 'operator_output_refresh';
@@ -30,6 +29,9 @@ List<String> SOURCE_OPTIONS_NAMES = ['None', 'White space', 'Tab', 'Comma', 'Col
 
 RegExp htmlTag = new RegExp("<([^>]*)>");
 RegExp invalidFilename = new RegExp("[/?*:;{}\\\\]+");
+
+String INPUT_WARNING_CLASS = 'has-warning';
+String INPUT_ERROR_CLASS = 'has-error';
 
 Map<String, String> SOURCE_OPTIONS_HUMAN_INPUTS = {
     'text input': 'text',
@@ -66,15 +68,13 @@ final html.DivElement modalAlert = modalDialog.querySelector('.modal-content .mo
 final html.DivElement modalBody = modalDialog.querySelector('.modal-content .modal-body');
 final closeButton = modalDialog.querySelector('.modal-footer #close_operator_modal');
 
-final html.DivElement humanModal = html.document.querySelector('#$HUMAN_MODAL_ID');
-final html.DivElement humanModalBody = humanModal.querySelector('.modal-content .modal-body');
-final closeHumanButton = humanModal.querySelector('.modal-footer #close_human_modal');
-
-final html.DivElement validationModal = html.document.querySelector('#$VALIDATION_MODAL_ID');
-final html.DivElement validationModalBody = validationModal.querySelector('.modal-content .modal-body');
-final closeValidationButton = validationModal.querySelector('.modal-footer #close_validation_modal');
-
 final html.DivElement reportModal = html.document.querySelector('#$REPORT_MODAL_ID');
 final html.DivElement reportModalBody = reportModal.querySelector('.modal-content .modal-body');
 final sendReportButton = reportModal.querySelector('.modal-footer #send_report_modal');
 final closeReportButton = reportModal.querySelector('.modal-footer #close_report_modal');
+
+final html.DivElement utilityModal = html.document.querySelector('#$UTILITY_MODAL_ID');
+final html.DivElement utilityModalHeader = utilityModal.querySelector('.modal-content .modal-header');
+final html.DivElement utilityModalWarning = utilityModal.querySelector('.modal-content .modal-header .alert');
+final html.DivElement utilityModalBody = utilityModal.querySelector('.modal-content .modal-body');
+final html.DivElement utilityModalFooter = utilityModal.querySelector('.modal-content .modal-footer');

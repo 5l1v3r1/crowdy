@@ -140,15 +140,16 @@ class ElementUI {
   }
 
   void addErrorClass() {
-    this.input.classes.add('has-error');
+    this.input.classes.add(INPUT_ERROR_CLASS);
   }
 
   void addWarningClass() {
-    this.input.classes.add('has-warning');
+    this.input.classes.add(INPUT_WARNING_CLASS);
   }
 
   void resetClass() {
-    this.input.className = 'form-control';
+    this.input.classes.remove(INPUT_WARNING_CLASS);
+    this.input.classes.remove(INPUT_ERROR_CLASS);
   }
 }
 
@@ -420,26 +421,24 @@ class HumanDetails extends SourceDetails {
   }
 
   void _onHumanClick(html.MouseEvent e) {
-    modal.style.display = 'none';
-    humanModal.classes.add('in');
-    humanModal.style.display = 'block';
-    humanModalBody
-      ..append(new html.ParagraphElement()..className = 'lead'..appendHtml(this.refreshableDivs.elementAt(0).innerHtml))
-      ..append(new html.ParagraphElement()..appendHtml(this.refreshableDivs.elementAt(1).innerHtml));
+    appendToUtilityModalBody(new html.ParagraphElement()..className = 'lead'..appendHtml(this.refreshableDivs.elementAt(0).innerHtml));
+    appendToUtilityModalBody(new html.ParagraphElement()..appendHtml(this.refreshableDivs.elementAt(1).innerHtml));
 
     this.parametersView.querySelectorAll('.rule').forEach((e) => _appendInputToPreview(e));
+
+    showUtilityModal('Human Task Preview');
   }
 
   void _appendInputToPreview(html.Element e) {
     String type = e.querySelector('label').text;
     String name = e.dataset['segment'];
     if (type == 'text input') {
-      humanModalBody.append(new html.ParagraphElement()
+      appendToUtilityModalBody(new html.ParagraphElement()
       ..append(new html.InputElement(type: 'text')..className = 'form-control'..name = name));
     }
     else if (type == 'number input') {
       List<html.InputElement> options = e.querySelectorAll('input');
-      humanModalBody.append(new html.ParagraphElement()
+      appendToUtilityModalBody(new html.ParagraphElement()
       ..append(new html.InputElement(type: 'number')
       ..className = 'form-control'..name = name
       ..attributes['min'] = options.first.value
@@ -452,7 +451,7 @@ class HumanDetails extends SourceDetails {
       List<String> options = delimit(inputWithoutTags, editableDelimiter);
         for(String option in options) {
           if (option.length > 0) {
-            humanModalBody.append(new html.DivElement()
+            appendToUtilityModalBody(new html.DivElement()
                       ..className = 'radio'
                       ..append(new html.LabelElement()
                       ..append(new html.InputElement(type: inputType)..name = name)
@@ -460,13 +459,6 @@ class HumanDetails extends SourceDetails {
           }
         }
     }
-  }
-
-  void _onHumanClose(html.MouseEvent e) {
-    humanModal.style.display = 'none';
-    humanModal.querySelector('.modal-content .modal-body').children.clear();
-    modal.classes.add('in');
-    modal.style.display = 'block';
   }
 
   void initialize() {
@@ -492,8 +484,6 @@ class HumanDetails extends SourceDetails {
     ..text = 'preview human task'
     ..className = 'btn btn-default btn-xs'
     ..onClick.listen(_onHumanClick));
-
-    closeHumanButton.onClick.listen(_onHumanClose);
   }
 
   bool refresh(OutputSpecification specification) {

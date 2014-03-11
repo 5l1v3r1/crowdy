@@ -137,3 +137,39 @@ void reportBug() {
     reportModalBody.querySelector('#report_3').text = e.toString();
   }
 }
+
+/*
+ * Utility modal operations
+ */
+void showUtilityModal(String title, {String message, bool closeButton: true}) {
+  utilityModal.onClick.listen((e) { if (e.target == utilityModal) { hideUtilityModal(); }});
+  utilityModal.classes.add('in');
+  utilityModal.style.display = 'block';
+
+  if (message != null) {
+    utilityModalWarning.style.display = 'block';
+    utilityModalWarning.querySelector('span.message').text = message;
+    utilityModalWarning.querySelector('.close').onClick.listen((e) => utilityModalWarning.style.display = 'none');
+  }
+
+  utilityModalHeader.querySelector('h4').text = title;
+
+  if (closeButton) {
+    utilityModalFooter.append(
+        new html.ButtonElement()
+        ..className = 'btn btn-default'
+        ..text = 'Close'
+        ..onClick.listen((e) => hideUtilityModal()));
+  }
+}
+
+void appendToUtilityModalBody(html.Element element) {
+  utilityModalBody.append(element);
+}
+
+void hideUtilityModal() {
+  utilityModalWarning.style.display = 'none';
+  utilityModalBody.children.clear();
+  utilityModalFooter.children.clear();
+  utilityModal.style.display = 'none';
+}
