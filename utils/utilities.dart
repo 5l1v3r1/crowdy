@@ -106,35 +106,56 @@ bool isBackspacePressed(html.KeyboardEvent e) {
  */
 String logMessages = "";
 void report(html.MouseEvent e) {
-  reportModal.classes.add('in');
-  reportModal.style.display = 'block';
+  appendToUtilityModalBody(new html.DivElement()
+    ..className = 'row'
+    ..append(new html.LabelElement()..className = 'col-sm-3 control-label'..text = 'Message')
+    ..append(new html.DivElement()..className = 'col-sm-9'
+      ..append(new html.TextAreaElement()..id = 'report_1'..className = 'form-control'..rows = 5)));
 
-  reportModalBody.querySelector('#report_2').text = logMessages;
+  appendToUtilityModalBody(new html.DivElement()
+      ..className = 'row'
+      ..append(new html.LabelElement()..className = 'col-sm-3 control-label'..text = 'Log')
+      ..append(new html.DivElement()..className = 'col-sm-9'
+        ..append(new html.TextAreaElement()..id = 'report_2'..className = 'form-control'..rows = 5..disabled = true..text = logMessages)));
 
-  closeReportButton.onClick.listen((e) {
-    reportModal.style.display = 'none';
-    (reportModalBody.querySelector('#report_3') as html.ParagraphElement).text = "";
-  });
-  sendReportButton.onClick.listen((e) => reportBug());
+  appendToUtilityModalBody(new html.DivElement()
+      ..className = 'row'
+      ..append(new html.DivElement()..className = 'col-sm-12'
+        ..append(new html.ParagraphElement()..id = 'report_3')));
+
+  appendToUtilityModalFooter(new html.ButtonElement()..className = 'btn btn-default'..text = 'Send'..onClick.listen((e) => reportBug()));
+
+//  reportModal.classes.add('in');
+//  reportModal.style.display = 'block';
+//
+//  reportModalBody.querySelector('#report_2').text = logMessages;
+
+//  closeReportButton.onClick.listen((e) {
+//    reportModal.style.display = 'none';
+//    (reportModalBody.querySelector('#report_3') as html.ParagraphElement).text = "";
+//  });
+//  sendReportButton.onClick.listen((e) => reportBug());
+
+  showUtilityModal('Report Bug');
 }
 
 void reportBug() {
   var url = "/report";
-  url += "/${Uri.encodeQueryComponent((reportModalBody.querySelector('#report_1') as html.TextAreaElement).value)}";
-  url += "/${Uri.encodeQueryComponent(reportModalBody.querySelector('#report_2').text)}";
+  url += "/${Uri.encodeQueryComponent((utilityModalBody.querySelector('#report_1') as html.TextAreaElement).value)}";
+  url += "/${Uri.encodeQueryComponent(utilityModalBody.querySelector('#report_2').text)}";
 
   try {
     html.HttpRequest.getString(url).then((response) {
-      reportModalBody.querySelector('#report_3').text = response;
+      utilityModalBody.querySelector('#report_3').text = response;
       if (response == "success") {
         html.document.querySelector('#clear').click();
-        (reportModalBody.querySelector('#report_1') as html.TextAreaElement).value = "";
-        (reportModalBody.querySelector('#report_2') as html.TextAreaElement).value = "";
+        (utilityModalBody.querySelector('#report_1') as html.TextAreaElement).value = "";
+        (utilityModalBody.querySelector('#report_2') as html.TextAreaElement).value = "";
       }
     });
   }
   catch(e) {
-    reportModalBody.querySelector('#report_3').text = e.toString();
+    utilityModalBody.querySelector('#report_3').text = e.toString();
   }
 }
 
@@ -165,6 +186,10 @@ void showUtilityModal(String title, {String message, bool closeButton: true}) {
 
 void appendToUtilityModalBody(html.Element element) {
   utilityModalBody.append(element);
+}
+
+void appendToUtilityModalFooter(html.Element element) {
+  utilityModalFooter.append(element);
 }
 
 void hideUtilityModal() {

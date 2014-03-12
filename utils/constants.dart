@@ -68,11 +68,6 @@ final html.DivElement modalAlert = modalDialog.querySelector('.modal-content .mo
 final html.DivElement modalBody = modalDialog.querySelector('.modal-content .modal-body');
 final closeButton = modalDialog.querySelector('.modal-footer #close_operator_modal');
 
-final html.DivElement reportModal = html.document.querySelector('#$REPORT_MODAL_ID');
-final html.DivElement reportModalBody = reportModal.querySelector('.modal-content .modal-body');
-final sendReportButton = reportModal.querySelector('.modal-footer #send_report_modal');
-final closeReportButton = reportModal.querySelector('.modal-footer #close_report_modal');
-
 final html.DivElement utilityModal = html.document.querySelector('#$UTILITY_MODAL_ID');
 final html.DivElement utilityModalHeader = utilityModal.querySelector('.modal-content .modal-header');
 final html.DivElement utilityModalWarning = utilityModal.querySelector('.modal-content .modal-header .alert');
