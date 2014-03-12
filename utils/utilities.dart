@@ -125,34 +125,17 @@ void report(html.MouseEvent e) {
 
   appendToUtilityModalFooter(new html.ButtonElement()..className = 'btn btn-default'..text = 'Send'..onClick.listen((e) => reportBug()));
 
-//  reportModal.classes.add('in');
-//  reportModal.style.display = 'block';
-//
-//  reportModalBody.querySelector('#report_2').text = logMessages;
-
-//  closeReportButton.onClick.listen((e) {
-//    reportModal.style.display = 'none';
-//    (reportModalBody.querySelector('#report_3') as html.ParagraphElement).text = "";
-//  });
-//  sendReportButton.onClick.listen((e) => reportBug());
-
   showUtilityModal('Report Bug');
 }
 
 void reportBug() {
   var url = "/report";
-  url += "/${Uri.encodeQueryComponent((utilityModalBody.querySelector('#report_1') as html.TextAreaElement).value)}";
-  url += "/${Uri.encodeQueryComponent(utilityModalBody.querySelector('#report_2').text)}";
+  Map<String, String> pairs = new Map<String, String>();
+  pairs["message"] = (utilityModalBody.querySelector('#report_1') as html.TextAreaElement).value;
+  pairs["log"] = utilityModalBody.querySelector('#report_2').text;
 
   try {
-    html.HttpRequest.getString(url).then((response) {
-      utilityModalBody.querySelector('#report_3').text = response;
-      if (response == "success") {
-        html.document.querySelector('#clear').click();
-        (utilityModalBody.querySelector('#report_1') as html.TextAreaElement).value = "";
-        (utilityModalBody.querySelector('#report_2') as html.TextAreaElement).value = "";
-      }
-    });
+    postData(url, pairs, utilityModalBody.querySelector('#report_3'));
   }
   catch(e) {
     utilityModalBody.querySelector('#report_3').text = e.toString();
@@ -197,4 +180,25 @@ void hideUtilityModal() {
   utilityModalBody.children.clear();
   utilityModalFooter.children.clear();
   utilityModal.style.display = 'none';
+}
+
+/*
+ * HTTP helpers
+ */
+void postData(String url, Map<String, String> pairs, html.Element result) {
+  html.HttpRequest request = new html.HttpRequest();
+
+  request.onReadyStateChange.listen((e) {
+    if (request.readyState == html.HttpRequest.DONE && (request.status == 200 || request.status == 0)) {
+      result.text = request.responseText;
+    }
+  });
+
+  // POST the data to the server
+  request.open("POST", url, async: false);
+
+  String jsonData = '{';
+  pairs.forEach((key, value) => jsonData += '"$key": "${value.replaceAll('"', '')}", ');
+  jsonData += '"test": "mert"}';
+  request.send(jsonData);
 }
