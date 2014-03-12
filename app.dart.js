@@ -1663,17 +1663,59 @@ w=z.selectionEnd
 z.value=J.rY(y).Nj(y,0,x)+"\t"+C.xB.yn(y,w)}},"call$1","eD",2,0,3],
 zJ:function(a){if(J.kE(a.className,"hide"))a.className="inner"
 else a.className="inner hide"},
-w0:[function(a){var z=$.Nd()
-J.pP(z).h(0,"in")
-J.oH(z.style,"block")
-$.H9().querySelector("#report_2").textContent=$.kB
-z=J.Vg($.Im())
-H.VM(new W.xC(0,z.uv,z.Ph,W.VF(new D.dM()),z.Sg),[H.Kp(z,0)]).Zz()
-z=J.Vg($.n6())
-H.VM(new W.xC(0,z.uv,z.Ph,W.VF(new D.LX()),z.Sg),[H.Kp(z,0)]).Zz()},"call$1","Sy",2,0,2],
+w0:[function(a){var z,y,x,w
+z=document.createElement("div",null)
+z.className="row"
+y=document.createElement("label",null)
+y.className="col-sm-3 control-label"
+y.textContent="Message"
+z.appendChild(y)
+y=document.createElement("div",null)
+y.className="col-sm-9"
+x=document.createElement("textarea",null)
+x.id="report_1"
+x.className="form-control"
+J.z7(x,5)
+y.appendChild(x)
+z.appendChild(y)
+y=$.HD()
+y.appendChild(z)
+z=document.createElement("div",null)
+z.className="row"
+x=document.createElement("label",null)
+x.className="col-sm-3 control-label"
+x.textContent="Log"
+z.appendChild(x)
+x=document.createElement("div",null)
+x.className="col-sm-9"
+w=document.createElement("textarea",null)
+w.id="report_2"
+w.className="form-control"
+J.z7(w,5)
+w.disabled=!0
+w.textContent=$.kB
+x.appendChild(w)
+z.appendChild(x)
+y.appendChild(z)
+z=document.createElement("div",null)
+z.className="row"
+x=document.createElement("div",null)
+x.className="col-sm-12"
+w=document.createElement("p",null)
+w.id="report_3"
+x.appendChild(w)
+z.appendChild(x)
+y.appendChild(z)
+z=document.createElement("button",null)
+z.className="btn btn-default"
+z.textContent="Send"
+y=J.Vg(z)
+H.VM(new W.xC(0,y.uv,y.Ph,W.VF(new D.dM()),y.Sg),[H.Kp(y,0)]).Zz()
+$.SR().appendChild(z)
+D.mm("Report Bug",!0,null)},"call$1","Sy",2,0,2],
 Hd:function(){var z,y,x,w,v
 z="/report"
-x=$.H9()
+x=$.HD()
 z=J.WB(z,"/"+P.jW(C.F3,H.Go(x.querySelector("#report_1"),"$isFB").value,C.dy,!0))
 z=J.WB(z,"/"+P.jW(C.F3,x.querySelector("#report_2").textContent,C.dy,!0))
 try{W.Kn(z,null,null).ml(new D.zX())}catch(w){v=H.Ru(w)
@@ -3137,7 +3179,7 @@ return}z=this.I9
 if(z.hr<1){$.IS().j2("Please first make sure there is an input flow to this operator.")
 return}y=document.createElement("div",null)
 y.className="row rule"
-y.id=this.jO+"-rule-"+$.H1
+y.id=this.jO+"-rule-"+$.Dd
 x=document.createElement("div",null)
 x.className="col-sm-3"
 w=document.createElement("ul",null)
@@ -3185,7 +3227,7 @@ z.className="form-control input-sm f2"
 v.appendChild(z)
 w.appendChild(v)
 s.appendChild(w)
-$.H1=$.H1+1
+$.Dd=$.Dd+1
 y.appendChild(x)
 y.appendChild(s)
 this.X2.appendChild(y)},"call$1","gpM",2,0,2],
@@ -3196,7 +3238,7 @@ y.QF(z)
 this.dv=y
 this.Wr.appendChild(y.Wr)},
 $isei:true,
-static:{"^":"H1"}},
+static:{"^":"Dd"}},
 eE:{
 "^":"Tp:13;a",
 call$2:function(a,b){return this.a.appendChild(W.oK(a,a,null,!1))}},
@@ -3562,14 +3604,10 @@ call$1:function(a){J.IR(this.b,"beforeend","<dt>"+H.d(this.c)+"</dt><dd>"+H.d(a)
 return}},
 dM:{
 "^":"Tp:14;",
-call$1:function(a){J.oH($.Nd().style,"none")
-H.Go($.H9().querySelector("#report_3"),"$isSN").textContent=""}},
-LX:{
-"^":"Tp:14;",
 call$1:function(a){return D.Hd()}},
 zX:{
 "^":"Tp:14;",
-call$1:function(a){var z=$.H9()
+call$1:function(a){var z=$.HD()
 z.querySelector("#report_3").textContent=a
 if(J.de(a,"success")){J.oc(document.querySelector("#clear"))
 H.Go(z.querySelector("#report_1"),"$isFB").value=""
@@ -3915,7 +3953,7 @@ b8:{
 $isb8:true},
 Pf:{
 "^":"a;"},
-Zf:{
+Lj:{
 "^":"Pf;MM",
 w0:[function(a,b){var z
 if(a==null)throw H.b(new P.AT("Error must not be null"))
@@ -5632,7 +5670,7 @@ r3:function(a,b){return document.createElement(a)},
 Kn:function(a,b,c){return W.lt(a,null,null,b,null,null,null,c).ml(new W.Kx())},
 lt:function(a,b,c,d,e,f,g,h){var z,y,x
 z=W.zU
-y=H.VM(new P.Zf(P.Dt(z)),[z])
+y=H.VM(new P.Lj(P.Dt(z)),[z])
 x=new XMLHttpRequest()
 C.W3.eo(x,"GET",a,!0)
 z=H.VM(new W.RO(x,C.fK.Ph,!1),[null])
@@ -5666,7 +5704,7 @@ return z.oj(a,!0)},
 qE:{
 "^":"cv;",
 $isqE:true,
-"%":"HTMLAppletElement|HTMLBRElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLFontElement|HTMLFrameElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"},
+"%":"HTMLAppletElement|HTMLBRElement|HTMLCanvasElement|HTMLContentElement|HTMLDListElement|HTMLDetailsElement|HTMLDialogElement|HTMLDirectoryElement|HTMLFontElement|HTMLFrameElement|HTMLHRElement|HTMLHeadElement|HTMLHeadingElement|HTMLHtmlElement|HTMLImageElement|HTMLLegendElement|HTMLMarqueeElement|HTMLMenuElement|HTMLModElement|HTMLOptGroupElement|HTMLParagraphElement|HTMLPreElement|HTMLQuoteElement|HTMLShadowElement|HTMLTableCaptionElement|HTMLTableCellElement|HTMLTableColElement|HTMLTableDataCellElement|HTMLTableHeaderCellElement|HTMLTitleElement|HTMLTrackElement|HTMLUListElement|HTMLUnknownElement;HTMLElement"},
 Ps:{
 "^":"qE;N:target=,t5:type%,y0:hostname=,LU:href},tp:port=,A8:protocol=",
 bu:function(a){return a.toString()},
@@ -5995,10 +6033,6 @@ $isQl:true,
 GX:{
 "^":"qE;oc:name%,t5:type=,P:value%",
 "%":"HTMLOutputElement"},
-SN:{
-"^":"qE;",
-$isSN:true,
-"%":"HTMLParagraphElement"},
 Fa:{
 "^":"qE;oc:name%,P:value%",
 "%":"HTMLParamElement"},
@@ -6097,7 +6131,7 @@ YC:function(a,b){return this.WN(a,b,null,null)},
 $isyY:true,
 "%":"HTMLTemplateElement"},
 FB:{
-"^":"qE;oc:name%,bO:placeholder},t5:type=,P:value%",
+"^":"qE;oc:name%,bO:placeholder},WT:rows},t5:type=,P:value%",
 $isFB:true,
 "%":"HTMLTextAreaElement"},
 QG:{
@@ -7103,7 +7137,7 @@ call$1:function(a){return a.V1(0)}},
 D7:{
 "^":"ar;nd,h2",
 gzT:function(){var z=this.h2
-return P.F(z.ev(z,new P.hT()),!0,W.cv)},
+return P.F(z.ev(z,new P.Zf()),!0,W.cv)},
 aN:function(a,b){H.bQ(this.gzT(),b)},
 u:function(a,b,c){var z=this.gzT()
 if(b>>>0!==b||b>=z.length)return H.e(z,b)
@@ -7141,7 +7175,7 @@ if(b>>>0!==b||b>=z.length)return H.e(z,b)
 return z[b]},
 gA:function(a){var z=this.gzT()
 return new H.a7(z,z.length,0,null)}},
-hT:{
+Zf:{
 "^":"Tp:14;",
 call$1:function(a){var z=J.x(a)
 return typeof a==="object"&&a!==null&&!!z.$iscv}},
@@ -7228,11 +7262,11 @@ N.qV.$isa=true
 J.P.$isa=true
 P.a6.$isa6=true
 P.a6.$isa=true
-J.Q.$isList=true
-J.Q.$isa=true
 W.cv.$iscv=true
 W.cv.$isKV=true
 W.cv.$isa=true
+J.Q.$isList=true
+J.Q.$isa=true
 W.HL.$isHL=true
 W.HL.$isa=true
 W.zU.$isa=true
@@ -7428,6 +7462,7 @@ J.w8=function(a){return J.RE(a).gkc(a)}
 J.x5=function(a){return J.RE(a).gbG(a)}
 J.xR=function(a){return J.RE(a).ghf(a)}
 J.z6=function(a,b){return J.RE(a).soc(a,b)}
+J.z7=function(a,b){return J.RE(a).sWT(a,b)}
 J.zH=function(a){return J.RE(a).gt5(a)}
 J.zO=function(a,b,c,d,e){return J.RE(a).yF(a,b,c,d,e)}
 C.KZ=new H.hJ()
@@ -7627,7 +7662,7 @@ $.dl=1
 $.NG=1
 $.nL=1
 $.I5=1
-$.H1=1
+$.Dd=1
 $.VI=null
 $.Z6="##"
 $.Bq="has-warning"
@@ -7704,10 +7739,6 @@ I.$lazy($,"modalDialog","j7","b5",function(){return $.aw().querySelector(".modal
 I.$lazy($,"modalAlert","xe","vP",function(){return $.b5().querySelector(".modal-content .modal-header .alert")})
 I.$lazy($,"modalBody","zE","RD",function(){return $.b5().querySelector(".modal-content .modal-body")})
 I.$lazy($,"closeButton","qd","Qm",function(){return $.b5().querySelector(".modal-footer #close_operator_modal")})
-I.$lazy($,"reportModal","Df","Nd",function(){return document.querySelector("#report_modal")})
-I.$lazy($,"reportModalBody","b1","H9",function(){return $.Nd().querySelector(".modal-content .modal-body")})
-I.$lazy($,"sendReportButton","Dd","n6",function(){return $.Nd().querySelector(".modal-footer #send_report_modal")})
-I.$lazy($,"closeReportButton","za","Im",function(){return $.Nd().querySelector(".modal-footer #close_report_modal")})
 I.$lazy($,"utilityModal","bD","Ev",function(){return document.querySelector("#utility_modal")})
 I.$lazy($,"utilityModalHeader","RC","NI",function(){return $.Ev().querySelector(".modal-content .modal-header")})
 I.$lazy($,"utilityModalWarning","Kf","Rf",function(){return $.Ev().querySelector(".modal-content .modal-header .alert")})
