@@ -196,9 +196,5 @@ void postData(String url, Map<String, String> pairs, html.Element result) {
 
   // POST the data to the server
   request.open("POST", url, async: false);
-
-  String jsonData = '{';
-  pairs.forEach((key, value) => jsonData += '"$key": "${value.replaceAll('"', '')}", ');
-  jsonData += '"test": "mert"}';
-  request.send(jsonData);
+  request.send(convert.JSON.encode(pairs));
 }

@@ -1,5 +1,6 @@
 library crowdy;
 
+import 'dart:convert' as convert;
 import 'dart:html' as html;
 import 'dart:svg' as svg;
 import 'package:logging/logging.dart';
