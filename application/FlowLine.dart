@@ -29,11 +29,13 @@ class FlowLine {
   void remove() {
     String from = this.from.group.attributes['id'];
     String to = this.to.group.attributes['id'];
-    operators[from].removeNext(to);
-    operators[to].removePrevious(from);
+    if (operators.containsKey(from) && operators.containsKey(to)) {
+      operators[from].removeNext(to);
+      operators[to].removePrevious(from);
 
-    canvas.children.remove(this.path);
-    operators[this.to.group.id].clearDownFlow();
+      canvas.children.remove(this.path);
+      operators[this.to.group.id].clearDownFlow();
+    }
   }
 
   void _onClick(html.MouseEvent e) {

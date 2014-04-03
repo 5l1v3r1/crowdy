@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  10 MAR 2014 00:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  2 APR 2014 20:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -497,23 +497,23 @@ File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 Chapter 1.
 [1
 
-] [2] [3] [4]) (text/background.tex [5] [6]
+] [2] [3]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 131.
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 131.
+[4] [5]) (text/background.tex [6]
 Chapter 2.
-<figures/keyword_statistics.png, id=408, 727.518pt x 511.6716pt>
+<figures/keyword_statistics.png, id=410, 727.518pt x 511.6716pt>
 File: figures/keyword_statistics.png Graphic file (type png)
 <use figures/keyword_statistics.png>
 Package pdftex.def Info: figures/keyword_statistics.png used on input line 19.
 (pdftex.def)             Requested size: 350.68272pt x 246.63797pt.
 [7
 
-] [8 <./figures/keyword_statistics.png>] [9] [10] [11] [12] [13] [14]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 240.
-(/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 240.
-[15] [16] [17] [18] [19] [20]
+] [8 <./figures/keyword_statistics.png>] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20]
 Overfull \hbox (70.20552pt too wide) in paragraph at lines 520--541
 [][]
  []
@@ -532,57 +532,57 @@ Underfull \hbox (badness 10000) in alignment at lines 541--541
 Chapter 3.
 [26
 
-] <figures/Architecture.pdf, id=547, 441.65pt x 279.0425pt>
+] <figures/Architecture.pdf, id=548, 441.65pt x 279.0425pt>
 File: figures/Architecture.pdf Graphic file (type pdf)
 <use figures/Architecture.pdf>
 Package pdftex.def Info: figures/Architecture.pdf used on input line 35.
 (pdftex.def)             Requested size: 317.74515pt x 200.75073pt.
-[27 <./figures/Architecture.pdf>] <figures/helloworld.png, id=564, 610.28pt x 87.82813pt>
+[27 <./figures/Architecture.pdf>] <figures/helloworld.png, id=565, 610.28pt x 87.82813pt>
 File: figures/helloworld.png Graphic file (type png)
 <use figures/helloworld.png>
 Package pdftex.def Info: figures/helloworld.png used on input line 82.
 (pdftex.def)             Requested size: 350.68272pt x 50.46994pt.
-[28 <./figures/helloworld.png>] <figures/basicoperator.pdf, id=572, 239.89626pt x 90.3375pt>
+[28 <./figures/helloworld.png>] <figures/basicoperator.pdf, id=573, 239.89626pt x 90.3375pt>
 File: figures/basicoperator.pdf Graphic file (type pdf)
 <use figures/basicoperator.pdf>
 Package pdftex.def Info: figures/basicoperator.pdf used on input line 100.
 (pdftex.def)             Requested size: 266.5552pt x 100.37537pt.
-[29 <./figures/basicoperator.pdf>] <figures/SourceOperator.pdf, id=584, 104.39pt x 68.255pt>
+[29 <./figures/basicoperator.pdf>] <figures/SourceOperator.pdf, id=585, 104.39pt x 68.255pt>
 File: figures/SourceOperator.pdf Graphic file (type pdf)
 <use figures/SourceOperator.pdf>
 Package pdftex.def Info: figures/SourceOperator.pdf used on input line 134.
 (pdftex.def)             Requested size: 92.11035pt x 60.22522pt.
-[30 <./figures/SourceOperator.pdf>] [31] [32] <figures/SinkOperator.pdf, id=617, 104.39pt x 68.255pt>
+[30 <./figures/SourceOperator.pdf>] [31] [32] <figures/SinkOperator.pdf, id=618, 104.39pt x 68.255pt>
 File: figures/SinkOperator.pdf Graphic file (type pdf)
 <use figures/SinkOperator.pdf>
 Package pdftex.def Info: figures/SinkOperator.pdf used on input line 254.
 (pdftex.def)             Requested size: 92.11035pt x 60.22522pt.
-<figures/ProcessingOperator.pdf, id=619, 109.40875pt x 68.255pt>
+<figures/ProcessingOperator.pdf, id=620, 109.40875pt x 68.255pt>
 File: figures/ProcessingOperator.pdf Graphic file (type pdf)
 <use figures/ProcessingOperator.pdf>
 Package pdftex.def Info: figures/ProcessingOperator.pdf used on input line 276.
 (pdftex.def)             Requested size: 96.53874pt x 60.22522pt.
-[33 <./figures/SinkOperator.pdf> <./figures/ProcessingOperator.pdf>] <figures/SelectionOperator.pdf, id=645, 43.16125pt x 68.255pt>
+[33 <./figures/SinkOperator.pdf> <./figures/ProcessingOperator.pdf>] <figures/SelectionOperator.pdf, id=646, 43.16125pt x 68.255pt>
 File: figures/SelectionOperator.pdf Graphic file (type pdf)
 <use figures/SelectionOperator.pdf>
 Package pdftex.def Info: figures/SelectionOperator.pdf used on input line 313.
 (pdftex.def)             Requested size: 38.08408pt x 60.22522pt.
-[34 <./figures/SelectionOperator.pdf>] <figures/SortOperator.pdf, id=659, 60.225pt x 68.255pt>
+[34 <./figures/SelectionOperator.pdf>] <figures/SortOperator.pdf, id=660, 60.225pt x 68.255pt>
 File: figures/SortOperator.pdf Graphic file (type pdf)
 <use figures/SortOperator.pdf>
 Package pdftex.def Info: figures/SortOperator.pdf used on input line 347.
 (pdftex.def)             Requested size: 53.14058pt x 60.22522pt.
-[35 <./figures/SortOperator.pdf>] <figures/EnrichOperator.pdf, id=678, 60.225pt x 68.255pt>
+[35 <./figures/SortOperator.pdf>] <figures/EnrichOperator.pdf, id=679, 60.225pt x 68.255pt>
 File: figures/EnrichOperator.pdf Graphic file (type pdf)
 <use figures/EnrichOperator.pdf>
 Package pdftex.def Info: figures/EnrichOperator.pdf used on input line 382.
 (pdftex.def)             Requested size: 53.14058pt x 60.22522pt.
-<figures/SplitOperator.pdf, id=680, 60.225pt x 68.255pt>
+<figures/SplitOperator.pdf, id=681, 60.225pt x 68.255pt>
 File: figures/SplitOperator.pdf Graphic file (type pdf)
 <use figures/SplitOperator.pdf>
 Package pdftex.def Info: figures/SplitOperator.pdf used on input line 399.
 (pdftex.def)             Requested size: 53.14058pt x 60.22522pt.
-[36 <./figures/EnrichOperator.pdf>] <figures/UnionOperator.pdf, id=699, 60.225pt x 68.255pt>
+[36 <./figures/EnrichOperator.pdf>] <figures/UnionOperator.pdf, id=700, 60.225pt x 68.255pt>
 File: figures/UnionOperator.pdf Graphic file (type pdf)
 <use figures/UnionOperator.pdf>
 Package pdftex.def Info: figures/UnionOperator.pdf used on input line 434.
@@ -620,17 +620,17 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 22.
 Here is how much of TeX's memory you used:
  10721 strings out of 493315
  157699 string characters out of 6137904
- 272070 words of memory out of 5000000
+ 273070 words of memory out of 5000000
  13799 multiletter control sequences out of 15000+600000
  16320 words of font info for 64 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,14n,75p,244b,875s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mtt12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/wasy/wasy10.pfb>
-Output written on output/paper.pdf (57 pages, 577216 bytes).
+Output written on output/paper.pdf (57 pages, 577390 bytes).
 PDF statistics:
- 872 PDF objects out of 1000 (max. 8388607)
- 754 compressed objects within 8 object streams
+ 873 PDF objects out of 1000 (max. 8388607)
+ 755 compressed objects within 8 object streams
  178 named destinations out of 1000 (max. 500000)
  477 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -243,6 +243,7 @@ class BaseDetails {
   void updateOperatorDetails() {
     this.base.forEach((id, element) => operators[this.id].updateDetail(id, element.input));
     this.elements.forEach((id, element) => operators[this.id].updateDetail(id, element.input));
+    operators[this.id].updateOutputs(this.output.list());
   }
 
   void validate() {
@@ -521,6 +522,29 @@ class HumanDetails extends SourceDetails {
     }
   }
 
+  void updateOperatorDetails() {
+    super.updateOperatorDetails();
+    operators[this.id].cleanRules();
+    for (html.Element e in this.parametersView.querySelectorAll('.rule')) {
+      String type = e.dataset['type'];
+      String segment = e.dataset['segment'];
+      String value = "";
+
+      if (type == 'text') {
+        value = (e.querySelector('.input-sm') as html.InputElement).value;
+      }
+      else if (type == 'number') {
+        List<html.Element> values = e.querySelectorAll('.input-sm');
+        value = '${(values.first as html.InputElement).value}::${(values.last as html.InputElement).value}';
+      }
+      else {
+        value = (e.querySelector('.input-sm') as html.DivElement).innerHtml;
+      }
+
+      operators[this.id].addRule('${type}::${segment}::${value}');
+    }
+  }
+
   void _onSegmentDragStart(html.MouseEvent e, OutputSegment segment) {
     _dragSegment = segment;
     _dragSegment.segment.classes.add('moving');
@@ -591,6 +615,8 @@ class HumanDetails extends SourceDetails {
     String inputDef = SOURCE_OPTIONS_HUMAN_INPUTS.keys.elementAt(this.availableInputs.selectedIndex);
     String inputType = SOURCE_OPTIONS_HUMAN_INPUTS[inputDef];
     this.output.addElement('segment-${ruleRow.hashCode}', example: '${inputDef} from human workers');
+
+    ruleRow.attributes['data-type'] = inputType;
 
     html.DivElement elementRowDefinition = new html.DivElement()
     ..className = 'col-sm-3'

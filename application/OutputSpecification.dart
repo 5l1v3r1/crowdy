@@ -107,6 +107,12 @@ class BaseSpecification {
     this.elements.remove(identifier);
   }
 
+  List<String> list() {
+    List<String> segments = new List<String>();
+    elements.forEach((identifier, segment) => segments.add(identifier));
+    return segments;
+  }
+
   void clear() {
     this.elementList.innerHtml = '';
     this.elements.clear();

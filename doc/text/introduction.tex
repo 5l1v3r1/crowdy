@@ -25,7 +25,7 @@ and software components involved within the system. Thus, system gains a social
 and technical characteristic with the ability to solve numerous problems, 
 even the ones requiring human intelligence.
 
-Social aspect of systems has expanded the scale of collaboration from small or 
+The social aspect of systems has expanded the scale of collaboration from small or 
 medium sized to internet-scale~\cite{Dorn2012b} leading to new era of computation. 
 Collaboration of creative and cognitive people with number-crunching 
 computer systems have appeared under many names such as crowdsourcing, 
@@ -38,7 +38,8 @@ is first coined by Jeff Howe in the June 2006 issue of Wired magazine~\cite{Howe
 as an alternative to the traditional, in-house approaches focusing on assigning tasks 
 to employees in the company for solving problems. Crowdsourcing describes a new, 
 mainly web-based business model that exploits collaboration of individuals in a 
-distributed network through an open call for proposals. The term is described by Howe as:
+distributed network through an open call for proposals. The term is described by Howe 
+as follows:
 
 \begin{quotation}
 Simply defined, crowdsourcing represents the act of a company or institution taking 
@@ -98,10 +99,10 @@ problems requires effective and efficient coordination of computation sources
 (human or software) rather than creating and listing a series of micro-tasks 
 to-be-completed.
 
-Recently detailed analyses on current mechanisms based on foundations of 
+Recently detailed analysis on current mechanisms based on foundations of 
 crowdsourcing reveal the necessity of a more sophisticated problem-solving 
-paradigm. Researchers explicitly state the need for a new generic platform 
-with ability to tackle advanced problems. Kittur et al.~\cite{Kittur2013} 
+paradigm~\cite{Kittur2013}. Researchers explicitly state the need for a new generic platform 
+with the ability to tackle advanced problems. Kittur et al.~\cite{Kittur2013} 
 suggest researchers to form new concepts of crowd work beyond 
 the simple, independent and deskilled tasks. Based on the fact that complex 
 work cannot be accomplished via existing simple and parallel approaches,
@@ -125,11 +126,14 @@ for massively parallel human computation, limited-scope and ability user interfa
 ~\cite{Marcus2011, Bernstein2010, Marcus2011b, Rzeszotarski2012}, 
 concepts for planning~\cite{Zhang2012}, 
 analysis of collaboration~\cite{Dorn2012}. 
-These works fail to tackle challenges of crowdsourcing due to various reasons: 
-having rigid structure and requirements, being only applicable to a small and 
-bounded problem-set, focusing on a specific aspect of crowdsourcing, 
-being developed in an ad hoc manner, requiring a significant amount of work in 
-order to implement and integrate.
+These studies fail to tackle challenges of crowdsourcing due to various reasons:
+\begin{itemize}
+	\item having rigid structure and requirements
+	\item being only applicable to a small and bounded problem-set
+	\item focusing on a specific aspect of crowdsourcing
+	\item being developed in an ad hoc manner
+	\item requiring a significant amount of work in order to implement and integrate.
+\end{itemize}
 
 %These works and related issues are further 
 %explained and examined thoroughly in the following section.
@@ -163,10 +167,14 @@ by the research community~\cite{Doan2011}.
 
 \section{Purpose}
 
-To address these issues, a new general-purpose and extensible platform for crowdsourcing 
+To address the issues listed in the previous section, a new general-purpose and 
+extensible platform for crowdsourcing 
 is proposed in this work. The new platform, $Crowdy$, is a computing stack to design 
 and develop crowdsourcing applications for effective and efficient collaboration of
-human and software components. The platform consists of an application editor, a runtime 
+human and software components. The platform enables users to perform computations 
+to complex problems.
+
+The platform consists of an application editor, a runtime 
 environment and computation resources. Users design applications by simply 
 creating and connecting operators together. These applications are submitted to runtime 
 environment. The runtime environment executes applications by creating processes. 

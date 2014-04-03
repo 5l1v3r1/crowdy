@@ -102,6 +102,25 @@ bool isBackspacePressed(html.KeyboardEvent e) {
 
 
 /*
+ * Submit application
+ */
+void submitApplication(Map<String, Map> appDetails) {
+  var url = "/submit";
+
+  Map<String, String> pairs = new Map<String, String>();
+  String details = convert.JSON.encode(appDetails);
+  pairs["operators"] = details;
+  print(details);
+
+  try {
+    postData(url, pairs, utilityModalBody.querySelector('#result'));
+  }
+  catch(e) {
+    utilityModalBody.querySelector('#result').text = e.toString();
+  }
+}
+
+/*
  * Report a bug
  */
 String logMessages = "";

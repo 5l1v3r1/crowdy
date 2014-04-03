@@ -12,6 +12,7 @@ class Operator {
     this.next = new Map<String, bool>();
     this.prev = new Map<String, bool>();
     this.details = new Map();
+    this.details['output'] = new List<String>();
     this.details['rules'] = new List<String>();
   }
 
@@ -82,8 +83,12 @@ class Operator {
     }
   }
 
+  void updateOutputs(List<String> outputs) {
+    this.details['output'] = outputs;
+  }
+
   void updateDetail(String identifier, html.Element input) {
-    if (input is html.InputElement) {
+    if (input is html.InputElement && identifier != 'id') {
       this.details[identifier] = input.value;
     }
     else if (input is html.TextAreaElement) {

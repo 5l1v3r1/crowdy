@@ -12,6 +12,8 @@ Validation validation = new Validation();
 
 class Validation {
 
+  Map<String, Map> appDetails = new Map<String, Map>();
+
   Validation() {
     validationMessages[VALIDATION_ERROR] = new List<String>();
     validationMessages[VALIDATION_WARNING] = new List<String>();
@@ -43,7 +45,19 @@ class Validation {
     appendToUtilityModalBody(new html.DListElement()..className = "dl-horizontal"
         ..appendHtml("<dt>${VALIDATION_RESULT}</dt><dd>${valid ? VALIDATION_SUCCESS : VALIDATION_FAILURE}</dd>"));
 
+    if (valid) {
+      appendToUtilityModalBody(new html.DivElement()
+            ..className = 'row'
+            ..append(new html.DivElement()..className = 'col-sm-12'
+              ..append(new html.ParagraphElement()..id = 'result')));
+
+      appendToUtilityModalFooter(new html.ButtonElement()..className = 'btn btn-default'
+          ..text = 'Submit'..onClick.listen((e) => submitApplication(appDetails)));
+    }
+
     showUtilityModal('Validation Result');
+
+    print(appDetails);
   }
 
   void validate() {
@@ -57,8 +71,10 @@ class Validation {
     int sourceCount = 0;
     int sinkCount = 0;
     bool operatorWithNoConnection = false;
+    appDetails.clear();
     for (String operatorId in operators.keys) {
       operators[operatorId].validate();
+      appDetails[operatorId] = operators[operatorId].details;
       sourceCount += (operators[operatorId].type.contains('source')) ? 1 : 0;
       sinkCount += (operators[operatorId].type.contains('sink')) ? 1 : 0;
       operatorWithNoConnection = operatorWithNoConnection || (operators[operatorId].next.length + operators[operatorId].prev.length == 0);
