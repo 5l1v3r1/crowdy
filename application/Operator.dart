@@ -13,7 +13,6 @@ class Operator {
     this.prev = new Map<String, bool>();
     this.details = new Map();
     this.details['output'] = new List<String>();
-    this.details['rules'] = new List<String>();
   }
 
   void initialize() {
@@ -50,6 +49,17 @@ class Operator {
     this.prev[previousOperatorId] = true;
     this.updateDownFlow(previousOperatorId);
     log.info("${previousOperatorId} connected to ${this.id}.");
+  }
+
+  Map getDetails() {
+    this.details['rules'] = this.uiDetails.listOutputs();
+    List<String> prevOperators = new List<String>();
+    List<String> nextOperators = new List<String>();
+    this.prev.forEach((identifier, connected) => prevOperators.add(identifier));
+    this.next.forEach((identifier, connected) => nextOperators.add(identifier));
+    this.details['prev'] = prevOperators;
+    this.details['next'] = nextOperators;
+    return this.details;
   }
 
   void removeNext(String nextOperatorId) {

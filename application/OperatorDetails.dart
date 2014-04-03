@@ -240,10 +240,13 @@ class BaseDetails {
     this.output.clear();
   }
 
+  List<String> listOutputs() {
+    return this.output.list();
+  }
+
   void updateOperatorDetails() {
     this.base.forEach((id, element) => operators[this.id].updateDetail(id, element.input));
     this.elements.forEach((id, element) => operators[this.id].updateDetail(id, element.input));
-    operators[this.id].updateOutputs(this.output.list());
   }
 
   void validate() {

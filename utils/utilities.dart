@@ -110,7 +110,6 @@ void submitApplication(Map<String, Map> appDetails) {
   Map<String, String> pairs = new Map<String, String>();
   String details = convert.JSON.encode(appDetails);
   pairs["operators"] = details;
-  print(details);
 
   try {
     postData(url, pairs, utilityModalBody.querySelector('#result'));

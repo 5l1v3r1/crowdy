@@ -46,6 +46,10 @@ class Validation {
         ..appendHtml("<dt>${VALIDATION_RESULT}</dt><dd>${valid ? VALIDATION_SUCCESS : VALIDATION_FAILURE}</dd>"));
 
     if (valid) {
+      for (String operatorId in operators.keys) {
+        appDetails[operatorId] = operators[operatorId].getDetails();
+      }
+
       appendToUtilityModalBody(new html.DivElement()
             ..className = 'row'
             ..append(new html.DivElement()..className = 'col-sm-12'
@@ -74,7 +78,6 @@ class Validation {
     appDetails.clear();
     for (String operatorId in operators.keys) {
       operators[operatorId].validate();
-      appDetails[operatorId] = operators[operatorId].details;
       sourceCount += (operators[operatorId].type.contains('source')) ? 1 : 0;
       sinkCount += (operators[operatorId].type.contains('sink')) ? 1 : 0;
       operatorWithNoConnection = operatorWithNoConnection || (operators[operatorId].next.length + operators[operatorId].prev.length == 0);
