@@ -12,7 +12,6 @@ class Operator {
     this.next = new Map<String, bool>();
     this.prev = new Map<String, bool>();
     this.details = new Map();
-    this.details['output'] = new List<String>();
   }
 
   void initialize() {
@@ -52,7 +51,7 @@ class Operator {
   }
 
   Map getDetails() {
-    this.details['rules'] = this.uiDetails.listOutputs();
+    this.details['output'] = this.uiDetails.listOutputs();
     List<String> prevOperators = new List<String>();
     List<String> nextOperators = new List<String>();
     this.prev.forEach((identifier, connected) => prevOperators.add(identifier));
@@ -91,10 +90,6 @@ class Operator {
     if (this.id == operatorId) {
       this.uiDetails.updateOperatorDetails();
     }
-  }
-
-  void updateOutputs(List<String> outputs) {
-    this.details['output'] = outputs;
   }
 
   void updateDetail(String identifier, html.Element input) {
