@@ -204,6 +204,8 @@ void hideUtilityModal() {
  * HTTP helpers
  */
 void postData(String url, Map<String, String> pairs, html.Element result) {
+  result.text = "Processing...";
+
   html.HttpRequest request = new html.HttpRequest();
 
   request.onReadyStateChange.listen((e) {
@@ -213,6 +215,6 @@ void postData(String url, Map<String, String> pairs, html.Element result) {
   });
 
   // POST the data to the server
-  request.open("POST", url, async: false);
+  request.open("POST", url, async: true);
   request.send(convert.JSON.encode(pairs));
 }
