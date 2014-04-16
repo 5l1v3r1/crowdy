@@ -737,7 +737,7 @@ class SinkFileDetails extends SinkDetails {
 
   void initialize() {
     super.initialize();
-    this.addElement('output', 'filename', 'File name', true, this.elements, features: {'maxlength': '255'});
+    this.addElement('file', 'filename', 'File name', true, this.elements, features: {'maxlength': '255'});
   }
 }
 
