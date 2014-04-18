@@ -146,6 +146,10 @@ C.~Callison-Burch, ``Fast, cheap, and creative: evaluating translation quality
   on Empirical Methods in Natural Language Processing: Volume 1-Volume 1},
   pp.~286--295, Association for Computational Linguistics, 2009.
 
+\bibitem{Richardson2008}
+L.~Richardson and S.~Ruby, {\em RESTful web services}.
+\newblock O'Reilly Media, Inc., 2008.
+
 \bibitem{Dean2008}
 J.~Dean and S.~Ghemawat, ``Mapreduce: simplified data processing on large
   clusters,'' {\em Communications of the ACM}, vol.~51, no.~1, pp.~107--113,
@@ -154,9 +158,5 @@ J.~Dean and S.~Ghemawat, ``Mapreduce: simplified data processing on large
 \bibitem{Kokciyan}
 N.~Kokciyan, ``Weflow: We follow the flow,'' Master's thesis, Galatasaray
   University, 2009.
-
-\bibitem{Richardson2008}
-L.~Richardson and S.~Ruby, {\em RESTful web services}.
-\newblock O'Reilly Media, Inc., 2008.
 
 \end{thebibliography}
