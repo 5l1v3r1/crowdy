@@ -104,7 +104,7 @@ class Operator {
       this.details[identifier] = input.value;
     }
     else if (input is html.DivElement) {
-      this.details[identifier] = input.text;
+      this.details[identifier] = input.innerHtml;
     }
   }
 
