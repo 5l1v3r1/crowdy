@@ -2,53 +2,43 @@
 
 %% Background
 
-The asynchrony, heterogeneity and inherent loose coupling that characterize applications 
-promote system of systems as a natural design abstraction for growing class of software 
-systems. This new concept goes beyond the size of current system definition by several 
-measures such as 
+The growing software systems are characterized by asynchrony, 
+heterogeneity and inherent loose coupling promoting system of systems 
+as a natural design abstraction. The new system concept goes beyond 
+the size of current definition by several measures such as 
 number of people the system employed for different purposes; 
 number of connections and interdependencies among components; 
 number of hardware elements; 
 amount of data stored, accessed, manipulated, and refined 
-and number of lines of code. Such systems are called 
-Ultra-Large-Scale (ULS) systems and perceived as socio-technical 
-ecosystems~\cite{ULSReport}.
+and number of lines of code~\cite{ULSReport}. Decentralized and dynamic 
+structure defines the system that is formed by various other systems interacting 
+in complex ways.
 
-The socio-technical aspect of a system is a result of decentralized and dynamic 
-structure formed by people and software components interacting in complex ways. 
-People become not only users, but also an integral part of the system providing 
-content and computation, and the overall behavior~\cite{ULSReport}. 
-The difference between the roles concerning system components and 
-humans (user, developer) becomes less distinct. The homogeneity 
-of components ceases together with the increasing scale and variety of people 
-and software components involved within the system. Thus, system gains a social 
+The software system becomes an ecosystem in which components supported by 
+a common platform operate through exchange of information, resources and 
+artifacts and contribute to the overall service that system tries to provide~\cite{Ecosystem}. 
+In fact, the components that are fundamental to system 
+functionalities are not only software components, but there are now components 
+whose functionality is operated by human. People become not only users, 
+but also an integral part of the system providing 
+content and computation, and the overall behavior~\cite{ULSReport}.
+
+The software system gains a social 
 and technical characteristic with the ability to solve numerous problems, 
-even the ones requiring human intelligence.
+even the ones requiring human intelligence. Homogeneity 
+of components ceases together with the increasing scale and variety of people 
+and software components involved within the system. The difference between 
+the roles concerning system components and 
+humans (user, developer) becomes less distinct. People becomes an essential 
+part of the system in collaboration with software components.
 
-The social aspect of systems has expanded the scale of collaboration from small or 
-medium sized to internet-scale~\cite{Dorn2012b} leading to new era of computation. 
-Collaboration of creative and cognitive people with number-crunching 
-computer systems have appeared under many names such as crowdsourcing, 
-human computation, collective intelligence, social computing, global brain etc, 
-for which you can find detailed studies on classification of systems and ideas 
-in~\cite{Quinn2009, Quinn2011} collected under distributed human computation term.
-
-The term $crowdsourcing$, which is the main consideration in this body of work, 
-is first coined by Jeff Howe in the June 2006 issue of Wired magazine~\cite{Howe2006b} 
-as an alternative to the traditional, in-house approaches focusing on assigning tasks 
-to employees in the company for solving problems. Crowdsourcing describes a new, 
-mainly web-based business model that exploits collaboration of individuals in a 
-distributed network through an open call for proposals. The term is described by Howe 
-as follows:
-
-\begin{quotation}
-Simply defined, crowdsourcing represents the act of a company or institution taking 
-a function once performed by employees and outsourcing it to an undefined 
-(and generally large) network of people in the form of an open call. This can take 
-the form of peer-production (when the job is performed collaboratively), but is also 
-often undertaken by sole individuals. The crucial prerequisite is the use of the open 
-call format and the large network of potential laborers.~\cite{Howe2006a}
-\end{quotation}
+The scale of collaboration of creative and cognitive people with 
+number-crunching computer systems has expanded from small or 
+medium size to internet-scale~\cite{Dorn2012b} leading to new era of 
+computation. Although this collaboration have appeared under many names 
+such as human computation, collective intelligence, social computing, 
+global brain etc, crowdsourcing is the main term that is being used to refer 
+human and computer collaboration.
 
 Crowdsourcing as the new and powerful mechanism of computation has become 
 compelling to accomplish work online~\cite{Kittur2011}. Over the past decade, numerous 
@@ -63,24 +53,12 @@ Wikipedia and Linux can be viewed as crowdsourcing systems from a point of view 
 conceives crowdsourcing as explicit collaboration of users to 
 build a long-lasting and beneficial artefact~\cite{Doan2011}.
 
-Indeed, one of the most interesting developments in terms of crowdsourcing is 
-Amazon's Mechanical Turk (MTurk), which is a general purpose crowdsourcing platform 
-recruiting large numbers of people to complete diverse jobs. Assignments on MTurk 
-range from labeling images with keywords, transcribing an audio snippet, finding some 
-piece of information on the Web. Requesters submit jobs, which are called Human 
-Intelligent Tasks or HITs in MTurk parlance, as HTML forms. Respectively workers, 
-who are the crowd of users, (called Turkers on MTurk) perform or complete these 
-jobs by inputting their answers and receiving a small payment in return. This actual 
-platform and other example systems listed above present the potential to accomplish 
-work in different areas within less time and money required by traditional 
-methods~\cite{Minder2012, Marcus2011}.
-
 %% Problem
 
 \section{Problem}
 \label{sec:problem}
 
-Although current crowdsourcing systems led by MTurk allow a variety of tasks 
+Although current crowdsourcing systems allow a variety of tasks 
 to be completed by people, the tasks requested for completion are typically simple. 
 Tasks, often described as micro-tasks, have the following two fundamental characteristics:
 
@@ -148,7 +126,7 @@ collaborations~\cite{Schall2010}. Thus, human involvement in current mechanisms 
 be rethought due to limited support for collaboration and 
 ignorance of collaboration patterns in problem-solving~\cite{Dorn2012a} 
 over general-purpose infrastructures that can more accurately reflect 
-the collaboration of people and computers~\cite{Minder2012, Bernstein2012}.
+the collaboration of people and computers~\cite{Bernstein2012, Minder2012}.
 
 %This additionally restricts 
 %the scope and complexity of tasks that can be addressed by crowdsourcing systems, and 
@@ -167,12 +145,19 @@ by the research community~\cite{Doan2011}.
 
 \section{Purpose}
 
-To address the issues listed in the previous section, a new general-purpose and 
-extensible platform for crowdsourcing 
-is proposed in this work. The new platform, $Crowdy$, is a computing stack to design 
+$Crowdy$ is a new general-purpose and extensible platform for crowdsourcing to 
+support software ecosystems via stream-based human computation. The platform 
+is developed to address the issues and challenges in crowdsourcing.
+
+$Crowdy$, is a computing stack to design 
 and develop crowdsourcing applications for effective and efficient collaboration of
-human and software components. The platform enables users to perform computations 
-to complex problems.
+human and software components. The platform
+\begin{itemize}
+	\item enables users to perform computations to solve complex problems
+	\item has no rigid structure or requirements
+	\item is not limited a specific problem-set or aspect of crowdsourcing
+	\item does not require significant amount of work to implement and solve the problems.
+\end{itemize}
 
 The platform consists of an application editor, a runtime 
 environment and computation resources. Users design applications by simply 
@@ -193,8 +178,8 @@ component-based model.
 \section{Thesis Plan}
 
 The remainder of the work continues as follows. In Chapter \ref{chap:background}, 
-background information related to this study is given and previous works are examined. 
-Chapter \ref{chap:platform} provides the details of the proposed platform. Motivating 
-examples are described and developed using the proposed platform in Chapter 
-\ref{chap:examples}. In Chapter \ref{chap:discussion}, a brief discussion of future work 
+background information on crowdsourcing is given. Chapter \ref{chap:platform} provides 
+the details of the proposed platform. Various motivating scenarios are described and 
+developed using the proposed platform in Chapter 
+\ref{chap:examples}. Related studies are examined in Chapter \ref{chap:relatedwork}. In Chapter \ref{chap:discussion}, a brief discussion of future work 
 is given. A final chapter concludes this study.

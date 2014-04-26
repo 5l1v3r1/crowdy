@@ -1,18 +1,20 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces The frequency of crowdsourcing keyword in academic papers.}}{8}{figure.caption.4}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces The frequency of crowdsourcing keyword in academic papers.}}{7}{figure.caption.4}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Task asking people to find address of a company\relax }}{9}{figure.caption.5}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Task asking people to distinguish sentiment in a text snippet\relax }}{10}{figure.caption.6}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Architecture of the platform.\relax }}{16}{figure.caption.5}
-\contentsline {figure}{\numberline {3.2}{\ignorespaces A sample, minimal $Crowdy$ application.\relax }}{17}{figure.caption.6}
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Base operator representation.\relax }}{18}{figure.caption.7}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Source operator representation.\relax }}{19}{figure.caption.8}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Sink operator representation.\relax }}{22}{figure.caption.10}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Processing operator representation.\relax }}{22}{figure.caption.11}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Selection operator representation.\relax }}{23}{figure.caption.12}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Sort operator representation.\relax }}{24}{figure.caption.13}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Enrich operator representation.\relax }}{25}{figure.caption.14}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Split operator representation.\relax }}{26}{figure.caption.15}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Union operator representation.\relax }}{26}{figure.caption.16}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Architecture of the platform.\relax }}{17}{figure.caption.7}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces A sample, minimal $Crowdy$ application.\relax }}{18}{figure.caption.8}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Base operator representation.\relax }}{19}{figure.caption.9}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Source operator representation.\relax }}{20}{figure.caption.10}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Sink operator representation.\relax }}{23}{figure.caption.12}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Processing operator representation.\relax }}{23}{figure.caption.13}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Selection operator representation.\relax }}{24}{figure.caption.14}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Sort operator representation.\relax }}{25}{figure.caption.15}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Enrich operator representation.\relax }}{26}{figure.caption.16}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Split operator representation.\relax }}{27}{figure.caption.17}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Union operator representation.\relax }}{27}{figure.caption.18}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
