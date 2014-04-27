@@ -49,4 +49,12 @@
 \contentsline {subsection}{\numberline {5.2.4}CrowdSpace}{43}{subsection.5.2.4}
 \contentsline {subsection}{\numberline {5.2.5}Human Architecture}{44}{subsection.5.2.5}
 \contentsline {chapter}{\numberline {6}Discussion}{45}{chapter.6}
-\contentsline {chapter}{\numberline {7}Conclusion}{46}{chapter.7}
+\contentsline {section}{\numberline {6.1}Extending the Operator Set}{45}{section.6.1}
+\contentsline {section}{\numberline {6.2}Improvements to Existing Operators}{46}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}human operator}{46}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}source manual operator}{47}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}sink email operator}{47}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}sink file operator}{47}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}selection/split operators}{47}{subsection.6.2.5}
+\contentsline {section}{\numberline {6.3}More Quality Control}{48}{section.6.3}
+\contentsline {chapter}{\numberline {7}Conclusion}{49}{chapter.7}

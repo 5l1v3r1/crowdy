@@ -1,8 +1,40 @@
 \chapter{Discussion}
 \label{chap:discussion}
 
-- Extending operator set
-- More quality control
-- Improvements in human task assignment
+$Crowdy$ is a general-purpose platform to develop and execute crowdsourcing application. During the development of the actual platform and testing it via different scenarios the following observations and enhancements have been identified. These improvements and ideas listed in this section conforms to a promising future work for the existing platform. 
 
-TODO
+\section{Extending the Operator Set}
+Platform provides a set of operators to define and solve problems. This set is proved to be enough for given real-world scenarios such as translation or finding business addresses. However, the problem set can be extended by various other scenarios and problems. Therefore, the existing operator set can be extended by several types of operators. For example, social media has become the main communication method to share and exchange information and ideas online. Therefore, it is inevitable to expect social media related computations such as classifying tweets. Let?s assume that user needs a crowdsourcing application that classifies and saves tweets into a file with respect to their sentiment identified by human workers. Although the existing platform is capable to handle such a scenario by inputting list of tweets into the system via \textit{source manual operator}, then letting people to analyze each tweet and identify sentiment via \textit{human processing operator} and finally saving tweets into a file by their classification that split by \textit{split operator}. In this scenario, \textit{source manual operator} can be replaced by a source operator that is capable of reading Twitter API configured by specific set of parameters.
+
+Besides Twitter API reader kind of specific functionality operators, the existing operator set can be further extended. In terms of source operators, file readers and RSS readers might be useful for certain scenarios such as reading content from files or web pages directly and inputing that data into the system. Having a projection relational operator can be another enhancement for the existing system, although not having that operator does not impact the system functionality significantly.
+
+Considering current platform definition, one crucial improvement might be adding feedback ports to certain set of operators in addition to input and output ports. This feedback port can be activate and deactivate an operator with respect to a given condition. Using this operator the crowdsourcing application gains more dynamism and ability to change internal functional details according to the conditions emerged by given input set.
+
+\section{Improvements to Existing Operators}
+The existing set of operators can be further improved individually. However, most of these improvements needs thorough testing and analysis. Here is a list of refinement that can be applied to existing operators: 
+
+\subsection{human operator}
+Requester can be enabled to change instructions and question design by changing format, adding/removing image/audio/video or basically adding HTML.
+
+Currently requester can create four types input to be completed by human workers: text input, number input, single selection or multiple selection. This list can be extended by other types of questions.
+
+Heterogeneity of human operators is a fundamental aspect of human computation. Right now the platform provides a set of filtering rules to the requester to assign task to the right worker. This can be further improved by allowing requesters to create their own custom rules to test whether a worker should be assigned to that task or not.
+
+\subsection{source manual operator}
+Source manual operator can be further enriched by adding more delimiter options.
+
+\subsection{sink email operator}
+Sink email operator can be configured to have parameters for subject and/or body.
+
+\subsection{sink file operator}
+Sink file operator writes data tuples into a tab delimited file. This delimiter can be set by requesters.
+
+\subsection{selection/split operators}
+Considering selection and split operators, more boolean predicates (greater than, less than etc.) can be added to test whether a data tuple evaluates to true or false.
+
+\section{More Quality Control}
+Quality control is the most important challenge for crowdsourcing systems. Since low quality submissions for human tasks is common, most of the quality control efforts focus on human-related computation. Operators that
+
+The quality control of the current platform definition can be additionally refined by allowing application to have loops.   
+
+

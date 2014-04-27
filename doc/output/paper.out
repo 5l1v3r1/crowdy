@@ -49,4 +49,12 @@
 \BOOKMARK [2][-]{subsection.5.2.4}{CrowdSpace}{section.5.2}% 49
 \BOOKMARK [2][-]{subsection.5.2.5}{Human Architecture}{section.5.2}% 50
 \BOOKMARK [0][-]{chapter.6}{Discussion}{}% 51
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 52
+\BOOKMARK [1][-]{section.6.1}{Extending the Operator Set}{chapter.6}% 52
+\BOOKMARK [1][-]{section.6.2}{Improvements to Existing Operators}{chapter.6}% 53
+\BOOKMARK [2][-]{subsection.6.2.1}{human operator}{section.6.2}% 54
+\BOOKMARK [2][-]{subsection.6.2.2}{source manual operator}{section.6.2}% 55
+\BOOKMARK [2][-]{subsection.6.2.3}{sink email operator}{section.6.2}% 56
+\BOOKMARK [2][-]{subsection.6.2.4}{sink file operator}{section.6.2}% 57
+\BOOKMARK [2][-]{subsection.6.2.5}{selection/split operators}{section.6.2}% 58
+\BOOKMARK [1][-]{section.6.3}{More Quality Control}{chapter.6}% 59
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 60
