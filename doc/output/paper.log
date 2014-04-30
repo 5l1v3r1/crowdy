@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  29 APR 2014 09:57
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  30 APR 2014 03:41
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -481,17 +481,17 @@ File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 \tf@toc=\write4
 \openout4 = `paper.toc'.
 
-[8] (output/paper.lof)
+[8] (output/paper.lof [9
+
+])
 \tf@lof=\write5
 \openout5 = `paper.lof'.
 
-[9
-
-] (output/paper.lot)
+[10] (output/paper.lot)
 \tf@lot=\write6
 \openout6 = `paper.lot'.
 
-[10
+[11
 
 ]) (text/introduction.tex
 Chapter 1.
@@ -508,17 +508,17 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 Chapter 2.
 [7
 
-] <figures/keyword_statistics.png, id=474, 727.518pt x 511.6716pt>
+] <figures/keyword_statistics.png, id=528, 727.518pt x 511.6716pt>
 File: figures/keyword_statistics.png Graphic file (type png)
 <use figures/keyword_statistics.png>
 Package pdftex.def Info: figures/keyword_statistics.png used on input line 41.
 (pdftex.def)             Requested size: 350.68272pt x 246.63797pt.
-[8 <./figures/keyword_statistics.png>] [9] <figures/sample/address.png, id=495, 567.62062pt x 808.52063pt>
+[8 <./figures/keyword_statistics.png>] [9] <figures/sample/address.png, id=549, 567.62062pt x 808.52063pt>
 File: figures/sample/address.png Graphic file (type png)
 <use figures/sample/address.png>
 Package pdftex.def Info: figures/sample/address.png used on input line 96.
 (pdftex.def)             Requested size: 206.28247pt x 293.83069pt.
-<figures/sample/sentiment.png, id=496, 480.29437pt x 464.23438pt>
+<figures/sample/sentiment.png, id=550, 480.29437pt x 464.23438pt>
 File: figures/sample/sentiment.png Graphic file (type png)
 <use figures/sample/sentiment.png>
 Package pdftex.def Info: figures/sample/sentiment.png used on input line 103.
@@ -527,57 +527,57 @@ Package pdftex.def Info: figures/sample/sentiment.png used on input line 103.
 Chapter 3.
 [17
 
-] <figures/Architecture.pdf, id=554, 441.65pt x 279.0425pt>
+] <figures/Architecture.pdf, id=607, 441.65pt x 279.0425pt>
 File: figures/Architecture.pdf Graphic file (type pdf)
 <use figures/Architecture.pdf>
 Package pdftex.def Info: figures/Architecture.pdf used on input line 35.
 (pdftex.def)             Requested size: 317.74515pt x 200.75073pt.
-[18 <./figures/Architecture.pdf>] <figures/helloworld.png, id=571, 610.28pt x 87.82813pt>
+[18 <./figures/Architecture.pdf>] <figures/helloworld.png, id=624, 610.28pt x 87.82813pt>
 File: figures/helloworld.png Graphic file (type png)
 <use figures/helloworld.png>
 Package pdftex.def Info: figures/helloworld.png used on input line 82.
 (pdftex.def)             Requested size: 350.68272pt x 50.46994pt.
-[19 <./figures/helloworld.png>] <figures/basicoperator.pdf, id=578, 239.89626pt x 90.3375pt>
+[19 <./figures/helloworld.png>] <figures/basicoperator.pdf, id=632, 239.89626pt x 90.3375pt>
 File: figures/basicoperator.pdf Graphic file (type pdf)
 <use figures/basicoperator.pdf>
 Package pdftex.def Info: figures/basicoperator.pdf used on input line 100.
 (pdftex.def)             Requested size: 266.5552pt x 100.37537pt.
-[20 <./figures/basicoperator.pdf>] <figures/SourceOperator.pdf, id=589, 104.39pt x 68.255pt>
+[20 <./figures/basicoperator.pdf>] <figures/SourceOperator.pdf, id=644, 104.39pt x 68.255pt>
 File: figures/SourceOperator.pdf Graphic file (type pdf)
 <use figures/SourceOperator.pdf>
 Package pdftex.def Info: figures/SourceOperator.pdf used on input line 134.
 (pdftex.def)             Requested size: 92.11035pt x 60.22522pt.
-[21 <./figures/SourceOperator.pdf>] [22] [23] <figures/SinkOperator.pdf, id=624, 104.39pt x 68.255pt>
+[21 <./figures/SourceOperator.pdf>] [22] [23] <figures/SinkOperator.pdf, id=677, 104.39pt x 68.255pt>
 File: figures/SinkOperator.pdf Graphic file (type pdf)
 <use figures/SinkOperator.pdf>
 Package pdftex.def Info: figures/SinkOperator.pdf used on input line 254.
 (pdftex.def)             Requested size: 92.11035pt x 60.22522pt.
-<figures/ProcessingOperator.pdf, id=626, 109.40875pt x 68.255pt>
+<figures/ProcessingOperator.pdf, id=679, 109.40875pt x 68.255pt>
 File: figures/ProcessingOperator.pdf Graphic file (type pdf)
 <use figures/ProcessingOperator.pdf>
 Package pdftex.def Info: figures/ProcessingOperator.pdf used on input line 276.
 (pdftex.def)             Requested size: 96.53874pt x 60.22522pt.
-[24 <./figures/SinkOperator.pdf> <./figures/ProcessingOperator.pdf>] <figures/SelectionOperator.pdf, id=652, 43.16125pt x 68.255pt>
+[24 <./figures/SinkOperator.pdf> <./figures/ProcessingOperator.pdf>] <figures/SelectionOperator.pdf, id=705, 43.16125pt x 68.255pt>
 File: figures/SelectionOperator.pdf Graphic file (type pdf)
 <use figures/SelectionOperator.pdf>
 Package pdftex.def Info: figures/SelectionOperator.pdf used on input line 313.
 (pdftex.def)             Requested size: 38.08408pt x 60.22522pt.
-[25 <./figures/SelectionOperator.pdf>] <figures/SortOperator.pdf, id=665, 60.225pt x 68.255pt>
+[25 <./figures/SelectionOperator.pdf>] <figures/SortOperator.pdf, id=718, 60.225pt x 68.255pt>
 File: figures/SortOperator.pdf Graphic file (type pdf)
 <use figures/SortOperator.pdf>
 Package pdftex.def Info: figures/SortOperator.pdf used on input line 347.
 (pdftex.def)             Requested size: 53.14058pt x 60.22522pt.
-[26 <./figures/SortOperator.pdf>] <figures/EnrichOperator.pdf, id=684, 60.225pt x 68.255pt>
+[26 <./figures/SortOperator.pdf>] <figures/EnrichOperator.pdf, id=738, 60.225pt x 68.255pt>
 File: figures/EnrichOperator.pdf Graphic file (type pdf)
 <use figures/EnrichOperator.pdf>
 Package pdftex.def Info: figures/EnrichOperator.pdf used on input line 382.
 (pdftex.def)             Requested size: 53.14058pt x 60.22522pt.
-<figures/SplitOperator.pdf, id=686, 60.225pt x 68.255pt>
+<figures/SplitOperator.pdf, id=740, 60.225pt x 68.255pt>
 File: figures/SplitOperator.pdf Graphic file (type pdf)
 <use figures/SplitOperator.pdf>
 Package pdftex.def Info: figures/SplitOperator.pdf used on input line 399.
 (pdftex.def)             Requested size: 53.14058pt x 60.22522pt.
-[27 <./figures/EnrichOperator.pdf>] <figures/UnionOperator.pdf, id=706, 60.225pt x 68.255pt>
+[27 <./figures/EnrichOperator.pdf>] <figures/UnionOperator.pdf, id=760, 60.225pt x 68.255pt>
 File: figures/UnionOperator.pdf Graphic file (type pdf)
 <use figures/UnionOperator.pdf>
 Package pdftex.def Info: figures/UnionOperator.pdf used on input line 434.
@@ -589,13 +589,43 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 
 [30] [31]) (text/examples.tex [32]
 Chapter 4.
-) (text/relatedwork.tex [33
+<figures/scenarios/naive.png, id=816, 519.9425pt x 88.33pt>
+File: figures/scenarios/naive.png Graphic file (type png)
+<use figures/scenarios/naive.png>
+Package pdftex.def Info: figures/scenarios/naive.png used on input line 13.
+(pdftex.def)             Requested size: 350.68272pt x 59.57568pt.
+[33
 
-]
+ <./figures/scenarios/naive.png>] <figures/scenarios/poem.png, id=823, 846.16125pt x 533.995pt>
+File: figures/scenarios/poem.png Graphic file (type png)
+<use figures/scenarios/poem.png>
+Package pdftex.def Info: figures/scenarios/poem.png used on input line 53.
+(pdftex.def)             Requested size: 198.80919pt x 125.46921pt.
+[34]
+File: figures/scenarios/naive.png Graphic file (type png)
+<use figures/scenarios/naive.png>
+Package pdftex.def Info: figures/scenarios/naive.png used on input line 63.
+(pdftex.def)             Requested size: 350.68272pt x 59.57568pt.
+[35 <./figures/scenarios/poem.png>] <figures/scenarios/scenario2_1.png, id=835, 604.2575pt x 87.82813pt>
+File: figures/scenarios/scenario2_1.png Graphic file (type png)
+<use figures/scenarios/scenario2_1.png>
+Package pdftex.def Info: figures/scenarios/scenario2_1.png used on input line 98.
+(pdftex.def)             Requested size: 350.68272pt x 50.97116pt.
+<figures/scenarios/poem2.png, id=838, 929.4725pt x 522.95375pt>
+File: figures/scenarios/poem2.png Graphic file (type png)
+<use figures/scenarios/poem2.png>
+Package pdftex.def Info: figures/scenarios/poem2.png used on input line 107.
+(pdftex.def)             Requested size: 222.99286pt x 125.46921pt.
+[36 <./figures/scenarios/scenario2_1.png>] <figures/scenarios/scenario2_2.png, id=845, 700.6175pt x 174.15062pt>
+File: figures/scenarios/scenario2_2.png Graphic file (type png)
+<use figures/scenarios/scenario2_2.png>
+Package pdftex.def Info: figures/scenarios/scenario2_2.png used on input line 122.
+(pdftex.def)             Requested size: 350.68272pt x 87.17075pt.
+[37 <./figures/scenarios/poem2.png> <./figures/scenarios/scenario2_2.png>]) (text/relatedwork.tex [38]
 Chapter 5.
-[34
+[39
 
-] [35] [36] [37] [38] [39] [40]
+] [40] [41] [42] [43] [44] [45]
 Overfull \hbox (70.20552pt too wide) in paragraph at lines 300--321
 [][]
  []
@@ -610,19 +640,19 @@ Underfull \hbox (badness 10000) in alignment at lines 321--321
 [][] 
  []
 
-[41] [42] [43] [44]) (text/discussion.tex [45]
+[46] [47] [48] [49]) (text/discussion.tex [50]
 Chapter 6.
-[46
+[51
 
-] [47] [48]) (text/conclusion.tex [49]
+] [52] [53]) (text/conclusion.tex [54]
 Chapter 7.
-) (output/paper.bbl [50
+) (output/paper.bbl [55
 
-] [51
+] [56
 
-] [52] [53])
+] [57] [58])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 23.
-[54]
+[59]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 23.
 (output/paper.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 23.
@@ -632,19 +662,19 @@ Package rerunfilecheck Info: File `paper.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 23.
  ) 
 Here is how much of TeX's memory you used:
- 10765 strings out of 493315
- 158296 string characters out of 6137904
- 272347 words of memory out of 5000000
- 13819 multiletter control sequences out of 15000+600000
+ 10825 strings out of 493315
+ 159580 string characters out of 6137904
+ 272787 words of memory out of 5000000
+ 13853 multiletter control sequences out of 15000+600000
  16320 words of font info for 64 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,14n,75p,1361b,875s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mtt12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/wasy/wasy10.pfb>
-Output written on output/paper.pdf (64 pages, 851735 bytes).
+Output written on output/paper.pdf (70 pages, 980291 bytes).
 PDF statistics:
- 970 PDF objects out of 1000 (max. 8388607)
- 840 compressed objects within 9 object streams
- 196 named destinations out of 1000 (max. 500000)
- 551 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1066 PDF objects out of 1200 (max. 8388607)
+ 919 compressed objects within 10 object streams
+ 216 named destinations out of 1000 (max. 500000)
+ 640 words of extra memory for PDF output out of 10000 (max. 10000000)
 
