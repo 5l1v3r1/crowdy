@@ -31,8 +31,8 @@
 \contentsline {subsubsection}{\numberline {3.3.0.3}Processing operators}{31}{subsubsection.3.3.0.3}
 \contentsline {subsubsection}{\numberline {3.3.0.4}Relational operators}{31}{subsubsection.3.3.0.4}
 \contentsline {subsubsection}{\numberline {3.3.0.5}Utility operators}{31}{subsubsection.3.3.0.5}
-\contentsline {chapter}{\numberline {4}Motivating Scenarios}{33}{chapter.4}
-\contentsline {section}{\numberline {4.1}Finding Business Addresses}{33}{section.4.1}
+\contentsline {chapter}{\numberline {4}Case Studies}{33}{chapter.4}
+\contentsline {section}{\numberline {4.1}Finding Business Information}{33}{section.4.1}
 \contentsline {section}{\numberline {4.2}Translation}{34}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Naive Approach}{35}{subsection.4.2.1}
 \contentsline {subsubsection}{\numberline {4.2.1.1}Issues}{36}{subsubsection.4.2.1.1}
