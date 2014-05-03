@@ -1,12 +1,43 @@
 \chapter{Conclusion}
 \label{chap:conclusion}
 
-In this work, an extensible and general-purpose crowdsourcing framework is defined and a platform is developed to solve sophisticated problems. The framework allows users to define real-world problems using a component-based model and implement a solution by creating a crowdsourcing application with ease. Platform manages the coordination between computer and human components effectively and produces the results that user is asking for. Based on the concepts of stream processing, $Crowdy$ provides an efficient way to describe problems by employing various components and managing the flow of information and dependencies between them.
+In this work, an extensible and general-purpose crowdsourcing framework is defined and a platform is developed to solve sophisticated problems. The framework allows users to define real-world problems using a component-based model and implement a solution by creating a crowdsourcing application with ease. Platform manages the coordination between computer and human components effectively and produces the results that user is asking for. Based on the concepts of stream processing, $Crowdy$ provides an efficient way to describe problems by employing various components and managing the flow of information and dependencies between them. Two case studies and multiple experiments show how the component-based framework can handle complex and sophisticated problems and lead solutions to solve them. In these studies, it is proved that the platform is capable of not just finding a solution to the problem, but it can solve the problem in several different ways.
 
-Two case studies and multiple experiments show how the component-based framework can handle complex and sophisticated problems such as translation. In these studies, it is proved that the platform can 
+$Crowdy$ can benefit requesters through easier and more efficient
 
+\section{Future Work}
+During the development of the actual platform and tests over different scenarios the following observations and enhancements have been identified. These improvements and ideas listed in this section conforms to a promising future work for the existing platform. 
 
-There are a number of possible improvement aspects that can be considered as future work. Considering the limitations 
+\subsection{Extending the Operator Set}
+Existing platform provides a set of operators to define and solve problems. This set is proved to be enough for given real-world scenarios such as translation or finding business addresses. However, the problem set can be expanded by various other scenarios and problems. Therefore, the existing operator set can be extended by several types of operators. For example, social media has become the main communication method to share and exchange information and ideas online. Therefore, it is inevitable to expect social media related computations such as classifying tweets. Let's assume that user needs a crowdsourcing application that classifies and saves tweets into a file with respect to their sentiment identified by human workers. The current platform is capable to handle such a scenario as follows. A list of tweets is input to the application via \textit{source manual operator}. Human workers analyze each tweet and identify a sentiment via \textit{human processing operator}, which has an input port to receive tweets. The identified tweets are saved into a file by their class (sentiment) that is split \textit{split operator}. In this scenario, \textit{source manual operator} can be replaced by a source operator that is capable of reading Twitter API to-be-configured by specific set of parameters.
 
-Further, the platform can be possibly integrated into other task markets and crowdsourcing services. Although this work utilizes Amazon?s MTurk as a resource for human computation, there are other available services such as CrowdFlower or oDesk that can be applied. If it is possible to apply the platform to the service where the details of each individual worker better known, that might lead better and greater opportunities to manage resource allocation and task assignment.
+Besides Twitter API reader kind of specific functionality operators, the existing operator set can be further extended. In terms of source operators, file readers and RSS readers might be useful for certain scenarios such as reading content from files or web pages directly rather than using source manual operator. Having a projection relational operator can be another enhancement for the existing system, although not having that operator does not impact the system functionality significantly.
 
+Considering current platform definition, one crucial improvement might be adding feedback ports to certain set of operators in addition to input and output ports. This feedback port can be activate and deactivate an operator with respect to a given condition. Using this operator the crowdsourcing application gains more dynamism and ability to change internal functional details according to the conditions emerged by given input set.
+
+\subsection{Improvements to Existing Operators}
+The existing set of operators can be further improved individually. However, most of these improvements needs thorough testing and analysis. Here is a list of refinement that can be applied to existing operators: 
+
+\textbf{human operator.}
+Requester can be enabled to change instructions and question design by changing format, adding/removing image/audio/video or basically adding HTML.
+
+Currently requester can create four types input to be completed by human workers: text input, number input, single selection or multiple selection. This list can be extended by other types of questions.
+
+Heterogeneity of human operators is a fundamental aspect of human computation. Right now the platform provides a set of rules to the requester to assign task to the right worker. This can be further improved by allowing requesters to create their own custom rules to test whether a worker is qualified to complete that task or not.
+
+Further, human operators can be possibly integrated into other task markets and crowdsourcing services. Although this work utilizes Amazon's MTurk as a resource for human computation, there are other available services such as CrowdFlower or oDesk that can be applied. If it is possible to apply the platform to the service where the details of each individual worker better known, that might lead better and greater opportunities to manage resource allocation and task assignment.
+
+\textbf{source manual operator.}
+Source manual operator can be further enriched by adding more delimiter options.
+
+\textbf{sink email operator.}
+Sink email operator can be configured to have parameters for subject and/or body.
+
+\textbf{sink file operator.}
+Sink file operator writes data tuples into a tab delimited file. This delimiter can be set by requesters.
+
+\textbf{selection/split operators.}
+Considering selection and split operators, more boolean predicates (greater than, less than etc.) can be added to test whether a data tuple evaluates to true or false.
+
+\subsection{More Quality Control}
+The quality control of the current platform definition can be additionally enhanced by having operators dedicated to quality control. These operators can be used to check various parameters of the task completed by human workers such as the duration takes to complete the task, the time human worker spends on the task page, the length of the submission in terms of characters, the number of key strokes occur while human worker is working on the task, the movements of the mouse etc. This approach requires a detailed analysis on the possible list of parameters. Further, a concrete evaluation criteria of a parameter list is significantly important, and this requirement not only considers computer science studies, but it necessary to bring efforts from different domains (sociology, business information etc.) to come up with a right set of definitions and rules for quality control.
