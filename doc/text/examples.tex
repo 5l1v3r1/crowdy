@@ -10,14 +10,14 @@ Finding a company's address or correcting an address is a common scenario that c
 
 Let's assume that we have a list of companies. The list contains company names and their corresponding mailing and website addresses. However, the mailing addresses change when company moves. It is also quite possible that street names, building numbers can change in time. In fact, web addresses can change too. What we want to do is employ a group of people to check company websites and extract address information and update their addresses if it is different than the ones we have in the list.
 
-The company list is input to the application and processed by human workers. Finally, results are saved into a file. This is presented in Figure~\ref{fig:scenario1} and detailed in the following operator by operator:
-
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.85\textwidth]{figures/scenarios/naive.png}
 	\caption{Crowdy application to correct business addresses.}
 	\label{fig:scenario1}
 \end{figure}
+
+The company list is input to the application and processed by human workers. Finally, results are saved into a file. This is presented in Figure~\ref{fig:scenario1} and detailed in the following operator by operator:
 
 \textbf{source manual operator.}
 Source manual operator is supplied with company list and the delimiter is selected to be comma. A small part of the list is displayed in Figure~\ref{fig:scenario1.list}. This operator outputs the data tuples in which there are company, website and mail segments.
@@ -41,7 +41,14 @@ Company E, 233 River Road New London CT 06320, www.companye.org
 \textbf{human processing operator.}
 Human processing operator gets data tuples from the source operator. Tuples are used to create the question and ask human workers to check website and mailing addresses. Workers are allowed to work on the task at most 5 minutes and they are given \$0.10 per successful completion.
 
-Figure displays the question that is shown to human workers.
+Figure~\ref{fig:scenario1.1h} displays the question that is shown to human workers.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/scenarios/scenario1_1h.png}
+	\caption{Human task that is generated for human workers.}
+	\label{fig:scenario1.1h}
+\end{figure}
 
 %input: {company: company name, website: company's website address, mail: company's mailing address}
 %output: {company: company name, updated_website: company's updated website address, updated_mail: company's updated mailing address}
@@ -57,13 +64,21 @@ Different than the previous solution, we can follow a different approach to solv
 
 \begin{figure}[ht]
 	\centering
+	\includegraphics[width=0.5\textwidth]{figures/scenarios/scenario1_2h.png}
+	\caption{Human task that is generated for human workers (updated).}
+	\label{fig:scenario1.2h}
+\end{figure}
+
+In the human processing operator, human workers are asked to find out and fill mailing and web addresses of companies (see Figure\ref{fig:scenario1.2h}). We can ask two more piece of information from them: whether mailing address if updated and whether web address is updated. The results can be split into four clusters based on the conditions proposed in this approach. The companies that have either updated mailing or web address can be even emailed rather than saving into a file. Figure ~\ref{fig:scenario1.2} demonstrates the new approach.
+
+\begin{figure}[ht]
+	\centering
 	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario1_2.png}
 	\caption{Another approach to correct business addresses.}
 	\label{fig:scenario1.2}
 \end{figure}
 
-In the human processing operator, human workers are asked to find out and fill mailing and web addresses of companies. We can ask two more piece of information from them: whether mailing address if updated and whether web address is updated. The results can be split into four clusters based on the conditions proposed in this approach. The companies that have either updated mailing or web address can be even emailed rather than saving into a file. Figure ~\ref{fig:scenario1.2} demonstrates the new approach.
-
+\newpage
 \section{Translation}
 Translation is one of the scenarios that crowdsourcing platforms are being challenged, because it is complex, challenging, time-consuming and highly subjective. Translation problem cannot be easily solved by typical human tasks, because tasks are interdependent and parallel approach would not work well on such a scenario.
 
