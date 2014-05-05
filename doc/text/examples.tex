@@ -12,7 +12,7 @@ Let's assume that we have a list of companies. The list contains company names a
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.85\textwidth]{figures/scenarios/naive.png}
+	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario1_1a.png}
 	\caption{Crowdy application to correct business addresses.}
 	\label{fig:scenario1}
 \end{figure}
@@ -73,7 +73,7 @@ In the human processing operator, human workers are asked to find out and fill m
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario1_2.png}
+	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario1_2a.png}
 	\caption{Another approach to correct business addresses.}
 	\label{fig:scenario1.2}
 \end{figure}
@@ -96,7 +96,7 @@ The naive approach to solve this problem would be inputing the poem into the app
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.85\textwidth]{figures/scenarios/naive.png}
+	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario2_1a.png}
 	\caption{Crowdy application to translate a text.}
 	\label{fig:scenario2}
 \end{figure}
@@ -110,7 +110,14 @@ Source manual operator is supplied with the poem and the delimiter is selected t
 \textbf{human processing operator.}
 Human processing operator gets data tuples (lines from the poem) from the source operator. These tuples are used to create the question and ask human workers to do the translation. Workers are allowed to work on the task at most 5 minutes and they are given \$0.10 per successful completion.
 
-Figure presents a sample question that is shown to human workers.
+Figure~\ref{fig:scenario2.1h} presents a sample question that is shown to human workers.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/scenarios/scenario2_1h.png}
+	\caption{Human task that is generated for human workers for translation.}
+	\label{fig:scenario2.1h}
+\end{figure}
 
 %input: a line from poem
 %output: {line: a line from poem, translation: translated line}
@@ -131,7 +138,7 @@ The naive approach can be improved by adding an extra segment in the source oper
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario2_1.png}
+	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario2_2a.png}
 	\caption{Crowdy application to translate a text.}
 	\label{fig:scenario2.1}
 \end{figure}
@@ -155,12 +162,19 @@ In this approach, quality control is added to the application. Figure~\ref{fig:s
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario2_2.png}
+	\includegraphics[width=0.85\textwidth]{figures/scenarios/scenario2_3a.png}
 	\caption{Crowdy application to translate a text.}
 	\label{fig:scenario2.2}
 \end{figure}
 
-The output from human operator is connected to another human operator that asks people to evaluate the translation done by others. The output from this operator has an extra segment that provides the condition indicating whether translation seems OK or not. Figure shows the question shown to human workers.
+The output from human operator is connected to another human operator that asks people to evaluate the translation done by others. The output from this operator has an extra segment that provides the condition indicating whether translation seems OK or not. Figure~\ref{fig:scenario2.2h} shows the question shown to human workers.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/scenarios/scenario2_2h.png}
+	\caption{Human task that is generated for human workers to check quality of translation.}
+	\label{fig:scenario2.2h}
+\end{figure}
 
 Additionally a split operator can be placed before sink operator. This operator can take a data tuple and check if it has a good quality translation or not. Using this condition translated lines can be separated into two files. In this way, requesters are able to see which lines are translated well, which are not.
 
