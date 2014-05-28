@@ -19,32 +19,32 @@ a common platform operate through exchange of information, resources and
 artifacts and contribute to the overall service that system tries to provide~\cite{Ecosystem}. 
 In fact, the components that are fundamental to system 
 functionalities are not only software components, but there are now components 
-whose functionality is operated by human. People become not only users, 
+whose functionality is operated by human beings. People become not only users, 
 but also an integral part of the system providing 
 content and computation, and the overall behavior~\cite{ULSReport}.
 
 Human involvement not only makes the system gain a social characteristic 
 in addition to it's technical features, it also gives ability to solve numerous 
-problems, even the ones requiring human intelligence. In that sense, the scale 
+problems, including the ones requiring human intelligence. In that sense, the scale 
 and variety of components involved within the system increases significantly, and 
 homogeneity of components cases respectively. The difference between 
 the roles concerning system components and 
-humans (user, developer) becomes less distinct. People becomes an essential 
+humans (user, developer) becomes less distinct. Humans take an essential 
 part of the system in collaboration with software components.
 
 The scale of collaboration of creative and cognitive people with 
 number-crunching computer systems has expanded from small or 
 medium size to internet-scale~\cite{Dorn2012b} leading to new era of 
-computation. Although this collaboration have appeared under many names 
+computation. Although this collaboration has appeared under many names 
 such as human computation, collective intelligence, social computing, 
-global brain etc, crowdsourcing is the main term that is being used to refer 
+global brain etc, crowdsourcing is the main term that is being used to refer to 
 human and computer collaboration.
 
 Crowdsourcing as the new and powerful mechanism of computation has become 
 compelling to accomplish work online~\cite{Kittur2011}. Over the past decade, numerous 
 crowdsourcing systems have appeared on the Web (Threadless, iStockphoto, 
-InnoCentive etc). Such systems enabling excessive collaboration of people have 
-provided solutions to the problems and tasks that are trivial for humans, but 
+InnoCentive etc). Such systems enable excessive collaboration of people have 
+provided solutions to the problems and tasks that are trivial for humans, which 
 cannot be easily completed by computers or computerized. Hundreds of thousands 
 of people have worked on various tasks including deciphering scanned text (recaptcha.net), 
 discovering new galaxies (galaxyzoo.org), seeking missing people (helpfindjim.com), 
@@ -55,7 +55,7 @@ build a long-lasting and beneficial artefact~\cite{Doan2011}.
 
 %% Problem
 
-\section{Problem}
+\section{Problem Statement}
 \label{sec:problem}
 
 Although current crowdsourcing systems allow a variety of tasks 
@@ -104,13 +104,15 @@ for massively parallel human computation, limited-scope and ability user interfa
 ~\cite{Marcus2011, Bernstein2010, Marcus2011b, Rzeszotarski2012}, 
 concepts for planning~\cite{Zhang2012}, 
 analysis of collaboration~\cite{Dorn2012}. 
-These studies fail to tackle challenges of crowdsourcing due to various reasons:
+These studies fail to tackle challenges of crowdsourcing due to following reasons:
 \begin{itemize}
-	\item having rigid structure and requirements
+	\item having rigid structure and requirements due to the (programming) concepts and 
+	libraries that they are based on
 	\item being only applicable to a small and bounded problem-set
-	\item focusing on a specific aspect of crowdsourcing
-	\item being developed in an ad hoc manner
-	\item requiring a significant amount of work in order to implement and integrate.
+	%\item focusing on a specific aspect of crowdsourcing
+	%\item being developed in an ad hoc manner
+	\item requiring a significant amount of work in order to implement and integrate 
+	a crowdsourcing solution to solve a problem.
 \end{itemize}
 
 %These works and related issues are further 
@@ -145,18 +147,23 @@ by the research community~\cite{Doan2011}.
 
 \section{Purpose}
 
-$Crowdy$ is a new general-purpose and extensible platform for crowdsourcing to 
-support software ecosystems via stream-based human computation. The platform 
-is developed to address the issues and challenges in crowdsourcing.
+This study aims to solve the previously mentioned issues associated with 
+crowdsourcing platforms and tackle challenges in crowdsourcing. In order to 
+achieve this, the existing frameworks and platforms are identified, analyzed 
+and discussed thoroughly. Based on the data and feedback extracted out of 
+the related studies, a new general-purpose and extensible framework is 
+proposed. The framework is implemented into a tool and evaluated through 
+real-world case studies.
 
-$Crowdy$, is a computing stack to design 
-and develop crowdsourcing applications for effective and efficient collaboration of
-human and software components. The platform
+The proposed platform, called $Crowdy$, is developed to support software 
+ecosystems via stream-based human computation. $Crowdy$ can be used 
+to design and develop crowdsourcing applications for effective and efficient 
+collaboration of human and software components. The platform
 \begin{itemize}
 	\item enables users to perform computations to solve complex problems
 	\item has no rigid structure or requirements
-	\item is not limited a specific problem-set or aspect of crowdsourcing
-	\item does not require significant amount of work to implement and solve the problems.
+	\item is not limited to a specific problem-set or aspect of crowdsourcing
+	%\item does not require significant amount of work to implement and solve the problems.
 \end{itemize}
 
 The platform consists of an application editor, a runtime 

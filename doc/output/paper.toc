@@ -1,5 +1,5 @@
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Problem}{2}{section.1.1}
+\contentsline {section}{\numberline {1.1}Problem Statement}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Purpose}{4}{section.1.2}
 \contentsline {section}{\numberline {1.3}Thesis Plan}{5}{section.1.3}
 \contentsline {chapter}{\numberline {2}Background}{7}{chapter.2}
