@@ -1,10 +1,12 @@
-\chapter{Background}
+\chapter{Crowd Computing}
 \label{chap:background}
 
 In the following, first the preliminary information about crowdsourcing concepts 
 is summarized, since crowdsourcing is a relatively area of computation. The 
-building blocks of a crowdsourcing platform are also described, and related studies 
-are later examined thoroughly over this description.
+building blocks of a crowdsourcing platform are also described.
+
+%, and related studies 
+%are later examined thoroughly over this description.
 
 \section{Preliminaries}
 Collaboration of creative and cognitive people with number-crunching 
@@ -67,12 +69,12 @@ solved by computers and subject to numerous research studies.
 
 Similar to other academic studies, MTurk is considered in this work to discuss 
 the common terms and form a preliminary list of concepts. In the following, 
-the fundamental concepts of crowdsourcing is explained.
+the fundamental concepts of crowdsourcing are explained.
 
 \footnotetext{The statistics are gathered through ACM Digital Library.}
 
 \subsection{Tasks}
-Task is a piece of work to be done by the crowd. Terms task, micro-task and job 
+Task is a piece of work to be done by the crowd. The terms task, micro-task and job 
 are interchangeably used. The term Human Intelligent Task or HIT is commonly 
 used as well. A task is often expressed over an HTML form in which there are three 
 different input types: single selection (radio buttons), multiple selection (checkboxes) 
@@ -112,10 +114,16 @@ similar qualities such as tasks to tag images of nature and people or tasks aski
 for translation of a text snippet from a language to another.
 
 \subsubsection{Time}
-Often time scale requiring to complete a task ranges from seconds to minutes. 
-Nearly 20\% of tasks takes less than 1-hour, and more than half of tasks does not 
-take more than 16-hours~\cite{Ipeirotis2010}. Maximum time allotted per 
-assignment can be set by requester. 
+Each task is associated with a time value that determines the maximum time 
+allotted per assignment, which can be set by requester. A task should be completed 
+within the time range associated with the task, otherwise task completion fails and 
+task remains uncompleted until some worker completes it within given time.
+
+Time it takes to complete a task is different for each work item. It is possible 
+to have a task that expected to be completed within seconds. However, it is 
+also possible to have tasks that can take hours. Nearly 20\% of tasks takes 
+less than 1-hour, and more than half of tasks does not 
+take more than 16-hours~\cite{Ipeirotis2010}.
 
 \subsubsection{Payment}
 Compensation or reward for completing tasks range from a single penny to dollars. 
@@ -165,7 +173,7 @@ range for a specific task.
 \section{Building Blocks of a Platform}
 Kittur et al. provides a detailed description for the future crowdsourcing platform 
 in~\cite{Kittur2013}. Based on this description building blocks of a crowdsourcing 
-platform is defined in the following.
+platform are defined in the following.
 
 A crowdsourcing platform is a platform to manage tasks and workers in the 
 process of solving problems through multi-stage workflows. Platform should enable 

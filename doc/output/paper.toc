@@ -2,11 +2,11 @@
 \contentsline {section}{\numberline {1.1}Problem Statement}{2}{section.1.1}
 \contentsline {section}{\numberline {1.2}Purpose}{4}{section.1.2}
 \contentsline {section}{\numberline {1.3}Thesis Plan}{5}{section.1.3}
-\contentsline {chapter}{\numberline {2}Background}{7}{chapter.2}
+\contentsline {chapter}{\numberline {2}Crowd Computing}{7}{chapter.2}
 \contentsline {section}{\numberline {2.1}Preliminaries}{7}{section.2.1}
 \contentsline {subsection}{\numberline {2.1.1}Tasks}{9}{subsection.2.1.1}
 \contentsline {subsubsection}{\numberline {2.1.1.1}Time}{11}{subsubsection.2.1.1.1}
-\contentsline {subsubsection}{\numberline {2.1.1.2}Payment}{11}{subsubsection.2.1.1.2}
+\contentsline {subsubsection}{\numberline {2.1.1.2}Payment}{12}{subsubsection.2.1.1.2}
 \contentsline {subsubsection}{\numberline {2.1.1.3}Acceptance}{12}{subsubsection.2.1.1.3}
 \contentsline {subsubsection}{\numberline {2.1.1.4}Expiration}{12}{subsubsection.2.1.1.4}
 \contentsline {subsection}{\numberline {2.1.2}Requesters}{12}{subsection.2.1.2}
