@@ -186,7 +186,12 @@ of a task is high quality and contributes to solution.
 Regarding this definition, a crowdsourcing platform consists of three basic elements:
 
 \subsection{Workflow Design}
-Complex and sophisticated problems cannot be solved by current simple parallel 
+The existing problem solving approach is simple and depends on parallel bulk 
+processing. There is no real sense of solution or workflow design. Problems are 
+solved in such a way that independent simple tasks are created by requesters, 
+and they solved by workers and each independent solution is processed 
+individually by requesters to come up with final solution. Complex and 
+sophisticated problems cannot be solved by the current simple parallel 
 approach. The reason is that these problems have interdependent portions with 
 changing space, time and skill-set requirements. On the other hand, current 
 approaches undertake problems through bulk processing of independent 
@@ -212,12 +217,23 @@ In terms of crowdsourcing, workflow could involve different scale of operations 
 can only be solved by diverse set of actors. A workflow may tackle highly dependent 
 tasks (e.g., translating a poem and assuring its quality) or massively parallel 
 tasks (e.g., finding some piece of information on the Web). Therefore, the workflow 
-design has diverse space requirements.
+design has diverse space requirements. For example, MapReduce is great for 
+dividing a problem into different chunks and solving those chunks separately and 
+finally merging small chunks of solutions into one. However, some problems may 
+require iterations and each iteration or solution chunks may affect the result of 
+the following solution attempts. Translation is an example that cannot be solved 
+by either MapReduce or Divide-and-Conquer or Iterative approaches. The problem 
+has interdependent problem pieces that depend on each other and iteration is 
+needed to achieve to final solution.
 
 \subsection{Task Assignment}
-In the context of crowd work, coordination of limited resources is prominent, 
-because problems has various types of tasks that require coordination and 
-collaboration of different computation resources. Crowdsourcing problems  
+In the context of crowd work, coordination of limited resources is prominent. 
+Not all problems are simple enough to be solved by simple human tasks such as 
+finding an address or matching a tag and an image. Complex and sophisticated 
+problems requires various types of tasks, which can be either solved by human 
+beings or software programs, to be completed for the final solution. Thus, 
+coordination and collaboration of different computation resources become
+essential. Crowdsourcing problems  
 have pieces that cannot be computerized, but require human intelligence. In 
 addition, there may be other problems that require both human and software 
 resources.
@@ -226,8 +242,12 @@ Although availability and assignment of software resources can be managed
 by certain algorithms, the case for human resources is rather unpredictable and 
 hard to solve. Human resources are formed by workers and the availability of a 
 worker cannot be predicted or known at any time. In fact, human resources 
-are not homogenous like computers. They are rather heterogeneous and each 
-worker in the crowd has a specific set of skills. Therefore, there may be a situation 
+are not homogenous like computers. They are rather heterogeneous. Not like 
+computing resources human resources are different in terms of homogeneity. 
+Each human being in the crowd has a specific set of skills. A worker may have 
+developed good skill set to transcribing audio into text, but at the same time it 
+is not guaranteed that she is good at translating English into Chinese or vice versa. 
+Therefore, there may be a situation 
 in which a task couldn't be assigned to any available workers due to mismatch 
 between task's requirements and skill-set of available workers. Ideally workers 
 are employed with tasks that fit their area of expertise. In practice, requesters 
@@ -238,9 +258,12 @@ human crowd is homogeneous. Task assignment needs to be redefined
 by demonstrating aspects of human resources.
 
 \subsection{Quality Control}
-Quality control is a big challenge for crowdsourcing platforms, since low quality work 
+Quality control is a big challenge for crowdsourcing, since low quality work 
 is common. It is shown that low quality submissions can compromise up to one third 
-of all submissions~\cite{Bernstein2010}. As a result, researchers have started to 
+of all submissions~\cite{Bernstein2010}.
+
+
+As a result, researchers have started to 
 investigate several ways of detecting and correcting for low quality work.
 
 Visualization of workflow is one of the methods employed for which directed graphs 
