@@ -62,6 +62,44 @@ $Crowdy$ applications are developed to solve complex and sophisticated problems
 that require both human intelligence and computing power. A typical application contains 
 three main high-level components: data ingest, processing and data egress.
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/ApplicationMetamodel.pdf}
+	\caption{Metamodel for a Crowdy application.}
+	\label{fig:metamodel}
+\end{figure}
+
+Figure~\ref{fig:metamodel} shows the metamodel for which a $Crowdy$ application is 
+based on. An application is formed by a set of $operator$s. As mentioned before, 
+typically an application has three $operator$s: one for inputting data, one for processing 
+that data items, and finally one for outputting the results. However, it is possible to 
+have an application with only two $operator$s: one for data input and other for data 
+output.
+
+Each $operator$ is associated with a type that can be one of \textit{source, sink, 
+processing, relational, utility, adapter}. Based on it's type, operator may have 
+one or two $port$s. The number of $port$s is basically decided by the type. For 
+instance, $source$ and $sink$ $operator$s have only $port$, but others have two 
+$port$s. A $port$ is associated with a $specification$, which can be either $input$ or 
+$output$ $specification$ again based on it's type. $Specification$ is formed by 
+$data segment$s that are used to convey information through $flow$s. This means 
+$flow$s are the components that deliver information from one $operator$ to another 
+via $port$s.
+
+$Operator$'s type also determines the type of resource it is associated with. The base 
+promise of this study is to combine limited computer and human resources together to 
+solve complex problems. Each $operator$ is linked to a $resource$, which can be either 
+$computer$s or $human$s. While that $operator$ is executed, related $resource$s are 
+allocated. An $operator$ also has $configuration$ dependent on it's type. $Configuration$ 
+may have $rule$s that decide how $operator$ will function based on the data.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/helloworld.png}
+	\caption{A sample, minimal $Crowdy$ application.}
+	\label{fig:hello world}
+\end{figure}
+
 Let's consider a minimal "Hello World" application that has these three components 
 in total, connected in a simple pipeline topology. Figure~\ref{fig:hello world} demonstrates 
 the application in the form of a flow graph. On the ingest side, there is a 
@@ -76,13 +114,6 @@ produced by an operator to another. One or more data segments can be assembled i
 data tuple via output specification of an operator instance (see Section~\ref{sec:flow comp}). 
 In addition, several options can be specified to configure an operator instance. These 
 include parameters, operator-specific rules, which are studied in the rest of this chapter.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.85\textwidth]{figures/helloworld.png}
-	\caption{A sample, minimal $Crowdy$ application.}
-	\label{fig:hello world}
-\end{figure}
 
 In a more realistic application, one or more source operators can be employed to produce 
 various data tuples that differ in both size and specification. Similarly, the application would 
