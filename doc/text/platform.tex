@@ -1,6 +1,25 @@
 \chapter{Platform}
 \label{chap:platform}
 
+Crowdsourcing based on simple, independent and deskilled list of tasks basically 
+limits the scope and complexity of problems can be tackled. Independent tasks that 
+are narrowly focused and low-complex cannot be easily utilized to solve complex 
+problems. Although simplicity and interdependency enable easily distributed and 
+parallelized processing, complex and sophisticated problems require efficient and 
+effective coordination in which problem itself is the decomposed into multiple stages. 
+Each stage requires allocation of appropriate resources, in addition to the management of interdependencies among stages.
+
+The need for new powerful programming paradigm that can handle the advanced 
+problem-solving is clearly stated~\cite{Doan2011, Kittur2013, Bernstein2012}. 
+The new paradigm or framework is required to be able to 
+\begin{itemize}
+	\item tackle advanced problems with no rigid limitations
+	\item decompose problems into smaller pieces (or tasks)
+	\item manage dependencies among different tasks
+	\item allocate appropriate resources to each task
+	\item reflect the skill-set of people and computers while solving tasks.
+\end{itemize}
+
 $Crowdy$ is an extensible, general-purpose crowdsourcing platform to solve 
 complex problems. The platform is developed over the fundamentals of stream 
 processing paradigm for which a series of operations are applied to the continuous 
@@ -70,28 +89,28 @@ three main high-level components: data ingest, processing and data egress.
 \end{figure}
 
 Figure~\ref{fig:metamodel} shows the metamodel for which a $Crowdy$ application is 
-based on. An application is formed by a set of $operator$s. As mentioned before, 
-typically an application has three $operator$s: one for inputting data, one for processing 
+based on. An application is formed by a set of \textit{operator}s. As mentioned before, 
+typically an application has three \textit{operator}s: one for inputting data, one for processing 
 that data items, and finally one for outputting the results. However, it is possible to 
-have an application with only two $operator$s: one for data input and other for data 
+have an application with only two \textit{operator}s: one for data input and other for data 
 output.
 
-Each $operator$ is associated with a type that can be one of \textit{source, sink, 
+Each \textit{operator} is associated with a type that can be one of \textit{source, sink, 
 processing, relational, utility, adapter}. Based on it's type, operator may have 
-one or two $port$s. The number of $port$s is basically decided by the type. For 
-instance, $source$ and $sink$ $operator$s have only $port$, but others have two 
-$port$s. A $port$ is associated with a $specification$, which can be either $input$ or 
-$output$ $specification$ again based on it's type. $Specification$ is formed by 
-$data segment$s that are used to convey information through $flow$s. This means 
-$flow$s are the components that deliver information from one $operator$ to another 
-via $port$s.
+one or two \textit{port}s. The number of \textit{port}s is basically decided by the type. 
+For instance, \textit{source} and \textit{sink} \textit{operator}s have only one \textit{port}, 
+but others have two \textit{port}s. A \textit{port} is associated with a \textit{specification}, 
+which can be either \textit{input} or \textit{output} \textit{specification} again based on 
+it's type. \textit{Specification} is formed by \textit{data segment}s that are used to 
+convey information through \textit{flow}s. This means \textit{flow}s are the 
+components that deliver information from one \textit{operator} to another via \textit{port}s.
 
-$Operator$'s type also determines the type of resource it is associated with. The base 
+\textit{Operator}'s type also determines the type of resource it is associated with. The base 
 promise of this study is to combine limited computer and human resources together to 
-solve complex problems. Each $operator$ is linked to a $resource$, which can be either 
-$computer$s or $human$s. While that $operator$ is executed, related $resource$s are 
-allocated. An $operator$ also has $configuration$ dependent on it's type. $Configuration$ 
-may have $rule$s that decide how $operator$ will function based on the data.
+solve complex problems. Each \textit{operator} is linked to a \textit{resource}, which can be either 
+\textit{computer}s or \textit{human}s. While that \textit{operator} is executed, related \textit{resource}s are 
+allocated. An \textit{operator} also has \textit{configuration} dependent on it's type. \textit{Configuration} 
+may have \textit{rule}s that decide how \textit{operator} will function based on the data.
 
 \begin{figure}[ht]
 	\centering

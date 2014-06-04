@@ -17,48 +17,48 @@
 \contentsline {subsection}{\numberline {2.2.3}Quality Control}{16}{subsection.2.2.3}
 \contentsline {chapter}{\numberline {3}Platform}{18}{chapter.3}
 \contentsline {section}{\numberline {3.1}Architecture}{19}{section.3.1}
-\contentsline {section}{\numberline {3.2}Concepts}{20}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Operator}{22}{subsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.1.1}Source operators}{23}{subsubsection.3.2.1.1}
-\contentsline {subsubsection}{\numberline {3.2.1.2}Sink operators}{26}{subsubsection.3.2.1.2}
-\contentsline {subsubsection}{\numberline {3.2.1.3}Processing operators}{26}{subsubsection.3.2.1.3}
-\contentsline {subsubsection}{\numberline {3.2.1.4}Relational operators}{27}{subsubsection.3.2.1.4}
-\contentsline {subsubsection}{\numberline {3.2.1.5}Utility operators}{29}{subsubsection.3.2.1.5}
-\contentsline {subsection}{\numberline {3.2.2}Flow}{31}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.2}Concepts}{21}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Operator}{23}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}Source operators}{24}{subsubsection.3.2.1.1}
+\contentsline {subsubsection}{\numberline {3.2.1.2}Sink operators}{27}{subsubsection.3.2.1.2}
+\contentsline {subsubsection}{\numberline {3.2.1.3}Processing operators}{27}{subsubsection.3.2.1.3}
+\contentsline {subsubsection}{\numberline {3.2.1.4}Relational operators}{28}{subsubsection.3.2.1.4}
+\contentsline {subsubsection}{\numberline {3.2.1.5}Utility operators}{30}{subsubsection.3.2.1.5}
+\contentsline {subsection}{\numberline {3.2.2}Flow}{32}{subsection.3.2.2}
 \contentsline {section}{\numberline {3.3}Application Development}{32}{section.3.3}
-\contentsline {subsubsection}{\numberline {3.3.0.1}Source operators}{32}{subsubsection.3.3.0.1}
+\contentsline {subsubsection}{\numberline {3.3.0.1}Source operators}{33}{subsubsection.3.3.0.1}
 \contentsline {subsubsection}{\numberline {3.3.0.2}Sink operators}{33}{subsubsection.3.3.0.2}
-\contentsline {subsubsection}{\numberline {3.3.0.3}Processing operators}{33}{subsubsection.3.3.0.3}
-\contentsline {subsubsection}{\numberline {3.3.0.4}Relational operators}{33}{subsubsection.3.3.0.4}
+\contentsline {subsubsection}{\numberline {3.3.0.3}Processing operators}{34}{subsubsection.3.3.0.3}
+\contentsline {subsubsection}{\numberline {3.3.0.4}Relational operators}{34}{subsubsection.3.3.0.4}
 \contentsline {subsubsection}{\numberline {3.3.0.5}Utility operators}{34}{subsubsection.3.3.0.5}
-\contentsline {chapter}{\numberline {4}Case Studies}{35}{chapter.4}
-\contentsline {section}{\numberline {4.1}Finding Business Information}{35}{section.4.1}
-\contentsline {section}{\numberline {4.2}Translation}{38}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Naive Approach}{39}{subsection.4.2.1}
-\contentsline {subsubsection}{\numberline {4.2.1.1}Issues}{40}{subsubsection.4.2.1.1}
-\contentsline {subsection}{\numberline {4.2.2}A More Sophisticated Approach}{41}{subsection.4.2.2}
-\contentsline {subsubsection}{\numberline {4.2.2.1}Issues}{42}{subsubsection.4.2.2.1}
-\contentsline {subsection}{\numberline {4.2.3}Final Approach}{42}{subsection.4.2.3}
-\contentsline {subsubsection}{\numberline {4.2.3.1}Issues}{43}{subsubsection.4.2.3.1}
-\contentsline {chapter}{\numberline {5}Related Work}{44}{chapter.5}
-\contentsline {section}{\numberline {5.1}Crowdsourcing Platforms}{44}{section.5.1}
-\contentsline {subsection}{\numberline {5.1.1}Jabberwocky}{45}{subsection.5.1.1}
-\contentsline {subsection}{\numberline {5.1.2}WeFlow}{46}{subsection.5.1.2}
-\contentsline {subsection}{\numberline {5.1.3}TurKit}{47}{subsection.5.1.3}
-\contentsline {subsection}{\numberline {5.1.4}CrowdLang}{48}{subsection.5.1.4}
-\contentsline {subsection}{\numberline {5.1.5}AutoMan}{48}{subsection.5.1.5}
-\contentsline {subsection}{\numberline {5.1.6}Turkomatic}{49}{subsection.5.1.6}
-\contentsline {subsection}{\numberline {5.1.7}CrowdForge}{50}{subsection.5.1.7}
-\contentsline {subsection}{\numberline {5.1.8}CrowdWeaver}{51}{subsection.5.1.8}
-\contentsline {section}{\numberline {5.2}Other Studies}{53}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Soylent}{53}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Qurk}{53}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}Mobi}{54}{subsection.5.2.3}
-\contentsline {subsection}{\numberline {5.2.4}CrowdSpace}{54}{subsection.5.2.4}
-\contentsline {subsection}{\numberline {5.2.5}Human Architecture}{55}{subsection.5.2.5}
-\contentsline {chapter}{\numberline {6}Discussion}{56}{chapter.6}
-\contentsline {chapter}{\numberline {7}Conclusion}{58}{chapter.7}
-\contentsline {section}{\numberline {7.1}Future Work}{59}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}Extending the Operator Set}{59}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}Improvements to Existing Operators}{60}{subsection.7.1.2}
-\contentsline {subsection}{\numberline {7.1.3}More Quality Control}{61}{subsection.7.1.3}
+\contentsline {chapter}{\numberline {4}Case Studies}{36}{chapter.4}
+\contentsline {section}{\numberline {4.1}Finding Business Information}{36}{section.4.1}
+\contentsline {section}{\numberline {4.2}Translation}{39}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Naive Approach}{40}{subsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.1.1}Issues}{41}{subsubsection.4.2.1.1}
+\contentsline {subsection}{\numberline {4.2.2}A More Sophisticated Approach}{42}{subsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.2.1}Issues}{43}{subsubsection.4.2.2.1}
+\contentsline {subsection}{\numberline {4.2.3}Final Approach}{43}{subsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.3.1}Issues}{44}{subsubsection.4.2.3.1}
+\contentsline {chapter}{\numberline {5}Related Work}{45}{chapter.5}
+\contentsline {section}{\numberline {5.1}Crowdsourcing Platforms}{45}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}Jabberwocky}{46}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}WeFlow}{47}{subsection.5.1.2}
+\contentsline {subsection}{\numberline {5.1.3}TurKit}{48}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}CrowdLang}{49}{subsection.5.1.4}
+\contentsline {subsection}{\numberline {5.1.5}AutoMan}{49}{subsection.5.1.5}
+\contentsline {subsection}{\numberline {5.1.6}Turkomatic}{50}{subsection.5.1.6}
+\contentsline {subsection}{\numberline {5.1.7}CrowdForge}{51}{subsection.5.1.7}
+\contentsline {subsection}{\numberline {5.1.8}CrowdWeaver}{52}{subsection.5.1.8}
+\contentsline {section}{\numberline {5.2}Other Studies}{54}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Soylent}{54}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Qurk}{54}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Mobi}{55}{subsection.5.2.3}
+\contentsline {subsection}{\numberline {5.2.4}CrowdSpace}{55}{subsection.5.2.4}
+\contentsline {subsection}{\numberline {5.2.5}Human Architecture}{56}{subsection.5.2.5}
+\contentsline {chapter}{\numberline {6}Discussion}{57}{chapter.6}
+\contentsline {chapter}{\numberline {7}Conclusion}{59}{chapter.7}
+\contentsline {section}{\numberline {7.1}Future Work}{60}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Extending the Operator Set}{60}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}Improvements to Existing Operators}{61}{subsection.7.1.2}
+\contentsline {subsection}{\numberline {7.1.3}More Quality Control}{62}{subsection.7.1.3}
