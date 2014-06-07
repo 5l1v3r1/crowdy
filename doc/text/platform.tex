@@ -140,6 +140,7 @@ have one or more processing operators along with other types of operators organi
 that is significantly more complex than this example.
 
 \subsection{Operator}
+\label{sec:operator}
 An operator is the basic building block of an application. Operator has a type that is 
 specified at the time of creation. This type determines configuration respectively. Also a 
 unique ID is assigned to an operator. In addition, operator has optional name and 
@@ -594,3 +595,203 @@ a valid \texttt{next-operator}.
 Union operator must have at least one incoming flow to-be-merged and one outgoing flow. 
 Each incoming flow must have the same specification, which is ensured by application editor 
 by preventing connecting flows with different specification to the same union operator.
+
+
+\section{Tool}
+\label{sec:tool}
+In this section, the application development over $Crowdy$ platform is 
+demonstrated via the tool that available \url{http://crowdy.herokuapp.com}. The 
+minimal example application presented earlier in this section is implemented. 
+The steps are presented and explained in detail with the sample screenshots from the tool.
+
+A $Crowdy$ application consists of operators in which one is connected to the other creating 
+an information flow. Figure~\ref{fig:panel1} shows the flow composition panel of the tool, which 
+is used to create and configure applications. At the top (pointed by (1)), a simple set of 
+instructions is listed to help users in the application development process. Additionally links 
+to validate an application, clear the flow composition panel and report a bug are given here. 
+On the right (pointed by (2)), the list of operators is given and that list is separated by operator 
+type, which is described in detail earlier in this section. The panel (pointed by (3)) is where 
+operators are placed and linked together to develop an application. Finally, the messages 
+panel (pointed by (4)) is where important information about the application are displayed to 
+user such as warnings, validation failures or successes etc.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel1.png}
+	\caption{Flow composition window.}
+	\label{fig:panel1}
+\end{figure}
+
+The creation of an operator is simple in $Crowdy$. Operators are created by dragging and 
+dropping the specific operator from the list to the panel. An operator can be moved across 
+the panel freely by dragging. An operator can be selected and deselected by clicking the 
+operator body. Once an operator is selected, the border color of the operator is darkened 
+to indicate it is actually selected. A selected operator can be removed by 
+pressing backspace key in the keyboard. Figure~\ref{fig:panel2} shows that a source 
+operator is created and selected.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel2.png}
+	\caption{An source operator added to flow.}
+	\label{fig:panel2}
+\end{figure}
+
+As explained in Section~\ref{sec:operator} in a detailed manner, operators in $Crowdy$ 
+are easily configurable. Each operator has it's own definition of configuration and list 
+of options. This configuration window can be opened by double-clicking operator body. 
+Figure~\ref{fig:panel3} demonstrates the configuration window for
+\textit{source manual operator}. The configuration has three sections: \textit{details}, 
+\textit{parameters} and \textit{output specification}. The \textit{details} section exists for 
+every operator and it can be used for bookkeeping purposes such as assigning 
+names, noting some information specific to those operators. The \textit{parameters} 
+section is specific to each operator and this is where actual configuration per operator 
+can be achieved. In this example, configuration for \textit{source manual operator} 
+is depicted. Finally, the \textit{output specification} section is where output definition 
+of that operator is shown. This section lists the data segments for that operator. These 
+segments can be renamed by clicking and editing the names. This section is 
+not shown for \textit{sink operators}, since they don't have any output to be delivered 
+to some other operator. In fact, this section is automatically generated for 
+\textit{relational} and \textit{utility operators} and updated once the source of those 
+segments makes any changes, since they are able capable of changing the 
+output specification by adding or deleting new segments.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel3.png}
+	\caption{Configuration window for source manual operator.}
+	\label{fig:panel3}
+\end{figure}
+
+Figure~\ref{fig:panel4} redemonstrates the configuration window, but 
+now fields are complete and outputs are specified. To exemplify the functionality 
+the list of countries and capitals separated by tab is entered. Delimiter is selected 
+to be tab in that sense and output specification is automatically generated. The 
+data segments are renamed after the information they are containing. The 
+segment names will be useful down the flow while creating human tasks or 
+manipulating flow of information.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel4.png}
+	\caption{Configuration window for source manual operator filled with sample information.}
+	\label{fig:panel4}
+\end{figure}
+
+The \textit{human processing operator} is created and then the output of source 
+operator is connected to it to create the flow as shown in Figure~\ref{fig:panel5}. 
+The arrow on the flow shows the direction of information. Similar operator 
+selection and deletion operations, the flow (the link between operators) can 
+be selected and deselected by clicking. A selected flow can be removed by 
+pressing backspace key in the keyboard. Once a flow is deleted, the connected 
+operators to that flow are deleted as well.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel5.png}
+	\caption{Two operators connected via flow.}
+	\label{fig:panel5}
+\end{figure}
+
+Figure~\ref{fig:panel6} shows the configuration window for 
+\textit{human processing operator}, which is useful to create human tasks. 
+Comparing this configuration with the previous 
+one indicate the difference in the \textit{parameters} section. This section now presents 
+the configuration specific to this operator. The fields are completed for the sake of 
+demonstration and output specification is created. For instance, the data segment of 
+the previous operator is available here to be able to create customizable questions 
+under \textit{available segments} part. Those segments can be dragged and dropped 
+to \textit{instructions}, \textit{question} and \textit{single/multiple choice} answer fields. 
+Dropped segments can be easily deleted by pressing \textit{X} button on the right.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel6.png}
+	\caption{Configuration window for human processing operator filled with sample information.}
+	\label{fig:panel6}
+\end{figure}
+
+In addition, the human task that is configured in this operator can be previewed 
+by clicking \textit{preview human task} button right near the \textit{parameters} 
+section title. Figure~\ref{fig:panel7} shows the corresponding human task for 
+that operator. The segments dropped in question field is presented using a different 
+color. These will be automatically replaced with the segment value once 
+information starts flowing from source to sink, which is when the application 
+is executed.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel7.png}
+	\caption{Human task preview window for human processing operator.}
+	\label{fig:panel7}
+\end{figure}
+
+Finally, a \textit{sink operator} is added and connected to 
+\textit{human processing operator} as shown in Figure~\ref{fig:panel8}.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel8.png}
+	\caption{A minimal application with source, processing and sink operators.}
+	\label{fig:panel8}
+\end{figure}
+
+The configuration window (demonstrated in Figure~\ref{fig:panel9}) is intentionally 
+left blank to show validation capabilities of $Crowdy$. Then, validation is 
+initiated by clicking \textit{validate} link at the top of the flow composition window.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel9.png}
+	\caption{Configuration window for sink operator.}
+	\label{fig:panel9}
+\end{figure}
+
+The validation result is shown in Figure~\ref{fig:panel10}. The result lists all warnings 
+and errors. An explanation per warning/error is given as well. Users are expected 
+to resolve errors at least to complete validation and finally submit application for 
+execution.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel10.png}
+	\caption{Validation windows listing warnings and errors.}
+	\label{fig:panel10}
+\end{figure}
+
+When we open the configuration window for \textit{sink operator}, which is the source 
+of validation problems, the problematic fields are marked with yellow for warning and 
+red for error (see Figure~\ref{fig:panel11}). Since \textit{file name} is required and it is 
+left empty, it caused an error during validation.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel11.png}
+	\caption{Configuration window for sink operator after validation.}
+	\label{fig:panel11}
+\end{figure}
+
+At least the errors should be resolved for validation to succeed. Once validation goes 
+through application can be submitted for execution via the link appearing on right bottom 
+of validation window demonstrated in Figure~\ref{fig:panel12}. After application is 
+submitted, the processes are created and appropriate resources are allocated to solve 
+the problem and find the result. In this specific example, results are expected to be 
+written into a file.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel12.png}
+	\caption{Successful validation window with submit link.}
+	\label{fig:panel12}
+\end{figure}
+
+Finally, Figure~\ref{fig:panel13} shows the window to report a bug. Bugs can be 
+reported using this window. While custom messages can be given, the tool itself 
+gather particular logs for that session to create an application.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/tool/panel13.png}
+	\caption{Window to report a bug.}
+	\label{fig:panel13}
+\end{figure}
