@@ -48,6 +48,7 @@ void main() {
   html.document.querySelector('#validate').onClick.listen(validate);
   html.document.querySelector('#clear').onClick.listen(clear);
   html.document.querySelector('#report').onClick.listen(report);
+  html.document.querySelector('#sample').onClick.listen(sample);
   html.document.onKeyDown.listen(_onKeyDown);
 }
 
@@ -61,36 +62,38 @@ void clear(html.MouseEvent e) {
 
   opNumber = 1;
   logMessages = "";
+}
 
-  /*String operatorId = 'operator_1';
+void sample(html.MouseEvent e) {
+  String operatorId = 'operator_1';
   operators[operatorId] = app.addOperator(operatorId, 'source.manual', 100, 100);
-  operators[operatorId].initialize();
-  var details = operators[operatorId].details as SourceManualDetailsUI;
+  var details = operators[operatorId].uiDetails as SourceManualDetails;
   details.base['name'].input.value = 'Read Operator';
   details.base['description'].input.value = 'This operator will read the manual entry. The content will be parsed with respect to the following parameters. This will basically result in a data flow with a number of data segments.';
-  details.elements['input'].input.value = 'line-1-segment-1 line-1-segment-2\nline-2-segment-1 line-2-segment-2';
-  details.elements['delimiter'].input.value = '1';
+  details.elements['input'].input.value = 'Brazil, Mexico, Cameroon, Crotia\nNetherlands, Chile, Australia, Spain\nColombia, Ivory Coast, Japan, Greece\nCosta Rica, Italy, England, Uruguay\nFrance, Switzerland, Ecuador, Honduras\nArgentina, Iran, Nigeria, Bosnia\nGermany, United States, Ghana, Portugal\nBelgium, Algeria, Russia, South Korea';
+  details.elements['delimiter'].input.value = '3';
   details._onRefresh();
 
   operatorId = 'operator_2';
   operators[operatorId] = app.addOperator(operatorId, 'processing.human', 300, 100);
-  operators[operatorId].initialize();
-  details = operators[operatorId].details as SourceHumanDetailsUI;
+  details = operators[operatorId].uiDetails as HumanDetails;
   details.base['name'].input.value = 'Human Processing Operator';
   details.base['description'].input.value = 'This operator will receive the data segments from previous operator. These segments can be used to configure the human task.';
+  details.elements['instructions'].input.innerHtml = 'Please read the question below and answer the question.';
+  details.elements['question'].input.innerHtml = 'Select the teams that you think it will qualify to the next round.';
 
   operatorId = 'operator_3';
-  operators[operatorId] = app.addOperator(operatorId, 'sink.file', 500, 100);
-  operators[operatorId].initialize();
-  details = operators[operatorId].details as SinkFileDetailsUI;
+  operators[operatorId] = app.addOperator(operatorId, 'sink.email', 500, 100);
+  details = operators[operatorId].uiDetails as SinkEmailDetails;
   details.base['name'].input.value = 'Write Operator';
   details.base['description'].input.value = 'This operator will write the results into a file. This file will be available to download.';
+  details.elements['email'].input.value = 'mertk-test@outlook.com';
 
   var op1 = operators['operator_1'] as SourceManualOperator;
   var op2 = operators['operator_2'] as HumanProcessingOperator;
-  var op3 = operators['operator_3'] as SinkFileOperator;
-  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op1.ui.outputPort, op2.ui.inputPort]));
-  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op2.ui.outputPort, op3.ui.inputPort]));*/
+  var op3 = operators['operator_3'] as SinkEmailOperator;
+  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op1.body.outputPort, op2.body.inputPort]));
+  canvas.dispatchEvent(new html.CustomEvent(STREAM_LINE_DRAW, detail: [op2.body.outputPort, op3.body.inputPort]));
 }
 
 void _onKeyDown(html.KeyboardEvent e) {
