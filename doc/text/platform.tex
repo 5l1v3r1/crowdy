@@ -44,32 +44,91 @@ $Crowdy$ embodies several features:
 \section{Architecture}
 
 $Crowdy$ platform is implemented as a REST~\cite{Richardson2008} architecture 
-shown in Figure~\ref{fig:architecture}. Applications are developed, configured and 
+shown in Figure~\ref{fig:deployment}. Applications are developed, configured and 
 validated on the client-side. These applications are submitted to server-side via an 
-application programming interface (API). Applications are executed, and results 
-are saved on the server-side.
+application programming interface (API) over HTTP. The execution happens on the 
+server-side and results are kept in a database server.
+
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[height=200px]{figures/Architecture.pdf}
+%	\caption{Architecture of the platform.}
+%	\label{fig:architecture}
+%\end{figure}
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[height=200px]{figures/Architecture.pdf}
+	\includegraphics[width=0.95\textwidth]{figures/architecture/Deployment.pdf}
 	\caption{Architecture of the platform.}
-	\label{fig:architecture}
+	\label{fig:deployment}
 \end{figure}
 
-The client-side provides an editor to easily create $Crowdy$ applications. Requesters 
-can drag and drop various types of operators and connect them together to create a data 
-flow, which conforms to a $Crowdy$ application. These applications are further analyzed 
-and validated before submission. A valid application is submitted to the virtual machine 
-on the server-side.
+The client-side of $Crowdy$ is where crowdsourcing applications are developed. Client 
+part consists of two components: \textit{workflow editor} and \textit{static analyzer}. The 
+\textit{workflow editor} sits on top of \textit{static analyzer} as shown in Figure
+~\ref{fig:clientdecomposition} and uses it's services to analyze applications.
 
-The server-side consists of three layers: virtual machine, services and data. In addition, 
-an API is provided to submit new applications to the virtual machine and retrieve details 
-of existing ones. Virtual machine sits on top of existing crowdsourcing services and 
-provides service-independent environment for human computations. Once a new 
-application is submitted, virtual machine first allocates required computation resources, 
-then runs the application and finally saves the results. Services layer is formed by 
-different crowdsourcing services such as Amazon's Mechanical Turk or microworkers. 
-The data later is basically where application state is kept.
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/architecture/ClientDecomposition.pdf}
+	\caption{Logical decomposition of client-side architecture.}
+	\label{fig:clientdecomposition}
+\end{figure}
+
+The \textit{workflow editor} is where applications are designed. The editor provides 
+users a list of available operators and a flow composition panel. An application is 
+a flow where information flows from source to sink operators. An operator can be 
+created by dragging from the list to the flow composition panel. A flow is created by 
+connecting one operator to another.
+
+The \textit{static analyzer} runs all the time during the application development. This 
+component checks the validity of the application. Warnings and errors are raised 
+when user tries an action that can result in an invalid application. When user is 
+ready to submit application to the server-side for execution, \textit{static analyzer} 
+does a final validation check. If validation succeeds, application can be submitted 
+to the server-side and execution can be started.
+
+The server-side of $Crowdy$ is where crowdsourcing applications are executed and 
+results are generated. Server part consists of three components: \textit{API}, 
+\textit{virtual machine} and \textit{service adapters}. In addition, server-side 
+is connected a database server and a crowdsourcing platform server. Figure
+~\ref{fig:serverdecomposition} demonstrates the logical decomposition of these 
+components and their usage relation.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figures/architecture/ServerDecomposition.pdf}
+	\caption{Logical decomposition of server-side architecture.}
+	\label{fig:serverdecomposition}
+\end{figure}
+
+The \textit{application programming interface (API)} on the application server 
+specifies how client-side should interact with server-side. Client-side submits 
+application and receives the details of an application state via \textit{API} using 
+remote HTTP calls. \textit{API} creates and updates applications. Application 
+states are saved into \textit{database server}.
+
+The \textit{virtual machine} is a component responsible for executing applications. 
+It provides service-independent environment for human computations. The 
+\textit{database server} is periodically checked, processes are created, and 
+required computation resources are allocated by \textit{virtual machine}. These 
+processes are then executed and results are saved again into \textit{database server}. 
+\textit{Virtual machine} uses the server itself to execute processes that needs 
+software resources. The \textit{service adapters} component is utilized to allocate 
+human resources.
+
+The \textit{service adapters} component provides an interface to \textit{virtual machine} 
+to execute processes that require human computation. This component uses and 
+adapts \textit{API}s provided by external crowdsourcing platform servers. The requests 
+from \textit{virtual machine} are translated into requests that external APIs can 
+understand and submitted there. After process completion, results are gathered and 
+saved into \textit{database server}.
+
+The \textit{database server} is where application state is kept. It is accessed by 
+\textit{API} and \textit{virtual machine} to create new applications and update 
+application state correspondingly.
+
+Uses view comes here.
 
 In the remainder of this chapter, the fundamental concepts of $Crowdy$ are explained 
 in more detail and features are explored as we look into various aspects of application 
@@ -206,6 +265,8 @@ Human source operator has the following parameters:
 	generated by the operator. It's value ranges from 1 to 1000.
 	\item \texttt{max allotted time}: The maximum time in seconds given to a human 
 	worker to solve and submit the task. It's value ranges from 10 to 300.
+	\item \texttt{lifetime}: The life time of human task in hours during which period 
+	task will be available to human workers. It's value ranges from 1 to 72.
 	\item \texttt{payment}: The payment in cents to be given to the human worker in 
 	case of successful task completion. It's value ranges from 5 to 500.
 	\item \texttt{instructions}: The detailed information for human workers on how to 
