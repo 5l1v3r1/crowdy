@@ -4,46 +4,47 @@
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Task asking people to find address of a company\relax }}{10}{figure.caption.5}
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Task asking people to distinguish sentiment in a text snippet\relax }}{11}{figure.caption.6}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Architecture of the platform.\relax }}{20}{figure.caption.7}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Architecture of the platform (deployment view).\relax }}{20}{figure.caption.7}
 \contentsline {figure}{\numberline {3.2}{\ignorespaces Logical decomposition of client-side architecture.\relax }}{20}{figure.caption.8}
 \contentsline {figure}{\numberline {3.3}{\ignorespaces Logical decomposition of server-side architecture.\relax }}{21}{figure.caption.9}
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Metamodel for a Crowdy application.\relax }}{23}{figure.caption.10}
-\contentsline {figure}{\numberline {3.5}{\ignorespaces A sample, minimal $Crowdy$ application.\relax }}{23}{figure.caption.11}
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Base operator representation.\relax }}{24}{figure.caption.12}
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Source operator representation.\relax }}{25}{figure.caption.13}
-\contentsline {figure}{\numberline {3.8}{\ignorespaces Sink operator representation.\relax }}{28}{figure.caption.15}
-\contentsline {figure}{\numberline {3.9}{\ignorespaces Processing operator representation.\relax }}{29}{figure.caption.16}
-\contentsline {figure}{\numberline {3.10}{\ignorespaces Selection operator representation.\relax }}{30}{figure.caption.17}
-\contentsline {figure}{\numberline {3.11}{\ignorespaces Sort operator representation.\relax }}{31}{figure.caption.18}
-\contentsline {figure}{\numberline {3.12}{\ignorespaces Enrich operator representation.\relax }}{32}{figure.caption.19}
-\contentsline {figure}{\numberline {3.13}{\ignorespaces Split operator representation.\relax }}{32}{figure.caption.20}
-\contentsline {figure}{\numberline {3.14}{\ignorespaces Union operator representation.\relax }}{33}{figure.caption.21}
-\contentsline {figure}{\numberline {3.15}{\ignorespaces Flow composition window.\relax }}{37}{figure.caption.22}
-\contentsline {figure}{\numberline {3.16}{\ignorespaces An source operator added to flow.\relax }}{38}{figure.caption.23}
-\contentsline {figure}{\numberline {3.17}{\ignorespaces Configuration window for source manual operator.\relax }}{39}{figure.caption.24}
-\contentsline {figure}{\numberline {3.18}{\ignorespaces Configuration window for source manual operator filled with sample information.\relax }}{40}{figure.caption.25}
-\contentsline {figure}{\numberline {3.19}{\ignorespaces Two operators connected via flow.\relax }}{41}{figure.caption.26}
-\contentsline {figure}{\numberline {3.20}{\ignorespaces Configuration window for human processing operator filled with sample information.\relax }}{42}{figure.caption.27}
-\contentsline {figure}{\numberline {3.21}{\ignorespaces Human task preview window for human processing operator.\relax }}{43}{figure.caption.28}
-\contentsline {figure}{\numberline {3.22}{\ignorespaces A minimal application with source, processing and sink operators.\relax }}{43}{figure.caption.29}
-\contentsline {figure}{\numberline {3.23}{\ignorespaces Configuration window for sink operator.\relax }}{44}{figure.caption.30}
-\contentsline {figure}{\numberline {3.24}{\ignorespaces Validation windows listing warnings and errors.\relax }}{44}{figure.caption.31}
-\contentsline {figure}{\numberline {3.25}{\ignorespaces Configuration window for sink operator after validation.\relax }}{45}{figure.caption.32}
-\contentsline {figure}{\numberline {3.26}{\ignorespaces Successful validation window with submit link.\relax }}{45}{figure.caption.33}
-\contentsline {figure}{\numberline {3.27}{\ignorespaces Window to report a bug.\relax }}{46}{figure.caption.34}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Architecture in terms of components and connectors.\relax }}{22}{figure.caption.10}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Metamodel for a Crowdy application.\relax }}{24}{figure.caption.11}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces A sample, minimal $Crowdy$ application.\relax }}{25}{figure.caption.12}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Base operator representation.\relax }}{26}{figure.caption.13}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Source operator representation.\relax }}{27}{figure.caption.14}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Sink operator representation.\relax }}{30}{figure.caption.16}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Processing operator representation.\relax }}{30}{figure.caption.17}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Selection operator representation.\relax }}{31}{figure.caption.18}
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Sort operator representation.\relax }}{32}{figure.caption.19}
+\contentsline {figure}{\numberline {3.13}{\ignorespaces Enrich operator representation.\relax }}{33}{figure.caption.20}
+\contentsline {figure}{\numberline {3.14}{\ignorespaces Split operator representation.\relax }}{33}{figure.caption.21}
+\contentsline {figure}{\numberline {3.15}{\ignorespaces Union operator representation.\relax }}{34}{figure.caption.22}
+\contentsline {figure}{\numberline {3.16}{\ignorespaces Flow composition window.\relax }}{39}{figure.caption.23}
+\contentsline {figure}{\numberline {3.17}{\ignorespaces An source operator added to flow.\relax }}{40}{figure.caption.24}
+\contentsline {figure}{\numberline {3.18}{\ignorespaces Configuration window for source manual operator.\relax }}{41}{figure.caption.25}
+\contentsline {figure}{\numberline {3.19}{\ignorespaces Configuration window for source manual operator filled with sample information.\relax }}{42}{figure.caption.26}
+\contentsline {figure}{\numberline {3.20}{\ignorespaces Two operators connected via flow.\relax }}{43}{figure.caption.27}
+\contentsline {figure}{\numberline {3.21}{\ignorespaces Configuration window for human processing operator filled with sample information.\relax }}{44}{figure.caption.28}
+\contentsline {figure}{\numberline {3.22}{\ignorespaces Human task preview window for human processing operator.\relax }}{44}{figure.caption.29}
+\contentsline {figure}{\numberline {3.23}{\ignorespaces A minimal application with source, processing and sink operators.\relax }}{45}{figure.caption.30}
+\contentsline {figure}{\numberline {3.24}{\ignorespaces Configuration window for sink operator.\relax }}{45}{figure.caption.31}
+\contentsline {figure}{\numberline {3.25}{\ignorespaces Validation windows listing warnings and errors.\relax }}{46}{figure.caption.32}
+\contentsline {figure}{\numberline {3.26}{\ignorespaces Configuration window for sink operator after validation.\relax }}{46}{figure.caption.33}
+\contentsline {figure}{\numberline {3.27}{\ignorespaces Successful validation window with submit link.\relax }}{47}{figure.caption.34}
+\contentsline {figure}{\numberline {3.28}{\ignorespaces Window to report a bug.\relax }}{47}{figure.caption.35}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Crowdy application to correct business addresses.\relax }}{48}{figure.caption.35}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Sample list of companies and their information.\relax }}{48}{figure.caption.36}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Human task that is generated for human workers.\relax }}{49}{figure.caption.37}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Human task that is generated for human workers (updated).\relax }}{50}{figure.caption.38}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Another approach to correct business addresses.\relax }}{51}{figure.caption.39}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Some part of Rumi's Poem "Etme".\relax }}{51}{figure.caption.40}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Crowdy application to translate a text.\relax }}{52}{figure.caption.41}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Human task that is generated for human workers for translation.\relax }}{52}{figure.caption.42}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Crowdy application to translate a text.\relax }}{53}{figure.caption.43}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Some part of Rumi's Poem "Etme".\relax }}{54}{figure.caption.44}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Crowdy application to translate a text.\relax }}{54}{figure.caption.45}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Human task that is generated for human workers to check quality of translation.\relax }}{55}{figure.caption.46}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Crowdy application to correct business addresses.\relax }}{49}{figure.caption.36}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Sample list of companies and their information.\relax }}{49}{figure.caption.37}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Human task that is generated for human workers.\relax }}{50}{figure.caption.38}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Human task that is generated for human workers (updated).\relax }}{51}{figure.caption.39}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Another approach to correct business addresses.\relax }}{52}{figure.caption.40}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Some part of Rumi's Poem "Etme".\relax }}{52}{figure.caption.41}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Crowdy application to translate a text.\relax }}{53}{figure.caption.42}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Human task that is generated for human workers for translation.\relax }}{53}{figure.caption.43}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Crowdy application to translate a text.\relax }}{54}{figure.caption.44}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Some part of Rumi's Poem "Etme".\relax }}{55}{figure.caption.45}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Crowdy application to translate a text.\relax }}{55}{figure.caption.46}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Human task that is generated for human workers to check quality of translation.\relax }}{56}{figure.caption.47}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
