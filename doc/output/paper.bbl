@@ -150,6 +150,11 @@ C.~Callison-Burch, ``Fast, cheap, and creative: evaluating translation quality
   on Empirical Methods in Natural Language Processing: Volume 1-Volume 1},
   pp.~286--295, Association for Computational Linguistics, 2009.
 
+\bibitem{Gedik2014}
+H.~Andrade, B.~Gedik, and D.~Turaga, {\em Fundamentals of Stream Processing:
+  Application Design, Systems, and Analytics}.
+\newblock Cambridge University Press, 2014.
+
 \bibitem{Richardson2008}
 L.~Richardson and S.~Ruby, {\em RESTful web services}.
 \newblock O'Reilly Media, Inc., 2008.

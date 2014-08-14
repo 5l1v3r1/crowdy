@@ -6,45 +6,45 @@ Database file #1: paper.bib
 Warning--empty journal in Zhang2011
 Warning--can't use both volume and number fields in Barowy2012
 Warning--empty booktitle in Marcus2011b
-You've used 33 entries,
+You've used 34 entries,
             1876 wiz_defined-function locations,
-            683 strings with 9398 characters,
-and the built_in function-call counts, 10025 in all, are:
-= -- 989
-> -- 370
+            689 strings with 9582 characters,
+and the built_in function-call counts, 10202 in all, are:
+= -- 1004
+> -- 381
 < -- 0
-+ -- 136
-- -- 103
-* -- 691
-:= -- 1355
-add.period$ -- 35
-call.type$ -- 33
++ -- 140
+- -- 106
+* -- 701
+:= -- 1382
+add.period$ -- 37
+call.type$ -- 34
 change.case$ -- 32
 chr.to.int$ -- 0
-cite$ -- 36
-duplicate$ -- 546
-empty$ -- 994
-format.name$ -- 103
-if$ -- 2459
+cite$ -- 37
+duplicate$ -- 555
+empty$ -- 1014
+format.name$ -- 106
+if$ -- 2503
 int.to.chr$ -- 0
-int.to.str$ -- 33
-missing$ -- 32
-newline$ -- 104
-num.names$ -- 33
-pop$ -- 153
+int.to.str$ -- 34
+missing$ -- 34
+newline$ -- 108
+num.names$ -- 34
+pop$ -- 159
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 365
+skip$ -- 366
 stack$ -- 0
 substring$ -- 736
-swap$ -- 214
+swap$ -- 215
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 3
-while$ -- 108
-width$ -- 35
-write$ -- 326
+while$ -- 109
+width$ -- 36
+write$ -- 335
 (There were 3 warnings)
