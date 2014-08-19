@@ -209,13 +209,14 @@ aligns with pipe-and-filter style~\cite{Clements}.
 Data arrives at operators at input ports, is processed and then passed to the next operator 
 in the downstream via its output ports though flow. The operators in this work corresponds 
 to the filter definition in pipe-and-filter style, and the flow is consistent with pipe 
-definition~\cite{Clements}. The operator and flow concepts are described in the following. 
+definition~\cite{Clements} as demonstrated in Figure~\ref{fig:pipefilter}. The corresponding 
+operator and flow concepts in Crowdy context are described in the following. 
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{figures/ApplicationMetamodel.pdf}
-	\caption{Metamodel for a Crowdy application.}
-	\label{fig:metamodel}
+	\includegraphics[width=0.8\textwidth]{figures/architecture/PipeFilter.png}
+	\caption{Crowdy application correspondence to Pipe-and-Filter style.}
+	\label{fig:pipefilter}
 \end{figure}
 
 Figure~\ref{fig:metamodel} shows the metamodel for which a $Crowdy$ application is 
@@ -224,6 +225,13 @@ typically an application has three \textit{operator}s: one for inputting data, o
 that data items, and finally one for outputting the results. However, it is possible to 
 have an application with only two \textit{operator}s: one for data input and other for data 
 output.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.9\textwidth]{figures/ApplicationMetamodel.pdf}
+	\caption{Metamodel for a Crowdy application.}
+	\label{fig:metamodel}
+\end{figure}
 
 Each \textit{operator} is associated with a type that can be one of \textit{source, sink, 
 processing, relational, utility, adapter}. Based on it's type, operator may have 
