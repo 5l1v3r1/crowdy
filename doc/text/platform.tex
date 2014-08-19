@@ -262,7 +262,7 @@ various data tuples that differ in both size and specification. Similarly, the a
 have one or more processing operators along with other types of operators organized in a way 
 that is significantly more complex than this example.
 
-\subsection{Operator}
+\section{Operator}
 \label{sec:operator}
 An operator is the basic building block of an application. Operator has a type that is 
 specified at the time of creation. This type determines configuration respectively. Also a 
@@ -298,7 +298,7 @@ Operators are generally cross-domain to allow general-purpose
 computation possible. They are grouped under six main categories: 
 \textit{source, sink, processing, relational, utility, adapter}.
 
-\subsubsection{Source operators}
+\subsection{Source operators}
 The set of source operators generates data tuples. These operators do not have 
 an input port, but have an output port, which produces data tuples. Figure~\ref{fig:source operator} 
 represents a source operator.
@@ -420,7 +420,7 @@ to generate output specification. If more segments are generated in the followin
 they are discarded. If there are not enough segments in another line, then the corresponding 
 segments are emptied and then outputted.
 
-\subsubsection{Sink operators}
+\subsection{Sink operators}
 The set of sink operators is where data tuples are serialized and converted into 
 the formats that can be used by requesters with ease. These operators have one 
 input port, but no output port. Figure \ref{fig:sink operator} demonstrates a sink operator.
@@ -442,7 +442,7 @@ The \textit{file sink operator} is a stateless operator to serialize the data tu
 a file. Operator has one parameter \texttt{filename} that is used to specify the name 
 of file in which tuples will be written.
 
-\subsubsection{Processing operators}
+\subsection{Processing operators}
 The set of processing operators provides data tuple processing via human workers. 
 These operators have both input and output ports. Figure \ref{fig:processing operator} 
 shows a processing operator.
@@ -542,7 +542,7 @@ Sorting rules share the following predefined format:
 
 where \texttt{segment-name} is one of the segments of incoming tuple.
 
-\subsubsection{Utility operators}
+\subsection{Utility operators}
 \label{sec:utility operators}
 The set of utility operators provides flow management functions. These operators 
 handle operations such as separating a flow into multiple flows or joining multiple 
@@ -615,7 +615,7 @@ Figure~\ref{fig:union operator} demonstrates the operator.
 Union operator requires incoming flows to have the same specification. Otherwise, 
 union operation will basically fail.
 
-\subsection{Flow}
+\section{Flow}
 Flow is the connection between operators used to move information from one operator 
 to another. A flow is formed by one or more data segments. A segment has an identifier 
 and corresponding value. In that sense, flow is like a hash table where segment identifiers 

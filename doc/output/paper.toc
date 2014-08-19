@@ -18,19 +18,19 @@
 \contentsline {chapter}{\numberline {3}Architecture}{18}{chapter.3}
 \contentsline {section}{\numberline {3.1}Architecture using Component-and-Connector Views}{19}{section.3.1}
 \contentsline {chapter}{\numberline {4}Platform}{25}{chapter.4}
-\contentsline {subsection}{\numberline {4.0.1}Operator}{27}{subsection.4.0.1}
-\contentsline {subsubsection}{\numberline {4.0.1.1}Source operators}{28}{subsubsection.4.0.1.1}
-\contentsline {subsubsection}{\numberline {4.0.1.2}Sink operators}{31}{subsubsection.4.0.1.2}
-\contentsline {subsubsection}{\numberline {4.0.1.3}Processing operators}{32}{subsubsection.4.0.1.3}
-\contentsline {subsubsection}{\numberline {4.0.1.4}Relational operators}{33}{subsubsection.4.0.1.4}
-\contentsline {subsubsection}{\numberline {4.0.1.5}Utility operators}{34}{subsubsection.4.0.1.5}
-\contentsline {subsection}{\numberline {4.0.2}Flow}{36}{subsection.4.0.2}
-\contentsline {section}{\numberline {4.1}Application Development}{37}{section.4.1}
-\contentsline {subsubsection}{\numberline {4.1.0.1}Source operators}{37}{subsubsection.4.1.0.1}
-\contentsline {subsubsection}{\numberline {4.1.0.2}Sink operators}{38}{subsubsection.4.1.0.2}
-\contentsline {subsubsection}{\numberline {4.1.0.3}Processing operators}{38}{subsubsection.4.1.0.3}
-\contentsline {subsubsection}{\numberline {4.1.0.4}Relational operators}{38}{subsubsection.4.1.0.4}
-\contentsline {subsubsection}{\numberline {4.1.0.5}Utility operators}{39}{subsubsection.4.1.0.5}
+\contentsline {section}{\numberline {4.1}Operator}{27}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Source operators}{28}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Sink operators}{31}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Processing operators}{32}{subsection.4.1.3}
+\contentsline {subsubsection}{\numberline {4.1.3.1}Relational operators}{33}{subsubsection.4.1.3.1}
+\contentsline {subsection}{\numberline {4.1.4}Utility operators}{34}{subsection.4.1.4}
+\contentsline {section}{\numberline {4.2}Flow}{36}{section.4.2}
+\contentsline {section}{\numberline {4.3}Application Development}{37}{section.4.3}
+\contentsline {subsubsection}{\numberline {4.3.0.1}Source operators}{37}{subsubsection.4.3.0.1}
+\contentsline {subsubsection}{\numberline {4.3.0.2}Sink operators}{38}{subsubsection.4.3.0.2}
+\contentsline {subsubsection}{\numberline {4.3.0.3}Processing operators}{38}{subsubsection.4.3.0.3}
+\contentsline {subsubsection}{\numberline {4.3.0.4}Relational operators}{38}{subsubsection.4.3.0.4}
+\contentsline {subsubsection}{\numberline {4.3.0.5}Utility operators}{39}{subsubsection.4.3.0.5}
 \contentsline {chapter}{\numberline {5}Tool}{40}{chapter.5}
 \contentsline {chapter}{\numberline {6}Case Studies}{50}{chapter.6}
 \contentsline {section}{\numberline {6.1}Verifying Business Information}{50}{section.6.1}
