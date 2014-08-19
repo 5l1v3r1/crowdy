@@ -15,51 +15,51 @@
 \BOOKMARK [2][-]{subsection.2.2.1}{Workflow Design}{section.2.2}% 15
 \BOOKMARK [2][-]{subsection.2.2.2}{Task Assignment}{section.2.2}% 16
 \BOOKMARK [2][-]{subsection.2.2.3}{Quality Control}{section.2.2}% 17
-\BOOKMARK [0][-]{chapter.3}{Platform}{}% 18
-\BOOKMARK [1][-]{section.3.1}{Architecture}{chapter.3}% 19
-\BOOKMARK [1][-]{section.3.2}{Concepts}{chapter.3}% 20
-\BOOKMARK [2][-]{subsection.3.2.1}{Operator}{section.3.2}% 21
-\BOOKMARK [3][-]{subsubsection.3.2.1.1}{Source operators}{subsection.3.2.1}% 22
-\BOOKMARK [3][-]{subsubsection.3.2.1.2}{Sink operators}{subsection.3.2.1}% 23
-\BOOKMARK [3][-]{subsubsection.3.2.1.3}{Processing operators}{subsection.3.2.1}% 24
-\BOOKMARK [3][-]{subsubsection.3.2.1.4}{Relational operators}{subsection.3.2.1}% 25
-\BOOKMARK [3][-]{subsubsection.3.2.1.5}{Utility operators}{subsection.3.2.1}% 26
-\BOOKMARK [2][-]{subsection.3.2.2}{Flow}{section.3.2}% 27
-\BOOKMARK [1][-]{section.3.3}{Application Development}{chapter.3}% 28
-\BOOKMARK [2][-]{subsubsection.3.3.0.1}{Source operators}{section.3.3}% 29
-\BOOKMARK [3][-]{subsubsection.3.3.0.2}{Sink operators}{subsubsection.3.3.0.1}% 30
-\BOOKMARK [3][-]{subsubsection.3.3.0.3}{Processing operators}{subsubsection.3.3.0.1}% 31
-\BOOKMARK [3][-]{subsubsection.3.3.0.4}{Relational operators}{subsubsection.3.3.0.1}% 32
-\BOOKMARK [3][-]{subsubsection.3.3.0.5}{Utility operators}{subsubsection.3.3.0.1}% 33
-\BOOKMARK [1][-]{section.3.4}{Tool}{chapter.3}% 34
-\BOOKMARK [0][-]{chapter.4}{Case Studies}{}% 35
-\BOOKMARK [1][-]{section.4.1}{Verifying Business Information}{chapter.4}% 36
-\BOOKMARK [1][-]{section.4.2}{Translation}{chapter.4}% 37
-\BOOKMARK [2][-]{subsection.4.2.1}{Naive Approach}{section.4.2}% 38
-\BOOKMARK [3][-]{subsubsection.4.2.1.1}{Issues}{subsection.4.2.1}% 39
-\BOOKMARK [2][-]{subsection.4.2.2}{A More Sophisticated Approach}{section.4.2}% 40
-\BOOKMARK [3][-]{subsubsection.4.2.2.1}{Issues}{subsection.4.2.2}% 41
-\BOOKMARK [2][-]{subsection.4.2.3}{Final Approach}{section.4.2}% 42
-\BOOKMARK [3][-]{subsubsection.4.2.3.1}{Issues}{subsection.4.2.3}% 43
-\BOOKMARK [0][-]{chapter.5}{Related Work}{}% 44
-\BOOKMARK [1][-]{section.5.1}{Crowdsourcing Platforms}{chapter.5}% 45
-\BOOKMARK [2][-]{subsection.5.1.1}{Jabberwocky}{section.5.1}% 46
-\BOOKMARK [2][-]{subsection.5.1.2}{WeFlow}{section.5.1}% 47
-\BOOKMARK [2][-]{subsection.5.1.3}{TurKit}{section.5.1}% 48
-\BOOKMARK [2][-]{subsection.5.1.4}{CrowdLang}{section.5.1}% 49
-\BOOKMARK [2][-]{subsection.5.1.5}{AutoMan}{section.5.1}% 50
-\BOOKMARK [2][-]{subsection.5.1.6}{Turkomatic}{section.5.1}% 51
-\BOOKMARK [2][-]{subsection.5.1.7}{CrowdForge}{section.5.1}% 52
-\BOOKMARK [2][-]{subsection.5.1.8}{CrowdWeaver}{section.5.1}% 53
-\BOOKMARK [1][-]{section.5.2}{Other Studies}{chapter.5}% 54
-\BOOKMARK [2][-]{subsection.5.2.1}{Soylent}{section.5.2}% 55
-\BOOKMARK [2][-]{subsection.5.2.2}{Qurk}{section.5.2}% 56
-\BOOKMARK [2][-]{subsection.5.2.3}{Mobi}{section.5.2}% 57
-\BOOKMARK [2][-]{subsection.5.2.4}{CrowdSpace}{section.5.2}% 58
-\BOOKMARK [2][-]{subsection.5.2.5}{Human Architecture}{section.5.2}% 59
-\BOOKMARK [0][-]{chapter.6}{Discussion}{}% 60
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 61
-\BOOKMARK [1][-]{section.7.1}{Future Work}{chapter.7}% 62
-\BOOKMARK [2][-]{subsection.7.1.1}{Extending the Operator Set}{section.7.1}% 63
-\BOOKMARK [2][-]{subsection.7.1.2}{Improvements to Existing Operators}{section.7.1}% 64
-\BOOKMARK [2][-]{subsection.7.1.3}{More Quality Control}{section.7.1}% 65
+\BOOKMARK [0][-]{chapter.3}{Architecture}{}% 18
+\BOOKMARK [1][-]{section.3.1}{Architecture using Component-and-Connector Views}{chapter.3}% 19
+\BOOKMARK [0][-]{chapter.4}{Platform}{}% 20
+\BOOKMARK [1][-]{subsection.4.0.1}{Operator}{chapter.4}% 21
+\BOOKMARK [2][-]{subsubsection.4.0.1.1}{Source operators}{subsection.4.0.1}% 22
+\BOOKMARK [3][-]{subsubsection.4.0.1.2}{Sink operators}{subsubsection.4.0.1.1}% 23
+\BOOKMARK [3][-]{subsubsection.4.0.1.3}{Processing operators}{subsubsection.4.0.1.1}% 24
+\BOOKMARK [3][-]{subsubsection.4.0.1.4}{Relational operators}{subsubsection.4.0.1.1}% 25
+\BOOKMARK [3][-]{subsubsection.4.0.1.5}{Utility operators}{subsubsection.4.0.1.1}% 26
+\BOOKMARK [2][-]{subsection.4.0.2}{Flow}{subsection.4.0.1}% 27
+\BOOKMARK [1][-]{section.4.1}{Application Development}{chapter.4}% 28
+\BOOKMARK [2][-]{subsubsection.4.1.0.1}{Source operators}{section.4.1}% 29
+\BOOKMARK [3][-]{subsubsection.4.1.0.2}{Sink operators}{subsubsection.4.1.0.1}% 30
+\BOOKMARK [3][-]{subsubsection.4.1.0.3}{Processing operators}{subsubsection.4.1.0.1}% 31
+\BOOKMARK [3][-]{subsubsection.4.1.0.4}{Relational operators}{subsubsection.4.1.0.1}% 32
+\BOOKMARK [3][-]{subsubsection.4.1.0.5}{Utility operators}{subsubsection.4.1.0.1}% 33
+\BOOKMARK [0][-]{chapter.5}{Tool}{}% 34
+\BOOKMARK [0][-]{chapter.6}{Case Studies}{}% 35
+\BOOKMARK [1][-]{section.6.1}{Verifying Business Information}{chapter.6}% 36
+\BOOKMARK [1][-]{section.6.2}{Translation}{chapter.6}% 37
+\BOOKMARK [2][-]{subsection.6.2.1}{Naive Approach}{section.6.2}% 38
+\BOOKMARK [3][-]{subsubsection.6.2.1.1}{Issues}{subsection.6.2.1}% 39
+\BOOKMARK [2][-]{subsection.6.2.2}{A More Sophisticated Approach}{section.6.2}% 40
+\BOOKMARK [3][-]{subsubsection.6.2.2.1}{Issues}{subsection.6.2.2}% 41
+\BOOKMARK [2][-]{subsection.6.2.3}{Final Approach}{section.6.2}% 42
+\BOOKMARK [3][-]{subsubsection.6.2.3.1}{Issues}{subsection.6.2.3}% 43
+\BOOKMARK [0][-]{chapter.7}{Related Work}{}% 44
+\BOOKMARK [1][-]{section.7.1}{Crowdsourcing Platforms}{chapter.7}% 45
+\BOOKMARK [2][-]{subsection.7.1.1}{Jabberwocky}{section.7.1}% 46
+\BOOKMARK [2][-]{subsection.7.1.2}{WeFlow}{section.7.1}% 47
+\BOOKMARK [2][-]{subsection.7.1.3}{TurKit}{section.7.1}% 48
+\BOOKMARK [2][-]{subsection.7.1.4}{CrowdLang}{section.7.1}% 49
+\BOOKMARK [2][-]{subsection.7.1.5}{AutoMan}{section.7.1}% 50
+\BOOKMARK [2][-]{subsection.7.1.6}{Turkomatic}{section.7.1}% 51
+\BOOKMARK [2][-]{subsection.7.1.7}{CrowdForge}{section.7.1}% 52
+\BOOKMARK [2][-]{subsection.7.1.8}{CrowdWeaver}{section.7.1}% 53
+\BOOKMARK [1][-]{section.7.2}{Other Studies}{chapter.7}% 54
+\BOOKMARK [2][-]{subsection.7.2.1}{Soylent}{section.7.2}% 55
+\BOOKMARK [2][-]{subsection.7.2.2}{Qurk}{section.7.2}% 56
+\BOOKMARK [2][-]{subsection.7.2.3}{Mobi}{section.7.2}% 57
+\BOOKMARK [2][-]{subsection.7.2.4}{CrowdSpace}{section.7.2}% 58
+\BOOKMARK [2][-]{subsection.7.2.5}{Human Architecture}{section.7.2}% 59
+\BOOKMARK [0][-]{chapter.8}{Discussion}{}% 60
+\BOOKMARK [0][-]{chapter.9}{Conclusion}{}% 61
+\BOOKMARK [1][-]{section.9.1}{Future Work}{chapter.9}% 62
+\BOOKMARK [2][-]{subsection.9.1.1}{Extending the Operator Set}{section.9.1}% 63
+\BOOKMARK [2][-]{subsection.9.1.2}{Improvements to Existing Operators}{section.9.1}% 64
+\BOOKMARK [2][-]{subsection.9.1.3}{More Quality Control}{section.9.1}% 65

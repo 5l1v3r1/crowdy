@@ -1,5 +1,5 @@
-\chapter{Platform}
-\label{chap:platform}
+\chapter{Architecture}
+\label{chap:architecture}
 
 Crowdsourcing based on simple, independent and deskilled list of tasks basically 
 limits the scope and complexity of problems can be tackled. Independent tasks that 
@@ -41,13 +41,38 @@ $Crowdy$ embodies several features:
 	\item Application runtime interface
 \end{itemize}
 
-\section{Architecture}
+\section{Architecture using Component-and-Connector Views}
 
-$Crowdy$ platform is implemented as a REST~\cite{Richardson2008} architecture 
-shown in Figure~\ref{fig:deployment}. Applications are developed, configured and 
-validated on the client-side. These applications are submitted to server-side via an 
-application programming interface (API) over HTTP. The execution happens on the 
-server-side and results are kept in a database server.
+
+$Crowdy$ platform is implemented as a REST~\cite{Richardson2008} architecture. 
+Applications are developed, configured and validated on the client-side. These 
+applications are submitted to server-side via an application programming interface 
+(API) over HTTP. The execution happens on the server-side and results are kept 
+in a database server.
+
+In the following, the architecture design is explained using Views and Beyond approach
+~\cite{Clements}. Views and Beyond approach is useful for identification and documentation of 
+design decisions made. Component-and-connector (C\&C) views are used to document 
+presence of runtime elements and their interactions.
+
+Figure~\ref{fig:arch} illustrates the primary presentation of the system's 
+runtime architecture. It is showing a picture of the system as it appears at runtime. 
+A set of clients can interact with the application server, embodying a client-server 
+style. The client components communicate with application server components 
+via the API defined by the server. Client components can achieve a set of operations 
+such as creating a new application, getting results for an existing application over that API.
+
+The system contains a shared repository of $tasks$ in \textit{database server} 
+accessed by the application server. The $task$ database is the list of action 
+items per application. New tasks can be created for new applications or a 
+list of uncompleted tasks can be completed 
+with an API call from the application server. Thus, the connection between the 
+application server and the task database is handled by API as well.
+
+The system has another server that is \textit{crowdsourcing platform server}. This 
+server provides the required resources for human computation. The resource 
+allocation and usage using this component are handled by HTTP API calls too. 
+The application server does the API calls.
 
 %\begin{figure}[ht]
 %	\centering
@@ -58,9 +83,9 @@ server-side and results are kept in a database server.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.95\textwidth]{figures/architecture/Deployment.pdf}
-	\caption{Architecture of the platform (deployment view).}
-	\label{fig:deployment}
+	\includegraphics[width=0.6\textwidth]{figures/architecture/CC1.png}
+	\caption{Architecture of the platform.}
+	\label{fig:arch}
 \end{figure}
 
 The client-side of $Crowdy$ is where crowdsourcing applications are developed. Client 
@@ -70,7 +95,7 @@ part consists of two components: \textit{workflow editor} and \textit{static ana
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.85\textwidth]{figures/architecture/ClientDecomposition.pdf}
+	\includegraphics[width=0.5\textwidth]{figures/architecture/CC2.png}
 	\caption{Logical decomposition of client-side architecture.}
 	\label{fig:clientdecomposition}
 \end{figure}
@@ -91,13 +116,13 @@ to the server-side and execution can be started.
 The server-side of $Crowdy$ is where crowdsourcing applications are executed and 
 results are generated. Server part consists of three components: \textit{API}, 
 \textit{virtual machine} and \textit{service adapters}. In addition, server-side 
-is connected a database server and a crowdsourcing platform server. Figure
-~\ref{fig:serverdecomposition} demonstrates the logical decomposition of these 
+is connected a database server and a crowdsourcing platform server. 
+Figure~\ref{fig:serverdecomposition} demonstrates the logical decomposition of these 
 components and their usage relation.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.85\textwidth]{figures/architecture/ServerDecomposition.pdf}
+	\includegraphics[width=0.85\textwidth]{figures/architecture/CC3.png}
 	\caption{Logical decomposition of server-side architecture.}
 	\label{fig:serverdecomposition}
 \end{figure}
@@ -165,13 +190,16 @@ Task is then executed by human workers and results are sent back from
 \textit{human resource management server} to \textit{human task execution} 
 component via \textit{service adapters}.
 
-In the remainder of this chapter, the fundamental concepts of $Crowdy$ are explained 
+In the remainder, the fundamental concepts of $Crowdy$ are explained 
 in more detail and features are explored as we look into various aspects of application 
 development using $Crowdy$ platform. In Section~\ref{sec:tool} the tool developed over 
 these concepts is explained, and a sample application is developed using the tool.
 
-\section{Concepts}
 
+
+
+\chapter{Platform}
+\label{chap:platform}
 $Crowdy$ applications are developed to solve complex and sophisticated problems 
 that require both human intelligence and computing power. A typical application contains 
 three main high-level components: data ingest, processing and data egress.
@@ -694,7 +722,8 @@ Each incoming flow must have the same specification, which is ensured by applica
 by preventing connecting flows with different specification to the same union operator.
 
 
-\section{Tool}
+
+\chapter{Tool}
 \label{sec:tool}
 $Crowdy$ has been implemented as a web-based tool and made freely 
 available\footnote{http://crowdy.herokuapp.com}. The 

@@ -159,6 +159,11 @@ H.~Andrade, B.~Gedik, and D.~Turaga, {\em Fundamentals of Stream Processing:
 L.~Richardson and S.~Ruby, {\em RESTful web services}.
 \newblock O'Reilly Media, Inc., 2008.
 
+\bibitem{Clements}
+P.~Clements, D.~Garlan, L.~Bass, J.~Stafford, R.~Nord, J.~Ivers, and R.~Little,
+  {\em Documenting software architectures: views and beyond}.
+\newblock Pearson Education, 2002.
+
 \bibitem{Dean2008}
 J.~Dean and S.~Ghemawat, ``Mapreduce: simplified data processing on large
   clusters,'' {\em Communications of the ACM}, vol.~51, no.~1, pp.~107--113,
