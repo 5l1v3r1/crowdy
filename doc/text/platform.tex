@@ -55,6 +55,13 @@ In the following, the architecture design is explained using Views and Beyond ap
 design decisions made. Component-and-connector (C\&C) views are used to document 
 presence of runtime elements and their interactions.
 
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/architecture/CC1.png}
+	\caption{Architecture of the platform.}
+	\label{fig:arch}
+\end{figure}
+
 Figure~\ref{fig:arch} illustrates the primary presentation of the system's 
 runtime architecture. It is showing a picture of the system as it appears at runtime. 
 A set of clients can interact with the application server, embodying a client-server 
@@ -80,13 +87,6 @@ The application server does the API calls.
 %	\caption{Architecture of the platform.}
 %	\label{fig:architecture}
 %\end{figure}
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=0.5\textwidth]{figures/architecture/CC1.png}
-	\caption{Architecture of the platform.}
-	\label{fig:arch}
-\end{figure}
 
 The client-side of $Crowdy$ is where crowdsourcing applications are developed. Client 
 part consists of two components: \textit{workflow editor} and \textit{static analyzer}. The 

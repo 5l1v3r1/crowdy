@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  19 AUG 2014 16:05
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  19 AUG 2014 16:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -532,22 +532,22 @@ Overfull \hbox (22.51274pt too wide) in paragraph at lines 44--44
 []\OT1/cmr/bx/n/17.28 Architecture us-ing Component-and-Connector
  []
 
-[19] <figures/architecture/CC1.png, id=669, 195.3699pt x 196.8153pt>
+[19] <figures/architecture/CC1.png, id=668, 195.3699pt x 196.8153pt>
 File: figures/architecture/CC1.png Graphic file (type png)
 <use figures/architecture/CC1.png>
-Package pdftex.def Info: figures/architecture/CC1.png used on input line 86.
+Package pdftex.def Info: figures/architecture/CC1.png used on input line 60.
 (pdftex.def)             Requested size: 206.28247pt x 207.81837pt.
-<figures/architecture/CC2.png, id=671, 494.84875pt x 176.66pt>
+[20 <./figures/architecture/CC1.png>] <figures/architecture/CC2.png, id=677, 494.84875pt x 176.66pt>
 File: figures/architecture/CC2.png Graphic file (type png)
 <use figures/architecture/CC2.png>
 Package pdftex.def Info: figures/architecture/CC2.png used on input line 98.
 (pdftex.def)             Requested size: 247.54149pt x 88.37021pt.
-[20] <figures/architecture/CC3.png, id=678, 715.67375pt x 346.29375pt>
+<figures/architecture/CC3.png, id=679, 715.67375pt x 346.29375pt>
 File: figures/architecture/CC3.png Graphic file (type png)
 <use figures/architecture/CC3.png>
 Package pdftex.def Info: figures/architecture/CC3.png used on input line 125.
 (pdftex.def)             Requested size: 350.68272pt x 169.68541pt.
-[21 <./figures/architecture/CC1.png> <./figures/architecture/CC2.png>] [22 <./figures/architecture/CC3.png>] <figures/architecture/ComponentConnector.pdf, id=691, 391.4625pt x 329.23pt>
+[21 <./figures/architecture/CC2.png>] [22 <./figures/architecture/CC3.png>] <figures/architecture/ComponentConnector.pdf, id=691, 391.4625pt x 329.23pt>
 File: figures/architecture/ComponentConnector.pdf Graphic file (type pdf)
 <use figures/architecture/ComponentConnector.pdf>
 Package pdftex.def Info: figures/architecture/ComponentConnector.pdf used on input line 166.
@@ -812,7 +812,7 @@ Here is how much of TeX's memory you used:
  38i,14n,75p,1361b,1716s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mtt12.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/wasy/wasy10.pfb>
-Output written on output/paper.pdf (92 pages, 4298290 bytes).
+Output written on output/paper.pdf (92 pages, 4298354 bytes).
 PDF statistics:
  1315 PDF objects out of 1440 (max. 8388607)
  1099 compressed objects within 11 object streams
