@@ -69,7 +69,7 @@ list of uncompleted tasks can be completed
 with an API call from the application server. Thus, the connection between the 
 application server and the task database is handled by API as well.
 
-The system has another server that is \textit{crowdsourcing platform server}. This 
+The system has another server that is \textit{human resource management server}. This 
 server provides the required resources for human computation. The resource 
 allocation and usage using this component are handled by HTTP API calls too. 
 The application server does the API calls.
@@ -83,20 +83,20 @@ The application server does the API calls.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.6\textwidth]{figures/architecture/CC1.png}
+	\includegraphics[width=0.5\textwidth]{figures/architecture/CC1.png}
 	\caption{Architecture of the platform.}
 	\label{fig:arch}
 \end{figure}
 
 The client-side of $Crowdy$ is where crowdsourcing applications are developed. Client 
 part consists of two components: \textit{workflow editor} and \textit{static analyzer}. The 
-\textit{workflow editor} sits on top of \textit{static analyzer} as shown in Figure
-~\ref{fig:clientdecomposition} and uses it's services to analyze applications.
+\textit{workflow editor} sits on top of \textit{static analyzer} as shown in 
+Figure~\ref{fig:clientdecomposition} and uses it's services to analyze applications.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figures/architecture/CC2.png}
-	\caption{Logical decomposition of client-side architecture.}
+	\includegraphics[width=0.6\textwidth]{figures/architecture/CC2.png}
+	\caption{Client-side architecture.}
 	\label{fig:clientdecomposition}
 \end{figure}
 
@@ -123,7 +123,7 @@ components and their usage relation.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.85\textwidth]{figures/architecture/CC3.png}
-	\caption{Logical decomposition of server-side architecture.}
+	\caption{Server-side architecture.}
 	\label{fig:serverdecomposition}
 \end{figure}
 
@@ -153,18 +153,18 @@ The \textit{database server} is where application state is kept. It is accessed 
 \textit{API} and \textit{virtual machine} to create new applications and update 
 application state correspondingly.
 
-Figure \ref{fig:componentconnector} demonstrates the architecture via components 
-and connectors. As explained before this is an client-server architecture in which 
-the connections in between web services are handled by APIs over HTTP. 
-Considering architecture from this perspective reveals the significance of 
-\textit{virtual machine} within \textit{application server}. \textit{Virtual machine} 
-connected to \textit{database server} and \textit{service adapters} constitutes 
-the idea of stream-based human computation.
+Figure \ref{fig:componentconnector} demonstrates the architecture in detail 
+via components and connectors. As explained before this is an client-server 
+architecture in which the connections in between web services are handled 
+by APIs over HTTP. Considering architecture from this perspective reveals the 
+significance of \textit{virtual machine} within \textit{application server}. 
+\textit{Virtual machine} connected to \textit{database server} and 
+\textit{service adapters} constitutes the idea of stream-based human computation.
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.85\textwidth]{figures/architecture/ComponentConnector.pdf}
-	\caption{Architecture in terms of components and connectors.}
+	\caption{Detailed architecture in terms of components and connectors.}
 	\label{fig:componentconnector}
 \end{figure}
 
@@ -192,7 +192,7 @@ component via \textit{service adapters}.
 
 In the remainder, the fundamental concepts of $Crowdy$ are explained 
 in more detail and features are explored as we look into various aspects of application 
-development using $Crowdy$ platform. In Section~\ref{sec:tool} the tool developed over 
+development using $Crowdy$ platform. In Chapter~\ref{sec:tool} the tool developed over 
 these concepts is explained, and a sample application is developed using the tool.
 
 
@@ -202,7 +202,14 @@ these concepts is explained, and a sample application is developed using the too
 \label{chap:platform}
 $Crowdy$ applications are developed to solve complex and sophisticated problems 
 that require both human intelligence and computing power. A typical application contains 
-three main high-level components: data ingest, processing and data egress.
+three main high-level components: data ingest, processing and data egress. Indeed, 
+the pattern of interaction that characterized by successive transformations of data streams 
+aligns with pipe-and-filter style~\cite{Clements}.
+
+Data arrives at operators at input ports, is processed and then passed to the next operator 
+in the downstream via its output ports though flow. The operators in this work corresponds 
+to the filter definition in pipe-and-filter style, and the flow is consistent with pipe 
+definition~\cite{Clements}. The operator and flow concepts are described in the following. 
 
 \begin{figure}[ht]
 	\centering
